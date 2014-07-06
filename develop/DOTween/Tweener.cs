@@ -123,7 +123,7 @@ namespace DG.Tween
         static bool DoGoto(Tweener<T> t, float to)
         {
             // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state
-            // FIXME problems (behaves like if timeScale was ridiculously low and also stutters) after thousands of completed loops
+            // FIXME behaves like if timeScale was ridiculously low (and also stutters) after thousands of completed loops due to float not allowing enough decimals
 
             // Lock creation extensions
             t.creationLocked = true;

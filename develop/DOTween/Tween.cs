@@ -59,7 +59,7 @@ namespace DG.Tween
         internal bool creationLocked; // TRUE after the tween was updated the first time (even if it was delayed)
         internal bool startupDone; // Called when the tween begins, AFTER any delay is elapsed
         internal float position; // Time position within a single loop cycle
-        internal float elapsed; // Total elapsed time since beginning, loops included, delays excluded
+        internal float elapsed; // Total elapsed time since beginning, loops included, delays excluded (becomes very imprecise with thousands of loops so use with care)
         internal float fullDuration; // Total duration loops included
         internal int completedLoops;
         internal bool isPlaying; // Set by TweenManager when getting a new tween
