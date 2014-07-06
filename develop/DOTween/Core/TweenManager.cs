@@ -237,6 +237,24 @@ namespace DG.Tween.Core
             totPooledTweeners = totPooledSequences = 0;
         }
 
+        internal static int GetCompletedLoops(Tween t, float additionalDeltaTime)
+        {
+            if (t.isBackwards) {
+                float diff = t.position - additionalDeltaTime;
+                while (diff < 0 && t.completedLoops > 0) {
+                    diff += t.duration;
+                    t.completedLoops--;
+                }
+            } else {
+                float diff = t.position + additionalDeltaTime;
+                while (diff > t.duration && (t.loops == -1 || t.completedLoops < t.loops)) {
+                    diff -= t.duration;
+                    t.completedLoops++;
+                }
+            }
+            return t.completedLoops;
+        }
+
         internal static int TotActiveTweens()
         {
             return totActiveDefaultTweens + totActiveFixedTweens + totActiveIndependentTweens;
