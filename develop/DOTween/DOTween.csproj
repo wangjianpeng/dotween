@@ -60,6 +60,7 @@
     <Compile Include="Core\Enums\FilterType.cs" />
     <Compile Include="Core\Enums\OperationType.cs" />
     <Compile Include="Core\TweenManager.cs" />
+    <Compile Include="Core\UpdateData.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="DOTween.cs" />
     <Compile Include="EaseType.cs" />

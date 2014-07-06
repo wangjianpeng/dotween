@@ -78,7 +78,7 @@ namespace DG.Tween
 
         // Called by TweenManager at each update.
         // Returns TRUE if the tween needs to be killed
-        internal abstract bool Goto(float position, int completedLoops);
+        internal abstract bool Goto(UpdateData updateData);
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------

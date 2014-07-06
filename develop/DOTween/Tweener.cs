@@ -69,13 +69,6 @@ namespace DG.Tween
             DoReset(this);
         }
 
-        // Also called by TweenManager at each update.
-        // Returns TRUE if the tween needs to be killed
-        public override bool Goto(float to)
-        {
-            return DoGoto(this, to);
-        }
-
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
@@ -87,6 +80,13 @@ namespace DG.Tween
             t._endValue = endValue;
             t.duration = duration;
             if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetPlugin<T>();
+        }
+
+        // Also called by TweenManager at each update.
+        // Returns TRUE if the tween needs to be killed
+        internal override bool Goto(UpdateData updateData)
+        {
+            return DoGoto(this, updateData);
         }
 
         // ===================================================================================
@@ -120,74 +120,57 @@ namespace DG.Tween
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
         // Executes regardless of whether the tween is playing,
         // but not if the tween result would be a completion or rewind, and the tween is already there
-        static bool DoGoto(Tweener<T> t, float to)
+        static bool DoGoto(Tweener<T> t, UpdateData updateData)
         {
             // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state
+            // TODO Implement UpdateDelay method for delays, since they're not calculated in here anymore
             // FIXME behaves like if timeScale was ridiculously low (and also stutters) after thousands of completed loops due to float not allowing enough decimals
 
             // Lock creation extensions
             t.creationLocked = true;
 
-            float prevElapsed = t.elapsed;
-            t.elapsed = to;
-            if (t.elapsed < 0) t.elapsed = 0;
+            float prevPosition = t.position;
+            int prevCompletedLoops = t.completedLoops;
             bool wasComplete = t.isComplete;
-            bool wasDelayComplete = t.delayComplete; // Stored for an eventual onDelayComplete callback
-            int newCompletedSteps = 0;
+            int newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
+            t.position = updateData.position;
+            if (t.position > t.duration) t.position = t.duration;
+            else if (t.position < 0) t.position = 0;
+            t.completedLoops = updateData.completedLoops;
 
-            // Delay
-            if (t.delay > 0) {
-                t._elapsedDelay = t.elapsed;
-                if (t._elapsedDelay >= t.delay) {
-                    t.delayComplete = true;
-                    t.elapsed = t._elapsedDelay - t.delay;
-                    t._elapsedDelay = t.delay;
-                } else t.elapsed = 0;
+            // Startup
+            if (!t.startupDone) Startup(t);
+            // Determine if it will be complete after update
+            if (t.loops != -1) {
+                if (t.completedLoops >= t.loops) t.completedLoops = t.loops;
+                else if (t.position >= t.duration) t.completedLoops++;
+                t.isComplete = t.loops != -1 && t.completedLoops == t.loops;
+            } else {
+                if (t.position >= t.duration) t.completedLoops++;
             }
-
-            // Update
-            if (t.elapsed > 0 || prevElapsed > 0) {
-                // Startup
-                if (!t.startupDone) Startup(t);
-                // Elapsed
-                if (t.elapsed > t.fullDuration) t.elapsed = t.fullDuration;
-                // Check if it will be complete
-                t.isComplete = t.elapsed >= t.fullDuration;
-                // Loops - takes care of floating points imprecision, to avoid things like "2/2 = 0.99999" from happening
-                int prevCompletedLoops = t.completedLoops;
-                if (t.duration <= 0) t.completedLoops = 1;
-                else {
-                    float div = t.elapsed / t.duration;
-                    int ceil = (int)Math.Ceiling(div);
-                    if (ceil - div < _Epsilon) t.completedLoops = ceil;
-                    else t.completedLoops = ceil - 1;
-                }
-                if (t.completedLoops > prevCompletedLoops) newCompletedSteps = t.completedLoops - prevCompletedLoops;
-                // Position
-                t.position = (t.elapsed > t.duration) ? t.elapsed % t.duration : t.elapsed;
-                if (t.position <= 0 && t.elapsed > 0) t.position = t.duration; // Makes position 0 equal to position "end" when looping
-                // Get values from plugin and set them
-                float easePosition = t.position; // Changes in case we're yoyoing backwards
-                if (t.loopType == LoopType.Yoyo && (!t.isComplete ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
-                    // Behaves differently in case the tween is complete or not,
-                    // in order to make position 0 equal to position "end"
-                    easePosition = t.duration - t.position;
-                }
-                T newVal = t._tweenPlugin.GetValue(easePosition, t._startValue, t._endValue, t.duration, t.ease);
-                if (DOTween.useSafeMode) {
-                    try {
-                        t._setter(newVal);
-                    } catch (MissingReferenceException) {
-                        // Target/field doesn't exist anymore: kill tween
-                        return true;
-                    }
-                } else {
+            // Optimize position (makes position 0 equal to position "end" when looping)
+            if (t.position <= 0 && t.completedLoops > 0 || t.isComplete) t.position = t.duration;
+            // Get values from plugin and set them
+            float easePosition = t.position; // Changes in case we're yoyoing backwards
+            if (t.loopType == LoopType.Yoyo && (!t.isComplete ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
+                // Behaves differently in case the tween is complete or not,
+                // in order to make position 0 equal to position "end"
+                easePosition = t.duration - t.position;
+            }
+            T newVal = t._tweenPlugin.GetValue(easePosition, t._startValue, t._endValue, t.duration, t.ease);
+            if (DOTween.useSafeMode) {
+                try {
                     t._setter(newVal);
+                } catch (MissingReferenceException) {
+                    // Target/field doesn't exist anymore: kill tween
+                    return true;
                 }
-                // Set playing state
-                if (!t.isBackwards && t.isComplete && t.isPlaying) t.isPlaying = false;
-                else if (t.isBackwards && t.elapsed <= 0 && t.isPlaying) t.isPlaying = false;
+            } else {
+                t._setter(newVal);
             }
+            // Set playing state
+            if (!t.isBackwards && t.isComplete && t.isPlaying) t.isPlaying = false; // Reached the end
+            else if (t.isBackwards && t.completedLoops == 0 && t.position <= 0 && t.isPlaying) t.isPlaying = false; // Rewinded
 
             // Callbacks
             if (newCompletedSteps > 0) {
@@ -202,5 +185,92 @@ namespace DG.Tween
             // Return
             return t.autoKill && t.isComplete;
         }
+
+//        // Instead of advancing the tween from the previous position each time,
+//        // uses the given position to calculate running time since startup, and places the tween there like a Goto.
+//        // Executes regardless of whether the tween is playing,
+//        // but not if the tween result would be a completion or rewind, and the tween is already there
+//        static bool DoGoto_OLD(Tweener<T> t, float to)
+//        {
+//            // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state
+//            // FIXME behaves like if timeScale was ridiculously low (and also stutters) after thousands of completed loops due to float not allowing enough decimals
+//
+//            // Lock creation extensions
+//            t.creationLocked = true;
+//
+//            float prevElapsed = t.elapsed;
+//            t.elapsed = to;
+//            if (t.elapsed < 0) t.elapsed = 0;
+//            bool wasComplete = t.isComplete;
+//            bool wasDelayComplete = t.delayComplete; // Stored for an eventual onDelayComplete callback
+//            int newCompletedSteps = 0;
+//
+//            // Delay
+//            if (t.delay > 0) {
+//                t._elapsedDelay = t.elapsed;
+//                if (t._elapsedDelay >= t.delay) {
+//                    t.delayComplete = true;
+//                    t.elapsed = t._elapsedDelay - t.delay;
+//                    t._elapsedDelay = t.delay;
+//                } else t.elapsed = 0;
+//            }
+//
+//            // Update
+//            if (t.elapsed > 0 || prevElapsed > 0) {
+//                // Startup
+//                if (!t.startupDone) Startup(t);
+//                // Elapsed
+//                if (t.elapsed > t.fullDuration) t.elapsed = t.fullDuration;
+//                // Check if it will be complete
+//                t.isComplete = t.elapsed >= t.fullDuration;
+//                // Loops - takes care of floating points imprecision, to avoid things like "2/2 = 0.99999" from happening
+//                int prevCompletedLoops = t.completedLoops;
+//                if (t.duration <= 0) t.completedLoops = 1;
+//                else {
+//                    float div = t.elapsed / t.duration;
+//                    int ceil = (int)Math.Ceiling(div);
+//                    if (ceil - div < _Epsilon) t.completedLoops = ceil;
+//                    else t.completedLoops = ceil - 1;
+//                }
+//                if (t.completedLoops > prevCompletedLoops) newCompletedSteps = t.completedLoops - prevCompletedLoops;
+//                // Position
+//                t.position = (t.elapsed > t.duration) ? t.elapsed % t.duration : t.elapsed;
+//                if (t.position <= 0 && t.elapsed > 0) t.position = t.duration; // Makes position 0 equal to position "end" when looping
+//                // Get values from plugin and set them
+//                float easePosition = t.position; // Changes in case we're yoyoing backwards
+//                if (t.loopType == LoopType.Yoyo && (!t.isComplete ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
+//                    // Behaves differently in case the tween is complete or not,
+//                    // in order to make position 0 equal to position "end"
+//                    easePosition = t.duration - t.position;
+//                }
+//                T newVal = t._tweenPlugin.GetValue(easePosition, t._startValue, t._endValue, t.duration, t.ease);
+//                if (DOTween.useSafeMode) {
+//                    try {
+//                        t._setter(newVal);
+//                    } catch (MissingReferenceException) {
+//                        // Target/field doesn't exist anymore: kill tween
+//                        return true;
+//                    }
+//                } else {
+//                    t._setter(newVal);
+//                }
+//                // Set playing state
+//                if (!t.isBackwards && t.isComplete && t.isPlaying) t.isPlaying = false;
+//                else if (t.isBackwards && t.elapsed <= 0 && t.isPlaying) t.isPlaying = false;
+//            }
+//
+//            // Callbacks
+//            if (newCompletedSteps > 0) {
+//                if (t.onStepComplete != null) {
+//                    for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
+//                }
+//            }
+//            if (t.isComplete && !wasComplete) {
+//                if (t.onComplete != null) t.onComplete();
+//            }
+//
+//            // Return
+//            return t.autoKill && t.isComplete;
+//        }
     }
 }
