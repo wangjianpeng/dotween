@@ -22,7 +22,7 @@
 
 using System;
 using DG.Tween.Plugins.Core;
-using DG.Tween.Plugins.Core.Plugins;
+using DG.Tween.Plugins.CustomPlugins;
 using UnityEngine;
 
 namespace DG.Tween.Plugins

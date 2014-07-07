@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/05/07 00:41
+// Created: 2014/07/07 14:23
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,16 +18,26 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+// 
 
 using DG.Tween.Core;
 using DG.Tween.Plugins.Core;
+using UnityEngine;
 
-namespace DG.Tween.Plugins
+namespace DG.Tween.Plugins.CustomPlugins
 {
-    public abstract class ABSTweenPlugin<T> : ITweenPlugin
+    public class Vector3XPlugin : ABSTweenPlugin<Vector3>
     {
-        // getter is there because some plugins might need it
-        public abstract T GetValue(MemberGetter<T> getter, float elapsed, T startValue, T endValue, float duration, EaseFunction ease);
-        public abstract T GetRelativeEndValue(T startValue, T changeValue);
+        public override Vector3 GetValue(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        {
+            Vector3 res = getter();
+            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
+            return res;
+        }
+
+        public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)
+        {
+            return startValue + changeValue;
+        }
     }
 }
