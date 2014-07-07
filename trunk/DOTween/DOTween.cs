@@ -33,7 +33,7 @@ namespace DG.Tween
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.210";
+        public static readonly string Version = "0.1.300";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -110,12 +110,12 @@ namespace DG.Tween
         /// Directly sets the current max capacity of Tweeners and Sequences,
         /// so that DOTween doesn't need to automatically increase it in case the max is reached
         /// (which might lead to hiccups when that happens).
-        /// Pay attention: do not make capacity less than currently existing Tweeners/Sequences
+        /// Beware: do not make capacity less than currently existing Tweeners/Sequences
         /// </summary>
         /// <param name="tweenersCapacity">Max Tweeners capacity.
-        /// Default: 500</param>
+        /// Default: 200</param>
         /// <param name="sequencesCapacity">Max Sequences capacity.
-        /// Default: 100</param>
+        /// Default: 50</param>
         public static void SetTweensCapacity(int tweenersCapacity, int sequencesCapacity)
         {
             TweenManager.SetCapacities(tweenersCapacity, sequencesCapacity);

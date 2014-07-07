@@ -28,8 +28,8 @@ namespace DG.Tween.Core
 {
     internal static class TweenManager
     {
-        const int _DefaultMaxTweeners = 500;
-        const int _DefaultMaxSequences = 100;
+        const int _DefaultMaxTweeners = 200;
+        const int _DefaultMaxSequences = 50;
         const string _MaxTweenersReached = "Max number of Tweeners has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
 
         internal static int maxTweeners = _DefaultMaxTweeners;
@@ -203,6 +203,39 @@ namespace DG.Tween.Core
             totActiveDefaultTweens = totActiveFixedTweens = totActiveIndependentTweens = 0;
 
             return totDespawned;
+        }
+
+        internal static void Despawn(Tween t, bool modifyActiveLists = true)
+        {
+            switch (t.tweenType) {
+            case TweenType.Sequence:
+                _PooledSequences.Add(t);
+                totPooledSequences++;
+                break;
+            default:
+                _PooledTweeners.Add(t);
+                totPooledTweeners++;
+                break;
+            }
+            if (modifyActiveLists) {
+                // Remove tween from correct active list
+                switch (t.updateType) {
+                case UpdateType.Fixed:
+                    _ActiveFixedTweens.Remove(t);
+                    totActiveFixedTweens--;
+                    break;
+                case UpdateType.TimeScaleIndependent:
+                    _ActiveIndependentTweens.Remove(t);
+                    totActiveIndependentTweens--;
+                    break;
+                default:
+                    _ActiveDefaultTweens.Remove(t);
+                    totActiveDefaultTweens--;
+                    break;
+                }
+            }
+            t.active = false;
+            t.Reset();
         }
 
         internal static int FilteredOperation(OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId)
@@ -473,39 +506,6 @@ namespace DG.Tween.Core
         {
             int count = tweens.Count;
             for (int i = 0; i < count; ++i) Despawn(tweens[i], modifyActiveLists);
-        }
-
-        static void Despawn(Tween t, bool modifyActiveLists = true)
-        {
-            switch (t.tweenType) {
-            case TweenType.Sequence:
-                _PooledSequences.Add(t);
-                totPooledSequences++;
-                break;
-            default:
-                _PooledTweeners.Add(t);
-                totPooledTweeners++;
-                break;
-            }
-            if (modifyActiveLists) {
-                // Remove tween from correct active list
-                switch (t.updateType) {
-                case UpdateType.Fixed:
-                    _ActiveFixedTweens.Remove(t);
-                    totActiveFixedTweens--;
-                    break;
-                case UpdateType.TimeScaleIndependent:
-                    _ActiveIndependentTweens.Remove(t);
-                    totActiveIndependentTweens--;
-                    break;
-                default:
-                    _ActiveDefaultTweens.Remove(t);
-                    totActiveDefaultTweens--;
-                    break;
-                }
-            }
-            t.active = false;
-            t.Reset();
         }
 
         static void IncreaseCapacities(CapacityIncreaseMode increaseMode)
