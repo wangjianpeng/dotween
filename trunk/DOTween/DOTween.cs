@@ -22,7 +22,6 @@
 using System.Collections;
 using DG.Tween.Core;
 using DG.Tween.Core.Enums;
-using DG.Tween.Plugins;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
 
@@ -33,7 +32,7 @@ namespace DG.Tween
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.300";
+        public static readonly string Version = "0.1.350";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
