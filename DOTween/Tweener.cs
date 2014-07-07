@@ -120,12 +120,21 @@ namespace DG.Tween
         }
 
         // Called the moment the tween starts, AFTER any delay has elapsed
-        static void Startup(Tweener<T> t)
+        // Returns TRUE if there were missing references and the tween needs to be killed
+        static bool Startup(Tweener<T> t)
         {
             t.startupDone = true;
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-            t._startValue = t._getter();
+            if (DOTween.useSafeMode) {
+                try {
+                    t._startValue = t._getter();
+                } catch (UnassignedReferenceException) {
+                    // Target/field doesn't exist: kill tween
+                    return true;
+                }
+            } else t._startValue = t._getter();
             if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._startValue, t._endValue);
+            return false;
         }
 
         static float DoUpdateDelay(Tweener<T> t, float elapsed)
@@ -162,8 +171,11 @@ namespace DG.Tween
             else if (t.position < 0) t.position = 0;
             t.completedLoops = updateData.completedLoops;
 
-            // Startup + OnStart callback
-            if (!t.startupDone) Startup(t);
+            // Startup
+            if (!t.startupDone) {
+                if (Startup(t)) return true;
+            }
+            // OnStart callback
             if (!t.playedOnce && updateData.updateMode == UpdateMode.Update) {
                 t.playedOnce = true;
                 if (t.onStart != null) t.onStart();

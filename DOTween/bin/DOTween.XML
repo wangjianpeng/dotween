@@ -22,12 +22,12 @@
             Directly sets the current max capacity of Tweeners and Sequences,
             so that DOTween doesn't need to automatically increase it in case the max is reached
             (which might lead to hiccups when that happens).
-            Pay attention: do not make capacity less than currently existing Tweeners/Sequences
+            Beware: do not make capacity less than currently existing Tweeners/Sequences
             </summary>
             <param name="tweenersCapacity">Max Tweeners capacity.
-            Default: 500</param>
+            Default: 200</param>
             <param name="sequencesCapacity">Max Sequences capacity.
-            Default: 100</param>
+            Default: 50</param>
         </member>
         <member name="M:DG.Tween.DOTween.To``1(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``0,System.Single,DG.Tween.UpdateType)">
             <summary>
