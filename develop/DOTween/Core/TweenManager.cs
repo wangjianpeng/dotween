@@ -114,7 +114,7 @@ namespace DG.Tween.Core
         // Returns TRUE if the given tween was not already playing and is not complete
         internal static bool Play(Tween t)
         {
-            if (!t.isPlaying && (!t.isBackwards && !t.isComplete || t.isBackwards && t.completedLoops <= 0 && t.position <= 0)) {
+            if (!t.isPlaying && (!t.isBackwards && !t.isComplete || t.isBackwards && (t.completedLoops > 0 || t.position > 0))) {
                 t.isPlaying = true;
                 return true;
             }
@@ -240,22 +240,22 @@ namespace DG.Tween.Core
         internal static UpdateData GetUpdateDataFromDeltaTime(Tween t, float deltaTime)
         {
             deltaTime *= t.timeScale;
-            int prevCompletedLoops = t.completedLoops;
+            float position = t.position;
             int completedLoops = t.completedLoops;
             if (t.isBackwards) {
-                float diff = t.position - deltaTime;
-                while (diff < 0 && completedLoops > 0) {
-                    diff += t.duration;
+                if (completedLoops == t.loops) completedLoops--;
+                position -= deltaTime;
+                while (position < 0 && completedLoops > 0) {
+                    position += t.duration;
                     completedLoops--;
                 }
             } else {
-                float diff = t.position + deltaTime;
-                while (diff > t.duration && (t.loops == -1 || completedLoops < t.loops)) {
-                    diff -= t.duration;
+                position += deltaTime;
+                while (position > t.duration && (t.loops == -1 || completedLoops < t.loops)) {
+                    position -= t.duration;
                     completedLoops++;
                 }
             }
-            float position = t.position + deltaTime - (t.duration * (completedLoops - prevCompletedLoops));
 
             return new UpdateData(position, completedLoops);
         }

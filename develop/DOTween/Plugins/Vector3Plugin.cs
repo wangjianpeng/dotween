@@ -29,11 +29,10 @@ namespace DG.Tween.Plugins
     {
         public override Vector3 GetValue(float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
-            Vector3 res = startValue;
-            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            res.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
-            res.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
-            return res;
+            startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
+            startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
+            startValue.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
+            return startValue;
         }
 
         public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)

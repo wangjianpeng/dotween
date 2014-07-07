@@ -124,12 +124,10 @@ namespace DG.Tween
         {
             // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state
             // TODO Implement UpdateDelay method for delays, since they're not calculated in here anymore
-            // FIXME behaves like if timeScale was ridiculously low (and also stutters) after thousands of completed loops due to float not allowing enough decimals
 
             // Lock creation extensions
             t.creationLocked = true;
 
-            float prevPosition = t.position;
             int prevCompletedLoops = t.completedLoops;
             bool wasComplete = t.isComplete;
             int newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
@@ -185,92 +183,5 @@ namespace DG.Tween
             // Return
             return t.autoKill && t.isComplete;
         }
-
-//        // Instead of advancing the tween from the previous position each time,
-//        // uses the given position to calculate running time since startup, and places the tween there like a Goto.
-//        // Executes regardless of whether the tween is playing,
-//        // but not if the tween result would be a completion or rewind, and the tween is already there
-//        static bool DoGoto_OLD(Tweener<T> t, float to)
-//        {
-//            // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state
-//            // FIXME behaves like if timeScale was ridiculously low (and also stutters) after thousands of completed loops due to float not allowing enough decimals
-//
-//            // Lock creation extensions
-//            t.creationLocked = true;
-//
-//            float prevElapsed = t.elapsed;
-//            t.elapsed = to;
-//            if (t.elapsed < 0) t.elapsed = 0;
-//            bool wasComplete = t.isComplete;
-//            bool wasDelayComplete = t.delayComplete; // Stored for an eventual onDelayComplete callback
-//            int newCompletedSteps = 0;
-//
-//            // Delay
-//            if (t.delay > 0) {
-//                t._elapsedDelay = t.elapsed;
-//                if (t._elapsedDelay >= t.delay) {
-//                    t.delayComplete = true;
-//                    t.elapsed = t._elapsedDelay - t.delay;
-//                    t._elapsedDelay = t.delay;
-//                } else t.elapsed = 0;
-//            }
-//
-//            // Update
-//            if (t.elapsed > 0 || prevElapsed > 0) {
-//                // Startup
-//                if (!t.startupDone) Startup(t);
-//                // Elapsed
-//                if (t.elapsed > t.fullDuration) t.elapsed = t.fullDuration;
-//                // Check if it will be complete
-//                t.isComplete = t.elapsed >= t.fullDuration;
-//                // Loops - takes care of floating points imprecision, to avoid things like "2/2 = 0.99999" from happening
-//                int prevCompletedLoops = t.completedLoops;
-//                if (t.duration <= 0) t.completedLoops = 1;
-//                else {
-//                    float div = t.elapsed / t.duration;
-//                    int ceil = (int)Math.Ceiling(div);
-//                    if (ceil - div < _Epsilon) t.completedLoops = ceil;
-//                    else t.completedLoops = ceil - 1;
-//                }
-//                if (t.completedLoops > prevCompletedLoops) newCompletedSteps = t.completedLoops - prevCompletedLoops;
-//                // Position
-//                t.position = (t.elapsed > t.duration) ? t.elapsed % t.duration : t.elapsed;
-//                if (t.position <= 0 && t.elapsed > 0) t.position = t.duration; // Makes position 0 equal to position "end" when looping
-//                // Get values from plugin and set them
-//                float easePosition = t.position; // Changes in case we're yoyoing backwards
-//                if (t.loopType == LoopType.Yoyo && (!t.isComplete ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
-//                    // Behaves differently in case the tween is complete or not,
-//                    // in order to make position 0 equal to position "end"
-//                    easePosition = t.duration - t.position;
-//                }
-//                T newVal = t._tweenPlugin.GetValue(easePosition, t._startValue, t._endValue, t.duration, t.ease);
-//                if (DOTween.useSafeMode) {
-//                    try {
-//                        t._setter(newVal);
-//                    } catch (MissingReferenceException) {
-//                        // Target/field doesn't exist anymore: kill tween
-//                        return true;
-//                    }
-//                } else {
-//                    t._setter(newVal);
-//                }
-//                // Set playing state
-//                if (!t.isBackwards && t.isComplete && t.isPlaying) t.isPlaying = false;
-//                else if (t.isBackwards && t.elapsed <= 0 && t.isPlaying) t.isPlaying = false;
-//            }
-//
-//            // Callbacks
-//            if (newCompletedSteps > 0) {
-//                if (t.onStepComplete != null) {
-//                    for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
-//                }
-//            }
-//            if (t.isComplete && !wasComplete) {
-//                if (t.onComplete != null) t.onComplete();
-//            }
-//
-//            // Return
-//            return t.autoKill && t.isComplete;
-//        }
     }
 }
