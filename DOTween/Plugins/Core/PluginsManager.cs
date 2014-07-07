@@ -20,14 +20,19 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using DG.Tween.Plugins.Core.Plugins;
 using UnityEngine;
 
 namespace DG.Tween.Plugins.Core
 {
     internal static class PluginsManager
     {
+        // Default plugins
         static FloatPlugin _floatPlugin;
         static Vector3Plugin _vector3Plugin;
+        // Advanced and custom plugins
+        static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(20);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
@@ -50,11 +55,22 @@ namespace DG.Tween.Plugins.Core
             return null;
         }
 
+        internal static ABSTweenPlugin<T> GetCustomPlugin<T,TPlugin>(IPluginSetter<T,TPlugin> pluginSetter)
+            where TPlugin : ITweenPlugin, new()
+        {
+            if (_CustomPlugins.ContainsKey(pluginSetter.PluginType())) return _CustomPlugins[pluginSetter.PluginType()] as ABSTweenPlugin<T>;
+            
+            TPlugin plugin = new TPlugin();
+            _CustomPlugins.Add(pluginSetter.PluginType(), plugin);
+            return plugin as ABSTweenPlugin<T>;
+        }
+
         // Un-caches all plugins
         internal static void PurgeAll()
         {
             _floatPlugin = null;
             _vector3Plugin = null;
+            _CustomPlugins.Clear();
         }
     }
 }

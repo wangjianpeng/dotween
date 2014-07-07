@@ -23,6 +23,7 @@ using System;
 using DG.Tween.Core;
 using DG.Tween.Core.Easing;
 using DG.Tween.Core.Enums;
+using DG.Tween.Plugins;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
 
@@ -70,6 +71,7 @@ namespace DG.Tween
         // INTERNAL METHODS ------------------------------------------------------------------
 
         // Called by DOTween when spawning/creating a new Tweener
+        // Default plugins
         internal static void Setup(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, T endValue, float duration)
         {
             t._getter = getter;
@@ -77,6 +79,16 @@ namespace DG.Tween
             t._endValue = endValue;
             t.duration = duration;
             if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetPlugin<T>();
+        }
+        // Custom plugins
+        internal static void Setup<TPlugin>(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, IPluginSetter<T,TPlugin> pluginSetter, float duration)
+            where TPlugin : ITweenPlugin, new()
+        {
+            t._getter = getter;
+            t._setter = setter;
+            t._endValue = pluginSetter.EndValue();
+            t.duration = duration;
+            t._tweenPlugin = PluginsManager.GetCustomPlugin(pluginSetter);
         }
 
         // Also called by TweenManager at each update.
@@ -173,7 +185,7 @@ namespace DG.Tween
                 // in order to make position 0 equal to position "end"
                 easePosition = t.duration - t.position;
             }
-            T newVal = t._tweenPlugin.GetValue(easePosition, t._startValue, t._endValue, t.duration, t.ease);
+            T newVal = t._tweenPlugin.GetValue(t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease);
             if (DOTween.useSafeMode) {
                 try {
                     t._setter(newVal);

@@ -20,14 +20,13 @@
 // THE SOFTWARE.
 
 using DG.Tween.Core;
-using DG.Tween.Plugins.Core;
 using UnityEngine;
 
-namespace DG.Tween.Plugins
+namespace DG.Tween.Plugins.Core.Plugins
 {
     public class Vector3Plugin : ABSTweenPlugin<Vector3>
     {
-        public override Vector3 GetValue(float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Vector3 GetValue(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
