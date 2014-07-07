@@ -38,7 +38,7 @@ namespace DG.Tween
         public int id = -1;
         public string stringId;
         public UnityEngine.Object unityObjectId;
-        public TweenCallback onStart;
+        public TweenCallback onStart; // When the tween starts, AFTER any eventual delay
         public TweenCallback onStepComplete;
         public TweenCallback onComplete;
         // Fixed after creation
@@ -58,7 +58,7 @@ namespace DG.Tween
         // PLAY DATA /////////////////////////////////////////////////
 
         internal bool creationLocked; // TRUE after the tween was updated the first time (even if it was delayed)
-        internal bool startupDone; // Called when the tween begins, AFTER any delay is elapsed
+        internal bool startupDone; // TRUE after the tween begins, AFTER any delay is elapsed
         internal float position; // Time position within a single loop cycle
         internal float fullDuration; // Total duration loops included
         internal int completedLoops;

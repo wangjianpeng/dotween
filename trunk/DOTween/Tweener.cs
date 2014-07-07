@@ -113,6 +113,7 @@ namespace DG.Tween
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
             t._startValue = t._getter();
             if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._startValue, t._endValue);
+            if (t.onStart != null) t.onStart();
         }
 
         static float DoUpdateDelay(Tweener<T> t, float elapsed)
@@ -141,7 +142,7 @@ namespace DG.Tween
 
             int prevCompletedLoops = t.completedLoops;
             bool wasComplete = t.isComplete;
-            int newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
+            int newCompletedSteps = updateData.completedLoops > prevCompletedLoops ? updateData.completedLoops - prevCompletedLoops : 0;
             t.position = updateData.position;
             if (t.position > t.duration) t.position = t.duration;
             else if (t.position < 0) t.position = 0;
@@ -181,7 +182,7 @@ namespace DG.Tween
             if (!t.isBackwards && t.isComplete && t.isPlaying) t.isPlaying = false; // Reached the end
             else if (t.isBackwards && t.completedLoops == 0 && t.position <= 0 && t.isPlaying) t.isPlaying = false; // Rewinded
 
-            // Callbacks
+            // Additional callbacks
             if (newCompletedSteps > 0) {
                 if (t.onStepComplete != null) {
                     for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
