@@ -130,7 +130,10 @@ namespace DG.Tween
         {
             InitCheck();
             Tweener<T> tweener = TweenManager.GetTweener<T>(updateType);
-            Tweener<T>.Setup(tweener, getter, setter, endValue, duration);
+            if (!Tweener<T>.Setup(tweener, getter, setter, endValue, duration)) {
+                TweenManager.Despawn(tweener);
+                return null;
+            }
             return tweener;
         }
 
@@ -142,7 +145,10 @@ namespace DG.Tween
         {
             InitCheck();
             Tweener<T> tweener = TweenManager.GetTweener<T>(updateType);
-            Tweener<T>.Setup(tweener, getter, setter, pluginSetter, duration);
+            if (!Tweener<T>.Setup(tweener, getter, setter, pluginSetter, duration)) {
+                TweenManager.Despawn(tweener);
+                return null;
+            }
             return tweener;
         }
 
