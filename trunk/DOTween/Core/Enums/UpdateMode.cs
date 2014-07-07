@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/06 18:31
+// Created: 2014/07/07 12:52
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,22 +19,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-
-using DG.Tween.Core.Enums;
-
-namespace DG.Tween.Core
+namespace DG.Tween.Core.Enums
 {
-    internal struct UpdateData
+    internal enum UpdateMode
     {
-        internal float position;
-        internal int completedLoops;
-        internal UpdateMode updateMode;
-
-        public UpdateData(float position, int completedLoops, UpdateMode updateMode = UpdateMode.Update)
-        {
-            this.position = position;
-            this.completedLoops = completedLoops;
-            this.updateMode = updateMode;
-        }
+        Update,
+        Goto // Treats update as a full goto, thus not calling eventual onStepComplete callbacks
     }
 }

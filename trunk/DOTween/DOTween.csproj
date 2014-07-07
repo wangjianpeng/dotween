@@ -59,6 +59,7 @@
     <Compile Include="Core\Easing\Strong.cs" />
     <Compile Include="Core\Enums\FilterType.cs" />
     <Compile Include="Core\Enums\OperationType.cs" />
+    <Compile Include="Core\Enums\UpdateMode.cs" />
     <Compile Include="Core\TweenManager.cs" />
     <Compile Include="Core\UpdateData.cs" />
     <Compile Include="Core\Utils.cs" />
