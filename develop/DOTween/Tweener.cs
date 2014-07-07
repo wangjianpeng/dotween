@@ -31,7 +31,6 @@ namespace DG.Tween
     {
         // OPTIONS ///////////////////////////////////////////////////
 
-        internal float delay;
         internal bool isRelative;
         internal EaseFunction ease;
         internal EaseCurve easeCurve; // Stored in case of AnimationCurve ease
@@ -46,9 +45,6 @@ namespace DG.Tween
 
         // PLAY DATA /////////////////////////////////////////////////
 
-        const float _Epsilon = 0.0000001f;
-        internal bool delayComplete; // TRUE when the delay has elapsed (also set by Delay extension method)
-        float _elapsedDelay; // Amount of eventual delay elapsed
 
         // ***********************************************************************************
         // CONSTRUCTOR
@@ -84,6 +80,13 @@ namespace DG.Tween
 
         // Also called by TweenManager at each update.
         // Returns TRUE if the tween needs to be killed
+        internal override float UpdateDelay(float elapsed)
+        {
+            return DoUpdateDelay(this, elapsed);
+        }
+
+        // Also called by TweenManager at each update.
+        // Returns TRUE if the tween needs to be killed
         internal override bool Goto(UpdateData updateData)
         {
             return DoGoto(this, updateData);
@@ -95,16 +98,12 @@ namespace DG.Tween
         // _tweenPlugin is not reset since it's useful to keep it as a reference
         static void DoReset(Tweener<T> t)
         {
-            t.delay = 0;
             t.isRelative = false;
             t.ease = Quad.EaseOut;
             t.easeCurve = null;
 
             t._getter = null;
             t._setter = null;
-
-            t.delayComplete = true;
-            t._elapsedDelay = 0;
         }
 
         // Called the moment the tween starts, AFTER any delay has elapsed
@@ -114,6 +113,18 @@ namespace DG.Tween
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
             t._startValue = t._getter();
             if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._startValue, t._endValue);
+        }
+
+        static float DoUpdateDelay(Tweener<T> t, float elapsed)
+        {
+            t.elapsedDelay = elapsed;
+            if (t.elapsedDelay > t.delay) {
+                // Delay complete
+                t.elapsedDelay = t.delay;
+                t.delayComplete = true;
+                return elapsed - t.delay;
+            }
+            return 0;
         }
 
         // Instead of advancing the tween from the previous position each time,

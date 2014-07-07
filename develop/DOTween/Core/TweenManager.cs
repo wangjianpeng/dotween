@@ -300,7 +300,7 @@ namespace DG.Tween.Core
             for (int i = 0; i < totTweens; ++i) {
                 Tween t = tweens[i];
                 if (t.isPlaying) {
-//                    float elapsed = t.elapsed + (!t.isBackwards ? (deltaTime * t.timeScale) : -(deltaTime * t.timeScale));
+                    if (!t.delayComplete) deltaTime = t.UpdateDelay(t.elapsedDelay + deltaTime);
                     bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, deltaTime));
                     if (needsKilling) {
                         t.active = false;
