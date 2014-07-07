@@ -29,14 +29,9 @@
             <param name="sequencesCapacity">Max Sequences capacity.
             Default: 100</param>
         </member>
-        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
+        <member name="M:DG.Tween.DOTween.To``1(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``0,System.Single,DG.Tween.UpdateType)">
             <summary>
-            Tweens a float value
-            </summary>
-        </member>
-        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
-            <summary>
-            Tweens a Vector3 value
+            Tweens a property
             </summary>
         </member>
         <member name="M:DG.Tween.DOTween.To``2(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},DG.Tween.Plugins.Core.IPluginSetter{``0,``1},System.Single,DG.Tween.UpdateType)">

@@ -78,7 +78,7 @@ namespace DG.Tween
             t._setter = setter;
             t._endValue = endValue;
             t.duration = duration;
-            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetPlugin<T>();
+            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T>();
         }
         // Custom plugins
         internal static void Setup<TPlugin>(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, IPluginSetter<T,TPlugin> pluginSetter, float duration)
