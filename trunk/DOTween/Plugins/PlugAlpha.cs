@@ -21,8 +21,8 @@
 // 
 
 using System;
+using DG.Tween.Core;
 using DG.Tween.Plugins.Core;
-using DG.Tween.Plugins.CustomPlugins;
 using UnityEngine;
 
 namespace DG.Tween.Plugins
@@ -38,14 +38,26 @@ namespace DG.Tween.Plugins
             pluginType = typeof(AlphaPlugin);
         }
 
-        public Type PluginType()
+        public Type PluginType() { return pluginType; }
+        public Color EndValue() { return endValue; }
+    }
+
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public class AlphaPlugin : ABSTweenPlugin<Color>
+    {
+        public override Color GetValue(MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
         {
-            return pluginType;
+            Color res = getter();
+            res.a = ease(elapsed, startValue.a, (endValue.a - startValue.a), duration, 0, 0);
+            return res;
         }
 
-        public Color EndValue()
+        public override Color GetRelativeEndValue(Color startValue, Color changeValue)
         {
-            return endValue;
+            return startValue + changeValue;
         }
     }
 }
