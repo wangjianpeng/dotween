@@ -141,8 +141,11 @@ namespace DG.Tween
             t.creationLocked = true;
 
             int prevCompletedLoops = t.completedLoops;
+            bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
             bool wasComplete = t.isComplete;
-            int newCompletedSteps = updateData.completedLoops > prevCompletedLoops ? updateData.completedLoops - prevCompletedLoops : 0;
+            int newCompletedSteps = t.isBackwards
+                ? updateData.completedLoops < prevCompletedLoops ? prevCompletedLoops - updateData.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0)
+                : updateData.completedLoops > prevCompletedLoops ? updateData.completedLoops - prevCompletedLoops : 0;
             t.position = updateData.position;
             if (t.position > t.duration) t.position = t.duration;
             else if (t.position < 0) t.position = 0;
