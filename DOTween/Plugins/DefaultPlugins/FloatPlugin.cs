@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/07 14:23
+// Created: 2014/05/06 16:33
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,23 +18,20 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-// 
 
 using DG.Tween.Core;
-using UnityEngine;
+using DG.Tween.Plugins.Core;
 
-namespace DG.Tween.Plugins.Core.Plugins
+namespace DG.Tween.Plugins.DefaultPlugins
 {
-    public class Vector3XPlugin : ABSTweenPlugin<Vector3>
+    public class FloatPlugin : ABSTweenPlugin<float>
     {
-        public override Vector3 GetValue(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override float GetValue(MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
         {
-            Vector3 res = getter();
-            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            return res;
+            return ease(elapsed, startValue, (endValue - startValue), duration, 0, 0);
         }
 
-        public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)
+        public override float GetRelativeEndValue(float startValue, float changeValue)
         {
             return startValue + changeValue;
         }

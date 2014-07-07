@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/05/06 16:33
+// Created: 2014/05/07 00:41
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,12 @@
 
 using DG.Tween.Core;
 
-namespace DG.Tween.Plugins.Core.Plugins
+namespace DG.Tween.Plugins.Core
 {
-    public class FloatPlugin : ABSTweenPlugin<float>
+    public abstract class ABSTweenPlugin<T> : ITweenPlugin
     {
-        public override float GetValue(MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
-        {
-            return ease(elapsed, startValue, (endValue - startValue), duration, 0, 0);
-        }
-
-        public override float GetRelativeEndValue(float startValue, float changeValue)
-        {
-            return startValue + changeValue;
-        }
+        // getter is there because some plugins might need it
+        public abstract T GetValue(MemberGetter<T> getter, float elapsed, T startValue, T endValue, float duration, EaseFunction ease);
+        public abstract T GetRelativeEndValue(T startValue, T changeValue);
     }
 }

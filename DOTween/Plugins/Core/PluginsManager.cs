@@ -21,7 +21,7 @@
 
 using System;
 using System.Collections.Generic;
-using DG.Tween.Plugins.Core.Plugins;
+using DG.Tween.Plugins.DefaultPlugins;
 using UnityEngine;
 
 namespace DG.Tween.Plugins.Core

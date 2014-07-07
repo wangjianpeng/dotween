@@ -20,9 +20,10 @@
 // THE SOFTWARE.
 
 using DG.Tween.Core;
+using DG.Tween.Plugins.Core;
 using UnityEngine;
 
-namespace DG.Tween.Plugins.Core.Plugins
+namespace DG.Tween.Plugins.DefaultPlugins
 {
     public class Vector3Plugin : ABSTweenPlugin<Vector3>
     {
