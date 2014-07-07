@@ -21,8 +21,8 @@
 // 
 
 using System;
+using DG.Tween.Core;
 using DG.Tween.Plugins.Core;
-using DG.Tween.Plugins.CustomPlugins;
 using UnityEngine;
 
 namespace DG.Tween.Plugins
@@ -38,14 +38,26 @@ namespace DG.Tween.Plugins
             pluginType = typeof(Vector3XPlugin);
         }
 
-        public Type PluginType()
+        public Type PluginType() { return pluginType; }
+        public Vector3 EndValue() { return endValue; }
+    }
+
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public class Vector3XPlugin : ABSTweenPlugin<Vector3>
+    {
+        public override Vector3 GetValue(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
-            return pluginType;
+            Vector3 res = getter();
+            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
+            return res;
         }
 
-        public Vector3 EndValue()
+        public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)
         {
-            return endValue;
+            return startValue + changeValue;
         }
     }
 }

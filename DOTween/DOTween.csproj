@@ -69,8 +69,6 @@
     <Compile Include="MultiTweener.cs" />
     <Compile Include="Plugins\Core\IPluginSetter.cs" />
     <Compile Include="Plugins\Core\ITweenPlugin.cs" />
-    <Compile Include="Plugins\CustomPlugins\AlphaPlugin.cs" />
-    <Compile Include="Plugins\CustomPlugins\Vector3XPlugin.cs" />
     <Compile Include="Plugins\PlugAlpha.cs" />
     <Compile Include="Plugins\PlugVector3X.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
