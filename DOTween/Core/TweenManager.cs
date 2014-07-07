@@ -158,7 +158,7 @@ namespace DG.Tween.Core
         {
             t.isPlaying = false;
             if (t.position > 0 || t.completedLoops > 0) {
-                t.Goto(new UpdateData(0, 0));
+                t.Goto(new UpdateData(0, 0, UpdateMode.Goto));
                 return true;
             }
             return false;
@@ -168,7 +168,7 @@ namespace DG.Tween.Core
         {
             if (t.loops == -1) return false;
             if (!t.isComplete) {
-                t.Goto(new UpdateData(t.duration, t.loops));
+                t.Goto(new UpdateData(t.duration, t.loops, UpdateMode.Goto));
                 t.isPlaying = false;
                 // Despawn if needed
                 if (t.autoKill) Despawn(t, modifyActiveLists);

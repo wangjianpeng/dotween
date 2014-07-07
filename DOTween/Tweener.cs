@@ -22,6 +22,7 @@
 using System;
 using DG.Tween.Core;
 using DG.Tween.Core.Easing;
+using DG.Tween.Core.Enums;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
 
@@ -134,8 +135,7 @@ namespace DG.Tween
         // but not if the tween result would be a completion or rewind, and the tween is already there
         static bool DoGoto(Tweener<T> t, UpdateData updateData)
         {
-            // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state
-            // TODO Implement UpdateDelay method for delays, since they're not calculated in here anymore
+            // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state?
 
             // Lock creation extensions
             t.creationLocked = true;
@@ -186,7 +186,7 @@ namespace DG.Tween
             else if (t.isBackwards && t.completedLoops == 0 && t.position <= 0 && t.isPlaying) t.isPlaying = false; // Rewinded
 
             // Additional callbacks
-            if (newCompletedSteps > 0) {
+            if (newCompletedSteps > 0 && updateData.updateMode == UpdateMode.Update) {
                 if (t.onStepComplete != null) {
                     for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
                 }
