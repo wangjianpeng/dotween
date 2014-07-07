@@ -70,18 +70,23 @@ namespace DG.Tween
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        // Called by DOTween when spawning/creating a new Tweener
-        // Default plugins
-        internal static void Setup(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, T endValue, float duration)
+        // Called by DOTween when spawning/creating a new Tweener.
+        // Returns TRUE if the setup is successful
+        internal static bool Setup(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, T endValue, float duration)
         {
             t._getter = getter;
             t._setter = setter;
             t._endValue = endValue;
             t.duration = duration;
             if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T>();
+            if (t._tweenPlugin == null) {
+                // No suitable plugin found. Kill
+                Debugger.LogError("No suitable plugin found for this type");
+                return false;
+            }
+            return true;
         }
-        // Custom plugins
-        internal static void Setup<TPlugin>(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, IPluginSetter<T,TPlugin> pluginSetter, float duration)
+        internal static bool Setup<TPlugin>(Tweener<T> t, MemberGetter<T> getter, MemberSetter<T> setter, IPluginSetter<T,TPlugin> pluginSetter, float duration)
             where TPlugin : ITweenPlugin, new()
         {
             t._getter = getter;
@@ -89,6 +94,7 @@ namespace DG.Tween
             t._endValue = pluginSetter.EndValue();
             t.duration = duration;
             t._tweenPlugin = PluginsManager.GetCustomPlugin(pluginSetter);
+            return true;
         }
 
         // Also called by TweenManager at each update.
@@ -119,8 +125,9 @@ namespace DG.Tween
             t._setter = null;
         }
 
-        // Called the moment the tween starts, AFTER any delay has elapsed
-        // Returns TRUE if there were missing references and the tween needs to be killed
+        // Called the moment the tween starts, AFTER any delay has elapsed.
+        // Returns TRUE in case of success,
+        // FALSE if there were are missing references and the tween needs to be killed
         static bool Startup(Tweener<T> t)
         {
             t.startupDone = true;
@@ -130,11 +137,11 @@ namespace DG.Tween
                     t._startValue = t._getter();
                 } catch (UnassignedReferenceException) {
                     // Target/field doesn't exist: kill tween
-                    return true;
+                    return false;
                 }
             } else t._startValue = t._getter();
             if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._startValue, t._endValue);
-            return false;
+            return true;
         }
 
         static float DoUpdateDelay(Tweener<T> t, float elapsed)
@@ -173,7 +180,7 @@ namespace DG.Tween
 
             // Startup
             if (!t.startupDone) {
-                if (Startup(t)) return true;
+                if (!Startup(t)) return true;
             }
             // OnStart callback
             if (!t.playedOnce && updateData.updateMode == UpdateMode.Update) {
