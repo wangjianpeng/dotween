@@ -114,7 +114,7 @@ namespace DG.Tween.Core
         // Returns TRUE if the given tween was not already playing and is not complete
         internal static bool Play(Tween t)
         {
-            if (!t.isPlaying && (!t.isBackwards && !t.isComplete || t.isBackwards && t.elapsed > 0)) {
+            if (!t.isPlaying && (!t.isBackwards && !t.isComplete || t.isBackwards && (t.completedLoops > 0 || t.position > 0))) {
                 t.isPlaying = true;
                 return true;
             }
@@ -157,8 +157,8 @@ namespace DG.Tween.Core
         internal static bool Rewind(Tween t)
         {
             t.isPlaying = false;
-            if (t.elapsed > 0) {
-                t.Goto(0);
+            if (t.position > 0 || t.completedLoops > 0) {
+                t.Goto(new UpdateData(0, 0));
                 return true;
             }
             return false;
@@ -167,8 +167,8 @@ namespace DG.Tween.Core
         internal static bool Complete(Tween t, bool modifyActiveLists = true)
         {
             if (t.loops == -1) return false;
-            if (t.elapsed < t.fullDuration) {
-                t.Goto(t.fullDuration);
+            if (!t.isComplete) {
+                t.Goto(new UpdateData(t.duration, t.loops));
                 t.isPlaying = false;
                 // Despawn if needed
                 if (t.autoKill) Despawn(t, modifyActiveLists);
@@ -237,6 +237,29 @@ namespace DG.Tween.Core
             totPooledTweeners = totPooledSequences = 0;
         }
 
+        internal static UpdateData GetUpdateDataFromDeltaTime(Tween t, float deltaTime)
+        {
+            deltaTime *= t.timeScale;
+            float position = t.position;
+            int completedLoops = t.completedLoops;
+            if (t.isBackwards) {
+                if (completedLoops == t.loops) completedLoops--;
+                position -= deltaTime;
+                while (position < 0 && completedLoops > 0) {
+                    position += t.duration;
+                    completedLoops--;
+                }
+            } else {
+                position += deltaTime;
+                while (position > t.duration && (t.loops == -1 || completedLoops < t.loops)) {
+                    position -= t.duration;
+                    completedLoops++;
+                }
+            }
+
+            return new UpdateData(position, completedLoops);
+        }
+
         internal static int TotActiveTweens()
         {
             return totActiveDefaultTweens + totActiveFixedTweens + totActiveIndependentTweens;
@@ -277,8 +300,8 @@ namespace DG.Tween.Core
             for (int i = 0; i < totTweens; ++i) {
                 Tween t = tweens[i];
                 if (t.isPlaying) {
-                    float elapsed = t.elapsed + (!t.isBackwards ? (deltaTime * t.timeScale) : -(deltaTime * t.timeScale));
-                    bool needsKilling = t.Goto(elapsed);
+                    if (!t.delayComplete) deltaTime = t.UpdateDelay(t.elapsedDelay + deltaTime);
+                    bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, deltaTime));
                     if (needsKilling) {
                         t.active = false;
                         willKill = true;

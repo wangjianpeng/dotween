@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/05/06 19:35
+// Created: 2014/07/06 18:31
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,26 +18,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-using DG.Tween.Core;
-using DG.Tween.Plugins.Core;
-using UnityEngine;
-
-namespace DG.Tween.Plugins
+// 
+namespace DG.Tween.Core
 {
-    public class Vector3Plugin : ABSTweenPlugin<Vector3>
+    internal struct UpdateData
     {
-        public override Vector3 GetValue(float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
-        {
-            startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
-            startValue.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
-            return startValue;
-        }
+        internal float position;
+        internal int completedLoops;
 
-        public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)
+        public UpdateData(float position, int completedLoops)
         {
-            return startValue + changeValue;
+            this.position = position;
+            this.completedLoops = completedLoops;
         }
     }
 }
