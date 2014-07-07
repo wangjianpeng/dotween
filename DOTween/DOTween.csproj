@@ -41,7 +41,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\CoreOptions.cs" />
     <Compile Include="Core\Delegates.cs" />
     <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\Easing\Back.cs" />

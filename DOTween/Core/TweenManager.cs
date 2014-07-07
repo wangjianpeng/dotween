@@ -28,21 +28,25 @@ namespace DG.Tween.Core
 {
     internal static class TweenManager
     {
-        const string _MaxTweenersReached = "Max number of Tweeners has been reached. Set the correct max amount by calling DOTween.Init before your first tween";
+        const int _DefaultMaxTweeners = 500;
+        const int _DefaultMaxSequences = 100;
+        const string _MaxTweenersReached = "Max number of Tweeners has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
 
+        internal static int maxTweeners = _DefaultMaxTweeners;
+        internal static int maxSequences = _DefaultMaxSequences;
         internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveFixedTweens, hasActiveIndependentTweens;
         internal static int totActiveDefaultTweens, totActiveFixedTweens, totActiveIndependentTweens;
         internal static int totPooledTweeners, totPooledSequences;
         internal static int totTweeners, totSequences; // Both active and pooled
 
-        static readonly List<Tween> _ActiveDefaultTweens = new List<Tween>(CoreOptions.maxTweeners + CoreOptions.maxSequences);
-        static readonly List<Tween> _ActiveFixedTweens = new List<Tween>(CoreOptions.maxTweeners + CoreOptions.maxSequences);
-        static readonly List<Tween> _ActiveIndependentTweens = new List<Tween>(CoreOptions.maxTweeners + CoreOptions.maxSequences);
-        static readonly List<Tween> _PooledTweeners = new List<Tween>(CoreOptions.maxTweeners);
-        static readonly List<Tween> _PooledSequences = new List<Tween>(CoreOptions.maxSequences);
+        static readonly List<Tween> _ActiveDefaultTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
+        static readonly List<Tween> _ActiveFixedTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
+        static readonly List<Tween> _ActiveIndependentTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
+        static readonly List<Tween> _PooledTweeners = new List<Tween>(_DefaultMaxTweeners);
+        static readonly List<Tween> _PooledSequences = new List<Tween>(_DefaultMaxSequences);
 
-        static readonly List<Tween> _KillList = new List<Tween>(CoreOptions.maxTweeners);
-        static readonly List<int> _KillIds = new List<int>(CoreOptions.maxTweeners);
+        static readonly List<Tween> _KillList = new List<Tween>(_DefaultMaxTweeners);
+        static readonly List<int> _KillIds = new List<int>(_DefaultMaxTweeners);
 
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
@@ -68,14 +72,16 @@ namespace DG.Tween.Core
                     }
                 }
                 // Not found: remove a tween from the pool in case it's full
-                if (totPooledTweeners >= CoreOptions.maxTweeners) {
+                if (totPooledTweeners >= maxTweeners) {
                     _PooledTweeners.RemoveAt(0);
                     totPooledTweeners--;
                 }
             } else {
-                // Log error in case max number of Tweeners has already been reached, then continue
-                // (it is simply less efficient, nothing breaks)
-                if (totTweeners >= CoreOptions.maxTweeners) Debugger.LogError(_MaxTweenersReached);
+                // Increase capacity in case max number of Tweeners has already been reached, then continue
+                if (totTweeners >= maxTweeners) {
+                    if (DOTween.logBehaviour == LogBehaviour.Verbose) Debugger.LogWarning(_MaxTweenersReached);
+                    IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
+                }
             }
             // Not found: create new TweenerController
             t = new Tweener<T>();
@@ -215,7 +221,7 @@ namespace DG.Tween.Core
         }
 
         // Destroys any active tween without putting them back in a pool,
-        // then purges all pools
+        // then purges all pools and resets capacities
         internal static void PurgeAll()
         {
             _ActiveDefaultTweens.Clear();
@@ -224,6 +230,7 @@ namespace DG.Tween.Core
             hasActiveTweens = hasActiveDefaultTweens = hasActiveFixedTweens = hasActiveIndependentTweens = false;
             totActiveDefaultTweens = totActiveFixedTweens = totActiveIndependentTweens = 0;
             PurgePools();
+            ResetCapacities();
             totTweeners = totSequences = 0;
         }
 
@@ -235,6 +242,22 @@ namespace DG.Tween.Core
             _PooledTweeners.Clear();
             _PooledSequences.Clear();
             totPooledTweeners = totPooledSequences = 0;
+        }
+
+        internal static void ResetCapacities()
+        {
+            SetCapacities(_DefaultMaxTweeners, _DefaultMaxSequences);
+        }
+
+        internal static void SetCapacities(int tweenersCapacity, int sequencesCapacity)
+        {
+            maxTweeners = tweenersCapacity;
+            maxSequences = sequencesCapacity;
+            _ActiveDefaultTweens.Capacity = tweenersCapacity + sequencesCapacity;
+            _ActiveFixedTweens.Capacity = tweenersCapacity + sequencesCapacity;
+            _ActiveIndependentTweens.Capacity = tweenersCapacity + sequencesCapacity;
+            _PooledTweeners.Capacity = tweenersCapacity;
+            _PooledSequences.Capacity = sequencesCapacity;
         }
 
         internal static UpdateData GetUpdateDataFromDeltaTime(Tween t, float deltaTime)
@@ -483,6 +506,44 @@ namespace DG.Tween.Core
             }
             t.active = false;
             t.Reset();
+        }
+
+        static void IncreaseCapacities(CapacityIncreaseMode increaseMode)
+        {
+            int add = 0;
+            switch (increaseMode) {
+            case CapacityIncreaseMode.TweenersOnly:
+                add += _DefaultMaxTweeners;
+                maxTweeners += _DefaultMaxTweeners;
+                _PooledTweeners.Capacity += _DefaultMaxTweeners;
+                break;
+            case CapacityIncreaseMode.SequencesOnly:
+                add += _DefaultMaxSequences;
+                maxSequences += _DefaultMaxSequences;
+                _PooledSequences.Capacity += _DefaultMaxSequences;
+                break;
+            default:
+                add += _DefaultMaxTweeners + _DefaultMaxSequences;
+                maxTweeners += _DefaultMaxTweeners;
+                maxSequences += _DefaultMaxSequences;
+                _PooledTweeners.Capacity += _DefaultMaxTweeners;
+                _PooledSequences.Capacity += _DefaultMaxSequences;
+                break;
+            }
+            _ActiveDefaultTweens.Capacity += add;
+            _ActiveFixedTweens.Capacity += add;
+            _ActiveIndependentTweens.Capacity += add;
+        }
+
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ||| INTERNAL CLASSES ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        internal enum CapacityIncreaseMode
+        {
+            TweenersAndSequences,
+            TweenersOnly,
+            SequencesOnly
         }
     }
 }

@@ -4,18 +4,11 @@
         <name>DOTween</name>
     </assembly>
     <members>
-        <member name="M:DG.Tween.DOTween.Init(System.Int32,System.Int32,System.Boolean,System.Boolean,DG.Tween.LogBehaviour)">
+        <member name="M:DG.Tween.DOTween.Init(System.Boolean,System.Boolean,DG.Tween.LogBehaviour)">
             <summary>
             Must be called once, before the first ever DOTween call/reference.
             Otherwise, it will be called automatically and will use default options.
             </summary>
-            <param name="maxTweeners">Max Tweeners that can exist.
-            A low number will make things slightly more efficient, but if more than max tweens exist at any time errors will happen, so beware.
-            Can't be lower than maxSequences.
-            Default: 500</param>
-            <param name="maxSequences">Max Sequences that can exist.
-            A low number will make things slightly more efficient, but if more than max tweens exist at any time errors will happen, so beware.
-            Default: 100</param>
             <param name="autoKill">All newly created tweens will have their autoKill property set accordingly
             (TRUE: they are automatically killed when complete, FALSE: you will need to kill them manually).
             Default: TRUE</param>
@@ -23,6 +16,18 @@
             You can change this setting at any time by setting the <see cref="F:DG.Tween.DOTween.useSafeMode"/> property.
             Default: FALSE</param>
             <param name="logBehaviour">Type of logging to use</param>
+        </member>
+        <member name="M:DG.Tween.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
+            <summary>
+            Directly sets the current max capacity of Tweeners and Sequences,
+            so that DOTween doesn't need to automatically increase it in case the max is reached
+            (which might lead to hiccups when that happens).
+            Pay attention: do not make capacity less than currently existing Tweeners/Sequences
+            </summary>
+            <param name="tweenersCapacity">Max Tweeners capacity.
+            Default: 500</param>
+            <param name="sequencesCapacity">Max Sequences capacity.
+            Default: 100</param>
         </member>
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
             <summary>
