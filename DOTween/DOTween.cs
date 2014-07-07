@@ -125,24 +125,13 @@ namespace DG.Tween
         // PUBLIC TWEEN METHODS --------------------------------------------------------------
 
         /// <summary>
-        /// Tweens a float value
+        /// Tweens a property
         /// </summary>
-        public static Tweener<float> To(MemberGetter<float> getter, MemberSetter<float> setter, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        public static Tweener<T> To<T>(MemberGetter<T> getter, MemberSetter<T> setter, T endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             InitCheck();
-            Tweener<float> tweener = TweenManager.GetTweener<float>(updateType);
-            Tweener<float>.Setup(tweener, getter, setter, endValue, duration);
-            return tweener;
-        }
-
-        /// <summary>
-        /// Tweens a Vector3 value
-        /// </summary>
-        public static Tweener<Vector3> To(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
-        {
-            InitCheck();
-            Tweener<Vector3> tweener = TweenManager.GetTweener<Vector3>(updateType);
-            Tweener<Vector3>.Setup(tweener, getter, setter, endValue, duration);
+            Tweener<T> tweener = TweenManager.GetTweener<T>(updateType);
+            Tweener<T>.Setup(tweener, getter, setter, endValue, duration);
             return tweener;
         }
 

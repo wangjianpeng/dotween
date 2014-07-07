@@ -29,27 +29,32 @@ namespace DG.Tween.Plugins.Core
     internal static class PluginsManager
     {
         // Default plugins
-        static FloatPlugin _floatPlugin;
-        static Vector3Plugin _vector3Plugin;
+//        static FloatPlugin _floatPlugin;
+//        static Vector3Plugin _vector3Plugin;
+        static readonly Dictionary<Type, ITweenPlugin> _DefaultPlugins = new Dictionary<Type, ITweenPlugin>(10);
         // Advanced and custom plugins
         static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(20);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static ABSTweenPlugin<T> GetPlugin<T>()
+        internal static ABSTweenPlugin<T> GetDefaultPlugin<T>()
         {
             // TODO Improve
 
             Type t = typeof(T);
+            if (_DefaultPlugins.ContainsKey(t)) return _DefaultPlugins[t] as ABSTweenPlugin<T>;
 
+            ITweenPlugin plugin = null;
             if (t == typeof(float)) {
-                if (_floatPlugin == null) _floatPlugin = new FloatPlugin();
-                return _floatPlugin as ABSTweenPlugin<T>;
+                plugin = new FloatPlugin();
+            } else if (t == typeof(Vector3)) {
+                plugin = new Vector3Plugin();
             }
-            if (t == typeof(Vector3)) {
-                if (_vector3Plugin == null) _vector3Plugin = new Vector3Plugin();
-                return _vector3Plugin as ABSTweenPlugin<T>;
+
+            if (plugin != null) {
+                _DefaultPlugins.Add(t, plugin);
+                return plugin as ABSTweenPlugin<T>;
             }
 
             return null;
@@ -68,8 +73,7 @@ namespace DG.Tween.Plugins.Core
         // Un-caches all plugins
         internal static void PurgeAll()
         {
-            _floatPlugin = null;
-            _vector3Plugin = null;
+            _DefaultPlugins.Clear();
             _CustomPlugins.Clear();
         }
     }
