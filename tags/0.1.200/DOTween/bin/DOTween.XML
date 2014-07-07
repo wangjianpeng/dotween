@@ -1,0 +1,1104 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DOTween</name>
+    </assembly>
+    <members>
+        <member name="M:DG.Tween.DOTween.Init(System.Boolean,System.Boolean,DG.Tween.LogBehaviour)">
+            <summary>
+            Must be called once, before the first ever DOTween call/reference.
+            Otherwise, it will be called automatically and will use default options.
+            </summary>
+            <param name="autoKill">All newly created tweens will have their autoKill property set accordingly
+            (TRUE: they are automatically killed when complete, FALSE: you will need to kill them manually).
+            Default: TRUE</param>
+            <param name="useSafeMode">If TRUE DOTween will check for missing targets etc while running: safer but also slower.
+            You can change this setting at any time by setting the <see cref="F:DG.Tween.DOTween.useSafeMode"/> property.
+            Default: FALSE</param>
+            <param name="logBehaviour">Type of logging to use</param>
+        </member>
+        <member name="M:DG.Tween.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
+            <summary>
+            Directly sets the current max capacity of Tweeners and Sequences,
+            so that DOTween doesn't need to automatically increase it in case the max is reached
+            (which might lead to hiccups when that happens).
+            Pay attention: do not make capacity less than currently existing Tweeners/Sequences
+            </summary>
+            <param name="tweenersCapacity">Max Tweeners capacity.
+            Default: 500</param>
+            <param name="sequencesCapacity">Max Sequences capacity.
+            Default: 100</param>
+        </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
+            <summary>
+            Tweens a float value
+            </summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
+            <summary>
+            Tweens a Vector3 value
+            </summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Clear">
+            <summary>
+            Kills all tweens and cleans the pooled tweens cache
+            </summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Complete">
+            <summary>Completes all tweens and returns the number of actual tweens completed
+            (meaning tweens that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Complete(System.Int32)">
+            <summary>Completes all tweens with the given ID and returns the number of actual tweens completed
+            (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Complete(System.String)">
+            <summary>Completes all tweens with the given string ID and returns the number of actual tweens completed
+            (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Complete(UnityEngine.Object)">
+            <summary>Completes all tweens with the given object ID and returns the number of actual tweens completed
+            (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Flip">
+            <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Flip(System.Int32)">
+            <summary>Flips the tweens with the given ID (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Flip(System.String)">
+            <summary>Flips the tweens with the given string ID (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Flip(UnityEngine.Object)">
+            <summary>Flips the tweens with the given object ID (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Kill">
+            <summary>Kills all tweens and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Kill(System.Int32)">
+            <summary>Kills all tweens with the given ID and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Kill(System.String)">
+            <summary>Kills all tweens with the given string ID and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Kill(UnityEngine.Object)">
+            <summary>Kills all tweens with the given object ID and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Pause">
+            <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Pause(System.Int32)">
+            <summary>Pauses all tweens with the given ID and returns the number of actual tweens paused
+            (meaning the tweens that were actually playing and have been paused)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Pause(System.String)">
+            <summary>Pauses all tweens with the given string ID and returns the number of actual tweens paused
+            (meaning the tweens with the given id that were actually playing and have been paused)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Pause(UnityEngine.Object)">
+            <summary>Pauses all tweens with the given object ID and returns the number of actual tweens paused
+            (meaning the tweens with the given id that were actually playing and have been paused)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Play">
+            <summary>Plays all tweens and returns the number of actual tweens played
+            (meaning tweens that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Play(System.Int32)">
+            <summary>Plays all tweens with the given ID and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Play(System.String)">
+            <summary>Plays all tweens with the given string ID and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Play(UnityEngine.Object)">
+            <summary>Plays all tweens with the given object ID and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayBackwards">
+            <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
+            (meaning tweens that were not already playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayBackwards(System.Int32)">
+            <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayBackwards(System.String)">
+            <summary>Plays all tweens with the given string ID in backwards direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayBackwards(UnityEngine.Object)">
+            <summary>Plays all tweens with the given object ID in backwards direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayForward">
+            <summary>Plays all tweens in forward direction and returns the number of actual tweens played
+            (meaning tweens that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayForward(System.Int32)">
+            <summary>Plays all tweens with the given ID in forward direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayForward(System.String)">
+            <summary>Plays all tweens with the given string ID in forward direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.PlayForward(UnityEngine.Object)">
+            <summary>Plays all tweens with the given object ID in forward direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Restart">
+            <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Restart(System.Int32)">
+            <summary>Restarts all tweens with the given ID, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Restart(System.String)">
+            <summary>Restarts all tweens with the given string ID, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Restart(UnityEngine.Object)">
+            <summary>Restarts all tweens with the given object ID, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Rewind">
+            <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
+            (meaning tweens that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Rewind(System.Int32)">
+            <summary>Rewinds and pauses all tweens with the given ID, then returns the number of actual tweens rewinded
+            (meaning the tweens with the given id that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Rewind(System.String)">
+            <summary>Rewinds and pauses all tweens with the given string ID, then returns the number of actual tweens rewinded
+            (meaning the tweens with the given id that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Rewind(UnityEngine.Object)">
+            <summary>Rewinds and pauses all tweens with the given object ID, then returns the number of actual tweens rewinded
+            (meaning the tweens with the given id that were not already rewinded)</summary>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Quad">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quad.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quadratic (t^2) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quad.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quadratic (t^2) easing out: decelerating to zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quad.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quadratic (t^2) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Strong">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Strong.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Tween.
+            </summary>
+            <param name="time">
+            Time.
+            </param>
+            <param name="startValue">
+            Begin value.
+            </param>
+            <param name="changeValue">
+            Change value.
+            </param>
+            <param name="duration">
+            Duration.
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            A <see cref="T:System.Single"/>
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Strong.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Tween.
+            </summary>
+            <param name="time">
+            Time.
+            </param>
+            <param name="startValue">
+            Begin value.
+            </param>
+            <param name="changeValue">
+            Change value.
+            </param>
+            <param name="duration">
+            Duration.
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            A <see cref="T:System.Single"/>
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Strong.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Tween.
+            </summary>
+            <param name="time">
+            Time.
+            </param>
+            <param name="startValue">
+            Begin value.
+            </param>
+            <param name="changeValue">
+            Change value.
+            </param>
+            <param name="duration">
+            Duration.
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            A <see cref="T:System.Single"/>
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Elastic">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Elastic.EaseIn(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Elastic.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="amplitude">
+            Amplitude.
+            </param>
+            <param name="period">
+            Period.
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Elastic.EaseOut(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Elastic.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="amplitude">
+            Amplitude.
+            </param>
+            <param name="period">
+            Period.
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Elastic.EaseInOut(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Elastic.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="amplitude">
+            Amplitude.
+            </param>
+            <param name="period">
+            Period.
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Tween">
+            <summary>
+            Shared by Tweeners and Sequences
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Quint">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quint.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quintic (t^5) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quint.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quintic (t^5) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quint.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quintic (t^5) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Circ">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Circ.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a circular (sqrt(1-t^2)) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Circ.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a circular (sqrt(1-t^2)) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Circ.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a circular (sqrt(1-t^2)) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Cubic">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Cubic.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a cubic (t^3) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Cubic.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a cubic (t^3) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Cubic.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a cubic (t^3) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Back">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Back.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="overshoot">
+            Overshoot ammount: higher means greater overshoot (0 produces cubic easing with no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent).
+            </param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Back.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="overshoot">
+            Overshoot ammount: higher means greater overshoot (0 produces cubic easing with no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent).
+            </param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Back.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="overshoot">
+            Overshoot ammount: higher means greater overshoot (0 produces cubic easing with no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent).
+            </param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.EaseCurve">
+            <summary>
+            Used to interpret AnimationCurves as eases.
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.MemberGetter`1">
+            <summary>
+            Used in place of <c>System.Func</c>, which is not available in mscorlib.
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.MemberSetter`1">
+            <summary>
+            Used in place of <c>System.Action</c>.
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.TweenCallback">
+            <summary>
+            Used for tween callbacks
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.EaseFunction">
+            <summary>
+            Used for ease functions
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Bounce">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Bounce.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Bounce.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Bounce.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Sine">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Sine.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a sinusoidal (sin(t)) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Sine.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a sinusoidal (sin(t)) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Sine.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a sinusoidal (sin(t)) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Expo">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Expo.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an exponential (2^t) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Expo.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an exponential (2^t) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Expo.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an exponential (2^t) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="F:DG.Tween.EaseType.AnimationCurve">
+            <summary>
+            Don't assign this! It's assigned internally when setting the ease to an AnimationCurve
+            </summary>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Linear">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Linear.EaseNone(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a simple linear tweening, with no easing.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tween.Core.Easing.Quart">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quart.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quartic (t^4) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quart.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quartic (t^4) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tween.Core.Easing.Quart.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quartic (t^4) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+    </members>
+</doc>
