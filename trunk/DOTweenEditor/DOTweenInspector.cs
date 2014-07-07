@@ -49,11 +49,17 @@ namespace DG.DOTweenEditor
             int totPausedTweens = totActiveTweens - totPlayingTweens;
 
             GUILayout.Label(_title);
-            GUILayout.Space(12);
+
+            GUILayout.Space(8);
             GUILayout.Label("Active tweens: " + totActiveTweens);
             GUILayout.Label("Playing tweens: " + totPlayingTweens);
             GUILayout.Label("Paused tweens: " + totPausedTweens);
             GUILayout.Label("Pooled tweens: " + TweenManager.TotPooledTweens());
+
+            GUILayout.Space(8);
+            GUILayout.Label("Tweeners Capacity: " + TweenManager.maxTweeners);
+            GUILayout.Label("Sequences Capacity: " + TweenManager.maxSequences);
+            GUILayout.Space(8);
         }
     }
 }

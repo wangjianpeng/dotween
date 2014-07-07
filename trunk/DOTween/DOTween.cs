@@ -32,7 +32,7 @@ namespace DG.Tween
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.110";
+        public static readonly string Version = "0.1.200";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -80,13 +80,6 @@ namespace DG.Tween
         /// Must be called once, before the first ever DOTween call/reference.
         /// Otherwise, it will be called automatically and will use default options.
         /// </summary>
-        /// <param name="maxTweeners">Max Tweeners that can exist.
-        /// A low number will make things slightly more efficient, but if more than max tweens exist at any time errors will happen, so beware.
-        /// Can't be lower than maxSequences.
-        /// Default: 500</param>
-        /// <param name="maxSequences">Max Sequences that can exist.
-        /// A low number will make things slightly more efficient, but if more than max tweens exist at any time errors will happen, so beware.
-        /// Default: 100</param>
         /// <param name="autoKill">All newly created tweens will have their autoKill property set accordingly
         /// (TRUE: they are automatically killed when complete, FALSE: you will need to kill them manually).
         /// Default: TRUE</param>
@@ -94,7 +87,7 @@ namespace DG.Tween
         /// You can change this setting at any time by setting the <see cref="DOTween.useSafeMode"/> property.
         /// Default: FALSE</param>
         /// <param name="logBehaviour">Type of logging to use</param>
-        public static void Init(int maxTweeners, int maxSequences, bool autoKill = true, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
+        public static void Init(bool autoKill = true, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
         {
             if (_initialized) return;
 
@@ -104,15 +97,27 @@ namespace DG.Tween
             DOTween.autoKill = autoKill;
             DOTween.useSafeMode = useSafeMode;
             DOTween.logBehaviour = logBehaviour;
-            if (maxTweeners < maxSequences) maxTweeners = maxSequences;
-            CoreOptions.maxTweeners = maxTweeners;
-            CoreOptions.maxSequences = maxSequences;
             // Gameobject
             GameObject go = new GameObject("[DOTween]");
             DontDestroyOnLoad(go);
             go.AddComponent<DOTween>();
             // Log
-            if (DOTween.logBehaviour == LogBehaviour.Verbose) Debugger.Log("DOTween initialization (logBehaviour: " + logBehaviour + ", maxTweeners: " + CoreOptions.maxTweeners + ", maxSequences: " + CoreOptions.maxSequences + ")");
+            if (DOTween.logBehaviour == LogBehaviour.Verbose) Debugger.Log("DOTween initialization (autoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
+        }
+
+        /// <summary>
+        /// Directly sets the current max capacity of Tweeners and Sequences,
+        /// so that DOTween doesn't need to automatically increase it in case the max is reached
+        /// (which might lead to hiccups when that happens).
+        /// Pay attention: do not make capacity less than currently existing Tweeners/Sequences
+        /// </summary>
+        /// <param name="tweenersCapacity">Max Tweeners capacity.
+        /// Default: 500</param>
+        /// <param name="sequencesCapacity">Max Sequences capacity.
+        /// Default: 100</param>
+        public static void SetTweensCapacity(int tweenersCapacity, int sequencesCapacity)
+        {
+            TweenManager.SetCapacities(tweenersCapacity, sequencesCapacity);
         }
 
         // ===================================================================================
@@ -389,8 +394,8 @@ namespace DG.Tween
         public static void InitCheck()
         {
             if (!_initialized) {
-                Init(CoreOptions.maxTweeners, CoreOptions.maxSequences);
-                Debugger.LogWarning("DOTween auto-initialized with default settings (autoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ", maxTweeners: " + CoreOptions.maxTweeners + ", maxSequences: " + CoreOptions.maxSequences + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
+                Init();
+                Debugger.LogWarning("DOTween auto-initialized with default settings (autoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
             }
         }
     }
