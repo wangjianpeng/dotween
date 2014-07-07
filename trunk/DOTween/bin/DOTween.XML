@@ -39,6 +39,11 @@
             Tweens a Vector3 value
             </summary>
         </member>
+        <member name="M:DG.Tween.DOTween.To``1(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},DG.Tween.Plugins.IPluginSetter{UnityEngine.Vector3,``0},System.Single,DG.Tween.UpdateType)">
+            <summary>
+            Tweens a Vector3 value using a custom plugin
+            </summary>
+        </member>
         <member name="M:DG.Tween.DOTween.Clear">
             <summary>
             Kills all tweens and cleans the pooled tweens cache

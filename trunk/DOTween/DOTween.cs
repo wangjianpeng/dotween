@@ -22,6 +22,7 @@
 using System.Collections;
 using DG.Tween.Core;
 using DG.Tween.Core.Enums;
+using DG.Tween.Plugins;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace DG.Tween
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.200";
+        public static readonly string Version = "0.1.210";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -142,6 +143,18 @@ namespace DG.Tween
             InitCheck();
             Tweener<Vector3> tweener = TweenManager.GetTweener<Vector3>(updateType);
             Tweener<Vector3>.Setup(tweener, getter, setter, endValue, duration);
+            return tweener;
+        }
+
+        /// <summary>
+        /// Tweens a Vector3 value using a custom plugin
+        /// </summary>
+        public static Tweener<Vector3> To<TPlugin>(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, IPluginSetter<Vector3, TPlugin> pluginSetter, float duration, UpdateType updateType = UpdateType.Default)
+            where TPlugin : ITweenPlugin, new()
+        {
+            InitCheck();
+            Tweener<Vector3> tweener = TweenManager.GetTweener<Vector3>(updateType);
+            Tweener<Vector3>.Setup(tweener, getter, setter, pluginSetter, duration);
             return tweener;
         }
 
