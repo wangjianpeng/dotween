@@ -21,12 +21,13 @@
 // 
 
 using System;
+using DG.Tween.Plugins.Core;
 using DG.Tween.Plugins.Core.Plugins;
 using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public struct PlugVector3X : IPluginSetter<Vector3, Vector3Plugin>
+    public struct PlugVector3X : IPluginSetter<Vector3, Vector3XPlugin>
     {
         internal Vector3 endValue;
         internal Type pluginType;

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace DG.Tween.Plugins
+namespace DG.Tween.Plugins.Core
 {
     public interface IPluginSetter<out T,TPlugin>
     {

@@ -147,14 +147,14 @@ namespace DG.Tween
         }
 
         /// <summary>
-        /// Tweens a Vector3 value using a custom plugin
+        /// Tweens a property using a custom plugin
         /// </summary>
-        public static Tweener<Vector3> To<TPlugin>(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, IPluginSetter<Vector3, TPlugin> pluginSetter, float duration, UpdateType updateType = UpdateType.Default)
+        public static Tweener<T> To<T,TPlugin>(MemberGetter<T> getter, MemberSetter<T> setter, IPluginSetter<T, TPlugin> pluginSetter, float duration, UpdateType updateType = UpdateType.Default)
             where TPlugin : ITweenPlugin, new()
         {
             InitCheck();
-            Tweener<Vector3> tweener = TweenManager.GetTweener<Vector3>(updateType);
-            Tweener<Vector3>.Setup(tweener, getter, setter, pluginSetter, duration);
+            Tweener<T> tweener = TweenManager.GetTweener<T>(updateType);
+            Tweener<T>.Setup(tweener, getter, setter, pluginSetter, duration);
             return tweener;
         }
 
