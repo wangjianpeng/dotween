@@ -34,9 +34,9 @@
             Tweens a property
             </summary>
         </member>
-        <member name="M:DG.Tween.DOTween.To``3(DG.Tween.Plugins.Core.IPlugSetter{``0,``1,``2},System.Single,DG.Tween.UpdateType)">
+        <member name="M:DG.Tween.DOTween.To``4(DG.Tween.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single,DG.Tween.UpdateType)">
             <summary>
-            Tweens a property using a custom plugin
+            Tweens a property using a custom plugin with eventual options
             </summary>
         </member>
         <member name="M:DG.Tween.DOTween.Clear">

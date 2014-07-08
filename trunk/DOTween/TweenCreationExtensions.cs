@@ -97,7 +97,7 @@ namespace DG.Tween
         // ===================================================================================
         // TWEENERS --------------------------------------------------------------------------
 
-        public static Tweener<T1,T2> Delay<T1,T2>(this Tweener<T1,T2> t, float delay)
+        public static Tweener<T1,T2,TPlugOptions> Delay<T1,T2,TPlugOptions>(this Tweener<T1,T2,TPlugOptions> t, float delay)
         {
             if (t.creationLocked) return t;
 
@@ -106,7 +106,7 @@ namespace DG.Tween
             return t;
         }
 
-        public static Tweener<T1,T2> Relative<T1,T2>(this Tweener<T1,T2> t, bool isRelative = true)
+        public static Tweener<T1,T2,TPlugOptions> Relative<T1,T2,TPlugOptions>(this Tweener<T1,T2,TPlugOptions> t, bool isRelative = true)
         {
             if (t.creationLocked) return t;
 
@@ -114,14 +114,14 @@ namespace DG.Tween
             return t;
         }
 
-        public static Tweener<T1,T2> Ease<T1,T2>(this Tweener<T1,T2> t, EaseType easeType)
+        public static Tweener<T1,T2,TPlugOptions> Ease<T1,T2,TPlugOptions>(this Tweener<T1,T2,TPlugOptions> t, EaseType easeType)
         {
             if (t.creationLocked) return t;
 
             t.ease = Utils.GetEaseFuncByType(easeType);
             return t;
         }
-        public static Tweener<T1,T2> Ease<T1,T2>(this Tweener<T1,T2> t, AnimationCurve animCurve)
+        public static Tweener<T1,T2,TPlugOptions> Ease<T1,T2,TPlugOptions>(this Tweener<T1,T2,TPlugOptions> t, AnimationCurve animCurve)
         {
             if (t.creationLocked) return t;
 

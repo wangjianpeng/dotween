@@ -70,6 +70,7 @@
     <Compile Include="Plugins\Core\IPlugSetter.cs" />
     <Compile Include="Plugins\Core\ITweenPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\QuaternionPlugin.cs" />
+    <Compile Include="Plugins\Core\NoOptions.cs" />
     <Compile Include="Plugins\PlugAlpha.cs" />
     <Compile Include="Plugins\PlugVector3X.cs" />
     <Compile Include="TweenCreationExtensions.cs" />

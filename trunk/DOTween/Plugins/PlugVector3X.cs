@@ -27,43 +27,72 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public struct PlugVector3X : IPlugSetter<Vector3, Vector3, Vector3XPlugin>
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ||| PLUG ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    public struct PlugVector3X : IPlugSetter<Vector3, Vector3, Vector3XPlugin, PlugVector3X.Options>
     {
         readonly Vector3 _endValue;
         readonly MemberGetter<Vector3> _getter;
         readonly MemberSetter<Vector3> _setter;
+        readonly Options _options;
 
         public PlugVector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
         {
             _getter = getter;
             _setter = setter;
             _endValue = new Vector3(endValue, 0, 0);
+            _options = new Options();
+        }
+        public PlugVector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, Options options)
+        {
+            _getter = getter;
+            _setter = setter;
+            _endValue = new Vector3(endValue, 0, 0);
+            _options = options;
         }
 
         public MemberGetter<Vector3> Getter() { return _getter; }
         public MemberSetter<Vector3> Setter() { return _setter; }
         public Vector3 EndValue() { return _endValue; }
+        public Options GetOptions() { return _options; }
+
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // ||| OPTIONS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        public struct Options
+        {
+            public bool snapToInt;
+
+            public Options(bool snapToInt)
+            {
+                this.snapToInt = snapToInt;
+            }
+        }
     }
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    // ||| PLUGIN ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public class Vector3XPlugin : ABSTweenPlugin<Vector3, Vector3>
+    public class Vector3XPlugin : ABSTweenPlugin<Vector3, Vector3, PlugVector3X.Options>
     {
-        public override Vector3 ConvertT1toT2(Vector3 value)
+        public override Vector3 ConvertT1toT2(PlugVector3X.Options options, Vector3 value)
         {
             return value;
         }
 
-        public override Vector3 Calculate(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Vector3 Calculate(PlugVector3X.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             Vector3 res = getter();
-            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
+            if (options.snapToInt) res.x = Mathf.Round(ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0));
+            else res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
             return res;
         }
 
-        public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)
+        public override Vector3 GetRelativeEndValue(PlugVector3X.Options options, Vector3 startValue, Vector3 changeValue)
         {
             return startValue + changeValue;
         }
