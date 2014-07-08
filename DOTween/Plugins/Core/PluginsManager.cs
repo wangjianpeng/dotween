@@ -28,10 +28,9 @@ namespace DG.Tween.Plugins.Core
 {
     internal static class PluginsManager
     {
-        // Default plugins
-//        static FloatPlugin _floatPlugin;
-//        static Vector3Plugin _vector3Plugin;
-        static readonly Dictionary<Type, ITweenPlugin> _DefaultPlugins = new Dictionary<Type, ITweenPlugin>(10);
+        // Default plugins. Contains internal dictionaries based on T2 types,
+        // since there might be more plugins for the same type (like float to float and float to int)
+        static readonly Dictionary<Type, Dictionary<Type, ITweenPlugin>> _DefaultPlugins = new Dictionary<Type, Dictionary<Type, ITweenPlugin>>(10);
         // Advanced and custom plugins
         static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(20);
 
@@ -42,18 +41,25 @@ namespace DG.Tween.Plugins.Core
         {
             // TODO Improve
 
-            Type t = typeof(T1);
-            if (_DefaultPlugins.ContainsKey(t)) return _DefaultPlugins[t] as ABSTweenPlugin<T1,T2>;
+            Type t1 = typeof(T1);
+            Type t2 = typeof(T2);
+            bool hasT1 = _DefaultPlugins.ContainsKey(t1);
+            bool hasT2 = hasT1 && _DefaultPlugins[t1].ContainsKey(t2);
+            if (hasT2) return _DefaultPlugins[t1][t2] as ABSTweenPlugin<T1,T2>;
 
+            // Retrieve correct custom plugin
             ITweenPlugin plugin = null;
-            if (t == typeof(float)) {
+            if (t1 == typeof(float)) {
                 plugin = new FloatPlugin();
-            } else if (t == typeof(Vector3)) {
+            } else if (t1 == typeof(Vector3)) {
                 plugin = new Vector3Plugin();
+            } else if (t1 == typeof(Quaternion)) {
+                plugin = new QuaternionPlugin();
             }
 
             if (plugin != null) {
-                _DefaultPlugins.Add(t, plugin);
+                if (!hasT1) _DefaultPlugins.Add(t1, new Dictionary<Type, ITweenPlugin>());
+                _DefaultPlugins[t1].Add(t2, plugin);
                 return plugin as ABSTweenPlugin<T1,T2>;
             }
 
