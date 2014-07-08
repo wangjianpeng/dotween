@@ -97,7 +97,7 @@ namespace DG.Tween
         // ===================================================================================
         // TWEENERS --------------------------------------------------------------------------
 
-        public static Tweener<T> Delay<T>(this Tweener<T> t, float delay)
+        public static Tweener<T1,T2> Delay<T1,T2>(this Tweener<T1,T2> t, float delay)
         {
             if (t.creationLocked) return t;
 
@@ -106,7 +106,7 @@ namespace DG.Tween
             return t;
         }
 
-        public static Tweener<T> Relative<T>(this Tweener<T> t, bool isRelative = true)
+        public static Tweener<T1,T2> Relative<T1,T2>(this Tweener<T1,T2> t, bool isRelative = true)
         {
             if (t.creationLocked) return t;
 
@@ -114,14 +114,14 @@ namespace DG.Tween
             return t;
         }
 
-        public static Tweener<T> Ease<T>(this Tweener<T> t, EaseType easeType)
+        public static Tweener<T1,T2> Ease<T1,T2>(this Tweener<T1,T2> t, EaseType easeType)
         {
             if (t.creationLocked) return t;
 
             t.ease = Utils.GetEaseFuncByType(easeType);
             return t;
         }
-        public static Tweener<T> Ease<T>(this Tweener<T> t, AnimationCurve animCurve)
+        public static Tweener<T1,T2> Ease<T1,T2>(this Tweener<T1,T2> t, AnimationCurve animCurve)
         {
             if (t.creationLocked) return t;
 

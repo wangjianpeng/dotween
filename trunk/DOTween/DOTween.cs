@@ -126,11 +126,13 @@ namespace DG.Tween
         /// <summary>
         /// Tweens a property
         /// </summary>
-        public static Tweener<T> To<T>(MemberGetter<T> getter, MemberSetter<T> setter, T endValue, float duration, UpdateType updateType = UpdateType.Default)
-        {
+        public static Tweener<T1,T2> To<T1,T2>(
+            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) {
             InitCheck();
-            Tweener<T> tweener = TweenManager.GetTweener<T>(updateType);
-            if (!Tweener<T>.Setup(tweener, getter, setter, endValue, duration)) {
+            Tweener<T1,T2> tweener = TweenManager.GetTweener<T1,T2>(updateType);
+            if (!Tweener<T1,T2>.Setup(tweener, getter, setter, endValue, duration)) {
                 TweenManager.Despawn(tweener);
                 return null;
             }
@@ -140,12 +142,15 @@ namespace DG.Tween
         /// <summary>
         /// Tweens a property using a custom plugin
         /// </summary>
-        public static Tweener<T> To<T,TPlugin>(MemberGetter<T> getter, MemberSetter<T> setter, IPluginSetter<T, TPlugin> pluginSetter, float duration, UpdateType updateType = UpdateType.Default)
+        public static Tweener<T1,T2> To<T1,T2,TPlugin>(
+            MemberGetter<T1> getter, MemberSetter<T1> setter, IPluginSetter<T1,T2, TPlugin> pluginSetter,
+            float duration, UpdateType updateType = UpdateType.Default
+        )
             where TPlugin : ITweenPlugin, new()
         {
             InitCheck();
-            Tweener<T> tweener = TweenManager.GetTweener<T>(updateType);
-            if (!Tweener<T>.Setup(tweener, getter, setter, pluginSetter, duration)) {
+            Tweener<T1,T2> tweener = TweenManager.GetTweener<T1,T2>(updateType);
+            if (!Tweener<T1,T2>.Setup(tweener, getter, setter, pluginSetter, duration)) {
                 TweenManager.Despawn(tweener);
                 return null;
             }

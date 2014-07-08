@@ -38,12 +38,12 @@ namespace DG.Tween.Plugins.Core
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static ABSTweenPlugin<T> GetDefaultPlugin<T>()
+        internal static ABSTweenPlugin<T1,T2> GetDefaultPlugin<T1,T2>()
         {
             // TODO Improve
 
-            Type t = typeof(T);
-            if (_DefaultPlugins.ContainsKey(t)) return _DefaultPlugins[t] as ABSTweenPlugin<T>;
+            Type t = typeof(T1);
+            if (_DefaultPlugins.ContainsKey(t)) return _DefaultPlugins[t] as ABSTweenPlugin<T1,T2>;
 
             ITweenPlugin plugin = null;
             if (t == typeof(float)) {
@@ -54,20 +54,20 @@ namespace DG.Tween.Plugins.Core
 
             if (plugin != null) {
                 _DefaultPlugins.Add(t, plugin);
-                return plugin as ABSTweenPlugin<T>;
+                return plugin as ABSTweenPlugin<T1,T2>;
             }
 
             return null;
         }
 
-        internal static ABSTweenPlugin<T> GetCustomPlugin<T,TPlugin>(IPluginSetter<T,TPlugin> pluginSetter)
+        internal static ABSTweenPlugin<T1,T2> GetCustomPlugin<T1,T2,TPlugin>(IPluginSetter<T1,T2,TPlugin> pluginSetter)
             where TPlugin : ITweenPlugin, new()
         {
-            if (_CustomPlugins.ContainsKey(pluginSetter.PluginType())) return _CustomPlugins[pluginSetter.PluginType()] as ABSTweenPlugin<T>;
+            if (_CustomPlugins.ContainsKey(pluginSetter.PluginType())) return _CustomPlugins[pluginSetter.PluginType()] as ABSTweenPlugin<T1,T2>;
             
             TPlugin plugin = new TPlugin();
             _CustomPlugins.Add(pluginSetter.PluginType(), plugin);
-            return plugin as ABSTweenPlugin<T>;
+            return plugin as ABSTweenPlugin<T1,T2>;
         }
 
         // Un-caches all plugins

@@ -27,7 +27,7 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public struct PlugVector3X : IPluginSetter<Vector3, Vector3XPlugin>
+    public struct PlugVector3X : IPluginSetter<Vector3, Vector3, Vector3XPlugin>
     {
         internal Vector3 endValue;
         internal Type pluginType;
@@ -46,9 +46,14 @@ namespace DG.Tween.Plugins
     // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public class Vector3XPlugin : ABSTweenPlugin<Vector3>
+    public class Vector3XPlugin : ABSTweenPlugin<Vector3, Vector3>
     {
-        public override Vector3 GetValue(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Vector3 ConvertT1toT2(Vector3 value)
+        {
+            return value;
+        }
+
+        public override Vector3 Calculate(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             Vector3 res = getter();
             res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
