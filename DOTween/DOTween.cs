@@ -143,14 +143,14 @@ namespace DG.Tween
         /// Tweens a property using a custom plugin
         /// </summary>
         public static Tweener<T1,T2> To<T1,T2,TPlugin>(
-            MemberGetter<T1> getter, MemberSetter<T1> setter, IPluginSetter<T1,T2, TPlugin> pluginSetter,
+            IPlugSetter<T1,T2, TPlugin> plugSetter,
             float duration, UpdateType updateType = UpdateType.Default
         )
             where TPlugin : ITweenPlugin, new()
         {
             InitCheck();
             Tweener<T1,T2> tweener = TweenManager.GetTweener<T1,T2>(updateType);
-            if (!Tweener<T1,T2>.Setup(tweener, getter, setter, pluginSetter, duration)) {
+            if (!Tweener<T1,T2>.Setup(tweener, plugSetter, duration)) {
                 TweenManager.Despawn(tweener);
                 return null;
             }

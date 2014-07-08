@@ -27,19 +27,22 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public struct PlugVector3X : IPluginSetter<Vector3, Vector3, Vector3XPlugin>
+    public struct PlugVector3X : IPlugSetter<Vector3, Vector3, Vector3XPlugin>
     {
-        internal Vector3 endValue;
-        internal Type pluginType;
+        readonly Vector3 _endValue;
+        readonly MemberGetter<Vector3> _getter;
+        readonly MemberSetter<Vector3> _setter;
 
-        public PlugVector3X(float endValue)
+        public PlugVector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
         {
-            this.endValue = new Vector3(endValue, 0, 0);
-            pluginType = typeof(Vector3XPlugin);
+            _getter = getter;
+            _setter = setter;
+            _endValue = new Vector3(endValue, 0, 0);
         }
 
-        public Type PluginType() { return pluginType; }
-        public Vector3 EndValue() { return endValue; }
+        public MemberGetter<Vector3> Getter() { return _getter; }
+        public MemberSetter<Vector3> Setter() { return _setter; }
+        public Vector3 EndValue() { return _endValue; }
     }
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
