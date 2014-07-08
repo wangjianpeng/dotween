@@ -76,16 +76,17 @@ namespace DG.Tween
         // Returns TRUE if the setup is successful
         internal static bool Setup(Tweener<T1,T2> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, float duration)
         {
-            t._getter = getter;
-            t._setter = setter;
-            t._endValue = endValue;
-            t.duration = duration;
-            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T1,T2>();
+            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2>();
             if (t._tweenPlugin == null) {
                 // No suitable plugin found. Kill
                 Debugger.LogError("No suitable plugin found for this type");
                 return false;
             }
+
+            t._getter = getter;
+            t._setter = setter;
+            t._endValue = endValue;
+            t.duration = duration;
             return true;
         }
         internal static bool Setup<TPlugin>(Tweener<T1, T2> t, IPlugSetter<T1,T2,TPlugin> plugSetter, float duration)
