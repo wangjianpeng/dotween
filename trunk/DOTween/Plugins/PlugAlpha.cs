@@ -30,8 +30,8 @@ namespace DG.Tween.Plugins
     public struct PlugAlpha : IPlugSetter<Color, Color, AlphaPlugin>
     {
         readonly Color _endValue;
-        readonly MemberGetter<Color> _getter; 
-        readonly MemberSetter<Color> _setter; 
+        readonly MemberGetter<Color> _getter;
+        readonly MemberSetter<Color> _setter;
 
         public PlugAlpha(MemberGetter<Color> getter, MemberSetter<Color> setter, float endValue)
         {
