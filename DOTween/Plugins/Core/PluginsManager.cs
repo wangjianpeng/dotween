@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using DG.Tween.Core;
 using DG.Tween.Plugins.DefaultPlugins;
 using UnityEngine;
 
@@ -54,7 +55,8 @@ namespace DG.Tween.Plugins.Core
             } else if (t1 == typeof(Vector3)) {
                 plugin = new Vector3Plugin();
             } else if (t1 == typeof(Quaternion)) {
-                plugin = new QuaternionPlugin();
+                if (t2 == typeof(Quaternion)) Debugger.LogError("Quaternion tweens require a Vector3 endValue");
+                else plugin = new QuaternionPlugin();
             }
 
             if (plugin != null) {
