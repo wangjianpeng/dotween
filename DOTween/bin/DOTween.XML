@@ -29,12 +29,12 @@
             <param name="sequencesCapacity">Max Sequences capacity.
             Default: 50</param>
         </member>
-        <member name="M:DG.Tween.DOTween.To``1(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``0,System.Single,DG.Tween.UpdateType)">
+        <member name="M:DG.Tween.DOTween.To``2(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,System.Single,DG.Tween.UpdateType)">
             <summary>
             Tweens a property
             </summary>
         </member>
-        <member name="M:DG.Tween.DOTween.To``2(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},DG.Tween.Plugins.Core.IPluginSetter{``0,``1},System.Single,DG.Tween.UpdateType)">
+        <member name="M:DG.Tween.DOTween.To``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},DG.Tween.Plugins.Core.IPluginSetter{``0,``1,``2},System.Single,DG.Tween.UpdateType)">
             <summary>
             Tweens a property using a custom plugin
             </summary>

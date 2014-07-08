@@ -53,16 +53,16 @@ namespace DG.Tween.Core
 
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
-        internal static Tweener<T> GetTweener<T>(UpdateType updateType, bool playNow = true)
+        internal static Tweener<T1,T2> GetTweener<T1,T2>(UpdateType updateType, bool playNow = true)
         {
-            Tweener<T> t;
+            Tweener<T1,T2> t;
             // Search inside pool
             if (totPooledTweeners > 0) {
-                Type type = typeof(T);
+                Type type = typeof(T1);
                 for (int i = 0; i < totPooledTweeners; ++i) {
                     if (_PooledTweeners[i].type == type) {
                         // Pooled Tweener exists: spawn it
-                        t = (Tweener<T>)_PooledTweeners[i];
+                        t = (Tweener<T1,T2>)_PooledTweeners[i];
                         t.active = true;
                         t.isPlaying = playNow;
                         AddActiveTween(t, updateType);
@@ -84,7 +84,7 @@ namespace DG.Tween.Core
                 }
             }
             // Not found: create new TweenerController
-            t = new Tweener<T>();
+            t = new Tweener<T1,T2>();
             totTweeners++;
             t.active = true;
             t.isPlaying = playNow;

@@ -24,9 +24,9 @@ using System;
 
 namespace DG.Tween.Plugins.Core
 {
-    public interface IPluginSetter<out T,TPlugin>
+    public interface IPluginSetter<out T1, out T2, TPlugin>
     {
         Type PluginType();
-        T EndValue();
+        T2 EndValue();
     }
 }

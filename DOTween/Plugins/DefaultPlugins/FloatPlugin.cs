@@ -24,9 +24,14 @@ using DG.Tween.Plugins.Core;
 
 namespace DG.Tween.Plugins.DefaultPlugins
 {
-    public class FloatPlugin : ABSTweenPlugin<float>
+    public class FloatPlugin : ABSTweenPlugin<float,float>
     {
-        public override float GetValue(MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
+        public override float ConvertT1toT2(float value)
+        {
+            return value;
+        }
+
+        public override float Calculate(MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
         {
             return ease(elapsed, startValue, (endValue - startValue), duration, 0, 0);
         }

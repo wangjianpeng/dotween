@@ -27,7 +27,7 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public class PlugAlpha : IPluginSetter<Color, AlphaPlugin>
+    public class PlugAlpha : IPluginSetter<Color, Color, AlphaPlugin>
     {
         internal Color endValue;
         internal Type pluginType;
@@ -46,9 +46,14 @@ namespace DG.Tween.Plugins
     // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public class AlphaPlugin : ABSTweenPlugin<Color>
+    public class AlphaPlugin : ABSTweenPlugin<Color, Color>
     {
-        public override Color GetValue(MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
+        public override Color ConvertT1toT2(Color value)
+        {
+            return value;
+        }
+
+        public override Color Calculate(MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
         {
             Color res = getter();
             res.a = ease(elapsed, startValue.a, (endValue.a - startValue.a), duration, 0, 0);

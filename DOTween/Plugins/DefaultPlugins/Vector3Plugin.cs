@@ -25,9 +25,14 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins.DefaultPlugins
 {
-    public class Vector3Plugin : ABSTweenPlugin<Vector3>
+    public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3>
     {
-        public override Vector3 GetValue(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Vector3 ConvertT1toT2(Vector3 value)
+        {
+            return value;
+        }
+
+        public override Vector3 Calculate(MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
