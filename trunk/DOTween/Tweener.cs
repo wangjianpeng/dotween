@@ -88,14 +88,14 @@ namespace DG.Tween
             }
             return true;
         }
-        internal static bool Setup<TPlugin>(Tweener<T1, T2> t, MemberGetter<T1> getter, MemberSetter<T1> setter, IPluginSetter<T1,T2,TPlugin> pluginSetter, float duration)
+        internal static bool Setup<TPlugin>(Tweener<T1, T2> t, IPlugSetter<T1,T2,TPlugin> plugSetter, float duration)
             where TPlugin : ITweenPlugin, new()
         {
-            t._getter = getter;
-            t._setter = setter;
-            t._endValue = pluginSetter.EndValue();
+            t._getter = plugSetter.Getter();
+            t._setter = plugSetter.Setter();
+            t._endValue = plugSetter.EndValue();
             t.duration = duration;
-            t._tweenPlugin = PluginsManager.GetCustomPlugin(pluginSetter);
+            t._tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
             return true;
         }
 

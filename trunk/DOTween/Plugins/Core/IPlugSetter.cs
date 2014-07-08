@@ -21,12 +21,14 @@
 // 
 
 using System;
+using DG.Tween.Core;
 
 namespace DG.Tween.Plugins.Core
 {
-    public interface IPluginSetter<out T1, out T2, TPlugin>
+    public interface IPlugSetter<T1, out T2, TPlugin>
     {
-        Type PluginType();
+        MemberGetter<T1> Getter();
+        MemberSetter<T1> Setter();
         T2 EndValue();
     }
 }

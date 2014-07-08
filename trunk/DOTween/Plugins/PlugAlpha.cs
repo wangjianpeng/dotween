@@ -27,19 +27,22 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public class PlugAlpha : IPluginSetter<Color, Color, AlphaPlugin>
+    public struct PlugAlpha : IPlugSetter<Color, Color, AlphaPlugin>
     {
-        internal Color endValue;
-        internal Type pluginType;
+        readonly Color _endValue;
+        readonly MemberGetter<Color> _getter; 
+        readonly MemberSetter<Color> _setter; 
 
-        public PlugAlpha(float endValue)
+        public PlugAlpha(MemberGetter<Color> getter, MemberSetter<Color> setter, float endValue)
         {
-            this.endValue = new Color(0, 0, 0, endValue);
-            pluginType = typeof(AlphaPlugin);
+            _getter = getter;
+            _setter = setter;
+            _endValue = new Color(0, 0, 0, endValue);
         }
 
-        public Type PluginType() { return pluginType; }
-        public Color EndValue() { return endValue; }
+        public MemberGetter<Color> Getter() { return _getter; }
+        public MemberSetter<Color> Setter() { return _setter; }
+        public Color EndValue() { return _endValue; }
     }
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -60,13 +60,14 @@ namespace DG.Tween.Plugins.Core
             return null;
         }
 
-        internal static ABSTweenPlugin<T1,T2> GetCustomPlugin<T1,T2,TPlugin>(IPluginSetter<T1,T2,TPlugin> pluginSetter)
+        internal static ABSTweenPlugin<T1,T2> GetCustomPlugin<T1,T2,TPlugin>(IPlugSetter<T1,T2,TPlugin> plugSetter)
             where TPlugin : ITweenPlugin, new()
         {
-            if (_CustomPlugins.ContainsKey(pluginSetter.PluginType())) return _CustomPlugins[pluginSetter.PluginType()] as ABSTweenPlugin<T1,T2>;
+            Type t = typeof(TPlugin);
+            if (_CustomPlugins.ContainsKey(t)) return _CustomPlugins[t] as ABSTweenPlugin<T1,T2>;
             
             TPlugin plugin = new TPlugin();
-            _CustomPlugins.Add(pluginSetter.PluginType(), plugin);
+            _CustomPlugins.Add(t, plugin);
             return plugin as ABSTweenPlugin<T1,T2>;
         }
 
