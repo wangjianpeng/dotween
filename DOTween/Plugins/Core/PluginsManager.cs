@@ -38,7 +38,7 @@ namespace DG.Tween.Plugins.Core
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static ABSTweenPlugin<T1,T2> GetDefaultPlugin<T1,T2>()
+        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetDefaultPlugin<T1,T2,TPlugOptions>()
         {
             // TODO Improve
 
@@ -46,7 +46,7 @@ namespace DG.Tween.Plugins.Core
             Type t2 = typeof(T2);
             bool hasT1 = _DefaultPlugins.ContainsKey(t1);
             bool hasT2 = hasT1 && _DefaultPlugins[t1].ContainsKey(t2);
-            if (hasT2) return _DefaultPlugins[t1][t2] as ABSTweenPlugin<T1,T2>;
+            if (hasT2) return _DefaultPlugins[t1][t2] as ABSTweenPlugin<T1,T2,TPlugOptions>;
 
             // Retrieve correct custom plugin
             ITweenPlugin plugin = null;
@@ -62,21 +62,21 @@ namespace DG.Tween.Plugins.Core
             if (plugin != null) {
                 if (!hasT1) _DefaultPlugins.Add(t1, new Dictionary<Type, ITweenPlugin>());
                 _DefaultPlugins[t1].Add(t2, plugin);
-                return plugin as ABSTweenPlugin<T1,T2>;
+                return plugin as ABSTweenPlugin<T1,T2,TPlugOptions>;
             }
 
             return null;
         }
 
-        internal static ABSTweenPlugin<T1,T2> GetCustomPlugin<T1,T2,TPlugin>(IPlugSetter<T1,T2,TPlugin> plugSetter)
+        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)
             where TPlugin : ITweenPlugin, new()
         {
             Type t = typeof(TPlugin);
-            if (_CustomPlugins.ContainsKey(t)) return _CustomPlugins[t] as ABSTweenPlugin<T1,T2>;
+            if (_CustomPlugins.ContainsKey(t)) return _CustomPlugins[t] as ABSTweenPlugin<T1,T2,TPlugOptions>;
             
             TPlugin plugin = new TPlugin();
             _CustomPlugins.Add(t, plugin);
-            return plugin as ABSTweenPlugin<T1,T2>;
+            return plugin as ABSTweenPlugin<T1,T2,TPlugOptions>;
         }
 
         // Un-caches all plugins

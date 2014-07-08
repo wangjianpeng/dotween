@@ -31,7 +31,7 @@ namespace DG.Tween
 {
     // T1: type of value to tween
     // T2: format in which value is stored while tweening
-    public sealed class Tweener<T1,T2> : Tween
+    public sealed class Tweener<T1,T2,TPlugOptions> : Tween
     {
         // OPTIONS ///////////////////////////////////////////////////
 
@@ -45,7 +45,8 @@ namespace DG.Tween
         MemberGetter<T1> _getter;
         MemberSetter<T1> _setter;
         T2 _startValue, _endValue;
-        ABSTweenPlugin<T1,T2> _tweenPlugin;
+        ABSTweenPlugin<T1,T2,TPlugOptions> _tweenPlugin;
+        TPlugOptions _plugOptions;
 
         // PLAY DATA /////////////////////////////////////////////////
 
@@ -74,9 +75,9 @@ namespace DG.Tween
 
         // Called by DOTween when spawning/creating a new Tweener.
         // Returns TRUE if the setup is successful
-        internal static bool Setup(Tweener<T1,T2> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, float duration)
+        internal static bool Setup(Tweener<T1,T2,TPlugOptions> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, float duration)
         {
-            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2>();
+            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T1,T2,TPlugOptions>();
             if (t._tweenPlugin == null) {
                 // No suitable plugin found. Kill
                 Debugger.LogError("No suitable plugin found for this type");
@@ -89,12 +90,13 @@ namespace DG.Tween
             t.duration = duration;
             return true;
         }
-        internal static bool Setup<TPlugin>(Tweener<T1, T2> t, IPlugSetter<T1,T2,TPlugin> plugSetter, float duration)
+        internal static bool Setup<TPlugin>(Tweener<T1,T2,TPlugOptions> t, IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
             where TPlugin : ITweenPlugin, new()
         {
             t._getter = plugSetter.Getter();
             t._setter = plugSetter.Setter();
             t._endValue = plugSetter.EndValue();
+            t._plugOptions = plugSetter.GetOptions();
             t.duration = duration;
             t._tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
             return true;
@@ -118,7 +120,7 @@ namespace DG.Tween
         // METHODS ---------------------------------------------------------------------------
 
         // _tweenPlugin is not reset since it's useful to keep it as a reference
-        static void DoReset(Tweener<T1, T2> t)
+        static void DoReset(Tweener<T1,T2,TPlugOptions> t)
         {
             t.isRelative = false;
             t.ease = Quad.EaseOut;
@@ -131,23 +133,23 @@ namespace DG.Tween
         // Called the moment the tween starts, AFTER any delay has elapsed.
         // Returns TRUE in case of success,
         // FALSE if there were are missing references and the tween needs to be killed
-        static bool Startup(Tweener<T1, T2> t)
+        static bool Startup(Tweener<T1,T2,TPlugOptions> t)
         {
             t.startupDone = true;
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
             if (DOTween.useSafeMode) {
                 try {
-                    t._startValue = t._tweenPlugin.ConvertT1toT2(t._getter());
+                    t._startValue = t._tweenPlugin.ConvertT1toT2(t._plugOptions, t._getter());
                 } catch (UnassignedReferenceException) {
                     // Target/field doesn't exist: kill tween
                     return false;
                 }
-            } else t._startValue = t._tweenPlugin.ConvertT1toT2(t._getter());
-            if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._startValue, t._endValue);
+            } else t._startValue = t._tweenPlugin.ConvertT1toT2(t._plugOptions, t._getter());
+            if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._plugOptions, t._startValue, t._endValue);
             return true;
         }
 
-        static float DoUpdateDelay(Tweener<T1, T2> t, float elapsed)
+        static float DoUpdateDelay(Tweener<T1,T2,TPlugOptions> t, float elapsed)
         {
             t.elapsedDelay = elapsed;
             if (t.elapsedDelay > t.delay) {
@@ -163,7 +165,7 @@ namespace DG.Tween
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
         // Executes regardless of whether the tween is playing,
         // but not if the tween result would be a completion or rewind, and the tween is already there
-        static bool DoGoto(Tweener<T1, T2> t, UpdateData updateData)
+        static bool DoGoto(Tweener<T1,T2,TPlugOptions> t, UpdateData updateData)
         {
             // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state?
 
@@ -207,7 +209,7 @@ namespace DG.Tween
                 // in order to make position 0 equal to position "end"
                 easePosition = t.duration - t.position;
             }
-            T1 newVal = t._tweenPlugin.Calculate(t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease);
+            T1 newVal = t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease);
             if (DOTween.useSafeMode) {
                 try {
                     t._setter(newVal);

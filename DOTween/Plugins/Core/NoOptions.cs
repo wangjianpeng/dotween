@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/05/07 00:41
+// Created: 2014/07/08 17:34
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,16 +18,11 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-using DG.Tween.Core;
-
+// 
 namespace DG.Tween.Plugins.Core
 {
-    public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin
+    public struct NoOptions
     {
-        // getter is there because some plugins might need it
-        public abstract T2 ConvertT1toT2(TPlugOptions options, T1 value);
-        public abstract T1 Calculate(TPlugOptions options, MemberGetter<T1> getter, float elapsed, T2 startValue, T2 endValue, float duration, EaseFunction ease);
-        public abstract T2 GetRelativeEndValue(TPlugOptions options, T2 startValue, T2 changeValue);
+         
     }
 }

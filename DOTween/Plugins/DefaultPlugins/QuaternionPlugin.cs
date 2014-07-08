@@ -26,14 +26,14 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins.DefaultPlugins
 {
-    public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3>
+    public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3,NoOptions>
     {
-        public override Vector3 ConvertT1toT2(Quaternion value)
+        public override Vector3 ConvertT1toT2(NoOptions options, Quaternion value)
         {
             return value.eulerAngles;
         }
 
-        public override Quaternion Calculate(MemberGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Quaternion Calculate(NoOptions options, MemberGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
@@ -41,7 +41,7 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return Quaternion.Euler(startValue);
         }
 
-        public override Vector3 GetRelativeEndValue(Vector3 startValue, Vector3 changeValue)
+        public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
         {
             return startValue + changeValue;
         }

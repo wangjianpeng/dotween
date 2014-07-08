@@ -25,10 +25,11 @@ using DG.Tween.Core;
 
 namespace DG.Tween.Plugins.Core
 {
-    public interface IPlugSetter<T1, out T2, TPlugin>
+    public interface IPlugSetter<T1, out T2, TPlugin, out TPlugOptions>
     {
         MemberGetter<T1> Getter();
         MemberSetter<T1> Setter();
         T2 EndValue();
+        TPlugOptions GetOptions();
     }
 }

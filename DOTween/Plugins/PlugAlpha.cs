@@ -27,7 +27,7 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins
 {
-    public struct PlugAlpha : IPlugSetter<Color, Color, AlphaPlugin>
+    public struct PlugAlpha : IPlugSetter<Color, Color, AlphaPlugin, NoOptions>
     {
         readonly Color _endValue;
         readonly MemberGetter<Color> _getter;
@@ -43,27 +43,28 @@ namespace DG.Tween.Plugins
         public MemberGetter<Color> Getter() { return _getter; }
         public MemberSetter<Color> Setter() { return _setter; }
         public Color EndValue() { return _endValue; }
+        public NoOptions GetOptions() { return new NoOptions(); }
     }
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public class AlphaPlugin : ABSTweenPlugin<Color, Color>
+    public class AlphaPlugin : ABSTweenPlugin<Color, Color, NoOptions>
     {
-        public override Color ConvertT1toT2(Color value)
+        public override Color ConvertT1toT2(NoOptions options, Color value)
         {
             return value;
         }
 
-        public override Color Calculate(MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
+        public override Color Calculate(NoOptions options, MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
         {
             Color res = getter();
             res.a = ease(elapsed, startValue.a, (endValue.a - startValue.a), duration, 0, 0);
             return res;
         }
 
-        public override Color GetRelativeEndValue(Color startValue, Color changeValue)
+        public override Color GetRelativeEndValue(NoOptions options, Color startValue, Color changeValue)
         {
             return startValue + changeValue;
         }
