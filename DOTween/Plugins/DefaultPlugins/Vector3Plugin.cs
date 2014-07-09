@@ -25,22 +25,27 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins.DefaultPlugins
 {
-    public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
+    public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3,PlugVector3.Options>
     {
-        public override Vector3 ConvertT1toT2(NoOptions options, Vector3 value)
+        public override Vector3 ConvertT1toT2(PlugVector3.Options options, Vector3 value)
         {
             return value;
         }
 
-        public override Vector3 Calculate(NoOptions options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Vector3 Calculate(PlugVector3.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
             startValue.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
+            if (options.snapping) {
+                startValue.x = Mathf.Round(startValue.x);
+                startValue.y = Mathf.Round(startValue.y);
+                startValue.z = Mathf.Round(startValue.z);
+            }
             return startValue;
         }
 
-        public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
+        public override Vector3 GetRelativeEndValue(PlugVector3.Options options, Vector3 startValue, Vector3 changeValue)
         {
             return startValue + changeValue;
         }

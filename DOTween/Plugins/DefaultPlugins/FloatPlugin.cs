@@ -21,22 +21,25 @@
 
 using DG.Tween.Core;
 using DG.Tween.Plugins.Core;
+using UnityEngine;
 
 namespace DG.Tween.Plugins.DefaultPlugins
 {
-    public class FloatPlugin : ABSTweenPlugin<float,float,NoOptions>
+    public class FloatPlugin : ABSTweenPlugin<float,float,PlugFloat.Options>
     {
-        public override float ConvertT1toT2(NoOptions options, float value)
+        public override float ConvertT1toT2(PlugFloat.Options options, float value)
         {
             return value;
         }
 
-        public override float Calculate(NoOptions options, MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
+        public override float Calculate(PlugFloat.Options options, MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
         {
-            return ease(elapsed, startValue, (endValue - startValue), duration, 0, 0);
+            return options.snapping
+                ? Mathf.Round(ease(elapsed, startValue, (endValue - startValue), duration, 0, 0))
+                : ease(elapsed, startValue, (endValue - startValue), duration, 0, 0);
         }
 
-        public override float GetRelativeEndValue(NoOptions options, float startValue, float changeValue)
+        public override float GetRelativeEndValue(PlugFloat.Options options, float startValue, float changeValue)
         {
             return startValue + changeValue;
         }

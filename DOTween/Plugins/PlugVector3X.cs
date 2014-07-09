@@ -20,7 +20,6 @@
 // THE SOFTWARE.
 // 
 
-using System;
 using DG.Tween.Core;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
@@ -64,11 +63,11 @@ namespace DG.Tween.Plugins
 
         public struct Options
         {
-            public bool snapToInt;
+            public bool snapping;
 
-            public Options(bool snapToInt)
+            public Options(bool snapping)
             {
-                this.snapToInt = snapToInt;
+                this.snapping = snapping;
             }
         }
     }
@@ -87,8 +86,8 @@ namespace DG.Tween.Plugins
         public override Vector3 Calculate(PlugVector3X.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
         {
             Vector3 res = getter();
-            if (options.snapToInt) res.x = Mathf.Round(ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0));
-            else res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
+            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
+            if (options.snapping) res.x = Mathf.Round(res.x);
             return res;
         }
 

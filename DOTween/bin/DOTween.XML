@@ -29,9 +29,18 @@
             <param name="sequencesCapacity">Max Sequences capacity.
             Default: 50</param>
         </member>
-        <member name="M:DG.Tween.DOTween.To``2(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,System.Single,DG.Tween.UpdateType)">
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a float using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a Vector3 using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Quaternion},DG.Tween.Core.MemberSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a Quaternion using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.To``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tween.UpdateType)">
             <summary>
-            Tweens a property
+            Tweens a property using default plugins with options
             </summary>
         </member>
         <member name="M:DG.Tween.DOTween.To``4(DG.Tween.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single,DG.Tween.UpdateType)">

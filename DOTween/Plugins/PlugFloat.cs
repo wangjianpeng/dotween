@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/07 14:52
+// Created: 2014/07/08 18:37
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-
-using DG.Tween.Core;
-
-namespace DG.Tween.Plugins.Core
+namespace DG.Tween.Plugins
 {
-    public interface IPlugSetter<T1, out T2, TPlugin, out TPlugOptions>
+    public struct PlugFloat
     {
-        MemberGetter<T1> Getter();
-        MemberSetter<T1> Setter();
-        T2 EndValue();
-        TPlugOptions GetOptions();
+        public struct Options
+        {
+            public bool snapping;
+
+            public Options(bool snapping)
+            {
+                this.snapping = snapping;
+            }
+        }
     }
 }
