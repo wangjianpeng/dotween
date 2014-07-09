@@ -48,6 +48,25 @@
             Tweens a property using a custom plugin with eventual options
             </summary>
         </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a float using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a Vector3 using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Quaternion},DG.Tween.Core.MemberSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a Quaternion using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tween.UpdateType)">
+            <summary>
+            Tweens a property using default plugins with options
+            </summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From``4(DG.Tween.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single,DG.Tween.UpdateType)">
+            <summary>
+            Tweens a property using a custom plugin with eventual options
+            </summary>
+        </member>
         <member name="M:DG.Tween.DOTween.Clear">
             <summary>
             Kills all tweens and cleans the pooled tweens cache
@@ -130,19 +149,19 @@
         </member>
         <member name="M:DG.Tween.DOTween.PlayBackwards">
             <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
-            (meaning tweens that were not already playing backwards or rewinded)</summary>
+            (meaning tweens that were not already started, playing backwards or rewinded)</summary>
         </member>
         <member name="M:DG.Tween.DOTween.PlayBackwards(System.Int32)">
             <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
-            (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+            (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         </member>
         <member name="M:DG.Tween.DOTween.PlayBackwards(System.String)">
             <summary>Plays all tweens with the given string ID in backwards direction and returns the number of actual tweens played
-            (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+            (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         </member>
         <member name="M:DG.Tween.DOTween.PlayBackwards(UnityEngine.Object)">
             <summary>Plays all tweens with the given object ID in backwards direction and returns the number of actual tweens played
-            (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+            (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         </member>
         <member name="M:DG.Tween.DOTween.PlayForward">
             <summary>Plays all tweens in forward direction and returns the number of actual tweens played
@@ -160,31 +179,31 @@
             <summary>Plays all tweens with the given object ID in forward direction and returns the number of actual tweens played
             (meaning the tweens with the given id that were not already playing forward or complete)</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Restart">
+        <member name="M:DG.Tween.DOTween.Restart(System.Boolean)">
             <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Restart(System.Int32)">
+        <member name="M:DG.Tween.DOTween.Restart(System.Int32,System.Boolean)">
             <summary>Restarts all tweens with the given ID, then returns the number of actual tweens restarted</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Restart(System.String)">
+        <member name="M:DG.Tween.DOTween.Restart(System.String,System.Boolean)">
             <summary>Restarts all tweens with the given string ID, then returns the number of actual tweens restarted</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Restart(UnityEngine.Object)">
+        <member name="M:DG.Tween.DOTween.Restart(UnityEngine.Object,System.Boolean)">
             <summary>Restarts all tweens with the given object ID, then returns the number of actual tweens restarted</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Rewind">
+        <member name="M:DG.Tween.DOTween.Rewind(System.Boolean)">
             <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
             (meaning tweens that were not already rewinded)</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Rewind(System.Int32)">
+        <member name="M:DG.Tween.DOTween.Rewind(System.Int32,System.Boolean)">
             <summary>Rewinds and pauses all tweens with the given ID, then returns the number of actual tweens rewinded
             (meaning the tweens with the given id that were not already rewinded)</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Rewind(System.String)">
+        <member name="M:DG.Tween.DOTween.Rewind(System.String,System.Boolean)">
             <summary>Rewinds and pauses all tweens with the given string ID, then returns the number of actual tweens rewinded
             (meaning the tweens with the given id that were not already rewinded)</summary>
         </member>
-        <member name="M:DG.Tween.DOTween.Rewind(UnityEngine.Object)">
+        <member name="M:DG.Tween.DOTween.Rewind(UnityEngine.Object,System.Boolean)">
             <summary>Rewinds and pauses all tweens with the given object ID, then returns the number of actual tweens rewinded
             (meaning the tweens with the given id that were not already rewinded)</summary>
         </member>

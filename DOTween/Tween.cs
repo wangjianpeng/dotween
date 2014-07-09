@@ -57,7 +57,7 @@ namespace DG.Tween
         // PLAY DATA /////////////////////////////////////////////////
 
         internal bool creationLocked; // TRUE after the tween was updated the first time (even if it was delayed)
-        internal bool startupDone;
+        internal bool startupDone; // TRUE the first time the actual tween starts, AFTER any delay has elapsed (unless it's a FROM tween)
         internal bool playedOnce; // TRUE after the tween was set in a play state at least once, AFTER any delay is elapsed
         internal float position; // Time position within a single loop cycle
         internal float fullDuration; // Total duration loops included

@@ -107,6 +107,25 @@ namespace DG.Tween.Core
             DoUpdate(deltaTime * DOTween.timeScale, _ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens);
         }
 
+        internal static bool Complete(Tween t, bool modifyActiveLists = true)
+        {
+            if (t.loops == -1) return false;
+            if (!t.isComplete) {
+                t.Goto(new UpdateData(t.duration, t.loops, UpdateMode.Goto));
+                t.isPlaying = false;
+                // Despawn if needed
+                if (t.autoKill) Despawn(t, modifyActiveLists);
+                return true;
+            }
+            return false;
+        }
+
+        internal static bool Flip(Tween t)
+        {
+            t.isBackwards = !t.isBackwards;
+            return true;
+        }
+
         // Returns TRUE if the given tween was not already paused
         internal static bool Pause(Tween t)
         {
@@ -147,40 +166,31 @@ namespace DG.Tween.Core
             return Play(t);
         }
 
-        internal static bool Restart(Tween t)
+        internal static bool Restart(Tween t, bool includeDelay = true)
         {
-            Rewind(t);
+            Rewind(t, includeDelay);
             t.isPlaying = true;
             return true;
         }
 
-        internal static bool Flip(Tween t)
-        {
-            t.isBackwards = !t.isBackwards;
-            return true;
-        }
-
-        internal static bool Rewind(Tween t)
+        internal static bool Rewind(Tween t, bool includeDelay = true)
         {
             t.isPlaying = false;
-            if (t.position > 0 || t.completedLoops > 0) {
+            bool rewinded = false;
+            if (includeDelay) {
+                rewinded = t.delay > 0 && t.elapsedDelay > 0;
+                t.elapsedDelay = 0;
+                t.delayComplete = false;
+            } else {
+                rewinded = t.elapsedDelay < t.delay;
+                t.elapsedDelay = t.delay;
+                t.delayComplete = true;
+            }
+            if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
+                rewinded = true;
                 t.Goto(new UpdateData(0, 0, UpdateMode.Goto));
-                return true;
             }
-            return false;
-        }
-
-        internal static bool Complete(Tween t, bool modifyActiveLists = true)
-        {
-            if (t.loops == -1) return false;
-            if (!t.isComplete) {
-                t.Goto(new UpdateData(t.duration, t.loops, UpdateMode.Goto));
-                t.isPlaying = false;
-                // Despawn if needed
-                if (t.autoKill) Despawn(t, modifyActiveLists);
-                return true;
-            }
-            return false;
+            return rewinded;
         }
 
         // Despawn all
@@ -238,17 +248,17 @@ namespace DG.Tween.Core
             t.Reset();
         }
 
-        internal static int FilteredOperation(OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId)
+        internal static int FilteredOperation(OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool)
         {
             int totInvolved = 0;
             if (hasActiveDefaultTweens) {
-                totInvolved += DoFilteredOperation(_ActiveDefaultTweens, UpdateType.Default, totActiveDefaultTweens, operationType, filterType, id, stringId, unityObjectId);
+                totInvolved += DoFilteredOperation(_ActiveDefaultTweens, UpdateType.Default, totActiveDefaultTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool);
             }
             if (hasActiveFixedTweens) {
-                totInvolved += DoFilteredOperation(_ActiveFixedTweens, UpdateType.Fixed, totActiveFixedTweens, operationType, filterType, id, stringId, unityObjectId);
+                totInvolved += DoFilteredOperation(_ActiveFixedTweens, UpdateType.Fixed, totActiveFixedTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool);
             }
             if (hasActiveIndependentTweens) {
-                totInvolved += DoFilteredOperation(_ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens, operationType, filterType, id, stringId, unityObjectId);
+                totInvolved += DoFilteredOperation(_ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool);
             }
             return totInvolved;
         }
@@ -358,6 +368,14 @@ namespace DG.Tween.Core
                 if (t.isPlaying) {
                     if (!t.delayComplete) {
                         deltaTime = t.UpdateDelay(t.elapsedDelay + deltaTime);
+                        if (deltaTime <= -1) {
+                            // Error during startup (heppens with a FROM tween): mark tween for killing
+                            t.active = false;
+                            willKill = true;
+                            _KillList.Add(t);
+                            _KillIds.Add(i);
+                            continue;
+                        }
                         if (deltaTime <= 0) continue;
                     }
                     bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, deltaTime));
@@ -394,7 +412,7 @@ namespace DG.Tween.Core
             }
         }
 
-        static int DoFilteredOperation(List<Tween> tweens, UpdateType updateType, int totTweens, OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId)
+        static int DoFilteredOperation(List<Tween> tweens, UpdateType updateType, int totTweens, OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool)
         {
             int totInvolved = 0;
             int totDespawned = 0;
@@ -436,13 +454,13 @@ namespace DG.Tween.Core
                         if (PlayForward(t)) totInvolved++;
                         break;
                     case OperationType.Restart:
-                        if (Restart(t)) totInvolved++;
+                        if (Restart(t, optionalBool)) totInvolved++;
                         break;
                     case OperationType.Flip:
                         if (Flip(t)) totInvolved++;
                         break;
                     case OperationType.Rewind:
-                        if (Rewind(t)) totInvolved++;
+                        if (Rewind(t, optionalBool)) totInvolved++;
                         break;
                     case OperationType.Complete:
                         bool hasAutoKill = t.autoKill;
