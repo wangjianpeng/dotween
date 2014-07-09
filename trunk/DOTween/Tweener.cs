@@ -207,6 +207,7 @@ namespace DG.Tween
         static bool DoGoto(Tweener<T1,T2,TPlugOptions> t, UpdateData updateData)
         {
             // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state?
+            // TODO Optimize
 
             // Lock creation extensions
             t.creationLocked = true;
@@ -243,7 +244,7 @@ namespace DG.Tween
             if (t.position <= 0 && t.completedLoops > 0 || t.isComplete) t.position = t.duration;
             // Get values from plugin and set them
             float easePosition = t.position; // Changes in case we're yoyoing backwards
-            if (t.loopType == LoopType.Yoyo && (!t.isComplete ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
+            if (t.loopType == LoopType.Yoyo && (!t.isComplete && t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
                 // Behaves differently in case the tween is complete or not,
                 // in order to make position 0 equal to position "end"
                 easePosition = t.duration - t.position;
