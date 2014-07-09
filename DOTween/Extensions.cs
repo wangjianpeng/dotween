@@ -35,15 +35,21 @@ namespace DG.Tween
         {
             TweenManager.Complete(t);
         }
-        /// <summary>Immediately complete a tween and return the amount of tweens completed</summary>
+        
         public static void Flip(this Tween t)
         {
             TweenManager.Flip(t);
         }
 
-        public static void Pause(this Tween t)
+        public static void Goto(this Tween t, float to, bool andPlay = false)
+        {
+            TweenManager.Goto(t, to, andPlay);
+        }
+
+        public static Tween Pause(this Tween t)
         {
             TweenManager.Pause(t);
+            return t;
         }
 
         public static void Play(this Tween t)
@@ -85,7 +91,7 @@ namespace DG.Tween
 
         public static float Elapsed(this Tween t)
         {
-            int loopsToCount = t.loops != -1 && t.completedLoops == t.loops ? t.completedLoops - 1 : t.completedLoops;
+            int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
             return (loopsToCount * t.duration) + t.position;
         }
     }

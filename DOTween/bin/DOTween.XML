@@ -104,6 +104,22 @@
             <summary>Flips the tweens with the given object ID (changing their direction to forward if it was backwards and viceversa),
             then returns the number of actual tweens flipped</summary>
         </member>
+        <member name="M:DG.Tween.DOTween.Goto(System.Single,System.Boolean)">
+            <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
+            (meaning tweens that don't have infinite loops)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Goto(System.Int32,System.Single,System.Boolean)">
+            <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
+            (meaning the tweens with the given id that don't have infinite loops)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Goto(System.String,System.Single,System.Boolean)">
+            <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
+            (meaning the tweens with the given id that don't have infinite loops)</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.Goto(UnityEngine.Object,System.Single,System.Boolean)">
+            <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
+            (meaning the tweens with the given id that don't have infinite loops)</summary>
+        </member>
         <member name="M:DG.Tween.DOTween.Kill">
             <summary>Kills all tweens and returns the number of actual tweens killed</summary>
         </member>
@@ -496,9 +512,6 @@
             <summary>
             Shared by Tweeners and Sequences
             </summary>
-        </member>
-        <member name="M:DG.Tween.Extensions.Flip(DG.Tween.Tween)">
-            <summary>Immediately complete a tween and return the amount of tweens completed</summary>
         </member>
         <member name="T:DG.Tween.Core.Easing.Quint">
             <summary>

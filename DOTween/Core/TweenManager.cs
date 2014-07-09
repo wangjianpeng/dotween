@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tween.Core.Enums;
+using UnityEngine;
 
 namespace DG.Tween.Core
 {
@@ -123,6 +124,22 @@ namespace DG.Tween.Core
         internal static bool Flip(Tween t)
         {
             t.isBackwards = !t.isBackwards;
+            return true;
+        }
+
+        internal static bool Goto(Tween t, float to, bool andPlay = false)
+        {
+            if (t.loops == -1) return false;
+
+            t.isPlaying = andPlay;
+            t.delayComplete = true;
+            t.elapsedDelay = t.delay;
+            int completedLoops = (int)(to / t.duration);
+            if (completedLoops > t.loops) completedLoops = t.loops;
+            float position = to % t.duration;
+            if (position <= 0 && completedLoops == t.loops) position = t.duration;
+            else if (position >= t.duration) position = 0;
+            t.Goto(new UpdateData(position, completedLoops, UpdateMode.Goto));
             return true;
         }
 
@@ -248,17 +265,19 @@ namespace DG.Tween.Core
             t.Reset();
         }
 
-        internal static int FilteredOperation(OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool)
-        {
+        internal static int FilteredOperation(
+            OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId,
+            bool optionalBool, float optionalFloat
+        ){
             int totInvolved = 0;
             if (hasActiveDefaultTweens) {
-                totInvolved += DoFilteredOperation(_ActiveDefaultTweens, UpdateType.Default, totActiveDefaultTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool);
+                totInvolved += DoFilteredOperation(_ActiveDefaultTweens, UpdateType.Default, totActiveDefaultTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool, optionalFloat);
             }
             if (hasActiveFixedTweens) {
-                totInvolved += DoFilteredOperation(_ActiveFixedTweens, UpdateType.Fixed, totActiveFixedTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool);
+                totInvolved += DoFilteredOperation(_ActiveFixedTweens, UpdateType.Fixed, totActiveFixedTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool, optionalFloat);
             }
             if (hasActiveIndependentTweens) {
-                totInvolved += DoFilteredOperation(_ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool);
+                totInvolved += DoFilteredOperation(_ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool, optionalFloat);
             }
             return totInvolved;
         }
@@ -307,6 +326,7 @@ namespace DG.Tween.Core
         {
             deltaTime *= t.timeScale;
             float position = t.position;
+            bool wasEndPosition = position >= t.duration;
             int completedLoops = t.completedLoops;
             if (t.isBackwards) {
                 if (completedLoops == t.loops) completedLoops--;
@@ -322,6 +342,7 @@ namespace DG.Tween.Core
                     completedLoops++;
                 }
             }
+            if (wasEndPosition) completedLoops--;
 
             return new UpdateData(position, completedLoops);
         }
@@ -412,8 +433,10 @@ namespace DG.Tween.Core
             }
         }
 
-        static int DoFilteredOperation(List<Tween> tweens, UpdateType updateType, int totTweens, OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool)
-        {
+        static int DoFilteredOperation(
+            List<Tween> tweens, UpdateType updateType, int totTweens, OperationType operationType,
+            FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool, float optionalFloat
+        ){
             int totInvolved = 0;
             int totDespawned = 0;
             for (int i = totTweens - 1; i > -1; --i) {
@@ -441,6 +464,22 @@ namespace DG.Tween.Core
                         tweens.RemoveAt(i);
                         totDespawned++;
                         break;
+                    case OperationType.Complete:
+                        bool hasAutoKill = t.autoKill;
+                        if (Complete(t, false)) {
+                            totInvolved++;
+                            if (hasAutoKill) {
+                                tweens.RemoveAt(i);
+                                totDespawned++;
+                            }
+                        }
+                        break;
+                    case OperationType.Flip:
+                        if (Flip(t)) totInvolved++;
+                        break;
+                    case OperationType.Goto:
+                        if (Goto(t, optionalFloat, optionalBool)) totInvolved++;
+                        break;
                     case OperationType.Pause:
                         if (Pause(t)) totInvolved++;
                         break;
@@ -456,21 +495,8 @@ namespace DG.Tween.Core
                     case OperationType.Restart:
                         if (Restart(t, optionalBool)) totInvolved++;
                         break;
-                    case OperationType.Flip:
-                        if (Flip(t)) totInvolved++;
-                        break;
                     case OperationType.Rewind:
                         if (Rewind(t, optionalBool)) totInvolved++;
-                        break;
-                    case OperationType.Complete:
-                        bool hasAutoKill = t.autoKill;
-                        if (Complete(t, false)) {
-                            totInvolved++;
-                            if (hasAutoKill) {
-                                tweens.RemoveAt(i);
-                                totDespawned++;
-                            }
-                        }
                         break;
                     }
                 }
