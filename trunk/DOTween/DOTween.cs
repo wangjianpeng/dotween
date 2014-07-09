@@ -22,6 +22,7 @@
 using System.Collections;
 using DG.Tween.Core;
 using DG.Tween.Core.Enums;
+using DG.Tween.Plugins;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
 
@@ -123,22 +124,55 @@ namespace DG.Tween
         // ===================================================================================
         // PUBLIC TWEEN METHODS --------------------------------------------------------------
 
-        /// <summary>
-        /// Tweens a property
-        /// </summary>
-        public static Tweener<T1,T2,NoOptions> To<T1,T2>(
-            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue,
+        // Sadly can't make generic versions of default tweens with additional options
+        // where the TO method doesn't contain the options param, otherwise the correct Option type won't be inferred.
+        // So: overloads. Sigh
+//        public static Tweener<T1, T2, NoOptions> To<T1, T2>(
+//            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue,
+//            float duration, UpdateType updateType = UpdateType.Default
+//        )
+//        {
+//            InitCheck();
+//            Tweener<T1, T2, NoOptions> tweener = TweenManager.GetTweener<T1, T2, NoOptions>(updateType);
+//            if (!Tweener<T1, T2, NoOptions>.Setup(tweener, getter, setter, endValue, duration)) {
+//                TweenManager.Despawn(tweener);
+//                return null;
+//            }
+//            return tweener;
+//        }
+
+        /// <summary>Tweens a float using default plugins</summary>
+        public static Tweener<float, float, PlugFloat.Options> To(
+            MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ) {
+        ){ return To(getter, setter, endValue, new PlugFloat.Options(), duration, updateType); }
+        /// <summary>Tweens a Vector3 using default plugins</summary>
+        public static Tweener<Vector3, Vector3, PlugVector3.Options> To(
+            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return To(getter, setter, endValue, new PlugVector3.Options(), duration, updateType); }
+        /// <summary>Tweens a Quaternion using default plugins</summary>
+        public static Tweener<Quaternion, Vector3, NoOptions> To(
+            MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return To(getter, setter, endValue, new NoOptions(), duration, updateType); }
+        /// <summary>
+        /// Tweens a property using default plugins with options
+        /// </summary>
+        public static Tweener<T1,T2,TPlugOptions> To<T1,T2,TPlugOptions>(
+            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
+            float duration, UpdateType updateType = UpdateType.Default
+        )
+            where TPlugOptions : struct
+        {
             InitCheck();
-            Tweener<T1,T2,NoOptions> tweener = TweenManager.GetTweener<T1,T2,NoOptions>(updateType);
-            if (!Tweener<T1,T2,NoOptions>.Setup(tweener, getter, setter, endValue, duration)) {
+            Tweener<T1,T2,TPlugOptions> tweener = TweenManager.GetTweener<T1,T2,TPlugOptions>(updateType);
+            if (!Tweener<T1,T2,TPlugOptions>.Setup(tweener, getter, setter, endValue, options, duration)) {
                 TweenManager.Despawn(tweener);
                 return null;
             }
             return tweener;
         }
-
         /// <summary>
         /// Tweens a property using a custom plugin with eventual options
         /// </summary>
@@ -147,6 +181,7 @@ namespace DG.Tween
             float duration, UpdateType updateType = UpdateType.Default
         )
             where TPlugin : ITweenPlugin, new()
+            where TPlugOptions : struct
         {
             InitCheck();
             Tweener<T1,T2,TPlugOptions> tweener = TweenManager.GetTweener<T1,T2,TPlugOptions>(updateType);

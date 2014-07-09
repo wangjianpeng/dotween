@@ -20,7 +20,6 @@
 // THE SOFTWARE.
 // 
 
-using System;
 using DG.Tween.Core;
 using DG.Tween.Plugins.Core;
 using UnityEngine;

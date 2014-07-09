@@ -21,7 +21,6 @@
 
 using System;
 using DG.Tween.Core;
-using UnityEngine;
 
 namespace DG.Tween
 {

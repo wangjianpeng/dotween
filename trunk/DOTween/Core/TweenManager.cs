@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tween.Core.Enums;
-using UnityEngine;
 
 namespace DG.Tween.Core
 {
@@ -54,6 +53,7 @@ namespace DG.Tween.Core
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
         internal static Tweener<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>(UpdateType updateType, bool playNow = true)
+            where TPlugOptions : struct
         {
             Tweener<T1,T2,TPlugOptions> t;
             // Search inside pool

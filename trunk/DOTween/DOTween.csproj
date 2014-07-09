@@ -72,6 +72,8 @@
     <Compile Include="Plugins\DefaultPlugins\QuaternionPlugin.cs" />
     <Compile Include="Plugins\Core\NoOptions.cs" />
     <Compile Include="Plugins\PlugAlpha.cs" />
+    <Compile Include="Plugins\PlugFloat.cs" />
+    <Compile Include="Plugins\PlugVector3.cs" />
     <Compile Include="Plugins\PlugVector3X.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />

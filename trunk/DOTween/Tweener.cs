@@ -23,7 +23,6 @@ using System;
 using DG.Tween.Core;
 using DG.Tween.Core.Easing;
 using DG.Tween.Core.Enums;
-using DG.Tween.Plugins;
 using DG.Tween.Plugins.Core;
 using UnityEngine;
 
@@ -31,7 +30,7 @@ namespace DG.Tween
 {
     // T1: type of value to tween
     // T2: format in which value is stored while tweening
-    public sealed class Tweener<T1,T2,TPlugOptions> : Tween
+    public sealed class Tweener<T1,T2,TPlugOptions> : Tween where TPlugOptions : struct
     {
         // OPTIONS ///////////////////////////////////////////////////
 
@@ -90,6 +89,22 @@ namespace DG.Tween
             t.duration = duration;
             return true;
         }
+        internal static bool Setup(Tweener<T1,T2,TPlugOptions> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
+        {
+            if (t._tweenPlugin == null) t._tweenPlugin = PluginsManager.GetDefaultPlugin<T1,T2,TPlugOptions>();
+            if (t._tweenPlugin == null) {
+                // No suitable plugin found. Kill
+                Debugger.LogError("No suitable plugin found for this type");
+                return false;
+            }
+
+            t._getter = getter;
+            t._setter = setter;
+            t._endValue = endValue;
+            t._plugOptions = options;
+            t.duration = duration;
+            return true;
+        }
         internal static bool Setup<TPlugin>(Tweener<T1,T2,TPlugOptions> t, IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
             where TPlugin : ITweenPlugin, new()
         {
@@ -128,6 +143,7 @@ namespace DG.Tween
 
             t._getter = null;
             t._setter = null;
+            t._plugOptions = new TPlugOptions();
         }
 
         // Called the moment the tween starts, AFTER any delay has elapsed.
