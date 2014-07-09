@@ -29,9 +29,16 @@ namespace DG.Tween
         // ===================================================================================
         // TWEENER + SEQUENCES ---------------------------------------------------------------
 
+        // Play operations
+
         public static void Complete(this Tween t)
         {
             TweenManager.Complete(t);
+        }
+        /// <summary>Immediately complete a tween and return the amount of tweens completed</summary>
+        public static void Flip(this Tween t)
+        {
+            TweenManager.Flip(t);
         }
 
         public static void Pause(this Tween t)
@@ -44,6 +51,16 @@ namespace DG.Tween
             TweenManager.Play(t);
         }
 
+        public static void PlayBackwards(this Tween t)
+        {
+            TweenManager.PlayBackwards(t);
+        }
+
+        public static void PlayForward(this Tween t)
+        {
+            TweenManager.PlayForward(t);
+        }
+
         public static void Restart(this Tween t, bool includeDelay = true)
         {
             TweenManager.Restart(t, includeDelay);
@@ -54,9 +71,22 @@ namespace DG.Tween
             TweenManager.Rewind(t, includeDelay);
         }
 
+        // Info getters
+
         public static int CompletedLoops(this Tween t)
         {
             return t.completedLoops;
+        }
+
+        public static float Position(this Tween t)
+        {
+            return t.position;
+        }
+
+        public static float Elapsed(this Tween t)
+        {
+            int loopsToCount = t.loops != -1 && t.completedLoops == t.loops ? t.completedLoops - 1 : t.completedLoops;
+            return (loopsToCount * t.duration) + t.position;
         }
     }
 }

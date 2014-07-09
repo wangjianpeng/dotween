@@ -497,6 +497,9 @@
             Shared by Tweeners and Sequences
             </summary>
         </member>
+        <member name="M:DG.Tween.Extensions.Flip(DG.Tween.Tween)">
+            <summary>Immediately complete a tween and return the amount of tweens completed</summary>
+        </member>
         <member name="T:DG.Tween.Core.Easing.Quint">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
