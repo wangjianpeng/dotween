@@ -34,6 +34,7 @@ namespace DG.Tween
     {
         // OPTIONS ///////////////////////////////////////////////////
 
+        internal bool isFrom;
         internal bool isRelative;
         internal EaseFunction ease;
         internal EaseCurve easeCurve; // Stored in case of AnimationCurve ease
@@ -137,6 +138,7 @@ namespace DG.Tween
         // _tweenPlugin is not reset since it's useful to keep it as a reference
         static void DoReset(Tweener<T1,T2,TPlugOptions> t)
         {
+            t.isFrom = false;
             t.isRelative = false;
             t.ease = Quad.EaseOut;
             t.easeCurve = null;
@@ -146,9 +148,10 @@ namespace DG.Tween
             t._plugOptions = new TPlugOptions();
         }
 
-        // Called the moment the tween starts, AFTER any delay has elapsed.
+        // Called the moment the tween starts, AFTER any delay has elapsed
+        // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
         // Returns TRUE in case of success,
-        // FALSE if there were are missing references and the tween needs to be killed
+        // FALSE if there are missing references and the tween needs to be killed
         static bool Startup(Tweener<T1,T2,TPlugOptions> t)
         {
             t.startupDone = true;
@@ -162,13 +165,27 @@ namespace DG.Tween
                 }
             } else t._startValue = t._tweenPlugin.ConvertT1toT2(t._plugOptions, t._getter());
             if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._plugOptions, t._startValue, t._endValue);
+            if (t.isFrom) {
+                // Swithc start and end value and jump immediately to new start value, regardless of delays
+                T2 prevStartValue = t._startValue;
+                t._startValue = t._endValue;
+                t._endValue = prevStartValue;
+                // Jump (no need for safeMode checks since they already happened when assigning start value
+                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, 0, t._startValue, t._endValue, t.duration, t.ease));
+            }
             return true;
         }
 
+        // Returns the elapsed time minus delay in case of success,
+        // -1 if there are missing references and the tween needs to be killed
         static float DoUpdateDelay(Tweener<T1,T2,TPlugOptions> t, float elapsed)
         {
+            if (t.isFrom && !t.startupDone) {
+                // Startup immediately to set the correct FROM setup
+                if (!Startup(t)) return -1;
+            }
             t.elapsedDelay = elapsed;
-            if (t.elapsedDelay > t.delay) {
+            if (elapsed > t.delay) {
                 // Delay complete
                 t.elapsedDelay = t.delay;
                 t.delayComplete = true;

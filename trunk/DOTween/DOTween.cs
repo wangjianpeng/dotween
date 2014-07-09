@@ -33,7 +33,7 @@ namespace DG.Tween
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.400";
+        public static readonly string Version = "0.1.450";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -127,70 +127,76 @@ namespace DG.Tween
         // Sadly can't make generic versions of default tweens with additional options
         // where the TO method doesn't contain the options param, otherwise the correct Option type won't be inferred.
         // So: overloads. Sigh
-//        public static Tweener<T1, T2, NoOptions> To<T1, T2>(
-//            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue,
-//            float duration, UpdateType updateType = UpdateType.Default
-//        )
-//        {
-//            InitCheck();
-//            Tweener<T1, T2, NoOptions> tweener = TweenManager.GetTweener<T1, T2, NoOptions>(updateType);
-//            if (!Tweener<T1, T2, NoOptions>.Setup(tweener, getter, setter, endValue, duration)) {
-//                TweenManager.Despawn(tweener);
-//                return null;
-//            }
-//            return tweener;
-//        }
+
+        /////////////////////////////////////////////////////////////////////
+        // TO ///////////////////////////////////////////////////////////////
 
         /// <summary>Tweens a float using default plugins</summary>
         public static Tweener<float, float, PlugFloat.Options> To(
             MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return To(getter, setter, endValue, new PlugFloat.Options(), duration, updateType); }
+        ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, false); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener<Vector3, Vector3, PlugVector3.Options> To(
             MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ) { return To(getter, setter, endValue, new PlugVector3.Options(), duration, updateType); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, updateType, false); }
         /// <summary>Tweens a Quaternion using default plugins</summary>
         public static Tweener<Quaternion, Vector3, NoOptions> To(
             MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ) { return To(getter, setter, endValue, new NoOptions(), duration, updateType); }
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
         public static Tweener<T1,T2,TPlugOptions> To<T1,T2,TPlugOptions>(
             MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
             float duration, UpdateType updateType = UpdateType.Default
-        )
-            where TPlugOptions : struct
-        {
-            InitCheck();
-            Tweener<T1,T2,TPlugOptions> tweener = TweenManager.GetTweener<T1,T2,TPlugOptions>(updateType);
-            if (!Tweener<T1,T2,TPlugOptions>.Setup(tweener, getter, setter, endValue, options, duration)) {
-                TweenManager.Despawn(tweener);
-                return null;
-            }
-            return tweener;
-        }
+        ) where TPlugOptions : struct
+        { return ApplyTo(getter, setter, endValue, options, duration, updateType, false); }
         /// <summary>
         /// Tweens a property using a custom plugin with eventual options
         /// </summary>
         public static Tweener<T1,T2,TPlugOptions> To<T1,T2,TPlugin,TPlugOptions>(
             IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter,
             float duration, UpdateType updateType = UpdateType.Default
-        )
-            where TPlugin : ITweenPlugin, new()
-            where TPlugOptions : struct
-        {
-            InitCheck();
-            Tweener<T1,T2,TPlugOptions> tweener = TweenManager.GetTweener<T1,T2,TPlugOptions>(updateType);
-            if (!Tweener<T1,T2,TPlugOptions>.Setup(tweener, plugSetter, duration)) {
-                TweenManager.Despawn(tweener);
-                return null;
-            }
-            return tweener;
-        }
+        ) where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
+        { return ApplyTo(plugSetter, duration, updateType, false); }
+
+        /////////////////////////////////////////////////////////////////////
+        // FROM /////////////////////////////////////////////////////////////
+
+        /// <summary>Tweens a float using default plugins</summary>
+        public static Tweener<float, float, PlugFloat.Options> From(
+            MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, true); }
+        /// <summary>Tweens a Vector3 using default plugins</summary>
+        public static Tweener<Vector3, Vector3, PlugVector3.Options> From(
+            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, updateType, true); }
+        /// <summary>Tweens a Quaternion using default plugins</summary>
+        public static Tweener<Quaternion, Vector3, NoOptions> From(
+            MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        /// <summary>
+        /// Tweens a property using default plugins with options
+        /// </summary>
+        public static Tweener<T1, T2, TPlugOptions> From<T1, T2, TPlugOptions>(
+            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) where TPlugOptions : struct
+        { return ApplyTo(getter, setter, endValue, options, duration, updateType, true); }
+        /// <summary>
+        /// Tweens a property using a custom plugin with eventual options
+        /// </summary>
+        public static Tweener<T1, T2, TPlugOptions> From<T1, T2, TPlugin, TPlugOptions>(
+            IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
+        { return ApplyTo(plugSetter, duration, updateType, true); }
 
         /// <summary>
         /// Kills all tweens and cleans the pooled tweens cache
@@ -205,54 +211,54 @@ namespace DG.Tween
         /// (meaning tweens that don't have infinite loops and were not already complete)</summary>
         public static int Complete()
         {
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, -1, null, null, false);
         }
         /// <summary>Completes all tweens with the given ID and returns the number of actual tweens completed
         /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
         public static int Complete(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.Id, id, null, null, false);
         }
         /// <summary>Completes all tweens with the given string ID and returns the number of actual tweens completed
         /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
         public static int Complete(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Completes all tweens with the given object ID and returns the number of actual tweens completed
         /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
         public static int Complete(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
         public static int Flip()
         {
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.All, -1, null, null, false);
         }
         /// <summary>Flips the tweens with the given ID (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
         public static int Flip(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.Id, id, null, null, false);
         }
         /// <summary>Flips the tweens with the given string ID (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
         public static int Flip(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Flips the tweens with the given object ID (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
         public static int Flip(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Kills all tweens and returns the number of actual tweens killed</summary>
@@ -263,176 +269,176 @@ namespace DG.Tween
         /// <summary>Kills all tweens with the given ID and returns the number of actual tweens killed</summary>
         public static int Kill(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.Id, id, null, null, false);
         }
         /// <summary>Kills all tweens with the given string ID and returns the number of actual tweens killed</summary>
         public static int Kill(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Kills all tweens with the given object ID and returns the number of actual tweens killed</summary>
         public static int Kill(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
         public static int Pause()
         {
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.All, -1, null, null, false);
         }
         /// <summary>Pauses all tweens with the given ID and returns the number of actual tweens paused
         /// (meaning the tweens that were actually playing and have been paused)</summary>
         public static int Pause(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.Id, id, null, null, false);
         }
         /// <summary>Pauses all tweens with the given string ID and returns the number of actual tweens paused
         /// (meaning the tweens with the given id that were actually playing and have been paused)</summary>
         public static int Pause(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Pauses all tweens with the given object ID and returns the number of actual tweens paused
         /// (meaning the tweens with the given id that were actually playing and have been paused)</summary>
         public static int Pause(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Plays all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already playing or complete)</summary>
         public static int Play()
         {
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.All, -1, null, null, false);
         }
         /// <summary>Plays all tweens with the given ID and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing or complete)</summary>
         public static int Play(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.Id, id, null, null, false);
         }
         /// <summary>Plays all tweens with the given string ID and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing or complete)</summary>
         public static int Play(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Plays all tweens with the given object ID and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing or complete)</summary>
         public static int Play(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
-        /// (meaning tweens that were not already playing backwards or rewinded)</summary>
+        /// (meaning tweens that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards()
         {
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, -1, null, null, false);
         }
         /// <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+        /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.Id, id, null, null, false);
         }
         /// <summary>Plays all tweens with the given string ID in backwards direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+        /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Plays all tweens with the given object ID in backwards direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing backwards or rewinded)</summary>
+        /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Plays all tweens in forward direction and returns the number of actual tweens played
         /// (meaning tweens that were not already playing forward or complete)</summary>
         public static int PlayForward()
         {
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, -1, null, null, false);
         }
         /// <summary>Plays all tweens with the given ID in forward direction and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
         public static int PlayForward(int id)
         {
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.Id, id, null, null, false);
         }
         /// <summary>Plays all tweens with the given string ID in forward direction and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
         public static int PlayForward(string stringId)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.StringId, -1, stringId, null, false);
         }
         /// <summary>Plays all tweens with the given object ID in forward direction and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
         public static int PlayForward(UnityEngine.Object unityObjectId)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.UnityObjectId, -1, null, unityObjectId, false);
         }
 
         /// <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
-        public static int Restart()
+        public static int Restart(bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.All, -1, null, null, includeDelay);
         }
         /// <summary>Restarts all tweens with the given ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(int id)
+        public static int Restart(int id, bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.Id, id, null, null, includeDelay);
         }
         /// <summary>Restarts all tweens with the given string ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(string stringId)
+        public static int Restart(string stringId, bool includeDelay = true)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.StringId, -1, stringId, null, includeDelay);
         }
         /// <summary>Restarts all tweens with the given object ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(UnityEngine.Object unityObjectId)
+        public static int Restart(UnityEngine.Object unityObjectId, bool includeDelay = true)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.UnityObjectId, -1, null, unityObjectId, includeDelay);
         }
 
         /// <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
         /// (meaning tweens that were not already rewinded)</summary>
-        public static int Rewind()
+        public static int Rewind(bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.All, -1, null, null);
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.All, -1, null, null, includeDelay);
         }
         /// <summary>Rewinds and pauses all tweens with the given ID, then returns the number of actual tweens rewinded
         /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(int id)
+        public static int Rewind(int id, bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.Id, id, null, null);
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.Id, id, null, null, includeDelay);
         }
         /// <summary>Rewinds and pauses all tweens with the given string ID, then returns the number of actual tweens rewinded
         /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(string stringId)
+        public static int Rewind(string stringId, bool includeDelay = true)
         {
             if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.StringId, -1, stringId, null);
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.StringId, -1, stringId, null, includeDelay);
         }
         /// <summary>Rewinds and pauses all tweens with the given object ID, then returns the number of actual tweens rewinded
         /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(UnityEngine.Object unityObjectId)
+        public static int Rewind(UnityEngine.Object unityObjectId, bool includeDelay = true)
         {
             if (unityObjectId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.UnityObjectId, -1, null, unityObjectId);
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.UnityObjectId, -1, null, unityObjectId, includeDelay);
         }
 
         // ===================================================================================
@@ -444,6 +450,40 @@ namespace DG.Tween
                 Init();
                 Debugger.LogWarning("DOTween auto-initialized with default settings (autoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
             }
+        }
+
+        // Tweens a property using default plugins with options
+        static Tweener<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugOptions>(
+            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
+            float duration, UpdateType updateType, bool isFrom
+        )
+            where TPlugOptions : struct
+        {
+            InitCheck();
+            Tweener<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>(updateType);
+            tweener.isFrom = isFrom;
+            if (!Tweener<T1, T2, TPlugOptions>.Setup(tweener, getter, setter, endValue, options, duration)) {
+                TweenManager.Despawn(tweener);
+                return null;
+            }
+            return tweener;
+        }
+        // Tweens a property using a custom plugin with eventual options
+        public static Tweener<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugin, TPlugOptions>(
+            IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter,
+            float duration, UpdateType updateType, bool isFrom
+        )
+            where TPlugin : ITweenPlugin, new()
+            where TPlugOptions : struct
+        {
+            InitCheck();
+            Tweener<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>(updateType);
+            tweener.isFrom = isFrom;
+            if (!Tweener<T1, T2, TPlugOptions>.Setup(tweener, plugSetter, duration)) {
+                TweenManager.Despawn(tweener);
+                return null;
+            }
+            return tweener;
         }
     }
 }

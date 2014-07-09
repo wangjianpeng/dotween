@@ -44,9 +44,14 @@ namespace DG.Tween
             TweenManager.Play(t);
         }
 
-        public static void Rewind(this Tween t)
+        public static void Restart(this Tween t, bool includeDelay = true)
         {
-            TweenManager.Rewind(t);
+            TweenManager.Restart(t, includeDelay);
+        }
+
+        public static void Rewind(this Tween t, bool includeDelay = true)
+        {
+            TweenManager.Rewind(t, includeDelay);
         }
 
         public static int CompletedLoops(this Tween t)
