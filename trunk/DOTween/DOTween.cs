@@ -40,6 +40,9 @@ namespace DG.Tween
         public static LogBehaviour logBehaviour = LogBehaviour.Default;
         internal static bool autoKill = true; // At creation, new tweens will have autoKillOnComplete set accordingly to this value
         public static float timeScale = 1; // Global timeScale
+        // Default options for Tweens
+        public static EaseType defaultEaseType = EaseType.InOutQuad;
+        public static LoopType defaultLoopType = LoopType.Restart;
 
         internal static bool isUnityEditor;
         static bool _initialized;
