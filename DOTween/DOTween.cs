@@ -139,6 +139,11 @@ namespace DG.Tween
             MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, false); }
+        /// <summary>Tweens an int using default plugins</summary>
+        public static Tweener<int, int, NoOptions> To(
+            MemberGetter<int> getter, MemberSetter<int> setter, int endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener<Vector3, Vector3, PlugVector3.Options> To(
             MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
@@ -149,6 +154,11 @@ namespace DG.Tween
             MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        /// <summary>Tweens a Color using default plugins</summary>
+        public static Tweener<Color, Color, NoOptions> To(
+            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
@@ -174,6 +184,11 @@ namespace DG.Tween
             MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, true); }
+        /// <summary>Tweens an int using default plugins</summary>
+        public static Tweener<int, int, NoOptions> From(
+            MemberGetter<int> getter, MemberSetter<int> setter, int endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener<Vector3, Vector3, PlugVector3.Options> From(
             MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
@@ -184,6 +199,11 @@ namespace DG.Tween
             MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        /// <summary>Tweens a Color using default plugins</summary>
+        public static Tweener<Color, Color, NoOptions> From(
+            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>

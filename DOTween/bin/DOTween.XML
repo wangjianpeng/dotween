@@ -32,11 +32,17 @@
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a float using default plugins</summary>
         </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.Int32},DG.Tween.Core.MemberSetter{System.Int32},System.Int32,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens an int using default plugins</summary>
+        </member>
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a Vector3 using default plugins</summary>
         </member>
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Quaternion},DG.Tween.Core.MemberSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a Quaternion using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Color},DG.Tween.Core.MemberSetter{UnityEngine.Color},UnityEngine.Color,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a Color using default plugins</summary>
         </member>
         <member name="M:DG.Tween.DOTween.To``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tween.UpdateType)">
             <summary>
@@ -51,11 +57,17 @@
         <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{System.Single},DG.Tween.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a float using default plugins</summary>
         </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{System.Int32},DG.Tween.Core.MemberSetter{System.Int32},System.Int32,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens an int using default plugins</summary>
+        </member>
         <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Vector3},DG.Tween.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a Vector3 using default plugins</summary>
         </member>
         <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Quaternion},DG.Tween.Core.MemberSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a Quaternion using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Color},DG.Tween.Core.MemberSetter{UnityEngine.Color},UnityEngine.Color,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a Color using default plugins</summary>
         </member>
         <member name="M:DG.Tween.DOTween.From``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tween.UpdateType)">
             <summary>

@@ -31,6 +31,7 @@ namespace DG.Tween.Plugins.Core
     {
         // Default plugins. Contains internal dictionaries based on T2 types,
         // since there might be more plugins for the same type (like float to float and float to int)
+        // FIXME are there really multiple plugins for same type? Apparently not, so go back to more normal dictionary
         static readonly Dictionary<Type, Dictionary<Type, ITweenPlugin>> _DefaultPlugins = new Dictionary<Type, Dictionary<Type, ITweenPlugin>>(10);
         // Advanced and custom plugins
         static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(20);
@@ -50,13 +51,17 @@ namespace DG.Tween.Plugins.Core
 
             // Retrieve correct custom plugin
             ITweenPlugin plugin = null;
-            if (t1 == typeof(float)) {
-                plugin = new FloatPlugin();
-            } else if (t1 == typeof(Vector3)) {
+            if (t1 == typeof(Vector3)) {
                 plugin = new Vector3Plugin();
             } else if (t1 == typeof(Quaternion)) {
                 if (t2 == typeof(Quaternion)) Debugger.LogError("Quaternion tweens require a Vector3 endValue");
                 else plugin = new QuaternionPlugin();
+            } else if (t1 == typeof(float)) {
+                plugin = new FloatPlugin();
+            } else if (t1 == typeof(Color)) {
+                plugin = new ColorPlugin();
+            } else if (t1 == typeof(int)) {
+                plugin = new IntPlugin();
             }
 
             if (plugin != null) {
