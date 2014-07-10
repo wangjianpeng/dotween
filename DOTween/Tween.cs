@@ -110,7 +110,7 @@ namespace DG.Tween
             t.position = t.fullDuration = t.completedLoops = 0;
             t.isPlaying = t.isComplete = false;
             t.elapsedDelay = 0;
-            t.delayComplete = false;
+            t.delayComplete = true;
         }
     }
 }

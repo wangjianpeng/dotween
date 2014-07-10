@@ -206,23 +206,6 @@ namespace DG.Tween
         // but not if the tween result would be a completion or rewind, and the tween is already there
         static bool DoGoto(Tweener<T1,T2,TPlugOptions> t, UpdateData updateData)
         {
-            // TODO Prevent any action if we determine that the tween should end as rewinded/complete and it's already in such a state?
-            // TODO Optimize
-
-            // Lock creation extensions
-            t.creationLocked = true;
-
-            int prevCompletedLoops = t.completedLoops;
-            bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
-            bool wasComplete = t.isComplete;
-            int newCompletedSteps = t.isBackwards
-                ? updateData.completedLoops < prevCompletedLoops ? prevCompletedLoops - updateData.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0)
-                : updateData.completedLoops > prevCompletedLoops ? updateData.completedLoops - prevCompletedLoops : 0;
-            t.position = updateData.position;
-            if (t.position > t.duration) t.position = t.duration;
-            else if (t.position < 0) t.position = 0;
-            t.completedLoops = updateData.completedLoops;
-
             // Startup
             if (!t.startupDone) {
                 if (!Startup(t)) return true;
@@ -232,43 +215,55 @@ namespace DG.Tween
                 t.playedOnce = true;
                 if (t.onStart != null) t.onStart();
             }
+
+            int prevCompletedLoops = t.completedLoops;
+            t.completedLoops = updateData.completedLoops;
+            bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
+            bool wasComplete = t.isComplete;
+            // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
+            int newCompletedSteps = 0;
+            if (t.onStepComplete != null && updateData.updateMode == UpdateMode.Update) {
+                newCompletedSteps = t.isBackwards
+                    ? t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0)
+                    : t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
+            }
+            
             // Determine if it will be complete after update
-            if (t.loops != -1) {
-                if (t.completedLoops >= t.loops) t.completedLoops = t.loops;
-                else if (t.position >= t.duration) t.completedLoops++;
-                t.isComplete = t.loops != -1 && t.completedLoops == t.loops;
-            } else {
-                if (t.position >= t.duration) t.completedLoops++;
+            if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
+            // Set position (makes position 0 equal to position "end" when looping)
+            t.position = updateData.position;
+            if (t.position > t.duration) t.position = t.duration;
+            else if (t.position <= 0) {
+                if (t.completedLoops > 0 || t.isComplete) t.position = t.duration;
+                else t.position = 0;
             }
-            // Optimize position (makes position 0 equal to position "end" when looping)
-            if (t.position <= 0 && t.completedLoops > 0 || t.isComplete) t.position = t.duration;
+            // Set playing state after update
+            if (t.isPlaying) {
+                if (!t.isBackwards) t.isPlaying = !t.isComplete; // Reached the end
+                else t.isPlaying = !(t.completedLoops == 0 && t.position <= 0); // Rewinded
+            }
+
             // Get values from plugin and set them
-            float easePosition = t.position; // Changes in case we're yoyoing backwards
-            if (t.loopType == LoopType.Yoyo && (!t.isComplete && t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)) {
-                // Behaves differently in case the tween is complete or not,
-                // in order to make position 0 equal to position "end"
-                easePosition = t.duration - t.position;
-            }
-            T1 newVal = t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease);
+            // EasePosition is different in case of Yoyo loop under certain circumstances
+            float easePosition = t.loopType == LoopType.Yoyo
+                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)
+                ? t.duration - t.position
+                : t.position;
             if (DOTween.useSafeMode) {
                 try {
-                    t._setter(newVal);
+                    t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease));
                 } catch (MissingReferenceException) {
                     // Target/field doesn't exist anymore: kill tween
                     return true;
                 }
             } else {
-                t._setter(newVal);
+                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease));
             }
-            // Set playing state
-            if (!t.isBackwards && t.isComplete && t.isPlaying) t.isPlaying = false; // Reached the end
-            else if (t.isBackwards && t.completedLoops == 0 && t.position <= 0 && t.isPlaying) t.isPlaying = false; // Rewinded
 
             // Additional callbacks
-            if (newCompletedSteps > 0 && updateData.updateMode == UpdateMode.Update) {
-                if (t.onStepComplete != null) {
-                    for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
-                }
+            if (newCompletedSteps > 0) {
+                // Already verified that onStepComplete is present
+                for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
             }
             if (t.isComplete && !wasComplete) {
                 if (t.onComplete != null) t.onComplete();
