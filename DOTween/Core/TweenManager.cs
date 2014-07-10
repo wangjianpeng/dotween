@@ -388,11 +388,11 @@ namespace DG.Tween.Core
             for (int i = 0; i < totTweens; ++i) {
                 Tween t = tweens[i];
                 if (!t.isPlaying) continue;
-                deltaTime *= t.timeScale;
                 t.creationLocked = true; // Lock tween creation methods from now on
+                float tDeltaTime = deltaTime * t.timeScale;
                 if (!t.delayComplete) {
-                    deltaTime = t.UpdateDelay(t.elapsedDelay + deltaTime);
-                    if (deltaTime <= -1) {
+                    tDeltaTime = t.UpdateDelay(t.elapsedDelay + tDeltaTime);
+                    if (tDeltaTime <= -1) {
                         // Error during startup (can happen with FROM tweens): mark tween for killing
                         willKill = true;
                         t.active = false;
@@ -400,9 +400,9 @@ namespace DG.Tween.Core
                         _KillIds.Add(i);
                         continue;
                     }
-                    if (deltaTime <= 0) continue;
+                    if (tDeltaTime <= 0) continue;
                 }
-                bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, deltaTime));
+                bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, tDeltaTime));
                 if (needsKilling) {
                     willKill = true;
                     t.active = false;
