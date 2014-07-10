@@ -315,21 +315,22 @@ namespace DG.Tween.Core
         {
             maxTweeners = tweenersCapacity;
             maxSequences = sequencesCapacity;
-            _ActiveDefaultTweens.Capacity = tweenersCapacity + sequencesCapacity;
-            _ActiveFixedTweens.Capacity = tweenersCapacity + sequencesCapacity;
-            _ActiveIndependentTweens.Capacity = tweenersCapacity + sequencesCapacity;
+            int maxActive = tweenersCapacity + sequencesCapacity;
+            _ActiveDefaultTweens.Capacity = maxActive;
+            _ActiveFixedTweens.Capacity = maxActive;
+            _ActiveIndependentTweens.Capacity = maxActive;
             _PooledTweeners.Capacity = tweenersCapacity;
             _PooledSequences.Capacity = sequencesCapacity;
+            _KillList.Capacity = maxActive;
+            _KillIds.Capacity = maxActive;
         }
 
         internal static UpdateData GetUpdateDataFromDeltaTime(Tween t, float deltaTime)
         {
-            deltaTime *= t.timeScale;
             float position = t.position;
             bool wasEndPosition = position >= t.duration;
             int completedLoops = t.completedLoops;
             if (t.isBackwards) {
-                if (completedLoops == t.loops) completedLoops--;
                 position -= deltaTime;
                 while (position < 0 && completedLoops > 0) {
                     position += t.duration;
@@ -386,26 +387,27 @@ namespace DG.Tween.Core
             bool willKill = false;
             for (int i = 0; i < totTweens; ++i) {
                 Tween t = tweens[i];
-                if (t.isPlaying) {
-                    if (!t.delayComplete) {
-                        deltaTime = t.UpdateDelay(t.elapsedDelay + deltaTime);
-                        if (deltaTime <= -1) {
-                            // Error during startup (heppens with a FROM tween): mark tween for killing
-                            t.active = false;
-                            willKill = true;
-                            _KillList.Add(t);
-                            _KillIds.Add(i);
-                            continue;
-                        }
-                        if (deltaTime <= 0) continue;
-                    }
-                    bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, deltaTime));
-                    if (needsKilling) {
-                        t.active = false;
+                if (!t.isPlaying) continue;
+                deltaTime *= t.timeScale;
+                t.creationLocked = true; // Lock tween creation methods from now on
+                if (!t.delayComplete) {
+                    deltaTime = t.UpdateDelay(t.elapsedDelay + deltaTime);
+                    if (deltaTime <= -1) {
+                        // Error during startup (can happen with FROM tweens): mark tween for killing
                         willKill = true;
+                        t.active = false;
                         _KillList.Add(t);
                         _KillIds.Add(i);
+                        continue;
                     }
+                    if (deltaTime <= 0) continue;
+                }
+                bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, deltaTime));
+                if (needsKilling) {
+                    willKill = true;
+                    t.active = false;
+                    _KillList.Add(t);
+                    _KillIds.Add(i);
                 }
             }
             // Kill all eventually marked tweens
@@ -577,6 +579,8 @@ namespace DG.Tween.Core
             _ActiveDefaultTweens.Capacity += add;
             _ActiveFixedTweens.Capacity += add;
             _ActiveIndependentTweens.Capacity += add;
+            _KillList.Capacity += add;
+            _KillIds.Capacity += add;
         }
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
