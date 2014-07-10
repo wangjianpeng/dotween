@@ -38,6 +38,8 @@ namespace DG.Tween.Core
         internal static int totActiveDefaultTweens, totActiveFixedTweens, totActiveIndependentTweens;
         internal static int totPooledTweeners, totPooledSequences;
         internal static int totTweeners, totSequences; // Both active and pooled
+        internal static bool isUpdateLoop; // TRUE while an update cycle is running (used to treat direct tween Kills differently)
+        internal static UpdateType updateLoopType;
 
         static readonly List<Tween> _ActiveDefaultTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
         static readonly List<Tween> _ActiveFixedTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
@@ -234,16 +236,6 @@ namespace DG.Tween.Core
 
         internal static void Despawn(Tween t, bool modifyActiveLists = true)
         {
-            switch (t.tweenType) {
-            case TweenType.Sequence:
-                _PooledSequences.Add(t);
-                totPooledSequences++;
-                break;
-            default:
-                _PooledTweeners.Add(t);
-                totPooledTweeners++;
-                break;
-            }
             if (modifyActiveLists) {
                 // Remove tween from correct active list
                 switch (t.updateType) {
@@ -260,6 +252,16 @@ namespace DG.Tween.Core
                     totActiveDefaultTweens--;
                     break;
                 }
+            }
+            switch (t.tweenType) {
+            case TweenType.Sequence:
+                _PooledSequences.Add(t);
+                totPooledSequences++;
+                break;
+            default:
+                _PooledTweeners.Add(t);
+                totPooledTweeners++;
+                break;
             }
             t.active = false;
             t.Reset();
@@ -348,6 +350,18 @@ namespace DG.Tween.Core
             return new UpdateData(position, completedLoops);
         }
 
+        internal static bool IsActive(Tween t)
+        {
+            switch (t.updateType) {
+            case UpdateType.Fixed:
+                return _ActiveFixedTweens.Contains(t);
+            case UpdateType.TimeScaleIndependent:
+                return _ActiveIndependentTweens.Contains(t);
+            default:
+                return _ActiveDefaultTweens.Contains(t);
+            }
+        }
+
         internal static int TotActiveTweens()
         {
             return totActiveDefaultTweens + totActiveFixedTweens + totActiveIndependentTweens;
@@ -384,9 +398,17 @@ namespace DG.Tween.Core
 
         static void DoUpdate(float deltaTime, List<Tween> tweens, UpdateType updateType, int totTweens)
         {
+            isUpdateLoop = true;
+            updateLoopType = updateType;
             bool willKill = false;
             for (int i = 0; i < totTweens; ++i) {
                 Tween t = tweens[i];
+                if (!t.active) {
+                    // Manually killed by another tween's callback
+                    willKill = true;
+                    MarkForKilling(t, i);
+                    continue;
+                }
                 if (!t.isPlaying) continue;
                 t.creationLocked = true; // Lock tween creation methods from now on
                 float tDeltaTime = deltaTime * t.timeScale;
@@ -395,9 +417,7 @@ namespace DG.Tween.Core
                     if (tDeltaTime <= -1) {
                         // Error during startup (can happen with FROM tweens): mark tween for killing
                         willKill = true;
-                        t.active = false;
-                        _KillList.Add(t);
-                        _KillIds.Add(i);
+                        MarkForKilling(t, i);
                         continue;
                     }
                     if (tDeltaTime <= 0) continue;
@@ -405,9 +425,7 @@ namespace DG.Tween.Core
                 bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, tDeltaTime));
                 if (needsKilling) {
                     willKill = true;
-                    t.active = false;
-                    _KillList.Add(t);
-                    _KillIds.Add(i);
+                    MarkForKilling(t, i);
                 }
             }
             // Kill all eventually marked tweens
@@ -433,6 +451,14 @@ namespace DG.Tween.Core
                     break;
                 }
             }
+            isUpdateLoop = false;
+        }
+
+        static void MarkForKilling(Tween t, int listId)
+        {
+            t.active = false;
+            _KillList.Add(t);
+            _KillIds.Add(listId);
         }
 
         static int DoFilteredOperation(

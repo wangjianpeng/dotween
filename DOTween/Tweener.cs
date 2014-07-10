@@ -203,7 +203,8 @@ namespace DG.Tween
         // Instead of advancing the tween from the previous position each time,
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
         // Executes regardless of whether the tween is playing,
-        // but not if the tween result would be a completion or rewind, and the tween is already there
+        // but not if the tween result would be a completion or rewind, and the tween is already there.
+        // Returns TRUE if the tween needs to be killed
         static bool DoGoto(Tweener<T1,T2,TPlugOptions> t, UpdateData updateData)
         {
             // Startup
@@ -213,7 +214,11 @@ namespace DG.Tween
             // OnStart callback
             if (!t.playedOnce && updateData.updateMode == UpdateMode.Update) {
                 t.playedOnce = true;
-                if (t.onStart != null) t.onStart();
+                if (t.onStart != null) {
+                    t.onStart();
+                    // Tween might have been killed by onStart callback: verify
+                    if (!t.active) return true;
+                }
             }
 
             int prevCompletedLoops = t.completedLoops;
