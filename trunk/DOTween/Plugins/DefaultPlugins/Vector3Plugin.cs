@@ -32,22 +32,27 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return value;
         }
 
-        public override Vector3 Calculate(PlugVector3.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
+        public override Vector3 GetRelativeEndValue(PlugVector3.Options options, Vector3 startValue, Vector3 changeValue)
         {
-            startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
-            startValue.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
+            return startValue + changeValue;
+        }
+
+        public override Vector3 GetChangeValue(PlugVector3.Options options, Vector3 startValue, Vector3 endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override Vector3 Calculate(PlugVector3.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, EaseFunction ease)
+        {
+            startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.z = ease(elapsed, startValue.z, changeValue.z, duration, 0, 0);
             if (options.snapping) {
                 startValue.x = Mathf.Round(startValue.x);
                 startValue.y = Mathf.Round(startValue.y);
                 startValue.z = Mathf.Round(startValue.z);
             }
             return startValue;
-        }
-
-        public override Vector3 GetRelativeEndValue(PlugVector3.Options options, Vector3 startValue, Vector3 changeValue)
-        {
-            return startValue + changeValue;
         }
     }
 }

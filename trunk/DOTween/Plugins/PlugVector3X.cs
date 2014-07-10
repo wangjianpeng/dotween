@@ -83,17 +83,23 @@ namespace DG.Tween.Plugins
             return value;
         }
 
-        public override Vector3 Calculate(PlugVector3X.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
-        {
-            Vector3 res = getter();
-            res.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            if (options.snapping) res.x = Mathf.Round(res.x);
-            return res;
-        }
-
         public override Vector3 GetRelativeEndValue(PlugVector3X.Options options, Vector3 startValue, Vector3 changeValue)
         {
             return startValue + changeValue;
+        }
+
+        public override Vector3 GetChangeValue(PlugVector3X.Options options, Vector3 startValue, Vector3 endValue)
+        {
+            endValue.x -= startValue.x;
+            return endValue;
+        }
+
+        public override Vector3 Calculate(PlugVector3X.Options options, MemberGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, EaseFunction ease)
+        {
+            Vector3 res = getter();
+            res.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            if (options.snapping) res.x = Mathf.Round(res.x);
+            return res;
         }
     }
 }

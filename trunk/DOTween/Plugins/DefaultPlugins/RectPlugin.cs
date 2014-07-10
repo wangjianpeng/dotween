@@ -33,27 +33,36 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return value;
         }
 
-        public override Rect Calculate(PlugRect.Options options, MemberGetter<Rect> getter, float elapsed, Rect startValue, Rect endValue, float duration, EaseFunction ease)
-        {
-            startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
-            startValue.width = ease(elapsed, startValue.width, (endValue.width - startValue.width), duration, 0, 0);
-            startValue.height = ease(elapsed, startValue.height, (endValue.height - startValue.height), duration, 0, 0);
-            if (options.snapping) {
-                startValue.x = Mathf.Round(startValue.x);
-                startValue.y = Mathf.Round(startValue.y);
-                startValue.width = Mathf.Round(startValue.width);
-                startValue.height = Mathf.Round(startValue.height);
-            }
-            return startValue;
-        }
-
         public override Rect GetRelativeEndValue(PlugRect.Options options, Rect startValue, Rect changeValue)
         {
             startValue.x += changeValue.x;
             startValue.y += changeValue.y;
             startValue.width += changeValue.width;
             startValue.height += changeValue.height;
+            return startValue;
+        }
+
+        public override Rect GetChangeValue(PlugRect.Options options, Rect startValue, Rect endValue)
+        {
+            endValue.x -= startValue.x;
+            endValue.y -= startValue.y;
+            endValue.width -= startValue.width;
+            endValue.height -= startValue.height;
+            return endValue;
+        }
+
+        public override Rect Calculate(PlugRect.Options options, MemberGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration, EaseFunction ease)
+        {
+            startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.width = ease(elapsed, startValue.width, changeValue.width, duration, 0, 0);
+            startValue.height = ease(elapsed, startValue.height, changeValue.height, duration, 0, 0);
+            if (options.snapping) {
+                startValue.x = Mathf.Round(startValue.x);
+                startValue.y = Mathf.Round(startValue.y);
+                startValue.width = Mathf.Round(startValue.width);
+                startValue.height = Mathf.Round(startValue.height);
+            }
             return startValue;
         }
     }

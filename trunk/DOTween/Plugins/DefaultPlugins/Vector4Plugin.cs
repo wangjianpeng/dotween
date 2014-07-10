@@ -33,12 +33,22 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return value;
         }
 
-        public override Vector4 Calculate(PlugVector4.Options options, MemberGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 endValue, float duration, EaseFunction ease)
+        public override Vector4 GetRelativeEndValue(PlugVector4.Options options, Vector4 startValue, Vector4 changeValue)
         {
-            startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
-            startValue.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
-            startValue.w = ease(elapsed, startValue.w, (endValue.w - startValue.w), duration, 0, 0);
+            return startValue + changeValue;
+        }
+
+        public override Vector4 GetChangeValue(PlugVector4.Options options, Vector4 startValue, Vector4 endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override Vector4 Calculate(PlugVector4.Options options, MemberGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration, EaseFunction ease)
+        {
+            startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.z = ease(elapsed, startValue.z, changeValue.z, duration, 0, 0);
+            startValue.w = ease(elapsed, startValue.w, changeValue.w, duration, 0, 0);
             if (options.snapping) {
                 startValue.x = Mathf.Round(startValue.x);
                 startValue.y = Mathf.Round(startValue.y);
@@ -46,11 +56,6 @@ namespace DG.Tween.Plugins.DefaultPlugins
                 startValue.w = Mathf.Round(startValue.w);
             }
             return startValue;
-        }
-
-        public override Vector4 GetRelativeEndValue(PlugVector4.Options options, Vector4 startValue, Vector4 changeValue)
-        {
-            return startValue + changeValue;
         }
     }
 }

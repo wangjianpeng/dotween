@@ -33,14 +33,19 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return value;
         }
 
-        public override uint Calculate(NoOptions options, MemberGetter<uint> getter, float elapsed, uint startValue, uint endValue, float duration, EaseFunction ease)
-        {
-            return (uint)Mathf.RoundToInt(ease(elapsed, startValue, (endValue - startValue), duration, 0, 0));
-        }
-
         public override uint GetRelativeEndValue(NoOptions options, uint startValue, uint changeValue)
         {
             return startValue + changeValue;
+        }
+
+        public override uint GetChangeValue(NoOptions options, uint startValue, uint endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override uint Calculate(NoOptions options, MemberGetter<uint> getter, float elapsed, uint startValue, uint changeValue, float duration, EaseFunction ease)
+        {
+            return (uint)Mathf.RoundToInt(ease(elapsed, startValue, changeValue, duration, 0, 0));
         }
     }
 }

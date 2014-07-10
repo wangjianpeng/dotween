@@ -21,9 +21,10 @@
 // 
 
 using DG.Tween.Core;
+using DG.Tween.Plugins.Core;
 using UnityEngine;
 
-namespace DG.Tween.Plugins.Core
+namespace DG.Tween.Plugins.DefaultPlugins
 {
     public class ColorPlugin : ABSTweenPlugin<Color, Color, NoOptions>
     {
@@ -32,18 +33,23 @@ namespace DG.Tween.Plugins.Core
             return value;
         }
 
-        public override Color Calculate(NoOptions options, MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
-        {
-            startValue.r = ease(elapsed, startValue.r, (endValue.r - startValue.r), duration, 0, 0);
-            startValue.g = ease(elapsed, startValue.g, (endValue.g - startValue.g), duration, 0, 0);
-            startValue.b = ease(elapsed, startValue.b, (endValue.b - startValue.b), duration, 0, 0);
-            startValue.a = ease(elapsed, startValue.a, (endValue.a - startValue.a), duration, 0, 0);
-            return startValue;
-        }
-
         public override Color GetRelativeEndValue(NoOptions options, Color startValue, Color changeValue)
         {
             return startValue + changeValue;
+        }
+
+        public override Color GetChangeValue(NoOptions options, Color startValue, Color endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override Color Calculate(NoOptions options, MemberGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
+        {
+            startValue.r = ease(elapsed, startValue.r, changeValue.r, duration, 0, 0);
+            startValue.g = ease(elapsed, startValue.g, changeValue.g, duration, 0, 0);
+            startValue.b = ease(elapsed, startValue.b, changeValue.b, duration, 0, 0);
+            startValue.a = ease(elapsed, startValue.a, changeValue.a, duration, 0, 0);
+            return startValue;
         }
     }
 }

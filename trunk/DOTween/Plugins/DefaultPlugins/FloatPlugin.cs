@@ -32,16 +32,21 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return value;
         }
 
-        public override float Calculate(PlugFloat.Options options, MemberGetter<float> getter, float elapsed, float startValue, float endValue, float duration, EaseFunction ease)
-        {
-            return options.snapping
-                ? Mathf.Round(ease(elapsed, startValue, (endValue - startValue), duration, 0, 0))
-                : ease(elapsed, startValue, (endValue - startValue), duration, 0, 0);
-        }
-
         public override float GetRelativeEndValue(PlugFloat.Options options, float startValue, float changeValue)
         {
             return startValue + changeValue;
+        }
+
+        public override float GetChangeValue(PlugFloat.Options options, float startValue, float endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override float Calculate(PlugFloat.Options options, MemberGetter<float> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        {
+            return options.snapping
+                ? Mathf.Round(ease(elapsed, startValue, changeValue, duration, 0, 0))
+                : ease(elapsed, startValue, changeValue, duration, 0, 0);
         }
     }
 }
