@@ -33,17 +33,22 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return value.eulerAngles;
         }
 
-        public override Quaternion Calculate(NoOptions options, MemberGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 endValue, float duration, EaseFunction ease)
-        {
-            startValue.x = ease(elapsed, startValue.x, (endValue.x - startValue.x), duration, 0, 0);
-            startValue.y = ease(elapsed, startValue.y, (endValue.y - startValue.y), duration, 0, 0);
-            startValue.z = ease(elapsed, startValue.z, (endValue.z - startValue.z), duration, 0, 0);
-            return Quaternion.Euler(startValue);
-        }
-
         public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
         {
             return startValue + changeValue;
+        }
+
+        public override Vector3 GetChangeValue(NoOptions options, Vector3 startValue, Vector3 endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override Quaternion Calculate(NoOptions options, MemberGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, EaseFunction ease)
+        {
+            startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.z = ease(elapsed, startValue.z, changeValue.z, duration, 0, 0);
+            return Quaternion.Euler(startValue);
         }
     }
 }

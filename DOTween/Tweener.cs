@@ -44,7 +44,7 @@ namespace DG.Tween
         new internal readonly Type type = typeof(T1);
         MemberGetter<T1> _getter;
         MemberSetter<T1> _setter;
-        T2 _startValue, _endValue;
+        T2 _startValue, _endValue, _changeValue;
         ABSTweenPlugin<T1,T2,TPlugOptions> _tweenPlugin;
         TPlugOptions _plugOptions;
 
@@ -170,15 +170,18 @@ namespace DG.Tween
                     return false;
                 }
             } else t._startValue = t._tweenPlugin.ConvertT1toT2(t._plugOptions, t._getter());
-            if (t.isRelative) t._endValue = t._tweenPlugin.GetRelativeEndValue(t._plugOptions, t._startValue, t._endValue);
+            if (t.isRelative) {
+                t._endValue = t._tweenPlugin.GetRelativeEndValue(t._plugOptions, t._startValue, t._endValue);
+            }
             if (t.isFrom) {
-                // Swithc start and end value and jump immediately to new start value, regardless of delays
+                // Switch start and end value and jump immediately to new start value, regardless of delays
                 T2 prevStartValue = t._startValue;
                 t._startValue = t._endValue;
                 t._endValue = prevStartValue;
+                t._changeValue = t._tweenPlugin.GetChangeValue(t._plugOptions, t._startValue, t._endValue);
                 // Jump (no need for safeMode checks since they already happened when assigning start value
                 t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, 0, t._startValue, t._endValue, t.duration, t.ease));
-            }
+            } else t._changeValue = t._tweenPlugin.GetChangeValue(t._plugOptions, t._startValue, t._endValue);
             return true;
         }
 
@@ -256,13 +259,13 @@ namespace DG.Tween
                 : t.position;
             if (DOTween.useSafeMode) {
                 try {
-                    t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease));
+                    t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._changeValue, t.duration, t.ease));
                 } catch (MissingReferenceException) {
                     // Target/field doesn't exist anymore: kill tween
                     return true;
                 }
             } else {
-                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._endValue, t.duration, t.ease));
+                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._changeValue, t.duration, t.ease));
             }
 
             // Additional callbacks

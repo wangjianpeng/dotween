@@ -56,16 +56,21 @@ namespace DG.Tween.Plugins
             return value;
         }
 
-        public override Color Calculate(NoOptions options, MemberGetter<Color> getter, float elapsed, Color startValue, Color endValue, float duration, EaseFunction ease)
-        {
-            Color res = getter();
-            res.a = ease(elapsed, startValue.a, (endValue.a - startValue.a), duration, 0, 0);
-            return res;
-        }
-
         public override Color GetRelativeEndValue(NoOptions options, Color startValue, Color changeValue)
         {
             return startValue + changeValue;
+        }
+
+        public override Color GetChangeValue(NoOptions options, Color startValue, Color endValue)
+        {
+            return endValue - startValue;
+        }
+
+        public override Color Calculate(NoOptions options, MemberGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
+        {
+            Color res = getter();
+            res.a = ease(elapsed, startValue.a, changeValue.a, duration, 0, 0);
+            return res;
         }
     }
 }
