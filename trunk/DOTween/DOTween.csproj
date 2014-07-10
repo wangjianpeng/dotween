@@ -67,8 +67,10 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="LoopType.cs" />
     <Compile Include="MultiTweener.cs" />
+    <Compile Include="Plugins\Core\ColorPlugin.cs" />
     <Compile Include="Plugins\Core\IPlugSetter.cs" />
     <Compile Include="Plugins\Core\ITweenPlugin.cs" />
+    <Compile Include="Plugins\DefaultPlugins\IntPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\QuaternionPlugin.cs" />
     <Compile Include="Plugins\Core\NoOptions.cs" />
     <Compile Include="Plugins\PlugAlpha.cs" />
