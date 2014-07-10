@@ -129,7 +129,9 @@ namespace DG.Tween
 
         // Sadly can't make generic versions of default tweens with additional options
         // where the TO method doesn't contain the options param, otherwise the correct Option type won't be inferred.
-        // So: overloads. Sigh
+        // So: overloads. Sigh.
+        // Also, Unity has a bug which doesn't allow method overloading with its own implicitly casteable types (like Vector4 and Color)
+        // and addiitonal parameters, so in those cases I have to create overloads instead than using optionals. ARARGH!
 
         /////////////////////////////////////////////////////////////////////
         // TO ///////////////////////////////////////////////////////////////
@@ -144,11 +146,38 @@ namespace DG.Tween
             MemberGetter<int> getter, MemberSetter<int> setter, int endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        /// <summary>Tweens an uint using default plugins</summary>
+        public static Tweener<uint, uint, NoOptions> To(
+            MemberGetter<uint> getter, MemberSetter<uint> setter, uint endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        /// <summary>Tweens a Vector2 using default plugins</summary>
+        public static Tweener<Vector2, Vector2, PlugVector2.Options> To(
+            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, UpdateType.Default, false); }
+        public static Tweener<Vector2, Vector2, PlugVector2.Options> To(
+            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            float duration, UpdateType updateType
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, updateType, false); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener<Vector3, Vector3, PlugVector3.Options> To(
             MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
-            float duration, UpdateType updateType = UpdateType.Default
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, UpdateType.Default, false); }
+        public static Tweener<Vector3, Vector3, PlugVector3.Options> To(
+            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, updateType, false); }
+        /// <summary>Tweens a Vector4 using default plugins</summary>
+        public static Tweener<Vector4, Vector4, PlugVector4.Options> To(
+            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, UpdateType.Default, false); }
+        public static Tweener<Vector4, Vector4, PlugVector4.Options> To(
+            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            float duration, UpdateType updateType
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, updateType, false); }
         /// <summary>Tweens a Quaternion using default plugins</summary>
         public static Tweener<Quaternion, Vector3, NoOptions> To(
             MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
@@ -157,8 +186,17 @@ namespace DG.Tween
         /// <summary>Tweens a Color using default plugins</summary>
         public static Tweener<Color, Color, NoOptions> To(
             MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            float duration
+        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, UpdateType.Default, false); }
+        public static Tweener<Color, Color, NoOptions> To(
+            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            float duration, UpdateType updateType
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        /// <summary>Tweens a Rect using default plugins</summary>
+        public static Tweener<Rect, Rect, PlugRect.Options> To(
+            MemberGetter<Rect> getter, MemberSetter<Rect> setter, Rect endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, updateType, false); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
@@ -183,17 +221,44 @@ namespace DG.Tween
         public static Tweener<float, float, PlugFloat.Options> From(
             MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, true); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, true); }
         /// <summary>Tweens an int using default plugins</summary>
         public static Tweener<int, int, NoOptions> From(
             MemberGetter<int> getter, MemberSetter<int> setter, int endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        /// <summary>Tweens an uint using default plugins</summary>
+        public static Tweener<uint, uint, NoOptions> From(
+            MemberGetter<uint> getter, MemberSetter<uint> setter, uint endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        /// <summary>Tweens a Vector2 using default plugins</summary>
+        public static Tweener<Vector2, Vector2, PlugVector2.Options> From(
+            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, UpdateType.Default, true); }
+        public static Tweener<Vector2, Vector2, PlugVector2.Options> From(
+            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            float duration, UpdateType updateType
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, updateType, true); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener<Vector3, Vector3, PlugVector3.Options> From(
             MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
-            float duration, UpdateType updateType = UpdateType.Default
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, UpdateType.Default, true); }
+        public static Tweener<Vector3, Vector3, PlugVector3.Options> From(
+            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, updateType, true); }
+        /// <summary>Tweens a Vector4 using default plugins</summary>
+        public static Tweener<Vector4, Vector4, PlugVector4.Options> From(
+            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, UpdateType.Default, true); }
+        public static Tweener<Vector4, Vector4, PlugVector4.Options> From(
+            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            float duration, UpdateType updateType
+        ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, updateType, true); }
         /// <summary>Tweens a Quaternion using default plugins</summary>
         public static Tweener<Quaternion, Vector3, NoOptions> From(
             MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
@@ -202,8 +267,17 @@ namespace DG.Tween
         /// <summary>Tweens a Color using default plugins</summary>
         public static Tweener<Color, Color, NoOptions> From(
             MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            float duration
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, UpdateType.Default, true); }
+        public static Tweener<Color, Color, NoOptions> From(
+            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            float duration, UpdateType updateType
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        /// <summary>Tweens a Rect using default plugins</summary>
+        public static Tweener<Rect, Rect, PlugRect.Options> From(
+            MemberGetter<Rect> getter, MemberSetter<Rect> setter, Rect endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, updateType, true); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>

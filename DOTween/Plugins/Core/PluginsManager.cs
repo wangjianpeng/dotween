@@ -56,12 +56,20 @@ namespace DG.Tween.Plugins.Core
             } else if (t1 == typeof(Quaternion)) {
                 if (t2 == typeof(Quaternion)) Debugger.LogError("Quaternion tweens require a Vector3 endValue");
                 else plugin = new QuaternionPlugin();
+            } else if (t1 == typeof(Vector2)) {
+                plugin = new Vector2Plugin();
             } else if (t1 == typeof(float)) {
                 plugin = new FloatPlugin();
             } else if (t1 == typeof(Color)) {
                 plugin = new ColorPlugin();
             } else if (t1 == typeof(int)) {
                 plugin = new IntPlugin();
+            } else if (t1 == typeof(Vector4)) {
+                plugin = new Vector4Plugin();
+            } else if (t1 == typeof(Rect)) {
+                plugin = new RectPlugin();
+            } else if (t1 == typeof(uint)) {
+                plugin = new UintPlugin();
             }
 
             if (plugin != null) {
