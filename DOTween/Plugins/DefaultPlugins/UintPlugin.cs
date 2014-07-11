@@ -43,7 +43,7 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override uint Calculate(NoOptions options, bool isRelative, MemberGetter<uint> getter, float elapsed, uint startValue, uint changeValue, float duration, EaseFunction ease)
+        public override uint Evaluate(NoOptions options, bool isRelative, MemberGetter<uint> getter, float elapsed, uint startValue, uint changeValue, float duration, EaseFunction ease)
         {
             return (uint)Mathf.RoundToInt(ease(elapsed, startValue, changeValue, duration, 0, 0));
         }

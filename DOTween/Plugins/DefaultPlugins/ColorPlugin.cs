@@ -43,7 +43,7 @@ namespace DG.Tween.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override Color Calculate(NoOptions options, bool isRelative, MemberGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
+        public override Color Evaluate(NoOptions options, bool isRelative, MemberGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
         {
             startValue.r = ease(elapsed, startValue.r, changeValue.r, duration, 0, 0);
             startValue.g = ease(elapsed, startValue.g, changeValue.g, duration, 0, 0);

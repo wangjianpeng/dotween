@@ -86,7 +86,7 @@ namespace DG.Tween.Plugins
             return endValue - startValue;
         }
 
-        public override Vector2 Calculate(PlugVector2X.Options options, bool isRelative, MemberGetter<Vector2> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        public override Vector2 Evaluate(PlugVector2X.Options options, bool isRelative, MemberGetter<Vector2> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
         {
             Vector2 res = getter();
             res.x = ease(elapsed, startValue, changeValue, duration, 0, 0);
