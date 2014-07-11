@@ -1180,5 +1180,10 @@
             The eased value.
             </returns>
         </member>
+        <member name="T:DG.Tween.Plug">
+            <summary>
+            Shortcuts to DOTween plugins creations
+            </summary>
+        </member>
     </members>
 </doc>
