@@ -346,6 +346,7 @@ namespace DG.Tween.Core
                 }
             }
             if (wasEndPosition) completedLoops--;
+            if (t.loops != -1 && completedLoops >= t.loops) position = t.duration;
 
             return new UpdateData(position, completedLoops);
         }
