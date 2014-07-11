@@ -44,7 +44,7 @@ namespace DG.Tween.Plugins.DefaultPlugins
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override string Calculate(NoOptions options, bool isRelative, MemberGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
+        public override string Evaluate(NoOptions options, bool isRelative, MemberGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
         {
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
