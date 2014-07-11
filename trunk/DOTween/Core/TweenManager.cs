@@ -129,10 +129,8 @@ namespace DG.Tween.Core
             return true;
         }
 
-        internal static bool Goto(Tween t, float to, bool andPlay = false)
+        internal static void Goto(Tween t, float to, bool andPlay = false)
         {
-            if (t.loops == -1) return false;
-
             t.isPlaying = andPlay;
             t.delayComplete = true;
             t.elapsedDelay = t.delay;
@@ -142,7 +140,6 @@ namespace DG.Tween.Core
             if (position <= 0 && completedLoops == t.loops) position = t.duration;
             else if (position >= t.duration) position = 0;
             t.Goto(new UpdateData(position, completedLoops, UpdateMode.Goto));
-            return true;
         }
 
         // Returns TRUE if the given tween was not already paused
@@ -507,7 +504,8 @@ namespace DG.Tween.Core
                         if (Flip(t)) totInvolved++;
                         break;
                     case OperationType.Goto:
-                        if (Goto(t, optionalFloat, optionalBool)) totInvolved++;
+                        Goto(t, optionalFloat, optionalBool);
+                        totInvolved++;
                         break;
                     case OperationType.Pause:
                         if (Pause(t)) totInvolved++;

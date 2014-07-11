@@ -70,6 +70,8 @@ namespace DG.Tween.Plugins.Core
                 plugin = new RectPlugin();
             } else if (t1 == typeof(uint)) {
                 plugin = new UintPlugin();
+            } else if (t1 == typeof(string)) {
+                plugin = new StringPlugin();
             }
 
             if (plugin != null) {

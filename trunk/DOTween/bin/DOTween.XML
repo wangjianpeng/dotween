@@ -38,6 +38,9 @@
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.UInt32},DG.Tween.Core.MemberSetter{System.UInt32},System.UInt32,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens an uint using default plugins</summary>
         </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{System.String},DG.Tween.Core.MemberSetter{System.String},System.String,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a string using default plugins</summary>
+        </member>
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Vector2},DG.Tween.Core.MemberSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
             <summary>Tweens a Vector2 using default plugins</summary>
         </member>
@@ -74,6 +77,9 @@
         </member>
         <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{System.UInt32},DG.Tween.Core.MemberSetter{System.UInt32},System.UInt32,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens an uint using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{System.String},DG.Tween.Core.MemberSetter{System.String},System.String,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a string using default plugins</summary>
         </member>
         <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Vector2},DG.Tween.Core.MemberSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
             <summary>Tweens a Vector2 using default plugins</summary>
@@ -141,20 +147,16 @@
             then returns the number of actual tweens flipped</summary>
         </member>
         <member name="M:DG.Tween.DOTween.Goto(System.Single,System.Boolean)">
-            <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-            (meaning tweens that don't have infinite loops)</summary>
+            <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         </member>
         <member name="M:DG.Tween.DOTween.Goto(System.Int32,System.Single,System.Boolean)">
-            <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-            (meaning the tweens with the given id that don't have infinite loops)</summary>
+            <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         </member>
         <member name="M:DG.Tween.DOTween.Goto(System.String,System.Single,System.Boolean)">
-            <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-            (meaning the tweens with the given id that don't have infinite loops)</summary>
+            <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         </member>
         <member name="M:DG.Tween.DOTween.Goto(UnityEngine.Object,System.Single,System.Boolean)">
-            <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-            (meaning the tweens with the given id that don't have infinite loops)</summary>
+            <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         </member>
         <member name="M:DG.Tween.DOTween.Kill">
             <summary>Kills all tweens and returns the number of actual tweens killed</summary>

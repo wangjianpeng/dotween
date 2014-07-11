@@ -25,10 +25,10 @@ namespace DG.Tween.Plugins.Core
 {
     public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin
     {
-        // getter is there because some plugins might need it
+        // getter and isRelative are there because some rare plugins need it
         public abstract T2 ConvertT1toT2(TPlugOptions options, T1 value);
         public abstract T2 GetRelativeEndValue(TPlugOptions options, T2 startValue, T2 changeValue);
         public abstract T2 GetChangeValue(TPlugOptions options, T2 startValue, T2 endValue);
-        public abstract T1 Calculate(TPlugOptions options, MemberGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration, EaseFunction ease);
+        public abstract T1 Calculate(TPlugOptions options, bool isRelative, MemberGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration, EaseFunction ease);
     }
 }
