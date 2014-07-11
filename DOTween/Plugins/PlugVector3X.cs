@@ -37,14 +37,7 @@ namespace DG.Tween.Plugins
         readonly MemberSetter<Vector3> _setter;
         readonly Options _options;
 
-        public PlugVector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
-        {
-            _getter = getter;
-            _setter = setter;
-            _endValue = endValue;
-            _options = new Options();
-        }
-        public PlugVector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, Options options)
+        public PlugVector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, Options options = new Options())
         {
             _getter = getter;
             _setter = setter;
