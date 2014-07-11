@@ -68,6 +68,8 @@ namespace DG.Tween.Plugins.Core
                 plugin = new Vector4Plugin();
             } else if (t1 == typeof(Rect)) {
                 plugin = new RectPlugin();
+            } else if (t1 == typeof(RectOffset)) {
+                plugin = new RectOffsetPlugin();
             } else if (t1 == typeof(uint)) {
                 plugin = new UintPlugin();
             } else if (t1 == typeof(string)) {

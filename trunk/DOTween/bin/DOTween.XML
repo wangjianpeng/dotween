@@ -59,6 +59,9 @@
         <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.Rect},DG.Tween.Core.MemberSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a Rect using default plugins</summary>
         </member>
+        <member name="M:DG.Tween.DOTween.To(DG.Tween.Core.MemberGetter{UnityEngine.RectOffset},DG.Tween.Core.MemberSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a RectOffset using default plugins</summary>
+        </member>
         <member name="M:DG.Tween.DOTween.To``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tween.UpdateType)">
             <summary>
             Tweens a property using default plugins with options
@@ -98,6 +101,9 @@
         </member>
         <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.Rect},DG.Tween.Core.MemberSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tween.UpdateType)">
             <summary>Tweens a Rect using default plugins</summary>
+        </member>
+        <member name="M:DG.Tween.DOTween.From(DG.Tween.Core.MemberGetter{UnityEngine.RectOffset},DG.Tween.Core.MemberSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tween.UpdateType)">
+            <summary>Tweens a RectOffset using default plugins</summary>
         </member>
         <member name="M:DG.Tween.DOTween.From``3(DG.Tween.Core.MemberGetter{``0},DG.Tween.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tween.UpdateType)">
             <summary>
