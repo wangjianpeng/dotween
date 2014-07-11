@@ -81,12 +81,15 @@
     <Compile Include="Plugins\PlugFloat.cs" />
     <Compile Include="Plugins\PlugRect.cs" />
     <Compile Include="Plugins\PlugVector2.cs" />
+    <Compile Include="Plugins\PlugVector2X.cs" />
+    <Compile Include="Plugins\PlugVector2Y.cs" />
     <Compile Include="Plugins\PlugVector3.cs" />
     <Compile Include="Plugins\PlugVector3X.cs" />
     <Compile Include="Plugins\PlugVector3Y.cs" />
     <Compile Include="Plugins\PlugVector3Z.cs" />
     <Compile Include="Plugins\PlugVector4.cs" />
     <Compile Include="Plugins\DefaultPlugins\Vector4Plugin.cs" />
+    <Compile Include="Plugins\DefaultPlugins\StringPlugin.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />
     <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />

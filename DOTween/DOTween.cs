@@ -151,6 +151,11 @@ namespace DG.Tween
             MemberGetter<uint> getter, MemberSetter<uint> setter, uint endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        /// <summary>Tweens a string using default plugins</summary>
+        public static Tweener<string, string, NoOptions> To(
+            MemberGetter<string> getter, MemberSetter<string> setter, string endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens a Vector2 using default plugins</summary>
         public static Tweener<Vector2, Vector2, PlugVector2.Options> To(
             MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
@@ -230,6 +235,11 @@ namespace DG.Tween
         /// <summary>Tweens an uint using default plugins</summary>
         public static Tweener<uint, uint, NoOptions> From(
             MemberGetter<uint> getter, MemberSetter<uint> setter, uint endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        /// <summary>Tweens a string using default plugins</summary>
+        public static Tweener<string, string, NoOptions> From(
+            MemberGetter<string> getter, MemberSetter<string> setter, string endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>Tweens a Vector2 using default plugins</summary>
@@ -358,27 +368,23 @@ namespace DG.Tween
             return TweenManager.FilteredOperation(OperationType.Flip, FilterType.UnityObjectId, -1, null, unityObjectId, false, 0);
         }
 
-        /// <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-        /// (meaning tweens that don't have infinite loops)</summary>
+        /// <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         public static int Goto(float to, bool andPlay = false)
         {
             return TweenManager.FilteredOperation(OperationType.Goto, FilterType.All, -1, null, null, andPlay, to);
         }
-        /// <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-        /// (meaning the tweens with the given id that don't have infinite loops)</summary>
+        /// <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         public static int Goto(int id, float to, bool andPlay = false)
         {
             return TweenManager.FilteredOperation(OperationType.Goto, FilterType.Id, id, null, null, andPlay, to);
         }
-        /// <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-        /// (meaning the tweens with the given id that don't have infinite loops)</summary>
+        /// <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         public static int Goto(string stringId, float to, bool andPlay = false)
         {
             if (stringId == null) return 0;
             return TweenManager.FilteredOperation(OperationType.Goto, FilterType.StringId, -1, stringId, null, andPlay, to);
         }
-        /// <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved
-        /// (meaning the tweens with the given id that don't have infinite loops)</summary>
+        /// <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         public static int Goto(UnityEngine.Object unityObjectId, float to, bool andPlay = false)
         {
             if (unityObjectId == null) return 0;

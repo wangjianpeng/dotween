@@ -180,7 +180,7 @@ namespace DG.Tween
                 t._endValue = prevStartValue;
                 t._changeValue = t._tweenPlugin.GetChangeValue(t._plugOptions, t._startValue, t._endValue);
                 // Jump (no need for safeMode checks since they already happened when assigning start value
-                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, 0, t._startValue, t._endValue, t.duration, t.ease));
+                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t.isRelative, t._getter, 0, t._startValue, t._endValue, t.duration, t.ease));
             } else t._changeValue = t._tweenPlugin.GetChangeValue(t._plugOptions, t._startValue, t._endValue);
             return true;
         }
@@ -259,13 +259,13 @@ namespace DG.Tween
                 : t.position;
             if (DOTween.useSafeMode) {
                 try {
-                    t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._changeValue, t.duration, t.ease));
+                    t._setter(t._tweenPlugin.Calculate(t._plugOptions, t.isRelative, t._getter, easePosition, t._startValue, t._changeValue, t.duration, t.ease));
                 } catch (MissingReferenceException) {
                     // Target/field doesn't exist anymore: kill tween
                     return true;
                 }
             } else {
-                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t._getter, easePosition, t._startValue, t._changeValue, t.duration, t.ease));
+                t._setter(t._tweenPlugin.Calculate(t._plugOptions, t.isRelative, t._getter, easePosition, t._startValue, t._changeValue, t.duration, t.ease));
             }
 
             // Additional callbacks
