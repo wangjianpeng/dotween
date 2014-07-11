@@ -22,6 +22,7 @@
 
 using DG.Tween.Core;
 using DG.Tween.Plugins;
+using DG.Tween.Plugins.Core;
 using UnityEngine;
 
 namespace DG.Tween
@@ -31,6 +32,67 @@ namespace DG.Tween
     /// </summary>
     public static class Plug
     {
+        ///////////////////////////////////////////////////////////////
+        // DEFAULT PLUGINS (options only) /////////////////////////////
+
+        // Float
+        public static PlugFloat.Options FloatOptions(bool snapping)
+        {
+            return new PlugFloat.Options(snapping);
+        }
+
+        // Vector2
+        public static PlugVector2.Options Vector2Options(bool snapping)
+        {
+            return new PlugVector2.Options(snapping);
+        }
+        // Vector3
+        public static PlugVector3.Options Vector3Options(bool snapping)
+        {
+            return new PlugVector3.Options(snapping);
+        }
+        // Vector4
+        public static PlugVector4.Options Vector4Options(bool snapping)
+        {
+            return new PlugVector4.Options(snapping);
+        }
+
+        // Rect
+        public static PlugRect.Options RectOptions(bool snapping)
+        {
+            return new PlugRect.Options(snapping);
+        }
+
+        ///////////////////////////////////////////////////////////////
+        // CUSTOM PLUGINS /////////////////////////////////////////////
+
+        // Vector2X
+        public static PlugVector2X Vector2X(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue)
+        {
+            return new PlugVector2X(getter, setter, endValue);
+        }
+        public static PlugVector2X Vector2X(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue, PlugVector2X.Options options)
+        {
+            return new PlugVector2X(getter, setter, endValue, options);
+        }
+        public static PlugVector2X.Options Vector2XOptions(bool snapping)
+        {
+            return new PlugVector2X.Options(snapping);
+        }
+        // Vector2Y
+        public static PlugVector2Y Vector2Y(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue)
+        {
+            return new PlugVector2Y(getter, setter, endValue);
+        }
+        public static PlugVector2Y Vector2Y(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue, PlugVector2Y.Options options)
+        {
+            return new PlugVector2Y(getter, setter, endValue, options);
+        }
+        public static PlugVector2Y.Options Vector2YOptions(bool snapping)
+        {
+            return new PlugVector2Y.Options(snapping);
+        }
+
         // Vector3X
         public static PlugVector3X Vector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
         {
@@ -69,6 +131,12 @@ namespace DG.Tween
         public static PlugVector3Z.Options Vector3ZOptions(bool snapping)
         {
             return new PlugVector3Z.Options(snapping);
+        }
+
+        // Alpha (no options)
+        public static PlugAlpha Alpha(MemberGetter<Color> getter, MemberSetter<Color> setter, float endValue)
+        {
+            return new PlugAlpha(getter, setter, endValue);
         }
     }
 }

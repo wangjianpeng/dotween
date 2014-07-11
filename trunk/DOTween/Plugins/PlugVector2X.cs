@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/11 10:53
+// Created: 2014/07/11 11:28
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -30,14 +30,14 @@ namespace DG.Tween.Plugins
     // ||| PLUG ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public struct PlugVector3Z : IPlugSetter<Vector3, float, Vector3ZPlugin, PlugVector3Z.Options>
+    public struct PlugVector2X : IPlugSetter<Vector2, float, Vector2XPlugin, PlugVector2X.Options>
     {
         readonly float _endValue;
-        readonly MemberGetter<Vector3> _getter;
-        readonly MemberSetter<Vector3> _setter;
+        readonly MemberGetter<Vector2> _getter;
+        readonly MemberSetter<Vector2> _setter;
         readonly Options _options;
 
-        public PlugVector3Z(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, Options options = new Options())
+        public PlugVector2X(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue, Options options = new Options())
         {
             _getter = getter;
             _setter = setter;
@@ -45,8 +45,8 @@ namespace DG.Tween.Plugins
             _options = options;
         }
 
-        public MemberGetter<Vector3> Getter() { return _getter; }
-        public MemberSetter<Vector3> Setter() { return _setter; }
+        public MemberGetter<Vector2> Getter() { return _getter; }
+        public MemberSetter<Vector2> Setter() { return _setter; }
         public float EndValue() { return _endValue; }
         public Options GetOptions() { return _options; }
 
@@ -69,28 +69,28 @@ namespace DG.Tween.Plugins
     // ||| PLUGIN ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public class Vector3ZPlugin : ABSTweenPlugin<Vector3, float, PlugVector3Z.Options>
+    public class Vector2XPlugin : ABSTweenPlugin<Vector2, float, PlugVector2X.Options>
     {
-        public override float ConvertT1toT2(PlugVector3Z.Options options, Vector3 value)
+        public override float ConvertT1toT2(PlugVector2X.Options options, Vector2 value)
         {
-            return value.z;
+            return value.x;
         }
 
-        public override float GetRelativeEndValue(PlugVector3Z.Options options, float startValue, float changeValue)
+        public override float GetRelativeEndValue(PlugVector2X.Options options, float startValue, float changeValue)
         {
             return startValue + changeValue;
         }
 
-        public override float GetChangeValue(PlugVector3Z.Options options, float startValue, float endValue)
+        public override float GetChangeValue(PlugVector2X.Options options, float startValue, float endValue)
         {
             return endValue - startValue;
         }
 
-        public override Vector3 Calculate(PlugVector3Z.Options options, MemberGetter<Vector3> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        public override Vector2 Calculate(PlugVector2X.Options options, MemberGetter<Vector2> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
         {
-            Vector3 res = getter();
-            res.z = ease(elapsed, startValue, changeValue, duration, 0, 0);
-            if (options.snapping) res.z = Mathf.Round(res.z);
+            Vector2 res = getter();
+            res.x = ease(elapsed, startValue, changeValue, duration, 0, 0);
+            if (options.snapping) res.x = Mathf.Round(res.x);
             return res;
         }
     }
