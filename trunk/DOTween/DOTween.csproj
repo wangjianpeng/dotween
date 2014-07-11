@@ -76,12 +76,15 @@
     <Compile Include="Plugins\DefaultPlugins\RectPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\UintPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\Vector2Plugin.cs" />
+    <Compile Include="Plug.cs" />
     <Compile Include="Plugins\PlugAlpha.cs" />
     <Compile Include="Plugins\PlugFloat.cs" />
     <Compile Include="Plugins\PlugRect.cs" />
     <Compile Include="Plugins\PlugVector2.cs" />
     <Compile Include="Plugins\PlugVector3.cs" />
     <Compile Include="Plugins\PlugVector3X.cs" />
+    <Compile Include="Plugins\PlugVector3Y.cs" />
+    <Compile Include="Plugins\PlugVector3Z.cs" />
     <Compile Include="Plugins\PlugVector4.cs" />
     <Compile Include="Plugins\DefaultPlugins\Vector4Plugin.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
