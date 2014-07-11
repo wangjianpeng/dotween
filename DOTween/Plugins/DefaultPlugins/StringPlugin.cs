@@ -26,6 +26,7 @@ using UnityEngine;
 
 namespace DG.Tween.Plugins.DefaultPlugins
 {
+    // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
     public class StringPlugin : ABSTweenPlugin<string, string, NoOptions>
     {
         public override string ConvertT1toT2(NoOptions options, string value)

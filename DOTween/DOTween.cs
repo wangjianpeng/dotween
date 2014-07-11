@@ -202,6 +202,11 @@ namespace DG.Tween
             MemberGetter<Rect> getter, MemberSetter<Rect> setter, Rect endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, updateType, false); }
+        /// <summary>Tweens a RectOffset using default plugins</summary>
+        public static Tweener<RectOffset, RectOffset, NoOptions> To(
+            MemberGetter<RectOffset> getter, MemberSetter<RectOffset> setter, RectOffset endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
@@ -288,6 +293,11 @@ namespace DG.Tween
             MemberGetter<Rect> getter, MemberSetter<Rect> setter, Rect endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, updateType, true); }
+        /// <summary>Tweens a RectOffset using default plugins</summary>
+        public static Tweener<RectOffset, RectOffset, NoOptions> From(
+            MemberGetter<RectOffset> getter, MemberSetter<RectOffset> setter, RectOffset endValue,
+            float duration, UpdateType updateType = UpdateType.Default
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
