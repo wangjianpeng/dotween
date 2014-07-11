@@ -35,9 +35,6 @@ namespace DG.Tween
         // OPTIONS ///////////////////////////////////////////////////
 
         internal bool isFrom;
-        internal bool isRelative;
-        internal EaseFunction ease;
-        internal EaseCurve easeCurve; // Stored in case of AnimationCurve ease
 
         // SETUP DATA ////////////////////////////////////////////////
 
@@ -145,9 +142,6 @@ namespace DG.Tween
         static void DoReset(Tweener<T1,T2,TPlugOptions> t)
         {
             t.isFrom = false;
-            t.isRelative = false;
-            t.ease = Quad.EaseOut;
-            t.easeCurve = null;
 
             t._getter = null;
             t._setter = null;

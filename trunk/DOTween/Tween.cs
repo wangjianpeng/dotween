@@ -21,6 +21,7 @@
 
 using System;
 using DG.Tween.Core;
+using DG.Tween.Core.Easing;
 
 namespace DG.Tween
 {
@@ -45,7 +46,11 @@ namespace DG.Tween
         internal float duration;
         internal int loops;
         internal LoopType loopType;
-        internal float delay; // Shared by Sequences only for compatibility reasons, otherwise not used
+        // Tweeners-only (shared by Sequences only for compatibility reasons, otherwise not used)
+        internal float delay;
+        internal bool isRelative;
+        internal EaseFunction ease;
+        internal EaseCurve easeCurve; // Stored in case of AnimationCurve ease
 
         // SETUP DATA ////////////////////////////////////////////////
 
@@ -105,6 +110,9 @@ namespace DG.Tween
             t.loops = 1;
             t.loopType = LoopType.Restart;
             t.delay = 0;
+            t.isRelative = false;
+            t.ease = null;
+            t.easeCurve = null;
             t.updateType = UpdateType.Default;
             t.creationLocked = t.startupDone = t.playedOnce = false;
             t.position = t.fullDuration = t.completedLoops = 0;
