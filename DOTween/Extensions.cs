@@ -62,9 +62,10 @@ namespace DG.Tween
             return t;
         }
 
-        public static void Play(this Tween t)
+        public static Tween Play(this Tween t)
         {
             TweenManager.Play(t);
+            return t;
         }
 
         public static void PlayBackwards(this Tween t)
@@ -103,6 +104,11 @@ namespace DG.Tween
         {
             int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
             return (loopsToCount * t.duration) + t.position;
+        }
+
+        public static bool IsBackwards(this Tween t)
+        {
+            return t.isBackwards;
         }
     }
 }

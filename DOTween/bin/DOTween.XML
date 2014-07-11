@@ -699,6 +699,11 @@
             The eased value.
             </returns>
         </member>
+        <member name="T:DG.Tween.Plug">
+            <summary>
+            Shortcuts to DOTween plugins creations
+            </summary>
+        </member>
         <member name="T:DG.Tween.Core.Easing.Cubic">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
@@ -1117,6 +1122,18 @@
             The eased value.
             </returns>
         </member>
+        <member name="M:DG.Tween.TweenCreationExtensions.Delay(DG.Tween.Tween,System.Single)">
+            <summary>Has no effect on Sequences</summary>
+        </member>
+        <member name="M:DG.Tween.TweenCreationExtensions.Relative(DG.Tween.Tween,System.Boolean)">
+            <summary>Has no effect on Sequences</summary>
+        </member>
+        <member name="M:DG.Tween.TweenCreationExtensions.Ease(DG.Tween.Tween,DG.Tween.EaseType)">
+            <summary>Has no effect on Sequences</summary>
+        </member>
+        <member name="M:DG.Tween.TweenCreationExtensions.Ease(DG.Tween.Tween,UnityEngine.AnimationCurve)">
+            <summary>Has no effect on Sequences</summary>
+        </member>
         <member name="T:DG.Tween.Core.Easing.Quart">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
@@ -1187,11 +1204,6 @@
             <returns>
             The eased value.
             </returns>
-        </member>
-        <member name="T:DG.Tween.Plug">
-            <summary>
-            Shortcuts to DOTween plugins creations
-            </summary>
         </member>
     </members>
 </doc>
