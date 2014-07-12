@@ -214,6 +214,12 @@ namespace DG.Tweening.Core
             return rewinded;
         }
 
+        internal static bool TogglePause(Tween t)
+        {
+            if (t.isPlaying) return Pause(t);
+            return Play(t);
+        }
+
         // Despawn all
         internal static int DespawnAll()
         {
@@ -529,6 +535,9 @@ namespace DG.Tweening.Core
                         break;
                     case OperationType.Rewind:
                         if (Rewind(t, optionalBool)) totInvolved++;
+                        break;
+                    case OperationType.TogglePause:
+                        if (TogglePause(t)) totInvolved++;
                         break;
                     }
                 }

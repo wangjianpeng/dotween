@@ -582,6 +582,33 @@ namespace DG.Tweening
             return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.UnityObjectId, -1, null, unityObjectId, includeDelay, 0);
         }
 
+        /// <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
+        /// (meaning tweens that could be played or paused, depending on the toggle state)</summary>
+        public static int TogglePause()
+        {
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.All, -1, null, null, false, 0);
+        }
+        /// <summary>Toggles the play state of all tweens with the given ID and returns the number of actual tweens toggled
+        /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        public static int TogglePause(int id)
+        {
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.Id, id, null, null, false, 0);
+        }
+        /// <summary>Toggles the play state of all tweens with the given string ID and returns the number of actual tweens toggled
+        /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        public static int TogglePause(string stringId)
+        {
+            if (stringId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.StringId, -1, stringId, null, false, 0);
+        }
+        /// <summary>Toggles the play state of all tweens with the given object ID and returns the number of actual tweens toggled
+        /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        public static int TogglePause(UnityEngine.Object unityObjectId)
+        {
+            if (unityObjectId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.UnityObjectId, -1, null, unityObjectId, false, 0);
+        }
+
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
