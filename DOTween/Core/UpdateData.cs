@@ -20,9 +20,9 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core.Enums;
+using DG.Tweening.Core.Enums;
 
-namespace DG.Tween.Core
+namespace DG.Tweening.Core
 {
     internal struct UpdateData
     {

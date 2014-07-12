@@ -20,8 +20,8 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween;
-using DG.Tween.Core;
+using DG.Tweening;
+using DG.Tweening.Core;
 using UnityEditor;
 using UnityEngine;
 

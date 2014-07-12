@@ -22,7 +22,7 @@
 
 using UnityEngine;
 
-namespace DG.Tween.Core.Easing
+namespace DG.Tweening.Core.Easing
 {
     /// <summary>
     /// Used to interpret AnimationCurves as eases.

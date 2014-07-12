@@ -20,12 +20,11 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core;
-using DG.Tween.Plugins;
-using DG.Tween.Plugins.Core;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins;
 using UnityEngine;
 
-namespace DG.Tween
+namespace DG.Tweening
 {
     /// <summary>
     /// Shortcuts to DOTween plugins creations

@@ -19,9 +19,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using DG.Tween.Core;
+using DG.Tweening.Core;
 
-namespace DG.Tween.Plugins.Core
+namespace DG.Tweening.Plugins.Core
 {
     public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin
     {

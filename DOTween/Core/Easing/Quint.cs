@@ -28,7 +28,7 @@
 // STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 // EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-namespace DG.Tween.Core.Easing
+namespace DG.Tweening.Core.Easing
 {
     /// <summary>
     /// This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).

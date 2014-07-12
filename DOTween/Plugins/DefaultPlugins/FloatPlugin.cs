@@ -19,11 +19,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using DG.Tween.Core;
-using DG.Tween.Plugins.Core;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
-namespace DG.Tween.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.DefaultPlugins
 {
     public class FloatPlugin : ABSTweenPlugin<float,float,PlugFloat.Options>
     {

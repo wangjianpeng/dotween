@@ -20,10 +20,10 @@
 // THE SOFTWARE.
 
 using System;
-using DG.Tween.Core;
-using DG.Tween.Core.Easing;
+using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 
-namespace DG.Tween
+namespace DG.Tweening
 {
     /// <summary>
     /// Shared by Tweeners and Sequences
@@ -88,11 +88,11 @@ namespace DG.Tween
         // Called by TweenManager in case a tween has a delay that needs to be updated.
         // Returns the eventual time in excess compared to the tween's delay time.
         // Shared also by Sequences even if they don't use it, in order to make it compatible with Tween.
-        internal abstract float UpdateDelay(float elapsed);
+        internal virtual float UpdateDelay(float elapsed) { return 0; }
 
         // Called by TweenManager at each update.
         // Returns TRUE if the tween needs to be killed
-        internal abstract bool Goto(UpdateData updateData);
+        internal virtual bool Goto(UpdateData updateData) { return true; }
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------

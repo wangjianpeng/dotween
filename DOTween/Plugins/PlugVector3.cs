@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 // 
 
-namespace DG.Tween.Plugins
+namespace DG.Tweening.Plugins
 {
     public struct PlugVector3
     {

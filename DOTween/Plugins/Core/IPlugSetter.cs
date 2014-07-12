@@ -20,9 +20,9 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core;
+using DG.Tweening.Core;
 
-namespace DG.Tween.Plugins.Core
+namespace DG.Tweening.Plugins.Core
 {
     public interface IPlugSetter<T1, out T2, TPlugin, out TPlugOptions>
     {

@@ -20,11 +20,11 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core;
-using DG.Tween.Plugins.Core;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
-namespace DG.Tween.Plugins
+namespace DG.Tweening.Plugins
 {
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // ||| PLUG ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

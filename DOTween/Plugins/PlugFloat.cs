@@ -19,7 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
-namespace DG.Tween.Plugins
+namespace DG.Tweening.Plugins
 {
     public struct PlugFloat
     {

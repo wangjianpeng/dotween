@@ -19,11 +19,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using DG.Tween.Core;
-using DG.Tween.Core.Easing;
+using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using UnityEngine;
 
-namespace DG.Tween
+namespace DG.Tweening
 {
     public static class TweenCreationExtensions
     {
