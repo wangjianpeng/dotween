@@ -28,6 +28,7 @@ namespace DG.Tween.Core
 {
     internal static class TweenManager
     {
+        // FIXME reset original values
         const int _DefaultMaxTweeners = 200;
         const int _DefaultMaxSequences = 50;
         const string _MaxTweenersReached = "Max number of Tweeners has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
@@ -58,14 +59,18 @@ namespace DG.Tween.Core
         internal static Tweener<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>(UpdateType updateType, bool playNow = true)
             where TPlugOptions : struct
         {
+            Tween tween;
             Tweener<T1,T2,TPlugOptions> t;
             // Search inside pool
             if (totPooledTweeners > 0) {
-                Type type = typeof(T1);
+                Type typeofT1 = typeof(T1);
+                Type typeofT2 = typeof(T2);
+                Type typeofTPlugOptions = typeof(TPlugOptions);
                 for (int i = 0; i < totPooledTweeners; ++i) {
-                    if (_PooledTweeners[i].type == type) {
+                    tween = _PooledTweeners[i];
+                    if (tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
                         // Pooled Tweener exists: spawn it
-                        t = (Tweener<T1,T2,TPlugOptions>)_PooledTweeners[i];
+                        t = (Tweener<T1, T2, TPlugOptions>)tween;
                         t.active = true;
                         t.isPlaying = playNow;
                         AddActiveTween(t, updateType);
@@ -75,9 +80,10 @@ namespace DG.Tween.Core
                     }
                 }
                 // Not found: remove a tween from the pool in case it's full
-                if (totPooledTweeners >= maxTweeners) {
+                if (totTweeners >= maxTweeners) {
                     _PooledTweeners.RemoveAt(0);
                     totPooledTweeners--;
+                    totTweeners--;
                 }
             } else {
                 // Increase capacity in case max number of Tweeners has already been reached, then continue

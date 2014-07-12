@@ -56,7 +56,9 @@ namespace DG.Tween
 
         internal UpdateType updateType;
         internal TweenType tweenType;
-        internal Type type; // Only used by Tweeners
+        internal Type typeofT1; // Only used by Tweeners
+        internal Type typeofT2; // Only used by Tweeners
+        internal Type typeofTPlugOptions; // Only used by Tweeners
         internal bool active; // FALSE when tween is despawned - set only by TweenManager
 
         // PLAY DATA /////////////////////////////////////////////////

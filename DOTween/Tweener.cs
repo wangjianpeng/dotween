@@ -38,7 +38,6 @@ namespace DG.Tween
 
         // SETUP DATA ////////////////////////////////////////////////
 
-        new internal readonly Type type = typeof(T1);
         MemberGetter<T1> _getter;
         MemberSetter<T1> _setter;
         T2 _startValue, _endValue, _changeValue;
@@ -54,6 +53,9 @@ namespace DG.Tween
 
         internal Tweener()
         {
+            typeofT1 = typeof(T1);
+            typeofT2 = typeof(T2);
+            typeofTPlugOptions = typeof(TPlugOptions);
             tweenType = TweenType.Tweener;
             Reset();
         }
