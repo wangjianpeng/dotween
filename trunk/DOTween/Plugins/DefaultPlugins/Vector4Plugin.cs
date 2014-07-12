@@ -20,11 +20,11 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core;
-using DG.Tween.Plugins.Core;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
-namespace DG.Tween.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.DefaultPlugins
 {
     public class Vector4Plugin : ABSTweenPlugin<Vector4, Vector4, PlugVector4.Options>
     {

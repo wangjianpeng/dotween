@@ -21,11 +21,11 @@
 
 using System;
 using System.Collections.Generic;
-using DG.Tween.Core;
-using DG.Tween.Plugins.DefaultPlugins;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.DefaultPlugins;
 using UnityEngine;
 
-namespace DG.Tween.Plugins.Core
+namespace DG.Tweening.Plugins.Core
 {
     internal static class PluginsManager
     {

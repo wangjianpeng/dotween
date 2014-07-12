@@ -20,9 +20,9 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core.Easing;
+using DG.Tweening.Core.Easing;
 
-namespace DG.Tween.Core
+namespace DG.Tweening.Core
 {
     public static class Utils
     {

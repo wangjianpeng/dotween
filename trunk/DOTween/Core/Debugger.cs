@@ -22,7 +22,7 @@
 
 using UnityEngine;
 
-namespace DG.Tween.Core
+namespace DG.Tweening.Core
 {
     public static class Debugger
     {

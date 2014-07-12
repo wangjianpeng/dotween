@@ -31,7 +31,7 @@
 using System;
 using UnityEngine;
 
-namespace DG.Tween.Core.Easing
+namespace DG.Tweening.Core.Easing
 {
     /// <summary>
     /// This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).

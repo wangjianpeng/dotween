@@ -20,9 +20,9 @@
 // THE SOFTWARE.
 // 
 
-using DG.Tween.Core;
+using DG.Tweening.Core;
 
-namespace DG.Tween
+namespace DG.Tweening
 {
     public static class Extensions
     {
