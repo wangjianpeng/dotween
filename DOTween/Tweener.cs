@@ -89,6 +89,7 @@ namespace DG.Tween
             t.duration = duration;
             t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
+            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
             return true;
         }
         internal static bool Setup(Tweener<T1,T2,TPlugOptions> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
@@ -107,6 +108,7 @@ namespace DG.Tween
             t.duration = duration;
             t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
+            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
             return true;
         }
         internal static bool Setup<TPlugin>(Tweener<T1,T2,TPlugOptions> t, IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
@@ -120,6 +122,7 @@ namespace DG.Tween
             t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
             t._tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
+            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
             return true;
         }
 

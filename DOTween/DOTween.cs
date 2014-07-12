@@ -43,6 +43,7 @@ namespace DG.Tween
         // Default options for Tweens
         public static EaseType defaultEaseType = EaseType.InOutQuad;
         public static LoopType defaultLoopType = LoopType.Restart;
+        public static AutoPlay defaultAutoPlayBehaviour = AutoPlay.All;
 
         internal static bool isUnityEditor;
         static bool _initialized;
