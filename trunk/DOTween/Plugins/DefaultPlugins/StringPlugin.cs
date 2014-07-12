@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 // 
 
+using System.Text;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
@@ -29,6 +30,8 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
     public class StringPlugin : ABSTweenPlugin<string, string, NoOptions>
     {
+        static readonly StringBuilder _Buffer = new StringBuilder();
+
         public override string ConvertT1toT2(NoOptions options, string value)
         {
             return value;
@@ -47,11 +50,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
         // ChangeValue is the same as endValue in this plugin
         public override string Evaluate(NoOptions options, bool isRelative, MemberGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
         {
+            _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
             int len = Mathf.RoundToInt(ease(elapsed, 0, changeValueLen, duration, 0, 0));
 
-            if (isRelative) return startValue + changeValue.Substring(0, len);
+            if (isRelative) return _Buffer.Append(startValue).Append(changeValue, 0, len).ToString();
 
             int diff = startValueLen - changeValueLen;
             int startValueMaxLen = startValueLen;
@@ -60,7 +64,9 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 float perc = (float)len / changeValueLen;
                 startValueMaxLen -= (int)(startValueMaxLen * perc);
             } else startValueMaxLen -= len;
-            return changeValue.Substring(0, len) + (len >= changeValueLen || len >= startValueLen ? "" : startValue.Substring(len, startValueMaxLen));
+            _Buffer.Append(changeValue, 0, len);
+            if (len < changeValueLen && len < startValueLen) _Buffer.Append(startValue, len, startValueMaxLen);
+            return _Buffer.ToString();
         }
     }
 }
