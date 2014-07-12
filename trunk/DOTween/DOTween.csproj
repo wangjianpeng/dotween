@@ -41,6 +41,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoPlay.cs" />
     <Compile Include="Core\Delegates.cs" />
     <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\Easing\Back.cs" />
