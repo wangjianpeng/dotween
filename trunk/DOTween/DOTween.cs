@@ -33,7 +33,7 @@ namespace DG.Tween
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.550";
+        public static readonly string Version = "0.1.600";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
