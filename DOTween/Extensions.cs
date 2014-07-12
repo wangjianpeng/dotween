@@ -88,6 +88,11 @@ namespace DG.Tweening
             TweenManager.Rewind(t, includeDelay);
         }
 
+        public static void TogglePause(this Tween t)
+        {
+            TweenManager.TogglePause(t);
+        }
+
         // Info getters
 
         public static int CompletedLoops(this Tween t)

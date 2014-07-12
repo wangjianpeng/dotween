@@ -267,6 +267,22 @@
             <summary>Rewinds and pauses all tweens with the given object ID, then returns the number of actual tweens rewinded
             (meaning the tweens with the given id that were not already rewinded)</summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause">
+            <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
+            (meaning tweens that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause(System.Int32)">
+            <summary>Toggles the play state of all tweens with the given ID and returns the number of actual tweens toggled
+            (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause(System.String)">
+            <summary>Toggles the play state of all tweens with the given string ID and returns the number of actual tweens toggled
+            (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause(UnityEngine.Object)">
+            <summary>Toggles the play state of all tweens with the given object ID and returns the number of actual tweens toggled
+            (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        </member>
         <member name="T:DG.Tweening.Core.Easing.Quad">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).

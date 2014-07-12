@@ -32,6 +32,7 @@ namespace DG.Tweening.Core.Enums
         PlayForward,
         PlayBackwards,
         Rewind,
-        Restart
+        Restart,
+        TogglePause
     }
 }
