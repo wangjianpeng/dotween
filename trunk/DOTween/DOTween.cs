@@ -33,7 +33,7 @@ namespace DG.Tweening
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.600";
+        public static readonly string Version = "0.1.650";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -156,7 +156,7 @@ namespace DG.Tweening
         public static Tweener To(
             MemberGetter<string> getter, MemberSetter<string> setter, string endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugString.Options(), duration, updateType, false); }
         /// <summary>Tweens a Vector2 using default plugins</summary>
         public static Tweener To(
             MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
@@ -247,7 +247,7 @@ namespace DG.Tweening
         public static Tweener From(
             MemberGetter<string> getter, MemberSetter<string> setter, string endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugString.Options(), duration, updateType, true); }
         /// <summary>Tweens a Vector2 using default plugins</summary>
         public static Tweener From(
             MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,

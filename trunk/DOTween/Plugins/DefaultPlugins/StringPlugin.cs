@@ -28,34 +28,42 @@ using UnityEngine;
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
-    public class StringPlugin : ABSTweenPlugin<string, string, NoOptions>
+    public class StringPlugin : ABSTweenPlugin<string, string, PlugString.Options>
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
-        public override string ConvertT1toT2(NoOptions options, string value)
+        public override string ConvertT1toT2(PlugString.Options options, string value)
         {
             return value;
         }
 
-        public override string GetRelativeEndValue(NoOptions options, string startValue, string changeValue)
+        public override string GetRelativeEndValue(PlugString.Options options, string startValue, string changeValue)
         {
             return changeValue;
         }
 
-        public override string GetChangeValue(NoOptions options, string startValue, string endValue)
+        public override string GetChangeValue(PlugString.Options options, string startValue, string endValue)
         {
             return endValue;
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override string Evaluate(NoOptions options, bool isRelative, MemberGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
+        public override string Evaluate(PlugString.Options options, bool isRelative, MemberGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
         {
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
             int len = Mathf.RoundToInt(ease(elapsed, 0, changeValueLen, duration, 0, 0));
 
-            if (isRelative) return _Buffer.Append(startValue).Append(changeValue, 0, len).ToString();
+            if (isRelative) {
+                _Buffer.Append(startValue);
+                if (options.scramble) return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
+                return _Buffer.Append(changeValue, 0, len).ToString();
+            }
+
+            if (options.scramble) {
+                return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
+            }
 
             int diff = startValueLen - changeValueLen;
             int startValueMaxLen = startValueLen;
@@ -67,6 +75,52 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             _Buffer.Append(changeValue, 0, len);
             if (len < changeValueLen && len < startValueLen) _Buffer.Append(startValue, len, startValueMaxLen);
             return _Buffer.ToString();
+        }
+    }
+
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    internal static class StringPluginExtensions
+    {
+        static readonly char[] _ScrambledChars = new[] {
+            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','Z',
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z',
+            '1','2','3','4','5','6','7','8','9','0'
+        };
+        static readonly int _ScrambledCharsLen;
+        static int _lastRndSeed;
+
+        static StringPluginExtensions()
+        {
+            _ScrambledCharsLen = _ScrambledChars.Length;
+            // Shuffle chars (uses Knuth shuggle algorithm)
+            for (int i = 0; i < _ScrambledCharsLen; i++) {
+                char tmp = _ScrambledChars[i];
+                int r = Random.Range(i, _ScrambledCharsLen);
+                _ScrambledChars[i] = _ScrambledChars[r];
+                _ScrambledChars[r] = tmp;
+            }
+        }
+
+        internal static StringBuilder AppendScrambledChars(this StringBuilder buffer, int length)
+        {
+            if (length <= 0) return buffer;
+
+            // Make sure random seed is different from previous one used
+            int rndSeed = _lastRndSeed;
+            while (rndSeed == _lastRndSeed) {
+                rndSeed = Random.Range(0, _ScrambledCharsLen);
+            }
+            _lastRndSeed = rndSeed;
+            // Append
+            for (int i = 0; i < length; ++i) {
+                if (rndSeed >= _ScrambledCharsLen) rndSeed = 0;
+                buffer.Append(_ScrambledChars[rndSeed]);
+                rndSeed += 1;
+            }
+            return buffer;
         }
     }
 }

@@ -82,6 +82,7 @@
     <Compile Include="Plugins\PlugAlpha.cs" />
     <Compile Include="Plugins\PlugFloat.cs" />
     <Compile Include="Plugins\PlugRect.cs" />
+    <Compile Include="Plugins\PlugString.cs" />
     <Compile Include="Plugins\PlugVector2.cs" />
     <Compile Include="Plugins\PlugVector2X.cs" />
     <Compile Include="Plugins\PlugVector2Y.cs" />

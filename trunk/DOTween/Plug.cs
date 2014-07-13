@@ -40,6 +40,12 @@ namespace DG.Tweening
             return new PlugFloat.Options(snapping);
         }
 
+        // String
+        public static PlugString.Options StringOptions(bool scramble)
+        {
+            return new PlugString.Options(scramble);
+        }
+
         // Vector2
         public static PlugVector2.Options Vector2Options(bool snapping)
         {
