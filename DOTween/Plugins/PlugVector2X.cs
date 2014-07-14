@@ -33,11 +33,11 @@ namespace DG.Tweening.Plugins
     public struct PlugVector2X : IPlugSetter<Vector2, float, Vector2XPlugin, PlugVector2X.Options>
     {
         readonly float _endValue;
-        readonly MemberGetter<Vector2> _getter;
-        readonly MemberSetter<Vector2> _setter;
+        readonly DOGetter<Vector2> _getter;
+        readonly DOSetter<Vector2> _setter;
         readonly Options _options;
 
-        public PlugVector2X(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue, Options options = new Options())
+        public PlugVector2X(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, Options options = new Options())
         {
             _getter = getter;
             _setter = setter;
@@ -45,8 +45,8 @@ namespace DG.Tweening.Plugins
             _options = options;
         }
 
-        public MemberGetter<Vector2> Getter() { return _getter; }
-        public MemberSetter<Vector2> Setter() { return _setter; }
+        public DOGetter<Vector2> Getter() { return _getter; }
+        public DOSetter<Vector2> Setter() { return _setter; }
         public float EndValue() { return _endValue; }
         public Options GetOptions() { return _options; }
 
@@ -86,7 +86,7 @@ namespace DG.Tweening.Plugins
             return endValue - startValue;
         }
 
-        public override Vector2 Evaluate(PlugVector2X.Options options, bool isRelative, MemberGetter<Vector2> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        public override Vector2 Evaluate(PlugVector2X.Options options, bool isRelative, DOGetter<Vector2> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
         {
             Vector2 res = getter();
             res.x = ease(elapsed, startValue, changeValue, duration, 0, 0);

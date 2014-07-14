@@ -43,7 +43,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override Vector4 Evaluate(PlugVector4.Options options, bool isRelative, MemberGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration, EaseFunction ease)
+        public override Vector4 Evaluate(PlugVector4.Options options, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);

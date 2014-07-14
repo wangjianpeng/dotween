@@ -23,12 +23,13 @@ using DG.Tweening.Core;
 
 namespace DG.Tweening.Plugins.Core
 {
+    // Public so it can be extended by custom plugins
     public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin
     {
         // getter and isRelative are there because some rare plugins need it
         public abstract T2 ConvertT1toT2(TPlugOptions options, T1 value);
         public abstract T2 GetRelativeEndValue(TPlugOptions options, T2 startValue, T2 changeValue);
         public abstract T2 GetChangeValue(TPlugOptions options, T2 startValue, T2 endValue);
-        public abstract T1 Evaluate(TPlugOptions options, bool isRelative, MemberGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration, EaseFunction ease);
+        public abstract T1 Evaluate(TPlugOptions options, bool isRelative, DOGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration, EaseFunction ease);
     }
 }

@@ -43,7 +43,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override Quaternion Evaluate(NoOptions options, bool isRelative, MemberGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, EaseFunction ease)
+        public override Quaternion Evaluate(NoOptions options, bool isRelative, DOGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);

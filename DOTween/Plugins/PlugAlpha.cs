@@ -29,18 +29,18 @@ namespace DG.Tweening.Plugins
     public struct PlugAlpha : IPlugSetter<Color, Color, AlphaPlugin, NoOptions>
     {
         readonly Color _endValue;
-        readonly MemberGetter<Color> _getter;
-        readonly MemberSetter<Color> _setter;
+        readonly DOGetter<Color> _getter;
+        readonly DOSetter<Color> _setter;
 
-        public PlugAlpha(MemberGetter<Color> getter, MemberSetter<Color> setter, float endValue)
+        public PlugAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue)
         {
             _getter = getter;
             _setter = setter;
             _endValue = new Color(0, 0, 0, endValue);
         }
 
-        public MemberGetter<Color> Getter() { return _getter; }
-        public MemberSetter<Color> Setter() { return _setter; }
+        public DOGetter<Color> Getter() { return _getter; }
+        public DOSetter<Color> Setter() { return _setter; }
         public Color EndValue() { return _endValue; }
         public NoOptions GetOptions() { return new NoOptions(); }
     }
@@ -66,7 +66,7 @@ namespace DG.Tweening.Plugins
             return endValue - startValue;
         }
 
-        public override Color Evaluate(NoOptions options, bool isRelative, MemberGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
+        public override Color Evaluate(NoOptions options, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
         {
             Color res = getter();
             res.a = ease(elapsed, startValue.a, changeValue.a, duration, 0, 0);

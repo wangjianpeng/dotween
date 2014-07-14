@@ -33,7 +33,7 @@ namespace DG.Tweening
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.650";
+        public static readonly string Version = "0.1.700";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -143,80 +143,80 @@ namespace DG.Tweening
 
         /// <summary>Tweens a float using default plugins</summary>
         public static Tweener To(
-            MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
+            DOGetter<float> getter, DOSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, false); }
         /// <summary>Tweens an int using default plugins</summary>
         public static Tweener To(
-            MemberGetter<int> getter, MemberSetter<int> setter, int endValue,
+            DOGetter<int> getter, DOSetter<int> setter, int endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens an uint using default plugins</summary>
         public static Tweener To(
-            MemberGetter<uint> getter, MemberSetter<uint> setter, uint endValue,
+            DOGetter<uint> getter, DOSetter<uint> setter, uint endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens a string using default plugins</summary>
         public static Tweener To(
-            MemberGetter<string> getter, MemberSetter<string> setter, string endValue,
+            DOGetter<string> getter, DOSetter<string> setter, string endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugString.Options(), duration, updateType, false); }
         /// <summary>Tweens a Vector2 using default plugins</summary>
         public static Tweener To(
-            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, UpdateType.Default, false); }
         public static Tweener To(
-            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, updateType, false); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener To(
-            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, UpdateType.Default, false); }
         public static Tweener To(
-            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, updateType, false); }
         /// <summary>Tweens a Vector4 using default plugins</summary>
         public static Tweener To(
-            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, UpdateType.Default, false); }
         public static Tweener To(
-            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, updateType, false); }
         /// <summary>Tweens a Quaternion using default plugins</summary>
         public static Tweener To(
-            MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
+            DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens a Color using default plugins</summary>
         public static Tweener To(
-            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            DOGetter<Color> getter, DOSetter<Color> setter, Color endValue,
             float duration
         ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, UpdateType.Default, false); }
         public static Tweener To(
-            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            DOGetter<Color> getter, DOSetter<Color> setter, Color endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens a Rect using default plugins</summary>
         public static Tweener To(
-            MemberGetter<Rect> getter, MemberSetter<Rect> setter, Rect endValue,
+            DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, updateType, false); }
         /// <summary>Tweens a RectOffset using default plugins</summary>
         public static Tweener To(
-            MemberGetter<RectOffset> getter, MemberSetter<RectOffset> setter, RectOffset endValue,
+            DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
         public static Tweener To<T1, T2, TPlugOptions>(
-            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
+            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options,
             float duration, UpdateType updateType = UpdateType.Default
         ) where TPlugOptions : struct
         { return ApplyTo(getter, setter, endValue, options, duration, updateType, false); }
@@ -234,80 +234,80 @@ namespace DG.Tweening
 
         /// <summary>Tweens a float using default plugins</summary>
         public static Tweener From(
-            MemberGetter<float> getter, MemberSetter<float> setter, float endValue,
+            DOGetter<float> getter, DOSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, true); }
         /// <summary>Tweens an int using default plugins</summary>
         public static Tweener From(
-            MemberGetter<int> getter, MemberSetter<int> setter, int endValue,
+            DOGetter<int> getter, DOSetter<int> setter, int endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>Tweens an uint using default plugins</summary>
         public static Tweener From(
-            MemberGetter<uint> getter, MemberSetter<uint> setter, uint endValue,
+            DOGetter<uint> getter, DOSetter<uint> setter, uint endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>Tweens a string using default plugins</summary>
         public static Tweener From(
-            MemberGetter<string> getter, MemberSetter<string> setter, string endValue,
+            DOGetter<string> getter, DOSetter<string> setter, string endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugString.Options(), duration, updateType, true); }
         /// <summary>Tweens a Vector2 using default plugins</summary>
         public static Tweener From(
-            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, UpdateType.Default, true); }
         public static Tweener From(
-            MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, Vector2 endValue,
+            DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, updateType, true); }
         /// <summary>Tweens a Vector3 using default plugins</summary>
         public static Tweener From(
-            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, UpdateType.Default, true); }
         public static Tweener From(
-            MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, Vector3 endValue,
+            DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, updateType, true); }
         /// <summary>Tweens a Vector4 using default plugins</summary>
         public static Tweener From(
-            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, UpdateType.Default, true); }
         public static Tweener From(
-            MemberGetter<Vector4> getter, MemberSetter<Vector4> setter, Vector4 endValue,
+            DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, updateType, true); }
         /// <summary>Tweens a Quaternion using default plugins</summary>
         public static Tweener From(
-            MemberGetter<Quaternion> getter, MemberSetter<Quaternion> setter, Vector3 endValue,
+            DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>Tweens a Color using default plugins</summary>
         public static Tweener From(
-            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            DOGetter<Color> getter, DOSetter<Color> setter, Color endValue,
             float duration
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, UpdateType.Default, true); }
         public static Tweener From(
-            MemberGetter<Color> getter, MemberSetter<Color> setter, Color endValue,
+            DOGetter<Color> getter, DOSetter<Color> setter, Color endValue,
             float duration, UpdateType updateType
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>Tweens a Rect using default plugins</summary>
         public static Tweener From(
-            MemberGetter<Rect> getter, MemberSetter<Rect> setter, Rect endValue,
+            DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, updateType, true); }
         /// <summary>Tweens a RectOffset using default plugins</summary>
         public static Tweener From(
-            MemberGetter<RectOffset> getter, MemberSetter<RectOffset> setter, RectOffset endValue,
+            DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue,
             float duration, UpdateType updateType = UpdateType.Default
         ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, true); }
         /// <summary>
         /// Tweens a property using default plugins with options
         /// </summary>
         public static Tweener From<T1, T2, TPlugOptions>(
-            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
+            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options,
             float duration, UpdateType updateType = UpdateType.Default
         ) where TPlugOptions : struct
         { return ApplyTo(getter, setter, endValue, options, duration, updateType, true); }
@@ -626,7 +626,7 @@ namespace DG.Tweening
 
         // Tweens a property using default plugins with options
         static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugOptions>(
-            MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options,
+            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options,
             float duration, UpdateType updateType, bool isFrom
         )
             where TPlugOptions : struct

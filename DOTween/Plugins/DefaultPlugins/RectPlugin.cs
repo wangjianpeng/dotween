@@ -51,7 +51,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue;
         }
 
-        public override Rect Evaluate(PlugRect.Options options, bool isRelative, MemberGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration, EaseFunction ease)
+        public override Rect Evaluate(PlugRect.Options options, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration, EaseFunction ease)
         {
             startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
             startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);

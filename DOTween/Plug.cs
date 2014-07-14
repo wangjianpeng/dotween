@@ -72,11 +72,11 @@ namespace DG.Tweening
         // CUSTOM PLUGINS /////////////////////////////////////////////
 
         // Vector2X
-        public static PlugVector2X Vector2X(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue)
+        public static PlugVector2X Vector2X(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue)
         {
             return new PlugVector2X(getter, setter, endValue);
         }
-        public static PlugVector2X Vector2X(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue, PlugVector2X.Options options)
+        public static PlugVector2X Vector2X(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, PlugVector2X.Options options)
         {
             return new PlugVector2X(getter, setter, endValue, options);
         }
@@ -85,11 +85,11 @@ namespace DG.Tweening
             return new PlugVector2X.Options(snapping);
         }
         // Vector2Y
-        public static PlugVector2Y Vector2Y(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue)
+        public static PlugVector2Y Vector2Y(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue)
         {
             return new PlugVector2Y(getter, setter, endValue);
         }
-        public static PlugVector2Y Vector2Y(MemberGetter<Vector2> getter, MemberSetter<Vector2> setter, float endValue, PlugVector2Y.Options options)
+        public static PlugVector2Y Vector2Y(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, PlugVector2Y.Options options)
         {
             return new PlugVector2Y(getter, setter, endValue, options);
         }
@@ -99,11 +99,11 @@ namespace DG.Tweening
         }
 
         // Vector3X
-        public static PlugVector3X Vector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
+        public static PlugVector3X Vector3X(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue)
         {
             return new PlugVector3X(getter, setter, endValue);
         }
-        public static PlugVector3X Vector3X(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, PlugVector3X.Options options)
+        public static PlugVector3X Vector3X(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, PlugVector3X.Options options)
         {
             return new PlugVector3X(getter, setter, endValue, options);
         }
@@ -112,11 +112,11 @@ namespace DG.Tweening
             return new PlugVector3X.Options(snapping);
         }
         // Vector3Y
-        public static PlugVector3Y Vector3Y(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
+        public static PlugVector3Y Vector3Y(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue)
         {
             return new PlugVector3Y(getter, setter, endValue);
         }
-        public static PlugVector3Y Vector3Y(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, PlugVector3Y.Options options)
+        public static PlugVector3Y Vector3Y(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, PlugVector3Y.Options options)
         {
             return new PlugVector3Y(getter, setter, endValue, options);
         }
@@ -125,11 +125,11 @@ namespace DG.Tweening
             return new PlugVector3Y.Options(snapping);
         }
         // Vector3Z
-        public static PlugVector3Z Vector3Z(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue)
+        public static PlugVector3Z Vector3Z(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue)
         {
             return new PlugVector3Z(getter, setter, endValue);
         }
-        public static PlugVector3Z Vector3Z(MemberGetter<Vector3> getter, MemberSetter<Vector3> setter, float endValue, PlugVector3Z.Options options)
+        public static PlugVector3Z Vector3Z(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, PlugVector3Z.Options options)
         {
             return new PlugVector3Z(getter, setter, endValue, options);
         }
@@ -139,7 +139,7 @@ namespace DG.Tweening
         }
 
         // Alpha (no options)
-        public static PlugAlpha Alpha(MemberGetter<Color> getter, MemberSetter<Color> setter, float endValue)
+        public static PlugAlpha Alpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue)
         {
             return new PlugAlpha(getter, setter, endValue);
         }
