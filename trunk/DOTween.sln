@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTween", "DOTween.csproj", "{DE17C145-3E8D-45D6-BBB6-D06BD7D80A55}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTween", "DOTween\DOTween.csproj", "{DE17C145-3E8D-45D6-BBB6-D06BD7D80A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTweenEditor", "..\DOTweenEditor\DOTweenEditor.csproj", "{421ACC19-8922-4E98-8921-B52240CE172A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTweenEditor", "DOTweenEditor\DOTweenEditor.csproj", "{421ACC19-8922-4E98-8921-B52240CE172A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
