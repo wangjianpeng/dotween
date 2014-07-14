@@ -56,13 +56,13 @@ namespace DG.Tweening
             }
         }
 
-        public static Tween Pause(this Tween t)
+        public static T Pause<T>(this T t) where T : Tween
         {
             TweenManager.Pause(t);
             return t;
         }
 
-        public static Tween Play(this Tween t)
+        public static T Play<T>(this T t) where T : Tween
         {
             TweenManager.Play(t);
             return t;
