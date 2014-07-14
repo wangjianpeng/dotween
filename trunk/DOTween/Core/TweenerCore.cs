@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
@@ -65,6 +66,16 @@ namespace DG.Tweening.Core
         {
             base.Reset();
             DoReset(this);
+        }
+
+        public override void ChangeEndValue<T>(T newEndValue)
+        {
+            if (typeof(T) != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+                return;
+            }
+
+            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2));
         }
 
         // ===================================================================================

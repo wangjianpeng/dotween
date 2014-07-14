@@ -87,7 +87,7 @@ namespace DG.Tweening.Core
             } else {
                 // Increase capacity in case max number of Tweeners has already been reached, then continue
                 if (totTweeners >= maxTweeners) {
-                    if (DOTween.logBehaviour == LogBehaviour.Verbose) Debugger.LogWarning(_MaxTweenersReached);
+                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweenersReached);
                     IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
                 }
             }

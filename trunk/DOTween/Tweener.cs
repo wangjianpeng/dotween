@@ -27,8 +27,17 @@ using UnityEngine;
 
 namespace DG.Tweening
 {
-    public class Tweener : Tween
+    public abstract class Tweener : Tween
     {
+        // ===================================================================================
+        // PUBLIC METHODS --------------------------------------------------------------------
+
+        /// <summary>
+        /// Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
+        /// and the endValue as the given one
+        /// </summary>
+        public abstract void ChangeEndValue<T>(T newEndValue);
+
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
@@ -93,6 +102,15 @@ namespace DG.Tweening
 
         ///////////////////////////////////////////////////////////
         // Called by TweenerCore //////////////////////////////////
+
+        internal static void DoChangeEndValue<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, T2 newEndValue) where TPlugOptions : struct
+        {
+            // Assign new end value and reset position
+            t.endValue = newEndValue;
+            // Startup again to set everything up
+            DoStartup(t);
+            TweenManager.Restart(t, false);
+        }
 
         // _tweenPlugin is not reset since it's useful to keep it as a reference
         internal static void DoReset<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct

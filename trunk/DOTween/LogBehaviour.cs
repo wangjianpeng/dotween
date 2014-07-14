@@ -24,6 +24,7 @@ namespace DG.Tweening
     public enum LogBehaviour
     {
         Default,
-        Verbose
+        Verbose,
+        ErrorsOnly
     }
 }
