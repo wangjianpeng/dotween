@@ -46,7 +46,7 @@ namespace DG.Tweening
 
         // Called by DOTween when spawning/creating a new Tweener.
         // Returns TRUE if the setup is successful
-        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, float duration)
+        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration)
             where TPlugOptions : struct
         {
             if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
@@ -65,7 +65,7 @@ namespace DG.Tweening
             t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
             return true;
         }
-        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, MemberGetter<T1> getter, MemberSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
+        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
             where TPlugOptions : struct
         {
             if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();

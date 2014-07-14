@@ -48,7 +48,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override string Evaluate(PlugString.Options options, bool isRelative, MemberGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
+        public override string Evaluate(PlugString.Options options, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
         {
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;

@@ -55,7 +55,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             );
         }
 
-        public override RectOffset Evaluate(NoOptions options, bool isRelative, MemberGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration, EaseFunction ease)
+        public override RectOffset Evaluate(NoOptions options, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration, EaseFunction ease)
         {
             return new RectOffset(
                 Mathf.RoundToInt(ease(elapsed, startValue.left, changeValue.left, duration, 0, 0)),

@@ -37,8 +37,8 @@ namespace DG.Tweening.Core
 
         // SETUP DATA ////////////////////////////////////////////////
 
-        internal MemberGetter<T1> getter;
-        internal MemberSetter<T1> setter;
+        internal DOGetter<T1> getter;
+        internal DOSetter<T1> setter;
         internal T2 startValue, endValue, changeValue;
         internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
         internal TPlugOptions plugOptions;

@@ -42,7 +42,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override float Evaluate(PlugFloat.Options options, bool isRelative, MemberGetter<float> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        public override float Evaluate(PlugFloat.Options options, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
         {
             return options.snapping
                 ? Mathf.Round(ease(elapsed, startValue, changeValue, duration, 0, 0))
