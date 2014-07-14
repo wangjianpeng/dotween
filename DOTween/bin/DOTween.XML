@@ -573,6 +573,12 @@
             Shared by Tweeners and Sequences
             </summary>
         </member>
+        <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0)">
+            <summary>
+            Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
+            and the endValue as the given one
+            </summary>
+        </member>
         <member name="T:DG.Tweening.Core.Easing.Quint">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).

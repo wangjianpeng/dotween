@@ -37,9 +37,13 @@ namespace DG.Tweening
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
-        public static LogBehaviour logBehaviour = LogBehaviour.Default;
         internal static bool autoKill = true; // At creation, new tweens will have autoKillOnComplete set accordingly to this value
         public static float timeScale = 1; // Global timeScale
+        public static LogBehaviour logBehaviour {
+            get { return _logBehaviour; }
+            set { _logBehaviour = value; Debugger.SetLogPriority(_logBehaviour); }
+        }
+        static LogBehaviour _logBehaviour;
         // Default options for Tweens
         public static EaseType defaultEaseType = EaseType.InOutQuad;
         public static LoopType defaultLoopType = LoopType.Restart;
@@ -107,7 +111,7 @@ namespace DG.Tweening
             DontDestroyOnLoad(go);
             go.AddComponent<DOTween>();
             // Log
-            if (DOTween.logBehaviour == LogBehaviour.Verbose) Debugger.Log("DOTween initialization (autoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
+            if (Debugger.logPriority >= 2) Debugger.Log("DOTween initialization (autoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
         }
 
         /// <summary>

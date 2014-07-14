@@ -24,19 +24,37 @@ using UnityEngine;
 
 namespace DG.Tweening.Core
 {
-    public static class Debugger
+    internal static class Debugger
     {
-        public static void Log(object message)
+        // 0: errors only - 1: default - 2: verbose
+        internal static int logPriority;
+
+        internal static void Log(object message)
         {
             Debug.Log("DOTWEEN :: " + message);
         }
-        public static void LogWarning(object message)
+        internal static void LogWarning(object message)
         {
             Debug.LogWarning("DOTWEEN :: " + message);
         }
-        public static void LogError(object message)
+        internal static void LogError(object message)
         {
             Debug.LogError("DOTWEEN :: " + message);
+        }
+
+        internal static void SetLogPriority(LogBehaviour logBehaviour)
+        {
+            switch (logBehaviour) {
+            case LogBehaviour.Default:
+                logPriority = 1;
+                break;
+            case LogBehaviour.Verbose:
+                logPriority = 2;
+                break;
+            default:
+                logPriority = 0;
+                break;
+            }
         }
     }
 }
