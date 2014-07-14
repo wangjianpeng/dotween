@@ -29,40 +29,40 @@
             <param name="sequencesCapacity">Max Sequences capacity.
             Default: 50</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{System.Single},DG.Tweening.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a float using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{System.Int32},DG.Tweening.Core.MemberSetter{System.Int32},System.Int32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens an int using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{System.UInt32},DG.Tweening.Core.MemberSetter{System.UInt32},System.UInt32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens an uint using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{System.String},DG.Tweening.Core.MemberSetter{System.String},System.String,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a string using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.Vector2},DG.Tweening.Core.MemberSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
             <summary>Tweens a Vector2 using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.Vector3},DG.Tweening.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Vector3 using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.Vector4},DG.Tweening.Core.MemberSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
             <summary>Tweens a Vector4 using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.Quaternion},DG.Tweening.Core.MemberSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a Quaternion using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.Color},DG.Tweening.Core.MemberSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
             <summary>Tweens a Color using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.Rect},DG.Tweening.Core.MemberSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a Rect using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.MemberGetter{UnityEngine.RectOffset},DG.Tweening.Core.MemberSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a RectOffset using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.To``3(DG.Tweening.Core.MemberGetter{``0},DG.Tweening.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To``3(DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,``2,System.Single,DG.Tweening.UpdateType)">
             <summary>
             Tweens a property using default plugins with options
             </summary>
@@ -72,40 +72,40 @@
             Tweens a property using a custom plugin with eventual options
             </summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{System.Single},DG.Tweening.Core.MemberSetter{System.Single},System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a float using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{System.Int32},DG.Tweening.Core.MemberSetter{System.Int32},System.Int32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens an int using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{System.UInt32},DG.Tweening.Core.MemberSetter{System.UInt32},System.UInt32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens an uint using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{System.String},DG.Tweening.Core.MemberSetter{System.String},System.String,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a string using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.Vector2},DG.Tweening.Core.MemberSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
             <summary>Tweens a Vector2 using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.Vector3},DG.Tweening.Core.MemberSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Vector3 using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.Vector4},DG.Tweening.Core.MemberSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
             <summary>Tweens a Vector4 using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.Quaternion},DG.Tweening.Core.MemberSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a Quaternion using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.Color},DG.Tweening.Core.MemberSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
             <summary>Tweens a Color using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.Rect},DG.Tweening.Core.MemberSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a Rect using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.MemberGetter{UnityEngine.RectOffset},DG.Tweening.Core.MemberSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tweening.UpdateType)">
             <summary>Tweens a RectOffset using default plugins</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.From``3(DG.Tweening.Core.MemberGetter{``0},DG.Tweening.Core.MemberSetter{``0},``1,``2,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From``3(DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,``2,System.Single,DG.Tweening.UpdateType)">
             <summary>
             Tweens a property using default plugins with options
             </summary>
@@ -879,12 +879,12 @@
             Used to interpret AnimationCurves as eases.
             </summary>
         </member>
-        <member name="T:DG.Tweening.Core.MemberGetter`1">
+        <member name="T:DG.Tweening.Core.DOGetter`1">
             <summary>
             Used in place of <c>System.Func</c>, which is not available in mscorlib.
             </summary>
         </member>
-        <member name="T:DG.Tweening.Core.MemberSetter`1">
+        <member name="T:DG.Tweening.Core.DOSetter`1">
             <summary>
             Used in place of <c>System.Action</c>.
             </summary>
@@ -1144,16 +1144,16 @@
             The eased value.
             </returns>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Delay(DG.Tweening.Tween,System.Single)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.Delay``1(``0,System.Single)">
             <summary>Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Relative(DG.Tweening.Tween,System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.Relative``1(``0,System.Boolean)">
             <summary>Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Ease(DG.Tweening.Tween,DG.Tweening.EaseType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.Ease``1(``0,DG.Tweening.EaseType)">
             <summary>Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Ease(DG.Tweening.Tween,UnityEngine.AnimationCurve)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.Ease``1(``0,UnityEngine.AnimationCurve)">
             <summary>Has no effect on Sequences</summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Quart">

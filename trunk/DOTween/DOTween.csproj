@@ -109,9 +109,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set BinDir=bin.Global\DOTween
-set DestinationDir=$(SolutionDir)..\..\%25BinDir%25
+set DestinationDir=$(SolutionDir)..\%25BinDir%25
 set BinDirNoMeta=bin.Global_no_meta\DOTween
-set DestinationDirNoMeta=$(SolutionDir)..\..\%25BinDirNoMeta%25
+set DestinationDirNoMeta=$(SolutionDir)..\%25BinDirNoMeta%25
 
 echo %25DestinationDir%25
 
