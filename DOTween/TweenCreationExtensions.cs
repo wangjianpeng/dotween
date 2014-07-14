@@ -30,7 +30,7 @@ namespace DG.Tweening
         // ===================================================================================
         // TWEENER + SEQUENCES ---------------------------------------------------------------
 
-        public static Tween AutoKill(this Tween t, bool autoKillOnCompletion = true)
+        public static T AutoKill<T>(this T t, bool autoKillOnCompletion = true) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -38,21 +38,21 @@ namespace DG.Tweening
             return t;
         }
 
-        public static Tween Id(this Tween t, UnityEngine.Object id)
+        public static T Id<T>(this T t, UnityEngine.Object id) where T : Tween
         {
             if (t.creationLocked) return t;
 
             t.unityObjectId = id;
             return t;
         }
-        public static Tween Id(this Tween t, int id)
+        public static T Id<T>(this T t, int id) where T : Tween
         {
             if (t.creationLocked) return t;
 
             t.id = id;
             return t;
         }
-        public static Tween Id(this Tween t, string id)
+        public static T Id<T>(this T t, string id) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -60,7 +60,7 @@ namespace DG.Tweening
             return t;
         }
 
-        public static Tween Loops(this Tween t, int loops, LoopType loopType = LoopType.Restart)
+        public static T Loops<T>(this T t, int loops, LoopType loopType = LoopType.Restart) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -72,21 +72,21 @@ namespace DG.Tweening
             return t;
         }
 
-        public static Tween OnStart(this Tween t, TweenCallback action)
+        public static T OnStart<T>(this T t, TweenCallback action) where T : Tween
         {
             if (t.creationLocked) return t;
 
             t.onStart = action;
             return t;
         }
-        public static Tween OnStepComplete(this Tween t, TweenCallback action)
+        public static T OnStepComplete<T>(this T t, TweenCallback action) where T : Tween
         {
             if (t.creationLocked) return t;
 
             t.onStepComplete = action;
             return t;
         }
-        public static Tween OnComplete(this Tween t, TweenCallback action)
+        public static T OnComplete<T>(this T t, TweenCallback action) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -98,7 +98,7 @@ namespace DG.Tweening
         // TWEENERS --------------------------------------------------------------------------
 
         /// <summary>Has no effect on Sequences</summary>
-        public static Tween Delay(this Tween t, float delay)
+        public static T Delay<T>(this T t, float delay) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -108,7 +108,7 @@ namespace DG.Tweening
         }
 
         /// <summary>Has no effect on Sequences</summary>
-        public static Tween Relative(this Tween t, bool isRelative = true)
+        public static T Relative<T>(this T t, bool isRelative = true) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -117,7 +117,7 @@ namespace DG.Tweening
         }
 
         /// <summary>Has no effect on Sequences</summary>
-        public static Tween Ease(this Tween t, EaseType easeType)
+        public static T Ease<T>(this T t, EaseType easeType) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -125,7 +125,7 @@ namespace DG.Tweening
             return t;
         }
         /// <summary>Has no effect on Sequences</summary>
-        public static Tween Ease(this Tween t, AnimationCurve animCurve)
+        public static T Ease<T>(this T t, AnimationCurve animCurve) where T : Tween
         {
             if (t.creationLocked) return t;
 
