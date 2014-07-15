@@ -112,6 +112,8 @@
 set DestinationDir=$(SolutionDir)..\%25BinDir%25
 set BinDirNoMeta=bin.Global_no_meta\DOTween
 set DestinationDirNoMeta=$(SolutionDir)..\%25BinDirNoMeta%25
+set BinDirUnityTests=UnityTests.Unity4\Assets\Demigiant\DOTween
+set DestinationDirUnityTests=$(SolutionDir)%25BinDirUnityTests%25
 
 echo %25DestinationDir%25
 
@@ -128,7 +130,10 @@ echo Copying files to Destination...
 echo f | xcopy "$(ProjectDir)\bin" %25DestinationDir%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirNoMeta%25
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E</PostBuildEvent>
+echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E
+
+echo Exporting Assembly to %25DestinationDirUnityTests%25
+echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirUnityTests%25 /Y /I /E</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

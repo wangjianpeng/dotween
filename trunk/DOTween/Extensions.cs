@@ -27,9 +27,10 @@ namespace DG.Tweening
     public static class Extensions
     {
         // ===================================================================================
-        // TWEENER + SEQUENCES ---------------------------------------------------------------
+        // TWEENERS + SEQUENCES --------------------------------------------------------------
 
-        // Play operations
+        ///////////////////////////////////////////////////
+        // Play operations ////////////////////////////////
 
         public static void Complete(this Tween t)
         {
@@ -93,7 +94,8 @@ namespace DG.Tweening
             TweenManager.TogglePause(t);
         }
 
-        // Info getters
+        ///////////////////////////////////////////////////
+        // Info getters ///////////////////////////////////
 
         public static int CompletedLoops(this Tween t)
         {
@@ -115,5 +117,9 @@ namespace DG.Tweening
         {
             return t.isBackwards;
         }
+
+        // ===================================================================================
+        // TWEENERS --------------------------------------------------------------------------
+
     }
 }
