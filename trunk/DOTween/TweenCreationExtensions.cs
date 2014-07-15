@@ -133,5 +133,81 @@ namespace DG.Tweening
             t.ease = t.easeCurve.Evaluate;
             return t;
         }
+
+        /////////////////////////////////////////////////////
+        // Transform Shortcuts //////////////////////////////
+
+        public static Tweener MoveTo(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(() => transform.position, x => transform.position = x, endValue, duration, updateType);
+        }
+        public static Tweener MoveToX(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3X(() => transform.position, x => transform.position = x, endValue), duration, updateType);
+        }
+        public static Tweener MoveToY(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3Y(() => transform.position, x => transform.position = x, endValue), duration, updateType);
+        }
+        public static Tweener MoveToZ(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3Z(() => transform.position, x => transform.position = x, endValue), duration, updateType);
+        }
+
+        public static Tweener MoveToLocal(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, endValue, duration, updateType);
+        }
+        public static Tweener MoveToLocalX(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3X(() => transform.localPosition, x => transform.localPosition = x, endValue), duration, updateType);
+        }
+        public static Tweener MoveToLocalY(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3Y(() => transform.localPosition, x => transform.localPosition = x, endValue), duration, updateType);
+        }
+        public static Tweener MoveToLocalZ(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3Z(() => transform.localPosition, x => transform.localPosition = x, endValue), duration, updateType);
+        }
+
+        public static Tweener RotateTo(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(() => transform.rotation, x => transform.rotation = x, endValue, duration, updateType);
+        }
+        public static Tweener RotateToLocal(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(() => transform.localRotation, x => transform.localRotation = x, endValue, duration, updateType);
+        }
+
+        public static Tweener ScaleTo(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(() => transform.localScale, x => transform.localScale = x, endValue, duration, updateType);
+        }
+        public static Tweener ScaleToX(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3X(() => transform.localScale, x => transform.localScale = x, endValue), duration, updateType);
+        }
+        public static Tweener ScaleToY(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3Y(() => transform.localScale, x => transform.localScale = x, endValue), duration, updateType);
+        }
+        public static Tweener ScaleToZ(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Vector3Z(() => transform.localScale, x => transform.localScale = x, endValue), duration, updateType);
+        }
+
+        /////////////////////////////////////////////////////
+        // Material Shortcuts ///////////////////////////////
+
+        public static Tweener ColorTo(this Material material, Color endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(() => material.color, x => material.color = x, endValue, duration, updateType);
+        }
+
+        public static Tweener FadeTo(this Material material, float endValue, float duration, UpdateType updateType = UpdateType.Default)
+        {
+            return DOTween.To(Plug.Alpha(() => material.color, x => material.color = x, endValue), duration, updateType);
+        }
     }
 }
