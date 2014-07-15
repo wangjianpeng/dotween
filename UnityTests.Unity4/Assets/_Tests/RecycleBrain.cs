@@ -5,7 +5,7 @@ using UnityEngine;
 public class RecycleBrain : BrainBase
 {
 	enum RecycleMode {
-		ChangeAll,
+		RecreateAndUseInternalPooling,
 		ChangeEndValue
 	}
 
@@ -31,8 +31,10 @@ public class RecycleBrain : BrainBase
 			newEndValue.z = UnityEngine.Random.Range(10f, 20f);
 			newEndValue = Camera.main.ScreenToWorldPoint(newEndValue);
 			switch (recycleMode) {
-			case RecycleMode.ChangeAll:
-
+			case RecycleMode.RecreateAndUseInternalPooling:
+				tween.Kill();
+				tween = DOTween.To(()=> target.position, x=> target.position = x, newEndValue, 2)
+			.Loops(-1, LoopType.Yoyo).Ease(EaseType.Linear);
 				break;
 			case RecycleMode.ChangeEndValue:
 				tween.ChangeEndValue(newEndValue);
