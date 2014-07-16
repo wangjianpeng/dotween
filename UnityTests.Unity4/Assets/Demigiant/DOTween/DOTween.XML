@@ -115,6 +115,11 @@
             Tweens a property using a custom plugin with eventual options
             </summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)">
+            <summary>
+            Returns a new <see cref="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)"/> to be used for tween groups
+            </summary>
+        </member>
         <member name="M:DG.Tweening.DOTween.Clear">
             <summary>
             Kills all tweens and cleans the pooled tweens cache

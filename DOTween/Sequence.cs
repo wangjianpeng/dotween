@@ -121,7 +121,7 @@ namespace DG.Tweening
             // Run current cycle
             if (data.newCompletedSteps > 0) from = data.useInversePosition ? s.duration : 0;
             else from = data.prevPosition;
-            return ApplyInternalCycle(s, from, s.position, data.updateMode);
+            return ApplyInternalCycle(s, from, data.useInversePosition ? s.duration - s.position : s.position, data.updateMode);
         }
 
         // ===================================================================================
@@ -139,7 +139,7 @@ namespace DG.Tweening
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
-                        if (!TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
+                        if (TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
                     }
                 }
             } else {
@@ -151,7 +151,7 @@ namespace DG.Tweening
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
-                        if (!TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
+                        if (TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
                     }
                 }
             }
