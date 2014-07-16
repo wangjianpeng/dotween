@@ -21,7 +21,8 @@ public class TempTestsBrain : BrainBase
 		// PlugVector3X
 		// Using NEW
 		tween = DOTween.To(new PlugVector3X(()=>target.position, x=> target.position = x, 3f, new PlugVector3X.Options(false)), 1.5f)
-			.Delay(delay).Relative().Loops(loops, loopType).AutoKill(false)
+			// .Delay(delay).Relative()
+			.Loops(loops, loopType).AutoKill(false)
 			.OnStart(()=> Debug.Log("Start"))
 			.OnStepComplete(()=> Debug.Log("Step Complete"))
 			.OnComplete(()=> Debug.Log("Complete"))

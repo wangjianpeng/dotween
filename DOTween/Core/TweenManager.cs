@@ -165,10 +165,11 @@ namespace DG.Tweening.Core
             t.delayComplete = true;
             t.elapsedDelay = t.delay;
             int completedLoops = (int)(to / t.duration);
-            if (completedLoops > t.loops) completedLoops = t.loops;
             float position = to % t.duration;
-            if (position <= 0 && completedLoops == t.loops) position = t.duration;
-            else if (position >= t.duration) position = 0;
+            if (completedLoops >= t.loops) {
+                completedLoops = t.loops;
+                position = t.duration;
+            } else if (position >= t.duration) position = 0;
             t.Goto(new UpdateData(position, completedLoops, UpdateMode.Goto));
         }
 

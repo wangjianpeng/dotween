@@ -70,7 +70,6 @@
     <Compile Include="EaseType.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="LoopType.cs" />
-    <Compile Include="MultiTweener.cs" />
     <Compile Include="Plugins\DefaultPlugins\ColorPlugin.cs" />
     <Compile Include="Plugins\Core\IPlugSetter.cs" />
     <Compile Include="Plugins\Core\ITweenPlugin.cs" />

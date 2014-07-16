@@ -43,10 +43,7 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        ///////////////////////////////////////////////////////////
-        // Called by others ///////////////////////////////////////
-
-        // Called by DOTween when spawning/creating a new Tweener.
+        // CALLED BY DOTween when spawning/creating a new Tweener.
         // Returns TRUE if the setup is successful
         internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration)
             where TPlugOptions : struct
@@ -102,19 +99,26 @@ namespace DG.Tweening
             return true;
         }
 
-        ///////////////////////////////////////////////////////////
-        // Called by TweenerCore //////////////////////////////////
-
-        internal static void DoChangeEndValue<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, T2 newEndValue) where TPlugOptions : struct
+        // CALLED BY TweenerCore
+        // Returns the elapsed time minus delay in case of success,
+        // -1 if there are missing references and the tween needs to be killed
+        internal static float DoUpdateDelay<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, float elapsed) where TPlugOptions : struct
         {
-            // Assign new end value and reset position
-            t.endValue = newEndValue;
-            // Startup again to set everything up
-            DoStartup(t);
-            TweenManager.Restart(t, false);
+            if (t.isFrom && !t.startupDone) {
+                // Startup immediately to set the correct FROM setup
+                if (!DoStartup(t)) return -1;
+            }
+            t.elapsedDelay = elapsed;
+            if (elapsed > t.delay) {
+                // Delay complete
+                t.elapsedDelay = t.delay;
+                t.delayComplete = true;
+                return elapsed - t.delay;
+            }
+            return 0;
         }
 
-        // Called the moment the tween starts, AFTER any delay has elapsed
+        // CALLED VIA Tween the moment the tween starts, AFTER any delay has elapsed
         // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
         // Returns TRUE in case of success,
         // FALSE if there are missing references and the tween needs to be killed
@@ -145,101 +149,14 @@ namespace DG.Tweening
             return true;
         }
 
-        // Returns the elapsed time minus delay in case of success,
-        // -1 if there are missing references and the tween needs to be killed
-        internal static float DoUpdateDelay<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, float elapsed) where TPlugOptions : struct
+        // CALLED BY TweenerCore
+        internal static void DoChangeEndValue<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, T2 newEndValue) where TPlugOptions : struct
         {
-            if (t.isFrom && !t.startupDone) {
-                // Startup immediately to set the correct FROM setup
-                if (!DoStartup(t)) return -1;
-            }
-            t.elapsedDelay = elapsed;
-            if (elapsed > t.delay) {
-                // Delay complete
-                t.elapsedDelay = t.delay;
-                t.delayComplete = true;
-                return elapsed - t.delay;
-            }
-            return 0;
-        }
-
-        // Instead of advancing the tween from the previous position each time,
-        // uses the given position to calculate running time since startup, and places the tween there like a Goto.
-        // Executes regardless of whether the tween is playing,
-        // but not if the tween result would be a completion or rewind, and the tween is already there.
-        // Returns TRUE if the tween needs to be killed
-        internal static bool DoGoto<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, UpdateData updateData) where TPlugOptions : struct
-        {
-            // Startup
-            if (!t.startupDone) {
-                if (!DoStartup(t)) return true;
-            }
-            // OnStart callback
-            if (!t.playedOnce && updateData.updateMode == UpdateMode.Update) {
-                t.playedOnce = true;
-                if (t.onStart != null) {
-                    t.onStart();
-                    // Tween might have been killed by onStart callback: verify
-                    if (!t.active) return true;
-                }
-            }
-
-            int prevCompletedLoops = t.completedLoops;
-            t.completedLoops = updateData.completedLoops;
-            bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
-            bool wasComplete = t.isComplete;
-            // Determine if it will be complete after update
-            if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
-            // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
-            int newCompletedSteps = 0;
-            if (t.onStepComplete != null && updateData.updateMode == UpdateMode.Update) {
-                newCompletedSteps = t.isBackwards
-                    ? t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0)
-                    : t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
-            }
-
-            // Set position (makes position 0 equal to position "end" when looping)
-            t.position = updateData.position;
-            if (t.position > t.duration) t.position = t.duration;
-            else if (t.position <= 0) {
-                if (t.completedLoops > 0 || t.isComplete) t.position = t.duration;
-                else t.position = 0;
-            }
-            // Set playing state after update
-            if (t.isPlaying) {
-                if (!t.isBackwards) t.isPlaying = !t.isComplete; // Reached the end
-                else t.isPlaying = !(t.completedLoops == 0 && t.position <= 0); // Rewinded
-            }
-
-            // updatePosition is different in case of Yoyo loop under certain circumstances
-            float updatePosition = t.loopType == LoopType.Yoyo
-                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)
-                ? t.duration - t.position
-                : t.position;
-
-            // Get values from plugin and set them
-            if (DOTween.useSafeMode) {
-                try {
-                    t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, updatePosition, t.startValue, t.changeValue, t.duration, t.ease));
-                } catch (MissingReferenceException) {
-                    // Target/field doesn't exist anymore: kill tween
-                    return true;
-                }
-            } else {
-                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, updatePosition, t.startValue, t.changeValue, t.duration, t.ease));
-            }
-
-            // Additional callbacks
-            if (newCompletedSteps > 0) {
-                // Already verified that onStepComplete is present
-                for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
-            }
-            if (t.isComplete && !wasComplete) {
-                if (t.onComplete != null) t.onComplete();
-            }
-
-            // Return
-            return t.autoKill && t.isComplete;
+            // Assign new end value and reset position
+            t.endValue = newEndValue;
+            // Startup again to set everything up
+            DoStartup(t);
+            TweenManager.Restart(t, false);
         }
     }
 }
