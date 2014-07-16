@@ -2,15 +2,13 @@
 // Created: 2014/07/16 11:38
 namespace DG.Tweening.Core
 {
-    public class SequenceCallback : ISequentiable
+    internal class SequenceCallback : ABSSequentiable
     {
-        public TweenType tweenType { get; private set; }
-        internal TweenCallback callback;
-
-        public SequenceCallback(TweenCallback callback)
+        public SequenceCallback(float sequencedPosition, TweenCallback callback)
         {
             tweenType = TweenType.Callback;
-            this.callback = callback;
+            this.sequencedPosition = sequencedPosition;
+            onStart = callback;
         }
     }
 }

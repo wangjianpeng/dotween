@@ -29,7 +29,7 @@ namespace DG.Tweening
     /// <summary>
     /// Shared by Tweeners and Sequences
     /// </summary>
-    public abstract class Tween : ISequentiable
+    public abstract class Tween : ABSSequentiable
     {
         // OPTIONS ///////////////////////////////////////////////////
 
@@ -39,7 +39,7 @@ namespace DG.Tweening
         public int id = -1;
         public string stringId;
         public UnityEngine.Object unityObjectId;
-        public TweenCallback onStart; // When the tween is set in a PLAY state the first time, AFTER any eventual delay
+//        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
         public TweenCallback onStepComplete;
         public TweenCallback onComplete;
         // Fixed after creation
@@ -56,7 +56,6 @@ namespace DG.Tweening
         // SETUP DATA ////////////////////////////////////////////////
 
         internal UpdateType updateType;
-        public TweenType tweenType { get; protected set; }
         internal Type typeofT1; // Only used by Tweeners
         internal Type typeofT2; // Only used by Tweeners
         internal Type typeofTPlugOptions; // Only used by Tweeners
@@ -95,6 +94,17 @@ namespace DG.Tweening
         // Called by TweenManager at each update.
         // Returns TRUE if the tween needs to be killed
         internal abstract bool Goto(UpdateData updateData);
+
+        // ===================================================================================
+        // INTERNAL METHODS ------------------------------------------------------------------
+
+//        // Goto part shared by Tweeners and Sequences
+//        static internal GotoSharedResult DoGotoShared(Tween t, UpdateData updateData, bool getOnlyNewCompletedSteps = false)
+//        {
+//            
+//
+//            return new GotoSharedResult(wasComplete, newCompletedSteps, updatePosition);
+//        }
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
