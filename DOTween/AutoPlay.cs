@@ -23,7 +23,9 @@ namespace DG.Tweening
 {
     public enum AutoPlay
     {
-        All,
-        None
+        None,
+        AutoPlaySequences,
+        AutoPlayTweeners,
+        All
     }
 }

@@ -64,7 +64,7 @@ namespace DG.Tweening
             t.duration = duration;
             t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
-            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
+            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return true;
         }
         internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
@@ -84,7 +84,7 @@ namespace DG.Tweening
             t.duration = duration;
             t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
-            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
+            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return true;
         }
         internal static bool Setup<T1, T2, TPlugOptions, TPlugin>(TweenerCore<T1, T2, TPlugOptions> t, IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter, float duration)
@@ -98,7 +98,7 @@ namespace DG.Tweening
             t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
             t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
-            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All;
+            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return true;
         }
 
@@ -188,6 +188,8 @@ namespace DG.Tweening
             t.completedLoops = updateData.completedLoops;
             bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
             bool wasComplete = t.isComplete;
+            // Determine if it will be complete after update
+            if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
             // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
             int newCompletedSteps = 0;
             if (t.onStepComplete != null && updateData.updateMode == UpdateMode.Update) {
@@ -196,8 +198,6 @@ namespace DG.Tweening
                     : t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
             }
 
-            // Determine if it will be complete after update
-            if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
             // Set position (makes position 0 equal to position "end" when looping)
             t.position = updateData.position;
             if (t.position > t.duration) t.position = t.duration;
@@ -211,21 +211,22 @@ namespace DG.Tweening
                 else t.isPlaying = !(t.completedLoops == 0 && t.position <= 0); // Rewinded
             }
 
-            // Get values from plugin and set them
-            // EasePosition is different in case of Yoyo loop under certain circumstances
-            float easePosition = t.loopType == LoopType.Yoyo
+            // updatePosition is different in case of Yoyo loop under certain circumstances
+            float updatePosition = t.loopType == LoopType.Yoyo
                 && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)
                 ? t.duration - t.position
                 : t.position;
+
+            // Get values from plugin and set them
             if (DOTween.useSafeMode) {
                 try {
-                    t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, easePosition, t.startValue, t.changeValue, t.duration, t.ease));
+                    t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, updatePosition, t.startValue, t.changeValue, t.duration, t.ease));
                 } catch (MissingReferenceException) {
                     // Target/field doesn't exist anymore: kill tween
                     return true;
                 }
             } else {
-                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, easePosition, t.startValue, t.changeValue, t.duration, t.ease));
+                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, updatePosition, t.startValue, t.changeValue, t.duration, t.ease));
             }
 
             // Additional callbacks

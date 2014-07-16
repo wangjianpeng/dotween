@@ -95,6 +95,53 @@ namespace DG.Tweening
         }
 
         // ===================================================================================
+        // SEQUENCES -------------------------------------------------------------------------
+
+        public static Sequence Append(this Sequence s, Tween t)
+        {
+            if (s.creationLocked) return s;
+            if (t == null || !t.active) return s;
+
+            Sequence.DoInsert(s, t, s.duration);
+            return s;
+        }
+
+        public static Sequence Insert(this Sequence s, Tween t, float atPosition)
+        {
+            if (s.creationLocked) return s;
+            if (t == null || !t.active) return s;
+
+            Sequence.DoInsert(s, t, atPosition);
+            return s;
+        }
+
+        public static Sequence AppendInterval(this Sequence s, float interval)
+        {
+            if (s.creationLocked) return s;
+
+            Sequence.DoAppendInterval(s, interval);
+            return s;
+        }
+
+        public static Sequence AppendCallback(this Sequence s, TweenCallback callback)
+        {
+            if (s.creationLocked) return s;
+            if (callback == null) return s;
+
+            Sequence.DoInsertCallback(s, callback, s.duration);
+            return s;
+        }
+
+        public static Sequence InsertCallback(this Sequence s, TweenCallback callback, float atPosition)
+        {
+            if (s.creationLocked) return s;
+            if (callback == null) return s;
+
+            Sequence.DoInsertCallback(s, callback, atPosition);
+            return s;
+        }
+
+        // ===================================================================================
         // TWEENERS --------------------------------------------------------------------------
 
         /// <summary>Has no effect on Sequences</summary>
