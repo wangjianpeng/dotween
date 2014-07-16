@@ -106,7 +106,7 @@ namespace DG.Tweening
             return s;
         }
 
-        public static Sequence Insert(this Sequence s, Tween t, float atPosition)
+        public static Sequence Insert(this Sequence s, float atPosition, Tween t)
         {
             if (s.creationLocked) return s;
             if (t == null || !t.active) return s;
@@ -132,7 +132,7 @@ namespace DG.Tweening
             return s;
         }
 
-        public static Sequence InsertCallback(this Sequence s, TweenCallback callback, float atPosition)
+        public static Sequence InsertCallback(this Sequence s, float atPosition, TweenCallback callback)
         {
             if (s.creationLocked) return s;
             if (callback == null) return s;

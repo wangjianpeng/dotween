@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening.Core.Enums;
+using UnityEngine;
 
 namespace DG.Tweening.Core
 {
@@ -159,7 +160,7 @@ namespace DG.Tweening.Core
             return true;
         }
 
-        // Returns FALSE if there was an error and the tween needs to be destroyed
+        // Returns TRUE if there was an error and the tween needs to be destroyed
         internal static bool Goto(Tween t, float to, bool andPlay = false, UpdateMode updateMode = UpdateMode.Goto)
         {
             t.isPlaying = andPlay;
