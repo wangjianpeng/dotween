@@ -60,6 +60,8 @@
     <Compile Include="Core\Enums\FilterType.cs" />
     <Compile Include="Core\Enums\OperationType.cs" />
     <Compile Include="Core\Enums\UpdateMode.cs" />
+    <Compile Include="Core\ISequentiable.cs" />
+    <Compile Include="Core\SequenceCallback.cs" />
     <Compile Include="Core\TweenManager.cs" />
     <Compile Include="Core\UpdateData.cs" />
     <Compile Include="Core\Utils.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="Plugins\PlugVector4.cs" />
     <Compile Include="Plugins\DefaultPlugins\Vector4Plugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\StringPlugin.cs" />
+    <Compile Include="Sequence.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />
     <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />

@@ -41,6 +41,7 @@ namespace DG.Tweening.Core
         internal static bool isUpdateLoop; // TRUE while an update cycle is running (used to treat direct tween Kills differently)
         internal static UpdateType updateLoopType;
 
+        // Tweens contained in Sequences are not inside the active lists
         static readonly List<Tween> _ActiveDefaultTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
         static readonly List<Tween> _ActiveFixedTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
         static readonly List<Tween> _ActiveIndependentTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
@@ -55,7 +56,7 @@ namespace DG.Tweening.Core
 
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
-        internal static TweenerCore<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>(UpdateType updateType, bool playNow = true)
+        internal static TweenerCore<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>(UpdateType updateType)
             where TPlugOptions : struct
         {
             Tween tween;
@@ -71,7 +72,6 @@ namespace DG.Tweening.Core
                         // Pooled Tweener exists: spawn it
                         t = (TweenerCore<T1, T2, TPlugOptions>)tween;
                         t.active = true;
-                        t.isPlaying = playNow;
                         AddActiveTween(t, updateType);
                         _PooledTweeners.RemoveAt(i);
                         totPooledTweeners--;
@@ -95,9 +95,34 @@ namespace DG.Tweening.Core
             t = new TweenerCore<T1,T2,TPlugOptions>();
             totTweeners++;
             t.active = true;
-            t.isPlaying = playNow;
             AddActiveTween(t, updateType);
             return t;
+        }
+
+        // Returns a new Sequence, from the pool if there's one available,
+        // otherwise by instantiating a new one
+        internal static Sequence GetSequence(UpdateType updateType)
+        {
+            Sequence s;
+            if (totPooledSequences > 0) {
+                s = (Sequence)_PooledSequences[0];
+                s.active = true;
+                AddActiveTween(s, updateType);
+                _PooledSequences.RemoveAt(0);
+                totPooledSequences--;
+            } else {
+                // Increase capacity in case max number of Tweeners has already been reached, then continue
+                if (totTweeners >= maxTweeners) {
+                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweenersReached);
+                    IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
+                }
+            }
+            // Not found: create new Sequence
+            s = new Sequence();
+            totSequences++;
+            s.active = true;
+            AddActiveTween(s, updateType);
+            return s;
         }
 
         internal static void Update(float deltaTime)
@@ -220,6 +245,25 @@ namespace DG.Tweening.Core
             return Play(t);
         }
 
+        // Removes the given tween from the active tweens list
+        internal static void AddActiveTweenToSequence(Tween tween)
+        {
+            switch (tween.updateType) {
+            case UpdateType.Fixed:
+                _ActiveFixedTweens.Remove(tween);
+                totActiveFixedTweens--;
+                break;
+            case UpdateType.TimeScaleIndependent:
+                _ActiveIndependentTweens.Remove(tween);
+                totActiveIndependentTweens--;
+                break;
+            default:
+                _ActiveDefaultTweens.Remove(tween);
+                totActiveDefaultTweens--;
+                break;
+            }
+        }
+
         // Despawn all
         internal static int DespawnAll()
         {
@@ -265,8 +309,13 @@ namespace DG.Tweening.Core
             case TweenType.Sequence:
                 _PooledSequences.Add(t);
                 totPooledSequences++;
+                // Despawn sequenced tweens
+                // TODO verify that this works correctly
+                Sequence s = (Sequence)t;
+                int len = s.sequencedTweens.Count;
+                for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
                 break;
-            default:
+            case TweenType.Tweener:
                 _PooledTweeners.Add(t);
                 totPooledTweeners++;
                 break;

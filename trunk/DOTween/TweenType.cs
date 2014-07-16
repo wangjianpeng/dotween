@@ -24,6 +24,8 @@ namespace DG.Tweening
     public enum TweenType
     {
         Tweener,
-        Sequence
+        Sequence,
+        Interval,
+        Callback // Indicates a callback in a Sequence
     }
 }
