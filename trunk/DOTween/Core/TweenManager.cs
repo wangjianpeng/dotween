@@ -159,7 +159,8 @@ namespace DG.Tweening.Core
             return true;
         }
 
-        internal static void Goto(Tween t, float to, bool andPlay = false)
+        // Returns FALSE if there was an error and the tween needs to be destroyed
+        internal static bool Goto(Tween t, float to, bool andPlay = false, UpdateMode updateMode = UpdateMode.Goto)
         {
             t.isPlaying = andPlay;
             t.delayComplete = true;
@@ -170,7 +171,7 @@ namespace DG.Tweening.Core
                 completedLoops = t.loops;
                 position = t.duration;
             } else if (position >= t.duration) position = 0;
-            t.Goto(new UpdateData(position, completedLoops, UpdateMode.Goto));
+            return t.Goto(new UpdateData(position, completedLoops, updateMode));
         }
 
         // Returns TRUE if the given tween was not already paused

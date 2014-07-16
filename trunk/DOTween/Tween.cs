@@ -108,7 +108,7 @@ namespace DG.Tweening
 
         // Applies the tween set by DoGoto.
         // Returns TRUE if the tween needs to be killed
-        internal abstract bool ApplyTween(float updatePosition);
+        internal abstract bool ApplyTween(ApplyTweenData data);
 
         // ===================================================================================
         // INTERNAL STATIC METHODS -----------------------------------------------------------
@@ -133,6 +133,7 @@ namespace DG.Tweening
                 }
             }
 
+            float prevPosition = t.position;
             int prevCompletedLoops = t.completedLoops;
             t.completedLoops = updateData.completedLoops;
             bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
@@ -161,13 +162,11 @@ namespace DG.Tweening
             }
 
             // updatePosition is different in case of Yoyo loop under certain circumstances
-            float updatePosition = t.loopType == LoopType.Yoyo
-                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0)
-                ? t.duration - t.position
-                : t.position;
+            bool useInversePosition = t.loopType == LoopType.Yoyo
+                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0);
 
             // Get values from plugin and set them
-            if (t.ApplyTween(updatePosition)) return true;
+            if (t.ApplyTween(new ApplyTweenData(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateData.updateMode))) return true;
 
             // Additional callbacks
             if (newCompletedSteps > 0) {
