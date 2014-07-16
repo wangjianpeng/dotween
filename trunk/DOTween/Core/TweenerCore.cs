@@ -22,6 +22,7 @@
 using System;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
+using UnityEngine;
 
 namespace DG.Tweening.Core
 {
@@ -86,18 +87,37 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        // Also called by TweenManager at each update.
+        // CALLED BY TweenManager at each update.
         // Returns TRUE if the tween needs to be killed
         internal override float UpdateDelay(float elapsed)
         {
             return DoUpdateDelay(this, elapsed);
         }
 
-        // Also called by TweenManager at each update.
-        // Returns TRUE if the tween needs to be killed
-        internal override bool Goto(UpdateData updateData)
+        // CALLED BY Tween the moment the tween starts, AFTER any delay has elapsed
+        // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
+        // Returns TRUE in case of success,
+        // FALSE if there are missing references and the tween needs to be killed
+        internal override bool Startup()
         {
-            return DoGoto(this, updateData);
+            return DoStartup(this);
+        }
+
+        // Applies the tween set by DoGoto.
+        // Returns TRUE if the tween needs to be killed
+        internal override bool ApplyTween(float updatePosition)
+        {
+            if (DOTween.useSafeMode) {
+                try {
+                    setter(tweenPlugin.Evaluate(plugOptions, isRelative, getter, updatePosition, startValue, changeValue, duration, ease));
+                } catch (MissingReferenceException) {
+                    // Target/field doesn't exist anymore: kill tween
+                    return true;
+                }
+            } else {
+                setter(tweenPlugin.Evaluate(plugOptions, isRelative, getter, updatePosition, startValue, changeValue, duration, ease));
+            }
+            return false;
         }
     }
 }
