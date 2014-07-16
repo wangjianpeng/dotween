@@ -33,7 +33,7 @@ namespace DG.Tweening
         // Serialized
         public int inspectorUpdater; // Used only in editor, to update inspector at every frame
 
-        public static readonly string Version = "0.1.700";
+        public static readonly string Version = "0.2.000";
 
         // Options
         public static bool useSafeMode = false; // If TRUE checks for missing targets and other stuff while running (slower but safer)
@@ -139,18 +139,18 @@ namespace DG.Tweening
         // and addiitonal parameters, so in those cases I have to create overloads instead than using optionals. ARARGH!
 
         /////////////////////////////////////////////////////////////////////
-        // TO ///////////////////////////////////////////////////////////////
+        // TWEENER TO ///////////////////////////////////////////////////////
 
         /// <summary>Tweens a float using default plugins</summary>
         public static Tweener To(
             DOGetter<float> getter, DOSetter<float> setter, float endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, false); }
+        ) { return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, updateType, false); }
         /// <summary>Tweens an int using default plugins</summary>
         public static Tweener To(
             DOGetter<int> getter, DOSetter<int> setter, int endValue,
             float duration, UpdateType updateType = UpdateType.Default
-        ){ return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
+        ) { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, updateType, false); }
         /// <summary>Tweens an uint using default plugins</summary>
         public static Tweener To(
             DOGetter<uint> getter, DOSetter<uint> setter, uint endValue,
@@ -230,7 +230,7 @@ namespace DG.Tweening
         { return ApplyTo(plugSetter, duration, updateType, false); }
 
         /////////////////////////////////////////////////////////////////////
-        // FROM /////////////////////////////////////////////////////////////
+        // TWEENER FROM /////////////////////////////////////////////////////
 
         /// <summary>Tweens a float using default plugins</summary>
         public static Tweener From(
@@ -319,6 +319,23 @@ namespace DG.Tweening
             float duration, UpdateType updateType = UpdateType.Default
         ) where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
         { return ApplyTo(plugSetter, duration, updateType, true); }
+
+        /////////////////////////////////////////////////////////////////////
+        // NEW SEQUENCES ////////////////////////////////////////////////////
+
+        /// <summary>
+        /// Returns a new <see cref="Sequence"/> to be used for tween groups
+        /// </summary>
+        public static Sequence Sequence(UpdateType updateType = UpdateType.Default)
+        {
+            InitCheck();
+            Sequence sequence = TweenManager.GetSequence(updateType);
+            Tweening.Sequence.Setup(sequence);
+            return sequence;
+        }
+
+        /////////////////////////////////////////////////////////////////////
+        // OTHER STUFF //////////////////////////////////////////////////////
 
         /// <summary>
         /// Kills all tweens and cleans the pooled tweens cache

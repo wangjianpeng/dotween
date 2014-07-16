@@ -22,7 +22,6 @@
 using System;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
-using UnityEngine;
 
 namespace DG.Tweening.Core
 {
@@ -62,10 +61,16 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
+        // _tweenPlugin is not reset since it's useful to keep it as a reference
         public override void Reset()
         {
             base.Reset();
-            DoReset(this);
+
+            isFrom = false;
+
+            getter = null;
+            setter = null;
+            plugOptions = new TPlugOptions();
         }
 
         public override void ChangeEndValue<T>(T newEndValue)

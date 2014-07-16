@@ -22,13 +22,14 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 
 namespace DG.Tweening
 {
     /// <summary>
     /// Shared by Tweeners and Sequences
     /// </summary>
-    public abstract class Tween
+    public abstract class Tween : ISequentiable
     {
         // OPTIONS ///////////////////////////////////////////////////
 
@@ -55,15 +56,16 @@ namespace DG.Tweening
         // SETUP DATA ////////////////////////////////////////////////
 
         internal UpdateType updateType;
-        internal TweenType tweenType;
+        public TweenType tweenType { get; protected set; }
         internal Type typeofT1; // Only used by Tweeners
         internal Type typeofT2; // Only used by Tweeners
         internal Type typeofTPlugOptions; // Only used by Tweeners
         internal bool active; // FALSE when tween is despawned - set only by TweenManager
+        internal bool isSequenced; // Set by Sequence when adding a Tween to it
 
         // PLAY DATA /////////////////////////////////////////////////
 
-        internal bool creationLocked; // TRUE after the tween was updated the first time (even if it was delayed)
+        internal bool creationLocked; // TRUE after the tween was updated the first time (even if it was delayed), or when added to a Sequence
         internal bool startupDone; // TRUE the first time the actual tween starts, AFTER any delay has elapsed (unless it's a FROM tween)
         internal bool playedOnce; // TRUE after the tween was set in a play state at least once, AFTER any delay is elapsed
         internal float position; // Time position within a single loop cycle
@@ -92,7 +94,7 @@ namespace DG.Tweening
 
         // Called by TweenManager at each update.
         // Returns TRUE if the tween needs to be killed
-        internal virtual bool Goto(UpdateData updateData) { return true; }
+        internal abstract bool Goto(UpdateData updateData);
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
@@ -116,6 +118,7 @@ namespace DG.Tweening
             t.ease = null;
             t.easeCurve = null;
             t.updateType = UpdateType.Default;
+            t.isSequenced = false;
             t.creationLocked = t.startupDone = t.playedOnce = false;
             t.position = t.fullDuration = t.completedLoops = 0;
             t.isPlaying = t.isComplete = false;

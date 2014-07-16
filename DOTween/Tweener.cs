@@ -29,6 +29,8 @@ namespace DG.Tweening
 {
     public abstract class Tweener : Tween
     {
+        internal Tweener() {}
+
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
@@ -110,16 +112,6 @@ namespace DG.Tweening
             // Startup again to set everything up
             DoStartup(t);
             TweenManager.Restart(t, false);
-        }
-
-        // _tweenPlugin is not reset since it's useful to keep it as a reference
-        internal static void DoReset<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
-        {
-            t.isFrom = false;
-
-            t.getter = null;
-            t.setter = null;
-            t.plugOptions = new TPlugOptions();
         }
 
         // Called the moment the tween starts, AFTER any delay has elapsed
