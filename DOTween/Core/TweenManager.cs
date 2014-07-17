@@ -393,6 +393,8 @@ namespace DG.Tweening.Core
 
         internal static UpdateData GetUpdateDataFromDeltaTime(Tween t, float deltaTime)
         {
+            if (t.duration <= 0) return new UpdateData(0, t.loops == -1 ? t.completedLoops + 1 : t.loops);
+
             float position = t.position;
             bool wasEndPosition = position >= t.duration;
             int completedLoops = t.completedLoops;
