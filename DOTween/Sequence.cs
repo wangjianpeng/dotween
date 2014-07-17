@@ -114,8 +114,8 @@ namespace DG.Tweening
                     && (data.prevPosition < s.duration ? data.prevCompletedLoops % 2 != 0 : data.prevCompletedLoops % 2 == 0);
                 while (cyclesDone < cycles) {
                     if (cyclesDone > 0) from = to;
+                    else if (isInverse) from = s.duration - from;
                     to = isInverse ? 0 : s.duration;
-                    Debug.Log("CYCLE inverse: " + isInverse);
                     if (ApplyInternalCycle(s, from, to, data.updateMode)) return true;
                     cyclesDone++;
                     if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
@@ -133,7 +133,6 @@ namespace DG.Tweening
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode)
         {
             bool isGoingBackwards = toPos < fromPos;
-            Debug.Log("     goingBackwards: " + isGoingBackwards + " from/to: " + fromPos + "," + toPos);
             if (isGoingBackwards) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
@@ -144,8 +143,7 @@ namespace DG.Tweening
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         Tween t = (Tween)sequentiable;
-                        t.isBackwards = isGoingBackwards;
-                        Debug.Log("             < " + t.stringId);
+                        t.isBackwards = true;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
                     }
                 }
@@ -159,8 +157,7 @@ namespace DG.Tweening
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         Tween t = (Tween)sequentiable;
-                        t.isBackwards = isGoingBackwards;
-                        Debug.Log("             > " + t.stringId);
+                        t.isBackwards = false;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
                     }
                 }
