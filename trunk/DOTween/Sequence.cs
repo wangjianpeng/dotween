@@ -115,6 +115,7 @@ namespace DG.Tweening
                 while (cyclesDone < cycles) {
                     if (cyclesDone > 0) from = to;
                     to = isInverse ? 0 : s.duration;
+                    Debug.Log("CYCLE inverse: " + isInverse);
                     if (ApplyInternalCycle(s, from, to, data.updateMode)) return true;
                     cyclesDone++;
                     if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
@@ -122,7 +123,7 @@ namespace DG.Tweening
             }
             // Run current cycle
             if (data.newCompletedSteps > 0) from = data.useInversePosition ? s.duration : 0;
-            else from = data.prevPosition;
+            else from = data.useInversePosition ? s.duration - data.prevPosition : data.prevPosition;
             return ApplyInternalCycle(s, from, data.useInversePosition ? s.duration - s.position : s.position, data.updateMode);
         }
 
@@ -132,6 +133,7 @@ namespace DG.Tweening
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode)
         {
             bool isGoingBackwards = toPos < fromPos;
+            Debug.Log("     goingBackwards: " + isGoingBackwards + " from/to: " + fromPos + "," + toPos);
             if (isGoingBackwards) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
@@ -141,7 +143,10 @@ namespace DG.Tweening
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
-                        if (TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
+                        Tween t = (Tween)sequentiable;
+                        t.isBackwards = isGoingBackwards;
+                        Debug.Log("             < " + t.stringId);
+                        if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
                     }
                 }
             } else {
@@ -154,7 +159,9 @@ namespace DG.Tweening
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         Tween t = (Tween)sequentiable;
-                        if (TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
+                        t.isBackwards = isGoingBackwards;
+                        Debug.Log("             > " + t.stringId);
+                        if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
                     }
                 }
             }
