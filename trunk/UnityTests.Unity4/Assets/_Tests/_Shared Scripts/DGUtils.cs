@@ -2,6 +2,10 @@
 
 public static class DGUtils
 {
+	public static void Log(object o) {
+		Debug.Log(Time.realtimeSinceStartup + " : " + o);
+	}
+
 	public static void OpenGUI()
 	{
 		GUILayout.BeginArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20));

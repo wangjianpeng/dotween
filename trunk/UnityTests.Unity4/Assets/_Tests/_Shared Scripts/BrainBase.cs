@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class BrainBase : MonoBehaviour 
 {
-	TestOptions options;
+	public bool forceFrameRate;
+	public int forcedFrameRate = 10;
+
 	[System.NonSerialized] public HOFpsGadget fpsGadget;
 
 	virtual protected void Awake()
 	{
-		if (options != null) return;
-
-		options = Resources.Load("TestOptions", typeof(TestOptions)) as TestOptions;
 		GameObject fpsGadgetGo = new GameObject("FPS");
 		DontDestroyOnLoad(fpsGadgetGo);
 		fpsGadget = fpsGadgetGo.AddComponent<HOFpsGadget>();
-		if (options.forceFrameRate) fpsGadget.limitFrameRate = options.forcedFrameRate;
+		if (forceFrameRate) fpsGadget.limitFrameRate = forcedFrameRate;
 		fpsGadget.showMemory = true;
 	}
 }
