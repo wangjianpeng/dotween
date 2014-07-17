@@ -143,9 +143,10 @@ namespace DG.Tweening
             // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
             int newCompletedSteps = 0;
             if (t.onStepComplete != null && updateData.updateMode == UpdateMode.Update) {
-                newCompletedSteps = t.isBackwards
-                    ? t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0)
-                    : t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
+                if (t.isBackwards) {
+                    newCompletedSteps = t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0);
+                    if (wasComplete) newCompletedSteps--;
+                } else newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
             }
 
             // Set position (makes position 0 equal to position "end" when looping)
