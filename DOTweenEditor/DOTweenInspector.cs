@@ -54,7 +54,7 @@ namespace DG.DOTweenEditor
             GUILayout.Label("Active tweens: " + totActiveTweens);
             GUILayout.Label("Playing tweens: " + totPlayingTweens);
             GUILayout.Label("Paused tweens: " + totPausedTweens);
-            GUILayout.Label("Pooled tweens: " + TweenManager.TotPooledTweens());
+            GUILayout.Label("Pooled tweens: " + TweenManager.TotPooledTweens() + " (" + TweenManager.totPooledTweeners + "/" + TweenManager.totPooledSequences + ")");
 
             GUILayout.Space(8);
             GUILayout.Label("Tweeners Capacity: " + TweenManager.maxTweeners);

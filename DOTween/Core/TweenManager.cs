@@ -32,6 +32,7 @@ namespace DG.Tweening.Core
         const int _DefaultMaxTweeners = 200;
         const int _DefaultMaxSequences = 50;
         const string _MaxTweenersReached = "Max number of Tweeners has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
+        const string _MaxSequencesReached = "Max number of Sequences has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
 
         internal static int maxTweeners = _DefaultMaxTweeners;
         internal static int maxSequences = _DefaultMaxSequences;
@@ -111,12 +112,12 @@ namespace DG.Tweening.Core
                 AddActiveTween(s, updateType);
                 _PooledSequences.RemoveAt(0);
                 totPooledSequences--;
-            } else {
-                // Increase capacity in case max number of Tweeners has already been reached, then continue
-                if (totTweeners >= maxTweeners) {
-                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweenersReached);
-                    IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
-                }
+                return s;
+            }
+            // Increase capacity in case max number of Sequences has already been reached, then continue
+            if (totSequences >= maxSequences) {
+                if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxSequencesReached);
+                IncreaseCapacities(CapacityIncreaseMode.SequencesOnly);
             }
             // Not found: create new Sequence
             s = new Sequence();
