@@ -40,17 +40,17 @@ namespace DG.Tweening
             TweenManager.AddActiveTweenToSequence(t);
 
             t.isSequenced = t.creationLocked = true;
-            t.sequencedPosition = atPosition;
-            t.sequencedEndPosition = t.sequencedPosition + t.duration;
+            if (t.loops == -1) t.loops = 1;
             t.autoKill = false;
             t.delay = t.elapsedDelay = 0;
             t.delayComplete = true;
-            if (t.loops == -1) t.loops = 1;
+            t.sequencedPosition = atPosition;
+            t.sequencedEndPosition = t.sequencedPosition + (t.duration * t.loops);
 
-            float newDuration = atPosition + (t.loops == -1 ? t.duration : t.duration * t.loops);
-            if (newDuration > inSequence.duration) inSequence.duration = newDuration;
+            if (t.sequencedEndPosition > inSequence.duration) inSequence.duration = t.sequencedEndPosition;
             inSequence._sequencedObjs.Add(t);
             inSequence.sequencedTweens.Add(t);
+
             return inSequence;
         }
 
@@ -95,6 +95,8 @@ namespace DG.Tweening
         {
             s.startupDone = true;
             s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
+            // Order sequencedObjs by start position
+            s._sequencedObjs.Sort(SortSequencedObjs);
             return true;
         }
 
@@ -119,7 +121,7 @@ namespace DG.Tweening
                 }
             }
             // Run current cycle
-            if (data.newCompletedSteps > 0) from = data.useInversePosition ? s.duration : 0;
+            if (data.newCompletedSteps > 0 || data.updateMode == UpdateMode.Goto) from = data.useInversePosition ? s.duration : 0;
             else from = data.prevPosition;
             return ApplyInternalCycle(s, from, data.useInversePosition ? s.duration - s.position : s.position, data.updateMode);
         }
@@ -129,12 +131,12 @@ namespace DG.Tweening
 
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode)
         {
-            bool isGoingBackwards = fromPos < toPos;
+            bool isGoingBackwards = toPos < fromPos;
             if (isGoingBackwards) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-                    if (sequentiable.sequencedEndPosition < toPos) return false;
+                    if (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
                         // Nested Tweener/Sequence
@@ -146,7 +148,7 @@ namespace DG.Tweening
                 int len = s._sequencedObjs.Count;
                 for (int i = 0; i < len; ++i) {
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-                    if (sequentiable.sequencedPosition > toPos) return false;
+                    if (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
                         // Nested Tweener/Sequence
@@ -156,6 +158,13 @@ namespace DG.Tweening
                 }
             }
             return false;
+        }
+
+        static int SortSequencedObjs(ABSSequentiable a, ABSSequentiable b)
+        {
+            if (a.sequencedPosition > b.sequencedPosition) return 1;
+            if (a.sequencedPosition < b.sequencedPosition) return -1;
+            return 0;
         }
     }
 }

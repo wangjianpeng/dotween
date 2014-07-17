@@ -118,6 +118,11 @@ namespace DG.Tweening
             return t.isBackwards;
         }
 
+        public static bool IsPlaying(this Tween t)
+        {
+            return t.isPlaying;
+        }
+
         // ===================================================================================
         // TWEENERS --------------------------------------------------------------------------
 

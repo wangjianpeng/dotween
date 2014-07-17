@@ -217,6 +217,7 @@ namespace DG.Tweening.Core
 
         internal static bool Restart(Tween t, bool includeDelay = true)
         {
+            t.isBackwards = false;
             Rewind(t, includeDelay);
             t.isPlaying = true;
             return true;
@@ -226,14 +227,16 @@ namespace DG.Tweening.Core
         {
             t.isPlaying = false;
             bool rewinded = false;
-            if (includeDelay) {
-                rewinded = t.delay > 0 && t.elapsedDelay > 0;
-                t.elapsedDelay = 0;
-                t.delayComplete = false;
-            } else {
-                rewinded = t.elapsedDelay < t.delay;
-                t.elapsedDelay = t.delay;
-                t.delayComplete = true;
+            if (t.delay > 0) {
+                if (includeDelay) {
+                    rewinded = t.delay > 0 && t.elapsedDelay > 0;
+                    t.elapsedDelay = 0;
+                    t.delayComplete = false;
+                } else {
+                    rewinded = t.elapsedDelay < t.delay;
+                    t.elapsedDelay = t.delay;
+                    t.delayComplete = true;
+                }
             }
             if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
                 rewinded = true;
