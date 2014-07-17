@@ -121,7 +121,7 @@ namespace DG.Tweening
                 }
             }
             // Run current cycle
-            if (data.newCompletedSteps > 0 || data.updateMode == UpdateMode.Goto) from = data.useInversePosition ? s.duration : 0;
+            if (data.newCompletedSteps > 0) from = data.useInversePosition ? s.duration : 0;
             else from = data.prevPosition;
             return ApplyInternalCycle(s, from, data.useInversePosition ? s.duration - s.position : s.position, data.updateMode);
         }
@@ -136,7 +136,7 @@ namespace DG.Tweening
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-                    if (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos) continue;
+                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos)) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
                         // Nested Tweener/Sequence
@@ -148,11 +148,12 @@ namespace DG.Tweening
                 int len = s._sequencedObjs.Count;
                 for (int i = 0; i < len; ++i) {
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-                    if (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos) continue;
+                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos)) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
+                        Tween t = (Tween)sequentiable;
                         if (TweenManager.Goto((Tween)sequentiable, gotoPos, false, updateMode)) return true;
                     }
                 }
