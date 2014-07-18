@@ -44,6 +44,7 @@ namespace DG.Tweening
 
         public static void Goto(this Tween t, float to, bool andPlay = false)
         {
+            if (to < 0) to = 0;
             TweenManager.Goto(t, to, andPlay);
         }
 
@@ -105,6 +106,16 @@ namespace DG.Tweening
         public static float Position(this Tween t)
         {
             return t.position;
+        }
+
+        public static float Duration(this Tween t)
+        {
+            return t.duration;
+        }
+
+        public static float FullDuration(this Tween t)
+        {
+            return t.fullDuration;
         }
 
         public static float Elapsed(this Tween t)

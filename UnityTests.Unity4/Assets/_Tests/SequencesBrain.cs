@@ -4,20 +4,74 @@ using UnityEngine;
 
 public class SequencesBrain : BrainBase
 {
+	public int loops = 10001;
 	public LoopType loopType;
-	public Transform target;
+	public GameObject prefab;
 
-	Material mat;
-	Sequence seq;
-	int stepCompleteS, stepCompleteT1, stepCompleteT2, stepCompleteT3;
-	int completeS, completeT1, completeT2, completeT3;
+	Sequence mainSequence;
+	int stepCompleteMS, stepCompleteS, stepCompleteT1, stepCompleteT2, stepCompleteT3;
+	int completeMS, completeS, completeT1, completeT2, completeT3;
 	StringBuilder sb = new StringBuilder();
 
 	void Start()
 	{
-		mat = target.gameObject.renderer.material;
+		mainSequence = CreateSequence();
+	}
 
-		seq = DOTween.Sequence().Loops(10001, loopType).AutoKill(false)
+	void OnGUI()
+	{
+		DGUtils.OpenGUI();
+
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Restart")) {
+			ResetStepsCounters();
+			mainSequence.Restart();
+		}
+		if (GUILayout.Button("Rewind")) {
+			ResetStepsCounters();
+			mainSequence.Rewind();
+		}
+		if (GUILayout.Button("Complete")) mainSequence.Complete();
+		if (GUILayout.Button("Flip")) mainSequence.Flip();
+		GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("TogglePause")) mainSequence.TogglePause();
+		if (GUILayout.Button("PlayForward")) mainSequence.PlayForward();
+		if (GUILayout.Button("PlayBackwards")) mainSequence.PlayBackwards();
+		GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Kill All")) DOTween.Kill();
+		if (GUILayout.Button("Create Sequence")) mainSequence = CreateSequence();
+		if (GUILayout.Button("Create Tween")) CreateTween();
+		GUILayout.EndHorizontal();
+
+		GUILayout.Space(10);
+		sb.Remove(0, sb.Length);
+		sb.Append("IsPlaying: ").Append(mainSequence.IsPlaying());
+		sb.Append("\nIsBackwards: ").Append(mainSequence.IsBackwards());
+		sb.Append("\nPosition: ").Append(mainSequence.Position());
+		sb.Append("\nElapsed: ").Append(mainSequence.Elapsed());
+		sb.Append("\nCompletedLoops: ").Append(mainSequence.CompletedLoops());
+		GUILayout.Label(sb.ToString());
+
+		GUILayout.Space(10);
+		sb.Remove(0, sb.Length);
+		sb.Append("MAINSequence Steps/Complete: ").Append(stepCompleteMS).Append("/").Append(completeMS);
+		sb.Append("\nSequence Steps/Complete: ").Append(stepCompleteS).Append("/").Append(completeS);
+		sb.Append("\nMove Steps/Complete: ").Append(stepCompleteT1).Append("/").Append(completeT1);
+		sb.Append("\nRotation Steps/Complete: ").Append(stepCompleteT2).Append("/").Append(completeT2);
+		sb.Append("\nColor Steps/Complete: ").Append(stepCompleteT3).Append("/").Append(completeT3);
+		GUILayout.Label(sb.ToString());
+
+		DGUtils.CloseGUI();
+	}
+
+	Sequence CreateSequence()
+	{
+		Transform target = ((GameObject)Instantiate(prefab)).transform;
+		Material mat = target.gameObject.renderer.material;
+
+		Sequence seq = DOTween.Sequence()
 			.Id("Sequence")
 			.OnStart(()=> DGUtils.Log("Sequence Start"))
 			.OnStepComplete(()=> { stepCompleteS++; DGUtils.Log("SEQUENCE Step Complete"); })
@@ -46,52 +100,30 @@ public class SequencesBrain : BrainBase
 			.OnComplete(()=> { completeT3++; })
 		);
 		seq.AppendInterval(0.5f);
+
+		Sequence mainSeq = DOTween.Sequence().Loops(loops, loopType).AutoKill(false)
+			.Id("MAINSequence")
+			.OnStart(()=> DGUtils.Log("MAINSequence Start"))
+			.OnStepComplete(()=> { stepCompleteMS++; DGUtils.Log("MAINSEQUENCE Step Complete"); })
+			.OnComplete(()=> { completeMS++; });
+
+		mainSeq.Append(seq);
+
+		return mainSeq;
 	}
 
-	void OnGUI()
+	void CreateTween()
 	{
-		DGUtils.OpenGUI();
+		Transform target = ((GameObject)Instantiate(prefab)).transform;
 
-		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Restart")) {
-			ResetStepsCounters();
-			seq.Restart();
-		}
-		if (GUILayout.Button("Rewind")) {
-			ResetStepsCounters();
-			seq.Rewind();
-		}
-		if (GUILayout.Button("Complete")) seq.Complete();
-		if (GUILayout.Button("Flip")) seq.Flip();
-		GUILayout.EndHorizontal();
-		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("TogglePause")) seq.TogglePause();
-		if (GUILayout.Button("PlayForward")) seq.PlayForward();
-		if (GUILayout.Button("PlayBackwards")) seq.PlayBackwards();
-		GUILayout.EndHorizontal();
-
-		GUILayout.Space(10);
-		sb.Remove(0, sb.Length);
-		sb.Append("IsPlaying: ").Append(seq.IsPlaying());
-		sb.Append("\nIsBackwards: ").Append(seq.IsBackwards());
-		sb.Append("\nPosition: ").Append(seq.Position());
-		sb.Append("\nElapsed: ").Append(seq.Elapsed());
-		sb.Append("\nCompletedLoops: ").Append(seq.CompletedLoops());
-		GUILayout.Label(sb.ToString());
-
-		GUILayout.Space(10);
-		sb.Remove(0, sb.Length);
-		sb.Append("Sequence Steps/Complete: ").Append(stepCompleteS).Append("/").Append(completeS);
-		sb.Append("\nMove Steps/Complete: ").Append(stepCompleteT1).Append("/").Append(completeT1);
-		sb.Append("\nRotation Steps/Complete: ").Append(stepCompleteT2).Append("/").Append(completeT2);
-		sb.Append("\nColor Steps/Complete: ").Append(stepCompleteT3).Append("/").Append(completeT3);
-		GUILayout.Label(sb.ToString());
-
-		DGUtils.CloseGUI();
+		target.MoveTo(new Vector3(2, 2, 2), 1f).Loops(1, LoopType.Yoyo)
+			.Id("Move (Tween)")
+			.Loops(3)
+			.OnComplete(()=> Destroy(target.gameObject));
 	}
 
 	void ResetStepsCounters()
 	{
-		stepCompleteS = stepCompleteT1 = stepCompleteT2 = stepCompleteT3 = completeS = completeT1 = completeT2 = completeT3 = 0;
+		stepCompleteMS = stepCompleteS = stepCompleteT1 = stepCompleteT2 = stepCompleteT3 = completeMS = completeS = completeT1 = completeT2 = completeT3 = 0;
 	}
 }
