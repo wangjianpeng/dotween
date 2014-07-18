@@ -105,6 +105,14 @@ namespace DG.Tweening
             Sequence.DoInsert(s, t, s.duration);
             return s;
         }
+        public static Sequence Prepend(this Sequence s, Tween t)
+        {
+            if (s.creationLocked) return s;
+            if (t == null || !t.active) return s;
+
+            Sequence.DoPrepend(s, t);
+            return s;
+        }
 
         public static Sequence Insert(this Sequence s, float atPosition, Tween t)
         {
@@ -122,6 +130,13 @@ namespace DG.Tweening
             Sequence.DoAppendInterval(s, interval);
             return s;
         }
+        public static Sequence PrependInterval(this Sequence s, float interval)
+        {
+            if (s.creationLocked) return s;
+
+            Sequence.DoPrependInterval(s, interval);
+            return s;
+        }
 
         public static Sequence AppendCallback(this Sequence s, TweenCallback callback)
         {
@@ -129,6 +144,14 @@ namespace DG.Tweening
             if (callback == null) return s;
 
             Sequence.DoInsertCallback(s, callback, s.duration);
+            return s;
+        }
+        public static Sequence PrependCallback(this Sequence s, TweenCallback callback)
+        {
+            if (s.creationLocked) return s;
+            if (callback == null) return s;
+
+            Sequence.DoInsertCallback(s, callback, 0);
             return s;
         }
 
