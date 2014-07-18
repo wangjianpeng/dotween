@@ -50,12 +50,12 @@ namespace DG.Tweening
 
         public static void Kill(this Tween t)
         {
-            if (TweenManager.IsActive(t)) {
-                if (TweenManager.isUpdateLoop && TweenManager.updateLoopType == t.updateType) {
-                    // Just mark it for killing, so the update loop will take care of it
-                    t.active = false;
-                } else TweenManager.Despawn(t);
-            }
+            if (!t.active) return;
+
+            if (TweenManager.isUpdateLoop && TweenManager.updateLoopType == t.updateType) {
+                // Just mark it for killing, so the update loop will take care of it
+                t.active = false;
+            } else TweenManager.Despawn(t);
         }
 
         public static T Pause<T>(this T t) where T : Tween

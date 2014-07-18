@@ -22,6 +22,8 @@
             Directly sets the current max capacity of Tweeners and Sequences,
             so that DOTween doesn't need to automatically increase it in case the max is reached
             (which might lead to hiccups when that happens).
+            Sequences capacity must be less or equal to tweeners capacity
+            (if you pass a low tweeners capacity it will be increased to match the sequeces').
             Beware: do not make capacity less than currently existing Tweeners/Sequences
             </summary>
             <param name="tweenersCapacity">Max Tweeners capacity.

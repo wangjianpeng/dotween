@@ -31,11 +31,11 @@ namespace DG.Tweening.Core
         // FIXME reset original values
         const int _DefaultMaxTweeners = 200;
         const int _DefaultMaxSequences = 50;
-        const string _MaxTweenersReached = "Max number of Tweeners has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
-        const string _MaxSequencesReached = "Max number of Sequences has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
+        const string _MaxTweensReached = "Max number of Tweens has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
 
-        internal static int maxTweeners = _DefaultMaxTweeners;
-        internal static int maxSequences = _DefaultMaxSequences;
+        internal static int maxActive = _DefaultMaxTweeners; // Always equal to maxTweeners
+        internal static int maxTweeners = _DefaultMaxTweeners; // Always >= maxSequences
+        internal static int maxSequences = _DefaultMaxSequences; // Always <= maxTweeners
         internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveFixedTweens, hasActiveIndependentTweens;
         internal static int totActiveDefaultTweens, totActiveFixedTweens, totActiveIndependentTweens;
         internal static int totPooledTweeners, totPooledSequences;
@@ -44,9 +44,10 @@ namespace DG.Tweening.Core
         internal static UpdateType updateLoopType;
 
         // Tweens contained in Sequences are not inside the active lists
-        static readonly List<Tween> _ActiveDefaultTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
-        static readonly List<Tween> _ActiveFixedTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
-        static readonly List<Tween> _ActiveIndependentTweens = new List<Tween>(_DefaultMaxTweeners + _DefaultMaxSequences);
+        // Arrays are always organized so that existing elements are next to each other from 0 to (totActiveTweens - 1)
+        static Tween[] _ActiveDefaultTweens = new Tween[_DefaultMaxTweeners];
+        static Tween[] _ActiveFixedTweens = new Tween[_DefaultMaxTweeners];
+        static Tween[] _ActiveIndependentTweens = new Tween[_DefaultMaxTweeners];
         static readonly List<Tween> _PooledTweeners = new List<Tween>(_DefaultMaxTweeners);
         static readonly List<Tween> _PooledSequences = new List<Tween>(_DefaultMaxSequences);
 
@@ -89,7 +90,7 @@ namespace DG.Tweening.Core
             } else {
                 // Increase capacity in case max number of Tweeners has already been reached, then continue
                 if (totTweeners >= maxTweeners) {
-                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweenersReached);
+                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
                     IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
                 }
             }
@@ -116,7 +117,7 @@ namespace DG.Tweening.Core
             }
             // Increase capacity in case max number of Sequences has already been reached, then continue
             if (totSequences >= maxSequences) {
-                if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxSequencesReached);
+                if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
                 IncreaseCapacities(CapacityIncreaseMode.SequencesOnly);
             }
             // Not found: create new Sequence
@@ -257,16 +258,13 @@ namespace DG.Tweening.Core
         {
             switch (tween.updateType) {
             case UpdateType.Fixed:
-                _ActiveFixedTweens.Remove(tween);
-                totActiveFixedTweens--;
+                RemoveActiveTweenFromList(_ActiveFixedTweens, tween.activeId, ref totActiveFixedTweens);
                 break;
             case UpdateType.TimeScaleIndependent:
-                _ActiveIndependentTweens.Remove(tween);
-                totActiveIndependentTweens--;
+                RemoveActiveTweenFromList(_ActiveIndependentTweens, tween.activeId, ref totActiveIndependentTweens);
                 break;
             default:
-                _ActiveDefaultTweens.Remove(tween);
-                totActiveDefaultTweens--;
+                RemoveActiveTweenFromList(_ActiveDefaultTweens, tween.activeId, ref totActiveDefaultTweens);
                 break;
             }
         }
@@ -277,15 +275,15 @@ namespace DG.Tweening.Core
             int totDespawned = TotActiveTweens();
             if (hasActiveDefaultTweens) {
                 DespawnTweens(_ActiveDefaultTweens, false);
-                _ActiveDefaultTweens.Clear();
+                ClearTweenArray(_ActiveDefaultTweens);
             }
             if (hasActiveFixedTweens) {
                 DespawnTweens(_ActiveFixedTweens, false);
-                _ActiveFixedTweens.Clear();
+                ClearTweenArray(_ActiveFixedTweens);
             }
             if (hasActiveIndependentTweens) {
                 DespawnTweens(_ActiveIndependentTweens, false);
-                _ActiveIndependentTweens.Clear();
+                ClearTweenArray(_ActiveIndependentTweens);
             }
             hasActiveTweens = hasActiveDefaultTweens = hasActiveFixedTweens = hasActiveIndependentTweens = false;
             totActiveDefaultTweens = totActiveFixedTweens = totActiveIndependentTweens = 0;
@@ -299,18 +297,19 @@ namespace DG.Tweening.Core
                 // Remove tween from correct active list
                 switch (t.updateType) {
                 case UpdateType.Fixed:
-                    _ActiveFixedTweens.Remove(t);
-                    totActiveFixedTweens--;
+                    RemoveActiveTweenFromList(_ActiveFixedTweens, t.activeId, ref totActiveFixedTweens);
+                    hasActiveFixedTweens = totActiveFixedTweens > 0;
                     break;
                 case UpdateType.TimeScaleIndependent:
-                    _ActiveIndependentTweens.Remove(t);
-                    totActiveIndependentTweens--;
+                    RemoveActiveTweenFromList(_ActiveIndependentTweens, t.activeId, ref totActiveIndependentTweens);
+                    hasActiveIndependentTweens = totActiveIndependentTweens > 0;
                     break;
                 default:
-                    _ActiveDefaultTweens.Remove(t);
-                    totActiveDefaultTweens--;
+                    RemoveActiveTweenFromList(_ActiveDefaultTweens, t.activeId, ref totActiveDefaultTweens);
+                    hasActiveDefaultTweens = totActiveDefaultTweens > 0;
                     break;
                 }
+                hasActiveTweens = hasActiveDefaultTweens || hasActiveFixedTweens || hasActiveIndependentTweens;
             }
             switch (t.tweenType) {
             case TweenType.Sequence:
@@ -328,6 +327,7 @@ namespace DG.Tweening.Core
                 break;
             }
             t.active = false;
+            t.activeId = -1;
             t.Reset();
         }
 
@@ -352,9 +352,9 @@ namespace DG.Tweening.Core
         // then purges all pools and resets capacities
         internal static void PurgeAll()
         {
-            _ActiveDefaultTweens.Clear();
-            _ActiveFixedTweens.Clear();
-            _ActiveIndependentTweens.Clear();
+            ClearTweenArray(_ActiveDefaultTweens);
+            ClearTweenArray(_ActiveFixedTweens);
+            ClearTweenArray(_ActiveIndependentTweens);
             hasActiveTweens = hasActiveDefaultTweens = hasActiveFixedTweens = hasActiveIndependentTweens = false;
             totActiveDefaultTweens = totActiveFixedTweens = totActiveIndependentTweens = 0;
             PurgePools();
@@ -379,12 +379,14 @@ namespace DG.Tweening.Core
 
         internal static void SetCapacities(int tweenersCapacity, int sequencesCapacity)
         {
+            if (tweenersCapacity < sequencesCapacity) tweenersCapacity = sequencesCapacity;
+
+            maxActive = tweenersCapacity;
             maxTweeners = tweenersCapacity;
             maxSequences = sequencesCapacity;
-            int maxActive = tweenersCapacity + sequencesCapacity;
-            _ActiveDefaultTweens.Capacity = maxActive;
-            _ActiveFixedTweens.Capacity = maxActive;
-            _ActiveIndependentTweens.Capacity = maxActive;
+            Array.Resize(ref _ActiveDefaultTweens, maxActive);
+            Array.Resize(ref _ActiveFixedTweens, maxActive);
+            Array.Resize(ref _ActiveIndependentTweens, maxActive);
             _PooledTweeners.Capacity = tweenersCapacity;
             _PooledSequences.Capacity = sequencesCapacity;
             _KillList.Capacity = maxActive;
@@ -415,18 +417,6 @@ namespace DG.Tweening.Core
             if (t.loops != -1 && completedLoops >= t.loops) position = t.duration;
 
             return new UpdateData(position, completedLoops);
-        }
-
-        internal static bool IsActive(Tween t)
-        {
-            switch (t.updateType) {
-            case UpdateType.Fixed:
-                return _ActiveFixedTweens.Contains(t);
-            case UpdateType.TimeScaleIndependent:
-                return _ActiveIndependentTweens.Contains(t);
-            default:
-                return _ActiveDefaultTweens.Contains(t);
-            }
         }
 
         internal static int TotActiveTweens()
@@ -463,7 +453,7 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
-        static void DoUpdate(float deltaTime, List<Tween> tweens, UpdateType updateType, int totTweens)
+        static void DoUpdate(float deltaTime, Tween[] tweens, UpdateType updateType, int totTweens)
         {
             isUpdateLoop = true;
             updateLoopType = updateType;
@@ -499,24 +489,23 @@ namespace DG.Tweening.Core
             if (willKill) {
                 DespawnTweens(_KillList, false);
                 int count = _KillIds.Count - 1;
-                int totRemoved = count + 1;
-                for (int i = count; i > -1; --i) tweens.RemoveAt(_KillIds[i]);
-                _KillList.Clear();
-                _KillIds.Clear();
                 switch (updateType) {
                 case UpdateType.Fixed:
-                    totActiveFixedTweens -= totRemoved;
+                    for (int i = count; i > -1; --i) RemoveActiveTweenFromList(_ActiveFixedTweens, _KillIds[i], ref totActiveFixedTweens);
                     hasActiveFixedTweens = totActiveFixedTweens > 0;
                     break;
                 case UpdateType.TimeScaleIndependent:
-                    totActiveIndependentTweens -= totRemoved;
+                    for (int i = count; i > -1; --i) RemoveActiveTweenFromList(_ActiveIndependentTweens, _KillIds[i], ref totActiveIndependentTweens);
                     hasActiveIndependentTweens = totActiveIndependentTweens > 0;
                     break;
                 default:
-                    totActiveDefaultTweens -= totRemoved;
+                    for (int i = count; i > -1; --i) RemoveActiveTweenFromList(_ActiveDefaultTweens, _KillIds[i], ref totActiveDefaultTweens);
                     hasActiveDefaultTweens = totActiveDefaultTweens > 0;
                     break;
                 }
+                hasActiveTweens = hasActiveDefaultTweens || hasActiveFixedTweens || hasActiveIndependentTweens;
+                _KillList.Clear();
+                _KillIds.Clear();
             }
             isUpdateLoop = false;
         }
@@ -529,11 +518,11 @@ namespace DG.Tweening.Core
         }
 
         static int DoFilteredOperation(
-            List<Tween> tweens, UpdateType updateType, int totTweens, OperationType operationType,
+            Tween[] tweens, UpdateType updateType, int totTweens, OperationType operationType,
             FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool, float optionalFloat
         ){
             int totInvolved = 0;
-            int totDespawned = 0;
+            bool hasDespawned = false;
             for (int i = totTweens - 1; i > -1; --i) {
                 bool isFilterCompliant = false;
                 Tween t = tweens[i];
@@ -556,16 +545,16 @@ namespace DG.Tweening.Core
                     case OperationType.Despawn:
                         totInvolved++;
                         Despawn(t, false);
-                        tweens.RemoveAt(i);
-                        totDespawned++;
+                        hasDespawned = true;
+                        _KillIds.Add(i);
                         break;
                     case OperationType.Complete:
                         bool hasAutoKill = t.autoKill;
                         if (Complete(t, false)) {
                             totInvolved++;
                             if (hasAutoKill) {
-                                tweens.RemoveAt(i);
-                                totDespawned++;
+                                hasDespawned = true;
+                                _KillIds.Add(i);
                             }
                         }
                         break;
@@ -601,21 +590,24 @@ namespace DG.Tweening.Core
                 }
             }
             // Special additional operations in case of despawn
-            if (totDespawned > 0) {
+            if (hasDespawned) {
+                int count = _KillIds.Count - 1;
                 switch (updateType) {
                 case UpdateType.Fixed:
-                    totActiveFixedTweens -= totDespawned;
+                    for (int i = count; i > -1; --i) RemoveActiveTweenFromList(_ActiveFixedTweens, _KillIds[i], ref totActiveFixedTweens);
                     hasActiveFixedTweens = totActiveFixedTweens > 0;
                     break;
                 case UpdateType.TimeScaleIndependent:
-                    totActiveIndependentTweens -= totDespawned;
+                    for (int i = count; i > -1; --i) RemoveActiveTweenFromList(_ActiveIndependentTweens, _KillIds[i], ref totActiveIndependentTweens);
                     hasActiveIndependentTweens = totActiveIndependentTweens > 0;
                     break;
                 default:
-                    totActiveDefaultTweens -= totDespawned;
+                    for (int i = count; i > -1; --i) RemoveActiveTweenFromList(_ActiveDefaultTweens, _KillIds[i], ref totActiveDefaultTweens);
                     hasActiveDefaultTweens = totActiveDefaultTweens > 0;
                     break;
                 }
+                hasActiveTweens = hasActiveDefaultTweens || hasActiveFixedTweens || hasActiveIndependentTweens;
+                _KillIds.Clear();
             }
 
             return totInvolved;
@@ -627,17 +619,20 @@ namespace DG.Tweening.Core
             tween.updateType = updateType;
             switch (updateType) {
             case UpdateType.Fixed:
-                _ActiveFixedTweens.Add(tween);
+                _ActiveFixedTweens[totActiveFixedTweens] = tween;
+                tween.activeId = totActiveFixedTweens;
                 hasActiveFixedTweens = true;
                 totActiveFixedTweens++;
                 break;
             case UpdateType.TimeScaleIndependent:
-                _ActiveIndependentTweens.Add(tween);
+                _ActiveIndependentTweens[totActiveIndependentTweens] = tween;
+                tween.activeId = totActiveIndependentTweens;
                 hasActiveIndependentTweens = true;
                 totActiveIndependentTweens++;
                 break;
             default:
-                _ActiveDefaultTweens.Add(tween);
+                _ActiveDefaultTweens[totActiveDefaultTweens] = tween;
+                tween.activeId = totActiveDefaultTweens;
                 hasActiveDefaultTweens = true;
                 totActiveDefaultTweens++;
                 break;
@@ -645,39 +640,67 @@ namespace DG.Tweening.Core
             hasActiveTweens = true;
         }
 
+        static void DespawnTweens(Tween[] tweens, bool modifyActiveLists = true)
+        {
+            int count = tweens.Length;
+            for (int i = 0; i < count; ++i) Despawn(tweens[i], modifyActiveLists);
+        }
         static void DespawnTweens(List<Tween> tweens, bool modifyActiveLists = true)
         {
             int count = tweens.Count;
             for (int i = 0; i < count; ++i) Despawn(tweens[i], modifyActiveLists);
         }
 
+        // Removes a tween from the given active list, reorganizes said list
+        // and decreases the given total
+        static void RemoveActiveTweenFromList(Tween[] tweens, int index, ref int totActiveTweensOfType)
+        {
+            if (index < totActiveTweensOfType - 1) {
+                for (int i = index; i < totActiveTweensOfType - 1; ++i) {
+                    tweens[i + 1].activeId = i;
+                    tweens[i] = tweens[i + 1];
+                }
+                tweens[totActiveTweensOfType - 1] = null;
+            } else tweens[index] = null;
+            totActiveTweensOfType--;
+        }
+
+        static void ClearTweenArray(Tween[] tweens)
+        {
+            int len = tweens.Length;
+            for (int i = 0; i < len; i++) tweens[i] = null;
+        }
+
         static void IncreaseCapacities(CapacityIncreaseMode increaseMode)
         {
-            int add = 0;
+            int killAdd = 0;
             switch (increaseMode) {
             case CapacityIncreaseMode.TweenersOnly:
-                add += _DefaultMaxTweeners;
+                killAdd += _DefaultMaxTweeners;
                 maxTweeners += _DefaultMaxTweeners;
                 _PooledTweeners.Capacity += _DefaultMaxTweeners;
                 break;
             case CapacityIncreaseMode.SequencesOnly:
-                add += _DefaultMaxSequences;
+                killAdd += _DefaultMaxSequences;
                 maxSequences += _DefaultMaxSequences;
                 _PooledSequences.Capacity += _DefaultMaxSequences;
                 break;
             default:
-                add += _DefaultMaxTweeners + _DefaultMaxSequences;
+                killAdd += _DefaultMaxTweeners;
                 maxTweeners += _DefaultMaxTweeners;
                 maxSequences += _DefaultMaxSequences;
                 _PooledTweeners.Capacity += _DefaultMaxTweeners;
                 _PooledSequences.Capacity += _DefaultMaxSequences;
                 break;
             }
-            _ActiveDefaultTweens.Capacity += add;
-            _ActiveFixedTweens.Capacity += add;
-            _ActiveIndependentTweens.Capacity += add;
-            _KillList.Capacity += add;
-            _KillIds.Capacity += add;
+            maxActive = maxTweeners;
+            Array.Resize(ref _ActiveDefaultTweens, maxActive);
+            Array.Resize(ref _ActiveFixedTweens, maxActive);
+            Array.Resize(ref _ActiveIndependentTweens, maxActive);
+            if (killAdd > 0) {
+                _KillList.Capacity += killAdd;
+                _KillIds.Capacity += killAdd;
+            }
         }
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
