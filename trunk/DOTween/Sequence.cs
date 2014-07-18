@@ -112,9 +112,11 @@ namespace DG.Tweening
                 from = data.prevPosition;
                 bool isInverse = s.loopType == LoopType.Yoyo
                     && (data.prevPosition < s.duration ? data.prevCompletedLoops % 2 != 0 : data.prevCompletedLoops % 2 == 0);
+                if (s.isBackwards) isInverse = !isInverse; // TEST
                 while (cyclesDone < cycles) {
+//                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
                     if (cyclesDone > 0) from = to;
-                    else if (isInverse) from = s.duration - from;
+                    else if (isInverse && !s.isBackwards) from = s.duration - from;
                     to = isInverse ? 0 : s.duration;
                     if (ApplyInternalCycle(s, from, to, data.updateMode)) return true;
                     cyclesDone++;
@@ -122,6 +124,7 @@ namespace DG.Tweening
                 }
             }
             // Run current cycle
+//            Debug.Log("::::::::::::: UPDATING");
             if (data.newCompletedSteps > 0) from = data.useInversePosition ? s.duration : 0;
             else from = data.useInversePosition ? s.duration - data.prevPosition : data.prevPosition;
             return ApplyInternalCycle(s, from, data.useInversePosition ? s.duration - s.position : s.position, data.updateMode);
@@ -142,8 +145,10 @@ namespace DG.Tweening
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
+                        if (gotoPos < 0) gotoPos = 0;
                         Tween t = (Tween)sequentiable;
                         t.isBackwards = true;
+//                        Debug.Log("             < " + t.stringId + " " + fromPos + "/" + toPos + " : " + gotoPos);
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
                     }
                 }
@@ -156,8 +161,10 @@ namespace DG.Tweening
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
+                        if (gotoPos < 0) gotoPos = 0;
                         Tween t = (Tween)sequentiable;
                         t.isBackwards = false;
+//                        Debug.Log("             > " + t.stringId + " " + fromPos + "/" + toPos + " : " + gotoPos);
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
                     }
                 }
