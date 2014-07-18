@@ -9,13 +9,18 @@ public class SequencesBrain : BrainBase
 	public GameObject prefab;
 
 	Sequence mainSequence;
-	int stepCompleteMS, stepCompleteS, stepCompleteT1, stepCompleteT2, stepCompleteT3;
-	int completeMS, completeS, completeT1, completeT2, completeT3;
+	int stepCompleteMS, stepCompleteS1, stepCompleteS2, stepCompleteT1, stepCompleteT2, stepCompleteT3;
+	int completeMS, completeS1, completeS2, completeT1, completeT2, completeT3;
 	StringBuilder sb = new StringBuilder();
 
 	void Start()
 	{
 		mainSequence = CreateSequence();
+	}
+
+	void Update()
+	{
+		Debug.Log("UPDATE " + Time.deltaTime);
 	}
 
 	void OnGUI()
@@ -57,7 +62,8 @@ public class SequencesBrain : BrainBase
 		GUILayout.Space(10);
 		sb.Remove(0, sb.Length);
 		sb.Append("MAINSequence Steps/Complete: ").Append(stepCompleteMS).Append("/").Append(completeMS);
-		sb.Append("\nSequence Steps/Complete: ").Append(stepCompleteS).Append("/").Append(completeS);
+		sb.Append("\nSequence OUTER Steps/Complete: ").Append(stepCompleteS1).Append("/").Append(completeS1);
+		sb.Append("\nSequence INNER Steps/Complete: ").Append(stepCompleteS2).Append("/").Append(completeS2);
 		sb.Append("\nMove Steps/Complete: ").Append(stepCompleteT1).Append("/").Append(completeT1);
 		sb.Append("\nRotation Steps/Complete: ").Append(stepCompleteT2).Append("/").Append(completeT2);
 		sb.Append("\nColor Steps/Complete: ").Append(stepCompleteT3).Append("/").Append(completeT3);
@@ -72,10 +78,10 @@ public class SequencesBrain : BrainBase
 		Material mat = target.gameObject.renderer.material;
 
 		Sequence seq = DOTween.Sequence()
-			.Id("Sequence")
-			.OnStart(()=> DGUtils.Log("Sequence Start"))
-			.OnStepComplete(()=> { stepCompleteS++; DGUtils.Log("SEQUENCE Step Complete"); })
-			.OnComplete(()=> { completeS++; });
+			.Id("Sequence INNER")
+			.OnStart(()=> DGUtils.Log("Sequence INNER Start"))
+			.OnStepComplete(()=> { stepCompleteS2++; DGUtils.Log("SEQUENCE INNER Step Complete"); })
+			.OnComplete(()=> { completeS2++; });
 
 		seq.AppendInterval(0.5f);
 		seq.Append(
@@ -101,13 +107,24 @@ public class SequencesBrain : BrainBase
 		);
 		seq.AppendInterval(0.5f);
 
-		Sequence mainSeq = DOTween.Sequence().Loops(loops, loopType).AutoKill(false)
-			.Id("MAINSequence")
+		Sequence seqPre = DOTween.Sequence()
+			.Id("Sequence OUTER")
+			.OnStart(()=> DGUtils.Log("Sequence OUTER Start"))
+			.OnStepComplete(()=> { stepCompleteS1++; DGUtils.Log("Sequence OUTER Step Complete"); })
+			.OnComplete(()=> { completeS1++; });
+		seqPre.Append(seq);
+		seqPre.PrependInterval(1);
+
+		Sequence mainSeq = DOTween.Sequence(UpdateType.TimeScaleIndependent).Loops(loops, loopType).AutoKill(false)
+			.Id("MAIN SEQUENCE")
 			.OnStart(()=> DGUtils.Log("MAINSequence Start"))
 			.OnStepComplete(()=> { stepCompleteMS++; DGUtils.Log("MAINSEQUENCE Step Complete"); })
 			.OnComplete(()=> { completeMS++; });
-
-		mainSeq.Append(seq);
+		mainSeq.Append(seqPre);
+		mainSeq.PrependInterval(1);
+		target = ((GameObject)Instantiate(prefab)).transform;
+		target.position = new Vector3(-5, 0, 0);
+		mainSeq.Append(target.MoveTo(Vector3.zero, 1));
 
 		return mainSeq;
 	}
@@ -124,6 +141,6 @@ public class SequencesBrain : BrainBase
 
 	void ResetStepsCounters()
 	{
-		stepCompleteMS = stepCompleteS = stepCompleteT1 = stepCompleteT2 = stepCompleteT3 = completeMS = completeS = completeT1 = completeT2 = completeT3 = 0;
+		stepCompleteMS = stepCompleteS1 = stepCompleteS2 = stepCompleteT1 = stepCompleteT2 = stepCompleteT3 = completeMS = completeS1 = completeS2 = completeT1 = completeT2 = completeT3 = 0;
 	}
 }
