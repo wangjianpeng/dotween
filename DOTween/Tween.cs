@@ -62,6 +62,7 @@ namespace DG.Tweening
         internal Type typeofTPlugOptions; // Only used by Tweeners
         internal bool active; // FALSE when tween is despawned - set only by TweenManager
         internal bool isSequenced; // Set by Sequence when adding a Tween to it
+        internal int activeId = -1; // Index inside its active list (touched only by TweenManager)
 
         // PLAY DATA /////////////////////////////////////////////////
 
@@ -185,7 +186,7 @@ namespace DG.Tweening
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
-        // Doesn't reset active state, since that is touched only by TweenManager
+        // Doesn't reset active state and activeId, since those are only touched only by TweenManager
         static void DoReset(Tween t)
         {
             t.autoKill = DOTween.autoKill;
