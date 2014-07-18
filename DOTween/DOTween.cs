@@ -19,7 +19,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System.Collections;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins;
@@ -51,6 +50,7 @@ namespace DG.Tweening
 
         internal static bool isUnityEditor;
         static bool _initialized;
+        float _timeScaleIndependentTime;
 
         // ===================================================================================
         // UNITY METHODS ---------------------------------------------------------------------
@@ -58,28 +58,20 @@ namespace DG.Tweening
         void Awake()
         {
             inspectorUpdater = 0;
-            StartCoroutine(TimeScaleIndependentUpdate());
+            _timeScaleIndependentTime = Time.realtimeSinceStartup;
         }
 
         void Update()
         {
             if (TweenManager.hasActiveDefaultTweens) TweenManager.Update(Time.deltaTime);
+            if (TweenManager.hasActiveIndependentTweens) TweenManager.TimeScaleIndependentUpdate(Time.realtimeSinceStartup - _timeScaleIndependentTime);
+            _timeScaleIndependentTime = Time.realtimeSinceStartup;
+            if (isUnityEditor) inspectorUpdater++;
         }
 
         void FixedUpdate()
         {
             if (TweenManager.hasActiveFixedTweens) TweenManager.FixedUpdate(Time.fixedDeltaTime);
-        }
-
-        IEnumerator TimeScaleIndependentUpdate()
-        {
-            float time = Time.realtimeSinceStartup;
-            while (true) {
-                yield return null;
-                if (TweenManager.hasActiveIndependentTweens) TweenManager.TimeScaleIndependentUpdate(Time.realtimeSinceStartup - time);
-                time = Time.realtimeSinceStartup;
-                if (isUnityEditor) inspectorUpdater++;
-            }
         }
 
         // ===================================================================================
