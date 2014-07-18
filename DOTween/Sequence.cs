@@ -35,6 +35,19 @@ namespace DG.Tweening
         // ===================================================================================
         // CREATION METHODS ------------------------------------------------------------------
 
+        internal static Sequence DoPrepend(Sequence inSequence, Tween t)
+        {
+            inSequence.duration += t.duration;
+            int len = inSequence._sequencedObjs.Count;
+            for (int i = 0; i < len; ++i) {
+                ABSSequentiable sequentiable = inSequence._sequencedObjs[i];
+                sequentiable.sequencedPosition += t.duration;
+                sequentiable.sequencedEndPosition += t.duration;
+            }
+
+            return DoInsert(inSequence, t, 0);
+        }
+
         internal static Sequence DoInsert(Sequence inSequence, Tween t, float atPosition)
         {
             TweenManager.AddActiveTweenToSequence(t);
@@ -57,6 +70,19 @@ namespace DG.Tweening
         internal static Sequence DoAppendInterval(Sequence inSequence, float interval)
         {
             inSequence.duration += interval;
+            return inSequence;
+        }
+
+        internal static Sequence DoPrependInterval(Sequence inSequence, float interval)
+        {
+            inSequence.duration += interval;
+            int len = inSequence._sequencedObjs.Count;
+            for (int i = 0; i < len; ++i) {
+                ABSSequentiable sequentiable = inSequence._sequencedObjs[i];
+                sequentiable.sequencedPosition += interval;
+                sequentiable.sequencedEndPosition += interval;
+            }
+
             return inSequence;
         }
 
