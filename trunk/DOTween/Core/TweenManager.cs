@@ -147,7 +147,7 @@ namespace DG.Tweening.Core
         {
             if (t.loops == -1) return false;
             if (!t.isComplete) {
-                Tween.DoGoto(t, new UpdateData(t.duration, t.loops, UpdateMode.Goto));
+                Tween.DoGoto(t, t.duration, t.loops, UpdateMode.Goto);
                 t.isPlaying = false;
                 // Despawn if needed
                 if (t.autoKill) Despawn(t, modifyActiveLists);
@@ -168,13 +168,13 @@ namespace DG.Tweening.Core
             t.isPlaying = andPlay;
             t.delayComplete = true;
             t.elapsedDelay = t.delay;
-            int completedLoops = (int)(to / t.duration);
-            float position = to % t.duration;
-            if (completedLoops >= t.loops) {
-                completedLoops = t.loops;
-                position = t.duration;
-            } else if (position >= t.duration) position = 0;
-            return Tween.DoGoto(t, new UpdateData(position, completedLoops, updateMode));
+            int toCompletedLoops = (int)(to / t.duration);
+            float toPosition = to % t.duration;
+            if (toCompletedLoops >= t.loops) {
+                toCompletedLoops = t.loops;
+                toPosition = t.duration;
+            } else if (toPosition >= t.duration) toPosition = 0;
+            return Tween.DoGoto(t, toPosition, toCompletedLoops, updateMode);
         }
 
         // Returns TRUE if the given tween was not already paused
@@ -242,7 +242,7 @@ namespace DG.Tweening.Core
             }
             if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
                 rewinded = true;
-                Tween.DoGoto(t, new UpdateData(0, 0, UpdateMode.Goto));
+                Tween.DoGoto(t, 0, 0, UpdateMode.Goto);
             }
             return rewinded;
         }
@@ -393,32 +393,6 @@ namespace DG.Tweening.Core
             _KillIds.Capacity = maxActive;
         }
 
-        internal static UpdateData GetUpdateDataFromDeltaTime(Tween t, float deltaTime)
-        {
-            if (t.duration <= 0) return new UpdateData(0, t.loops == -1 ? t.completedLoops + 1 : t.loops);
-
-            float position = t.position;
-            bool wasEndPosition = position >= t.duration;
-            int completedLoops = t.completedLoops;
-            if (t.isBackwards) {
-                position -= deltaTime;
-                while (position < 0 && completedLoops > 0) {
-                    position += t.duration;
-                    completedLoops--;
-                }
-            } else {
-                position += deltaTime;
-                while (position > t.duration && (t.loops == -1 || completedLoops < t.loops)) {
-                    position -= t.duration;
-                    completedLoops++;
-                }
-            }
-            if (wasEndPosition) completedLoops--;
-            if (t.loops != -1 && completedLoops >= t.loops) position = t.duration;
-
-            return new UpdateData(position, completedLoops);
-        }
-
         internal static int TotActiveTweens()
         {
             return totActiveDefaultTweens + totActiveFixedTweens + totActiveIndependentTweens;
@@ -479,7 +453,32 @@ namespace DG.Tweening.Core
                     }
                     if (tDeltaTime <= 0) continue;
                 }
-                bool needsKilling = Tween.DoGoto(t, GetUpdateDataFromDeltaTime(t, tDeltaTime));
+                // Find update data
+                float toPosition = t.position;
+                bool wasEndPosition = toPosition >= t.duration;
+                int toCompletedLoops = t.completedLoops;
+                if (t.duration <= 0) {
+                    toPosition = 0;
+                    toCompletedLoops = t.loops == -1 ? t.completedLoops + 1 : t.loops;
+                } else {
+                    if (t.isBackwards) {
+                        toPosition -= deltaTime;
+                        while (toPosition < 0 && toCompletedLoops > 0) {
+                            toPosition += t.duration;
+                            toCompletedLoops--;
+                        }
+                    } else {
+                        toPosition += deltaTime;
+                        while (toPosition > t.duration && (t.loops == -1 || toCompletedLoops < t.loops)) {
+                            toPosition -= t.duration;
+                            toCompletedLoops++;
+                        }
+                    }
+                    if (wasEndPosition) toCompletedLoops--;
+                    if (t.loops != -1 && toCompletedLoops >= t.loops) toPosition = t.duration;
+                }
+                // Goto
+                bool needsKilling = Tween.DoGoto(t, toPosition, toCompletedLoops, UpdateMode.Update);
                 if (needsKilling) {
                     willKill = true;
                     MarkForKilling(t, i);

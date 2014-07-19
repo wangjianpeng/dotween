@@ -111,14 +111,14 @@ namespace DG.Tweening
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
         // Executes regardless of whether the tween is playing.
         // Returns TRUE if the tween needs to be killed
-        internal static bool DoGoto(Tween t, UpdateData updateData)
+        internal static bool DoGoto(Tween t, float toPosition, int toCompletedLoops, UpdateMode updateMode)
         {
             // Startup
             if (!t.startupDone) {
                 if (!t.Startup()) return true;
             }
             // OnStart callback
-            if (!t.playedOnce && updateData.updateMode == UpdateMode.Update) {
+            if (!t.playedOnce && updateMode == UpdateMode.Update) {
                 t.playedOnce = true;
                 if (t.onStart != null) {
                     t.onStart();
@@ -129,22 +129,22 @@ namespace DG.Tweening
 
             float prevPosition = t.position;
             int prevCompletedLoops = t.completedLoops;
-            t.completedLoops = updateData.completedLoops;
+            t.completedLoops = toCompletedLoops;
             bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
             bool wasComplete = t.isComplete;
             // Determine if it will be complete after update
             if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
             // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
             int newCompletedSteps = 0;
-            if (t.onStepComplete != null && updateData.updateMode == UpdateMode.Update) {
+            if (t.onStepComplete != null && updateMode == UpdateMode.Update) {
                 if (t.isBackwards) {
-                    newCompletedSteps = t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (updateData.position <= 0 && !wasRewinded ? 1 : 0);
+                    newCompletedSteps = t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (toPosition <= 0 && !wasRewinded ? 1 : 0);
                     if (wasComplete) newCompletedSteps--;
                 } else newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
             }
 
             // Set position (makes position 0 equal to position "end" when looping)
-            t.position = updateData.position;
+            t.position = toPosition;
             if (t.position > t.duration) t.position = t.duration;
             else if (t.position <= 0) {
                 if (t.completedLoops > 0 || t.isComplete) t.position = t.duration;
@@ -161,7 +161,7 @@ namespace DG.Tweening
                 && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0);
 
             // Get values from plugin and set them
-            if (t.ApplyTween(new ApplyTweenData(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateData.updateMode))) return true;
+            if (t.ApplyTween(new ApplyTweenData(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode))) return true;
 
             // Additional callbacks
             if (newCompletedSteps > 0) {
