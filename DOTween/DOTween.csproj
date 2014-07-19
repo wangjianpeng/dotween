@@ -65,7 +65,6 @@
     <Compile Include="Core\GotoSharedResult.cs" />
     <Compile Include="Core\SequenceCallback.cs" />
     <Compile Include="Core\TweenManager.cs" />
-    <Compile Include="Core\UpdateData.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="DOTween.cs" />
     <Compile Include="EaseType.cs" />
