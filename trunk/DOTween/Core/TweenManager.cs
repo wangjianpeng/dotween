@@ -147,7 +147,7 @@ namespace DG.Tweening.Core
         {
             if (t.loops == -1) return false;
             if (!t.isComplete) {
-                t.Goto(new UpdateData(t.duration, t.loops, UpdateMode.Goto));
+                Tween.DoGoto(t, new UpdateData(t.duration, t.loops, UpdateMode.Goto));
                 t.isPlaying = false;
                 // Despawn if needed
                 if (t.autoKill) Despawn(t, modifyActiveLists);
@@ -174,7 +174,7 @@ namespace DG.Tweening.Core
                 completedLoops = t.loops;
                 position = t.duration;
             } else if (position >= t.duration) position = 0;
-            return t.Goto(new UpdateData(position, completedLoops, updateMode));
+            return Tween.DoGoto(t, new UpdateData(position, completedLoops, updateMode));
         }
 
         // Returns TRUE if the given tween was not already paused
@@ -242,7 +242,7 @@ namespace DG.Tweening.Core
             }
             if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
                 rewinded = true;
-                t.Goto(new UpdateData(0, 0, UpdateMode.Goto));
+                Tween.DoGoto(t, new UpdateData(0, 0, UpdateMode.Goto));
             }
             return rewinded;
         }
@@ -479,7 +479,7 @@ namespace DG.Tweening.Core
                     }
                     if (tDeltaTime <= 0) continue;
                 }
-                bool needsKilling = t.Goto(GetUpdateDataFromDeltaTime(t, tDeltaTime));
+                bool needsKilling = Tween.DoGoto(t, GetUpdateDataFromDeltaTime(t, tDeltaTime));
                 if (needsKilling) {
                     willKill = true;
                     MarkForKilling(t, i);

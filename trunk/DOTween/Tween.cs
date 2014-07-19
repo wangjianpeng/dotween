@@ -100,13 +100,6 @@ namespace DG.Tweening
         // FALSE if there are missing references and the tween needs to be killed
         internal abstract bool Startup();
 
-        // Called by TweenManager at each update.
-        // Returns TRUE if the tween needs to be killed
-        internal bool Goto(UpdateData updateData)
-        {
-            return DoGoto(this, updateData);
-        }
-
         // Applies the tween set by DoGoto.
         // Returns TRUE if the tween needs to be killed
         internal abstract bool ApplyTween(ApplyTweenData data);
