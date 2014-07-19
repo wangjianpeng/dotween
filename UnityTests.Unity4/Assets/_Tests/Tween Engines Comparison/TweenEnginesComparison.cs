@@ -55,8 +55,10 @@ public class TweenEnginesComparison : BrainBase
 	TestObjectData[] testObjsData;
 	Vector3[] rndPositions;
 	Vector3[] rndRotations;
-	Vector3[] rndScales;
+	readonly Vector3 rndScale = new Vector3(6,6,6);
 	float[] rndFloats;
+
+	float totCreationTime;
 
 	bool guiInitialized;
 	GUIStyle labelStyle;
@@ -98,14 +100,11 @@ public class TweenEnginesComparison : BrainBase
 		Vector3[] rndStartupPos = new Vector3[numTweens];
 		rndPositions = new Vector3[numTweens];
 		rndRotations = new Vector3[numTweens];
-		rndScales = new Vector3[numTweens];
 		rndFloats = new float[numTweens];
 		for (int i = 0; i < numTweens; ++i) {
 			rndStartupPos[i] = RandomVector3(50, 50, 20);
 			rndPositions[i] = RandomVector3(50, 50, 20);
 			rndRotations[i] = RandomVector3(180, 180, 180);
-			float rndScale = UnityEngine.Random.Range(0.1f, 4f);
-			rndScales[i] = RandomVector3(rndScale, rndScale, rndScale);
 			rndFloats[i] = UnityEngine.Random.Range(-1000f, 1000f);
 		}
 		// Generate testObjs
@@ -130,13 +129,23 @@ public class TweenEnginesComparison : BrainBase
 		if (engine == Engine.DOTween) {
 			// Set max capacity for this run.
 			// We could set it to the correct amount, but it would be somehow unfair for LeanTween
-			DOTween.SetTweensCapacity(Convert.ToInt32(numTweensList[numTweensList.Length - 1]), 0);
+			int minCapacityToBeFair = Convert.ToInt32(numTweensList[numTweensList.Length - 1]);
+			int capacityX1 = Convert.ToInt32(numTweensList[numTweensSelId]);
+			int neededCapacity = 0;
+			int capacity = minCapacityToBeFair;
+			if (testType == TestType.Transforms && positionTween) neededCapacity += capacityX1;
+			if (testType == TestType.Transforms && rotationTween) neededCapacity += capacityX1;
+			if (testType == TestType.Transforms && scaleTween) neededCapacity += capacityX1;
+			if (minCapacityToBeFair < neededCapacity) capacity = neededCapacity;
+			DOTween.SetTweensCapacity(capacity, 0);
 		}
 		
 		yield return null;
 		state = State.TweensSetup;
 		yield return null;
+		totCreationTime = Time.realtimeSinceStartup;
 		SetupTweens();
+		totCreationTime = Time.realtimeSinceStartup - totCreationTime;
 		yield return null;
 		state = State.Running;
 		// Reset FPS so average is more correct
@@ -160,7 +169,6 @@ public class TweenEnginesComparison : BrainBase
 		testObjsData = null;
 		rndPositions = null;
 		rndRotations = null;
-		rndScales = null;
 	}
 
 	void Reset()
@@ -187,7 +195,7 @@ public class TweenEnginesComparison : BrainBase
 		GoEaseType goEase = easing == Easing.Linear ? GoEaseType.Linear : GoEaseType.QuadInOut;
 		iTween.EaseType iTweenEase = easing == Easing.Linear ? iTween.EaseType.linear : iTween.EaseType.easeInOutQuad;
 		// Loop
-		int loops = testSetup == TestSetup.Emit ? 0 : -1;
+		int loops = testSetup == TestSetup.Emit ? 1 : -1;
 		DG.Tweening.LoopType dotweenLoopType = testSetup == TestSetup.YoyoLoop ? DG.Tweening.LoopType.Yoyo : DG.Tweening.LoopType.Restart;
 		Holoville.HOTween.LoopType hotweenLoopType = testSetup == TestSetup.YoyoLoop ? Holoville.HOTween.LoopType.Yoyo : Holoville.HOTween.LoopType.Restart;
 		LeanTweenType leanLoopType = testSetup == TestSetup.YoyoLoop ? LeanTweenType.pingPong : LeanTweenType.clamp;
@@ -211,7 +219,7 @@ public class TweenEnginesComparison : BrainBase
 					break;
 				case Engine.GoKit:
 					Go.to(data, duration, new GoTweenConfig()
-						.floatProp("floatValue", rndFloats[i])
+						.floatProp("floatValueProperty", rndFloats[i])
 						.setEaseType(goEase)
 						.setIterations(loops, goLoopType)
 					);
@@ -240,35 +248,62 @@ public class TweenEnginesComparison : BrainBase
 				Transform t = testObjsTrans[i];
 				switch (engine) {
 				case Engine.HOTween:
-					HOTween.To(t, duration, new TweenParms()
-						.Prop("position", rndPositions[i])
+					TweenParms tp = new TweenParms()
 						.Ease(hotweenEase)
-						.Loops(loops, hotweenLoopType)
-					);
+						.Loops(loops, hotweenLoopType);
+					if (positionTween) tp.Prop("position", rndPositions[i]);
+					if (rotationTween) tp.Prop("rotation", rndRotations[i]);
+					if (scaleTween) tp.Prop("localScale", rndScale);
+					HOTween.To(t, duration, tp);
 					break;
 				case Engine.LeanTween:
-					LeanTween.move(testObjsGos[i], rndPositions[i], duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+					if (positionTween) LeanTween.move(testObjsGos[i], rndPositions[i], duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+					if (rotationTween) LeanTween.rotate(testObjsGos[i], rndRotations[i], duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+					if (scaleTween) LeanTween.scale(testObjsGos[i], rndScale, duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
 					break;
 				case Engine.GoKit:
-					Go.to(t, duration, new GoTweenConfig()
-						.position(rndPositions[i])
+					GoTweenConfig goConfig = new GoTweenConfig()
 						.setEaseType(goEase)
-						.setIterations(loops, goLoopType)
-					);
+						.setIterations(loops, goLoopType);
+					if (positionTween) goConfig.addTweenProperty(new PositionTweenProperty(rndPositions[i]));
+					if (rotationTween) goConfig.addTweenProperty(new RotationTweenProperty(rndRotations[i]));
+					if (scaleTween) goConfig.addTweenProperty(new ScaleTweenProperty(rndScale));
+					Go.to(t, duration, goConfig);
 					break;
 				case Engine.iTween:
-					Hashtable hs = new Hashtable();
-					hs.Add("position", rndPositions[i]);
-					hs.Add("time", duration);
-					hs.Add("looptype", iTweenLoopType);
-					hs.Add("easetype", iTweenEase);
-					iTween.MoveTo(testObjsGos[i], hs);
+					Hashtable hs;
+					if (positionTween) {
+						hs = new Hashtable();
+						hs.Add("position", rndPositions[i]);
+						hs.Add("time", duration);
+						hs.Add("looptype", iTweenLoopType);
+						hs.Add("easetype", iTweenEase);
+						iTween.MoveTo(testObjsGos[i], hs);
+					}
+					if (rotationTween) {
+						hs = new Hashtable();
+						hs.Add("rotation", rndRotations[i]);
+						hs.Add("time", duration);
+						hs.Add("looptype", iTweenLoopType);
+						hs.Add("easetype", iTweenEase);
+						iTween.RotateTo(testObjsGos[i], hs);
+					}
+					if (scaleTween) {
+						hs = new Hashtable();
+						hs.Add("scale", rndScale);
+						hs.Add("time", duration);
+						hs.Add("looptype", iTweenLoopType);
+						hs.Add("easetype", iTweenEase);
+						iTween.ScaleTo(testObjsGos[i], hs);
+					}
 					break;
 				default:
 					// tCopy is needed to create correct closure object,
 					// otherwise closure will pass the same t to all the loop
 					Transform tCopy = t;
-					DOTween.To(()=> tCopy.position, x=> tCopy.position = x, rndPositions[i], duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+					if (positionTween) tCopy.MoveTo(rndPositions[i], duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+					if (rotationTween) tCopy.RotateTo(rndRotations[i], duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+					if (scaleTween) tCopy.ScaleTo(rndScale, duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
 					break;
 				}
 			}
@@ -370,7 +405,7 @@ public class TweenEnginesComparison : BrainBase
 		GUILayout.Space(vspace);
 		if (GUILayout.Button("START")) {
 			numTweens = Convert.ToInt32(numTweensList[numTweensSelId]);
-			if (engine == Engine.GoKit && testType == TestType.Floats && numTweens > 200) state = State.ConfirmGoKit;
+			if (engine == Engine.GoKit && testType == TestType.Floats && numTweens >= 8000) state = State.ConfirmGoKit;
 			else if (engine == Engine.iTween && numTweens > 4000) state = State.ConfirmITween;
 			else StartCoroutine(StartRun());
 		}
@@ -384,7 +419,7 @@ public class TweenEnginesComparison : BrainBase
 		GUILayout.BeginVertical();
 		GUILayout.FlexibleSpace();
 
-		GUILayout.Label("Beware, GoKit takes a very long time to startup custom tweens,\nand your computer might hang for a while.\n\nAre you sure you want to proceed?");
+		GUILayout.Label("Beware, GoKit takes a long time to startup and to stop custom tweens,\nand your computer might hang for a while.\n\nAre you sure you want to proceed?");
 		GUILayout.Space(8);
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Continue")) StartCoroutine(StartRun());
@@ -453,7 +488,7 @@ public class TweenEnginesComparison : BrainBase
 		}
 		GUILayout.FlexibleSpace();
 
-		GUILayout.Label(engine.ToString());
+		GUILayout.Label(engine.ToString() + " (startup time: " + totCreationTime + ")");
 		if (GUILayout.Button("STOP")) StopRun();
 
 		GUILayout.EndVertical();
