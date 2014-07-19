@@ -105,9 +105,9 @@ namespace DG.Tweening.Core
 
         // Applies the tween set by DoGoto.
         // Returns TRUE if the tween needs to be killed
-        internal override bool ApplyTween(ApplyTweenData data)
+        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
-            float updatePosition = data.useInversePosition ? duration - position : position;
+            float updatePosition = useInversePosition ? duration - position : position;
             if (DOTween.useSafeMode) {
                 try {
                     setter(tweenPlugin.Evaluate(plugOptions, isRelative, getter, updatePosition, startValue, changeValue, duration, ease));

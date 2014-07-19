@@ -101,7 +101,7 @@ namespace DG.Tweening
 
         // Applies the tween set by DoGoto.
         // Returns TRUE if the tween needs to be killed
-        internal abstract bool ApplyTween(ApplyTweenData data);
+        internal abstract bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode);
 
         // ===================================================================================
         // INTERNAL STATIC METHODS -----------------------------------------------------------
@@ -160,7 +160,7 @@ namespace DG.Tweening
                 && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0);
 
             // Get values from plugin and set them
-            if (t.ApplyTween(new ApplyTweenData(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode))) return true;
+            if (t.ApplyTween(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode)) return true;
 
             // Additional callbacks
             if (newCompletedSteps > 0) {

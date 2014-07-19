@@ -105,9 +105,9 @@ namespace DG.Tweening
             return DoStartup(this);
         }
 
-        internal override bool ApplyTween(ApplyTweenData data)
+        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
-            return DoApplyTween(this, data);
+            return DoApplyTween(this, prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode);
         }
 
         // Called by DOTween when spawning/creating a new Sequence.
@@ -128,32 +128,32 @@ namespace DG.Tweening
 
         // Applies the tween set by DoGoto.
         // Returns TRUE if the tween needs to be killed
-        internal static bool DoApplyTween(Sequence s, ApplyTweenData data)
+        internal static bool DoApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
             float from, to = 0;
-            if (data.updateMode == UpdateMode.Update && data.newCompletedSteps > 0) {
+            if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
                 // Run all cycles elapsed since last update
-                int cycles = data.newCompletedSteps;
+                int cycles = newCompletedSteps;
                 int cyclesDone = 0;
-                from = data.prevPosition;
+                from = prevPosition;
                 bool isInverse = s.loopType == LoopType.Yoyo
-                    && (data.prevPosition < s.duration ? data.prevCompletedLoops % 2 != 0 : data.prevCompletedLoops % 2 == 0);
+                    && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
                 if (s.isBackwards) isInverse = !isInverse; // TEST
                 while (cyclesDone < cycles) {
 //                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
                     if (cyclesDone > 0) from = to;
                     else if (isInverse && !s.isBackwards) from = s.duration - from;
                     to = isInverse ? 0 : s.duration;
-                    if (ApplyInternalCycle(s, from, to, data.updateMode)) return true;
+                    if (ApplyInternalCycle(s, from, to, updateMode)) return true;
                     cyclesDone++;
                     if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
                 }
             }
             // Run current cycle
 //            Debug.Log("::::::::::::: UPDATING");
-            if (data.newCompletedSteps > 0) from = data.useInversePosition ? s.duration : 0;
-            else from = data.useInversePosition ? s.duration - data.prevPosition : data.prevPosition;
-            return ApplyInternalCycle(s, from, data.useInversePosition ? s.duration - s.position : s.position, data.updateMode);
+            if (newCompletedSteps > 0) from = useInversePosition ? s.duration : 0;
+            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
+            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
         }
 
         // ===================================================================================
