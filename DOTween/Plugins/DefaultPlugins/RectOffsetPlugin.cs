@@ -21,6 +21,7 @@
 //
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -55,13 +56,13 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             );
         }
 
-        public override RectOffset Evaluate(NoOptions options, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration, EaseFunction ease)
+        public override RectOffset Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration)
         {
             return new RectOffset(
-                Mathf.RoundToInt(ease(elapsed, startValue.left, changeValue.left, duration, 0, 0)),
-                Mathf.RoundToInt(ease(elapsed, startValue.right, changeValue.right, duration, 0, 0)),
-                Mathf.RoundToInt(ease(elapsed, startValue.top, changeValue.top, duration, 0, 0)),
-                Mathf.RoundToInt(ease(elapsed, startValue.bottom, changeValue.bottom, duration, 0, 0))
+                Mathf.RoundToInt(Ease.Apply(t, elapsed, startValue.left, changeValue.left, duration, 0, 0)),
+                Mathf.RoundToInt(Ease.Apply(t, elapsed, startValue.right, changeValue.right, duration, 0, 0)),
+                Mathf.RoundToInt(Ease.Apply(t, elapsed, startValue.top, changeValue.top, duration, 0, 0)),
+                Mathf.RoundToInt(Ease.Apply(t, elapsed, startValue.bottom, changeValue.bottom, duration, 0, 0))
             );
         }
     }

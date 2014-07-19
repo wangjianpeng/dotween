@@ -903,7 +903,7 @@
         </member>
         <member name="T:DG.Tweening.Core.EaseFunction">
             <summary>
-            Used for ease functions
+            Used for animationCurve-based ease functions
             </summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Bounce">

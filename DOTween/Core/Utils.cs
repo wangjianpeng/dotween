@@ -26,42 +26,6 @@ namespace DG.Tweening.Core
 {
     public static class Utils
     {
-        public static EaseFunction GetEaseFuncByType(EaseType easeType)
-        {
-            switch (easeType) {
-                case EaseType.Linear: return Linear.EaseNone;
-                case EaseType.InSine: return Sine.EaseIn;
-                case EaseType.OutSine: return Sine.EaseOut;
-                case EaseType.InOutSine: return Sine.EaseInOut;
-                case EaseType.InQuad: return Quad.EaseIn;
-                case EaseType.OutQuad: return Quad.EaseOut;
-                case EaseType.InOutQuad: return Quad.EaseInOut;
-                case EaseType.InCubic: return Cubic.EaseIn;
-                case EaseType.OutCubic: return Cubic.EaseOut;
-                case EaseType.InOutCubic: return Cubic.EaseInOut;
-                case EaseType.InQuart: return Quart.EaseIn;
-                case EaseType.OutQuart: return Quart.EaseOut;
-                case EaseType.InOutQuart: return Quart.EaseInOut;
-                case EaseType.InQuint: return Quint.EaseIn;
-                case EaseType.OutQuint: return Quint.EaseOut;
-                case EaseType.InOutQuint: return Quint.EaseInOut;
-                case EaseType.InExpo: return Expo.EaseIn;
-                case EaseType.OutExpo: return Expo.EaseOut;
-                case EaseType.InOutExpo: return Expo.EaseInOut;
-                case EaseType.InCirc: return Circ.EaseIn;
-                case EaseType.OutCirc: return Circ.EaseOut;
-                case EaseType.InOutCirc: return Circ.EaseInOut;
-                case EaseType.InElastic: return Elastic.EaseIn;
-                case EaseType.OutElastic: return Elastic.EaseOut;
-                case EaseType.InOutElastic: return Elastic.EaseInOut;
-                case EaseType.InBack: return Back.EaseIn;
-                case EaseType.OutBack: return Back.EaseOut;
-                case EaseType.InOutBack: return Back.EaseInOut;
-                case EaseType.InBounce: return Bounce.EaseIn;
-                case EaseType.OutBounce: return Bounce.EaseOut;
-                case EaseType.InOutBounce: return Bounce.EaseInOut;
-                default: return Quad.EaseOut;
-            }
-        }
+        
     }
 }

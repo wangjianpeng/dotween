@@ -191,7 +191,7 @@ namespace DG.Tweening
         {
             if (t.creationLocked) return t;
 
-            t.ease = Utils.GetEaseFuncByType(easeType);
+            t.easeType = easeType;
             return t;
         }
         /// <summary>Has no effect on Sequences</summary>
@@ -199,7 +199,7 @@ namespace DG.Tweening
         {
             if (t.creationLocked) return t;
 
-            t.ease = new EaseCurve(animCurve).Evaluate;
+            t.easeCurveEval = new EaseCurve(animCurve).Evaluate;
             return t;
         }
 

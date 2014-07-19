@@ -21,6 +21,7 @@
 // 
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -43,12 +44,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override Color Evaluate(NoOptions options, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration, EaseFunction ease)
+        public override Color Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
         {
-            startValue.r = ease(elapsed, startValue.r, changeValue.r, duration, 0, 0);
-            startValue.g = ease(elapsed, startValue.g, changeValue.g, duration, 0, 0);
-            startValue.b = ease(elapsed, startValue.b, changeValue.b, duration, 0, 0);
-            startValue.a = ease(elapsed, startValue.a, changeValue.a, duration, 0, 0);
+            startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
+            startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
+            startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
+            startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
             return startValue;
         }
     }

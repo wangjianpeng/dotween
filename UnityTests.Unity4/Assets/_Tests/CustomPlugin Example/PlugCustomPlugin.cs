@@ -1,4 +1,6 @@
-﻿using DG.Tweening.Core;
+﻿using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using System;
 using UnityEngine;
@@ -44,10 +46,10 @@ public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
         return endValue;
     }
 
-    public override Vector3 Evaluate(NoOptions options, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, EaseFunction ease)
+    public override Vector3 Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
     {
         Vector3 res = getter();
-        res.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
+        res.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
         return res;
     }
 }

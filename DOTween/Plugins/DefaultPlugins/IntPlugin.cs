@@ -21,6 +21,7 @@
 // 
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -43,9 +44,9 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override int Evaluate(NoOptions options, bool isRelative, DOGetter<int> getter, float elapsed, int startValue, int changeValue, float duration, EaseFunction ease)
+        public override int Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<int> getter, float elapsed, int startValue, int changeValue, float duration)
         {
-            return Mathf.RoundToInt(ease(elapsed, startValue, changeValue, duration, 0, 0));
+            return Mathf.RoundToInt(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));
         }
     }
 }

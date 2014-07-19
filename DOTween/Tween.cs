@@ -51,7 +51,8 @@ namespace DG.Tweening
         // Tweeners-only (shared by Sequences only for compatibility reasons, otherwise not used)
         internal float delay;
         internal bool isRelative;
-        internal EaseFunction ease;
+        internal EaseType easeType;
+        internal EaseFunction easeCurveEval; // Used only for AnimationCurve ease
 
         // SETUP DATA ////////////////////////////////////////////////
 
@@ -194,7 +195,7 @@ namespace DG.Tweening
             t.loopType = LoopType.Restart;
             t.delay = 0;
             t.isRelative = false;
-            t.ease = null;
+            t.easeCurveEval = null;
             t.updateType = UpdateType.Default;
             t.isSequenced = false;
             t.creationLocked = t.startupDone = t.playedOnce = false;

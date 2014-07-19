@@ -21,6 +21,7 @@
 // 
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -86,10 +87,10 @@ namespace DG.Tweening.Plugins
             return endValue - startValue;
         }
 
-        public override Vector3 Evaluate(PlugVector3Y.Options options, bool isRelative, DOGetter<Vector3> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        public override Vector3 Evaluate(PlugVector3Y.Options options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, float startValue, float changeValue, float duration)
         {
             Vector3 res = getter();
-            res.y = ease(elapsed, startValue, changeValue, duration, 0, 0);
+            res.y = Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0);
             if (options.snapping) res.y = Mathf.Round(res.y);
             return res;
         }

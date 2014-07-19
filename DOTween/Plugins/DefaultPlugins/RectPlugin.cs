@@ -21,6 +21,7 @@
 // 
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -51,12 +52,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue;
         }
 
-        public override Rect Evaluate(PlugRect.Options options, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration, EaseFunction ease)
+        public override Rect Evaluate(PlugRect.Options options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
         {
-            startValue.x = ease(elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = ease(elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.width = ease(elapsed, startValue.width, changeValue.width, duration, 0, 0);
-            startValue.height = ease(elapsed, startValue.height, changeValue.height, duration, 0, 0);
+            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.width = Ease.Apply(t, elapsed, startValue.width, changeValue.width, duration, 0, 0);
+            startValue.height = Ease.Apply(t, elapsed, startValue.height, changeValue.height, duration, 0, 0);
             if (options.snapping) {
                 startValue.x = Mathf.Round(startValue.x);
                 startValue.y = Mathf.Round(startValue.y);

@@ -59,7 +59,6 @@ namespace DG.Tweening
             t.setter = setter;
             t.endValue = endValue;
             t.duration = duration;
-            t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return true;
@@ -79,7 +78,6 @@ namespace DG.Tweening
             t.endValue = endValue;
             t.plugOptions = options;
             t.duration = duration;
-            t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return true;
@@ -92,7 +90,6 @@ namespace DG.Tweening
             t.endValue = plugSetter.EndValue();
             t.plugOptions = plugSetter.GetOptions();
             t.duration = duration;
-            t.ease = Utils.GetEaseFuncByType(DOTween.defaultEaseType);
             t.loopType = DOTween.defaultLoopType;
             t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
             t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
@@ -144,7 +141,7 @@ namespace DG.Tweening
                 t.endValue = prevStartValue;
                 t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
                 // Jump (no need for safeMode checks since they already happened when assigning start value
-                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t.isRelative, t.getter, 0, t.startValue, t.endValue, t.duration, t.ease));
+                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, t.duration));
             } else t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
             return true;
         }

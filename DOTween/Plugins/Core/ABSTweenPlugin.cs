@@ -30,6 +30,6 @@ namespace DG.Tweening.Plugins.Core
         public abstract T2 ConvertT1toT2(TPlugOptions options, T1 value);
         public abstract T2 GetRelativeEndValue(TPlugOptions options, T2 startValue, T2 changeValue);
         public abstract T2 GetChangeValue(TPlugOptions options, T2 startValue, T2 endValue);
-        public abstract T1 Evaluate(TPlugOptions options, bool isRelative, DOGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration, EaseFunction ease);
+        public abstract T1 Evaluate(TPlugOptions options, Tween t, bool isRelative, DOGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration);
     }
 }
