@@ -199,8 +199,7 @@ namespace DG.Tweening
         {
             if (t.creationLocked) return t;
 
-            t.easeCurve = new EaseCurve(animCurve);
-            t.ease = t.easeCurve.Evaluate;
+            t.ease = new EaseCurve(animCurve).Evaluate;
             return t;
         }
 

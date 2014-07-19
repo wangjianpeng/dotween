@@ -52,7 +52,6 @@ namespace DG.Tweening
         internal float delay;
         internal bool isRelative;
         internal EaseFunction ease;
-        internal EaseCurve easeCurve; // Stored in case of AnimationCurve ease
 
         // SETUP DATA ////////////////////////////////////////////////
 
@@ -196,7 +195,6 @@ namespace DG.Tweening
             t.delay = 0;
             t.isRelative = false;
             t.ease = null;
-            t.easeCurve = null;
             t.updateType = UpdateType.Default;
             t.isSequenced = false;
             t.creationLocked = t.startupDone = t.playedOnce = false;
