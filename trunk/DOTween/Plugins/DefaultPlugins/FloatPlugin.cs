@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -42,11 +43,11 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue - startValue;
         }
 
-        public override float Evaluate(PlugFloat.Options options, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration, EaseFunction ease)
+        public override float Evaluate(PlugFloat.Options options, Tween t, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration)
         {
             return options.snapping
-                ? Mathf.Round(ease(elapsed, startValue, changeValue, duration, 0, 0))
-                : ease(elapsed, startValue, changeValue, duration, 0, 0);
+                ? Mathf.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0))
+                : Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0);
         }
     }
 }

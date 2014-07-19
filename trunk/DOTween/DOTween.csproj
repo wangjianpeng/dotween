@@ -49,6 +49,7 @@
     <Compile Include="Core\Easing\Bounce.cs" />
     <Compile Include="Core\Easing\Circ.cs" />
     <Compile Include="Core\Easing\Cubic.cs" />
+    <Compile Include="Core\Easing\Ease.cs" />
     <Compile Include="Core\Easing\EaseCurve.cs" />
     <Compile Include="Core\Easing\Elastic.cs" />
     <Compile Include="Core\Easing\Expo.cs" />

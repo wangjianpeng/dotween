@@ -110,13 +110,13 @@ namespace DG.Tweening.Core
             float updatePosition = useInversePosition ? duration - position : position;
             if (DOTween.useSafeMode) {
                 try {
-                    setter(tweenPlugin.Evaluate(plugOptions, isRelative, getter, updatePosition, startValue, changeValue, duration, ease));
+                    setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
                 } catch (MissingReferenceException) {
                     // Target/field doesn't exist anymore: kill tween
                     return true;
                 }
             } else {
-                setter(tweenPlugin.Evaluate(plugOptions, isRelative, getter, updatePosition, startValue, changeValue, duration, ease));
+                setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
             }
             return false;
         }

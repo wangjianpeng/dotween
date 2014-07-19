@@ -22,6 +22,7 @@
 
 using System.Text;
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -48,12 +49,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override string Evaluate(PlugString.Options options, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration, EaseFunction ease)
+        public override string Evaluate(PlugString.Options options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
         {
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
-            int len = Mathf.RoundToInt(ease(elapsed, 0, changeValueLen, duration, 0, 0));
+            int len = Mathf.RoundToInt(Ease.Apply(t, elapsed, 0, changeValueLen, duration, 0, 0));
 
             if (isRelative) {
                 _Buffer.Append(startValue);
