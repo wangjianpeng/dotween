@@ -55,6 +55,7 @@ public class TweenEnginesComparison : BrainBase
 	TestObjectData[] testObjsData;
 	Vector3[] rndPositions;
 	Vector3[] rndRotations;
+	Vector3[] rndStartupPos;
 	readonly Vector3 rndScale = new Vector3(6,6,6);
 	float[] rndFloats;
 
@@ -97,7 +98,7 @@ public class TweenEnginesComparison : BrainBase
 
 		duration = Convert.ToSingle(durationList[durationSelId]);
 		// Generate random values for tweens
-		Vector3[] rndStartupPos = new Vector3[numTweens];
+		rndStartupPos = new Vector3[numTweens];
 		rndPositions = new Vector3[numTweens];
 		rndRotations = new Vector3[numTweens];
 		rndFloats = new float[numTweens];
@@ -146,10 +147,21 @@ public class TweenEnginesComparison : BrainBase
 		totCreationTime = Time.realtimeSinceStartup;
 		SetupTweens();
 		totCreationTime = Time.realtimeSinceStartup - totCreationTime;
+		if (testSetup == TestSetup.Emit) StartCoroutine(RestartCoroutine());
 		yield return null;
 		state = State.Running;
 		// Reset FPS so average is more correct
 		fpsGadget.ResetFps();
+	}
+
+	IEnumerator RestartCoroutine()
+	{
+		WaitForSeconds wfs = new WaitForSeconds(duration + 0.1f);
+		while (true) {
+			yield return wfs;
+			Reset(false);
+			SetupTweens();
+		}
 	}
 
 	void StopRun()
@@ -171,18 +183,22 @@ public class TweenEnginesComparison : BrainBase
 		rndRotations = null;
 	}
 
-	void Reset()
+	void Reset(bool complete = true)
 	{
-		// Simply kill tweens and reset the already existing testObjs
-		if (engine == Engine.DOTween) DOTween.Clear();
-		else if (engine == Engine.HOTween) HOTween.Kill();
-		else if (engine == Engine.LeanTween) LeanTween.reset();
-		else if (engine == Engine.GoKit) KillAllGoTweens();
-		else if (engine == Engine.iTween) iTween.Stop();
-		foreach (Transform t in testObjsTrans) {
-			t.position = Vector3.zero;
-			t.localScale = Vector3.one;
-			t.rotation = Quaternion.identity;
+		if (complete) {
+			if (engine == Engine.DOTween) DOTween.Clear();
+			else if (engine == Engine.HOTween) HOTween.Kill();
+			else if (engine == Engine.LeanTween) LeanTween.reset();
+			else if (engine == Engine.GoKit) KillAllGoTweens();
+			else if (engine == Engine.iTween) iTween.Stop();
+		}
+		if (testObjsTrans != null) {
+			for (int i = 0; i < testObjsTrans.Length; ++i) {
+				Transform t = testObjsTrans[i];
+				t.position = rndStartupPos[i];
+				t.localScale = Vector3.one;
+				t.rotation = Quaternion.identity;
+			}
 		}
 	}
 
