@@ -192,6 +192,7 @@ namespace DG.Tweening
             if (t.creationLocked) return t;
 
             t.easeType = easeType;
+            t.easeCurveEval = null;
             return t;
         }
         /// <summary>Has no effect on Sequences</summary>
@@ -199,6 +200,7 @@ namespace DG.Tweening
         {
             if (t.creationLocked) return t;
 
+            t.easeType = EaseType.AnimationCurve;
             t.easeCurveEval = new EaseCurve(animCurve).Evaluate;
             return t;
         }
