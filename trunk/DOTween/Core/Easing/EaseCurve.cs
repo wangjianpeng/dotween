@@ -29,15 +29,15 @@ namespace DG.Tweening.Core.Easing
     /// </summary>
     internal class EaseCurve
     {
-        AnimationCurve animCurve;
+        readonly AnimationCurve _animCurve;
 
         // ***********************************************************************************
         // CONSTRUCTOR
         // ***********************************************************************************
 
-        public EaseCurve(AnimationCurve p_animCurve)
+        public EaseCurve(AnimationCurve animCurve)
         {
-            animCurve = p_animCurve;
+            _animCurve = animCurve;
         }
 
         // ===================================================================================
@@ -45,9 +45,9 @@ namespace DG.Tweening.Core.Easing
 
         public float Evaluate(float time, float startValue, float changeValue, float duration, float unusedOvershoot, float unusedPeriod)
         {
-            float curveLen = animCurve[animCurve.length - 1].time;
+            float curveLen = _animCurve[_animCurve.length - 1].time;
             float timePerc = time / duration;
-            float eval = animCurve.Evaluate(timePerc * curveLen);
+            float eval = _animCurve.Evaluate(timePerc * curveLen);
             return changeValue * eval + startValue;
         }
     }
