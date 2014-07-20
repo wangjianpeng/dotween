@@ -45,11 +45,11 @@ public class RecycleBrain : BrainBase
 
 	void OnGUI()
 	{
-		DGUtils.OpenGUI();
+		DGUtils.BeginGUI();
 
 		GUILayout.Label("Recycle Mode");
 		recycleMode = (RecycleMode)GUILayout.Toolbar((int)recycleMode, recycleModeList);
 
-		DGUtils.CloseGUI();
+		DGUtils.EndGUI();
 	}
 }

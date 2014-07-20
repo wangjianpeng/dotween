@@ -6,7 +6,7 @@ public static class DGUtils
 		Debug.Log(Time.realtimeSinceStartup + " : " + o);
 	}
 
-	public static void OpenGUI()
+	public static void BeginGUI()
 	{
 		GUILayout.BeginArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20));
 		GUILayout.BeginHorizontal();
@@ -14,7 +14,7 @@ public static class DGUtils
 		GUILayout.BeginVertical();
 	}
 
-	public static void CloseGUI()
+	public static void EndGUI()
 	{
 		GUILayout.EndVertical();
 		GUILayout.FlexibleSpace();

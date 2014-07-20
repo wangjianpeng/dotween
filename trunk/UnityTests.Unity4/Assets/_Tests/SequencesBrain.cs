@@ -25,7 +25,7 @@ public class SequencesBrain : BrainBase
 
 	void OnGUI()
 	{
-		DGUtils.OpenGUI();
+		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Restart")) {
@@ -69,7 +69,7 @@ public class SequencesBrain : BrainBase
 		sb.Append("\nColor Steps/Complete: ").Append(stepCompleteT3).Append("/").Append(completeT3);
 		GUILayout.Label(sb.ToString());
 
-		DGUtils.CloseGUI();
+		DGUtils.EndGUI();
 	}
 
 	Sequence CreateSequence()
