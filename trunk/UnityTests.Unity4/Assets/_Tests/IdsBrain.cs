@@ -33,6 +33,7 @@ public class IdsBrain : BrainBase
 	void OnGUI()
 	{
 		DGUtils.BeginGUI();
+		GUILayout.Space(50);
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("TogglePause by Id")) DOTween.TogglePause(0);

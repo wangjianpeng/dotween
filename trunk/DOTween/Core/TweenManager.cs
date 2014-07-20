@@ -462,13 +462,13 @@ namespace DG.Tweening.Core
                     toCompletedLoops = t.loops == -1 ? t.completedLoops + 1 : t.loops;
                 } else {
                     if (t.isBackwards) {
-                        toPosition -= deltaTime;
+                        toPosition -= tDeltaTime;
                         while (toPosition < 0 && toCompletedLoops > 0) {
                             toPosition += t.duration;
                             toCompletedLoops--;
                         }
                     } else {
-                        toPosition += deltaTime;
+                        toPosition += tDeltaTime;
                         while (toPosition > t.duration && (t.loops == -1 || toCompletedLoops < t.loops)) {
                             toPosition -= t.duration;
                             toCompletedLoops++;
