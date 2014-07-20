@@ -332,18 +332,18 @@ namespace DG.Tweening.Core
         }
 
         internal static int FilteredOperation(
-            OperationType operationType, FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId,
+            OperationType operationType, FilterType filterType, int id, string stringId, object objId,
             bool optionalBool, float optionalFloat
         ){
             int totInvolved = 0;
             if (hasActiveDefaultTweens) {
-                totInvolved += DoFilteredOperation(_ActiveDefaultTweens, UpdateType.Default, totActiveDefaultTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool, optionalFloat);
+                totInvolved += DoFilteredOperation(_ActiveDefaultTweens, UpdateType.Default, totActiveDefaultTweens, operationType, filterType, id, stringId, objId, optionalBool, optionalFloat);
             }
             if (hasActiveFixedTweens) {
-                totInvolved += DoFilteredOperation(_ActiveFixedTweens, UpdateType.Fixed, totActiveFixedTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool, optionalFloat);
+                totInvolved += DoFilteredOperation(_ActiveFixedTweens, UpdateType.Fixed, totActiveFixedTweens, operationType, filterType, id, stringId, objId, optionalBool, optionalFloat);
             }
             if (hasActiveIndependentTweens) {
-                totInvolved += DoFilteredOperation(_ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens, operationType, filterType, id, stringId, unityObjectId, optionalBool, optionalFloat);
+                totInvolved += DoFilteredOperation(_ActiveIndependentTweens, UpdateType.TimeScaleIndependent, totActiveIndependentTweens, operationType, filterType, id, stringId, objId, optionalBool, optionalFloat);
             }
             return totInvolved;
         }
@@ -518,7 +518,7 @@ namespace DG.Tweening.Core
 
         static int DoFilteredOperation(
             Tween[] tweens, UpdateType updateType, int totTweens, OperationType operationType,
-            FilterType filterType, int id, string stringId, UnityEngine.Object unityObjectId, bool optionalBool, float optionalFloat
+            FilterType filterType, int id, string stringId, object objId, bool optionalBool, float optionalFloat
         ){
             int totInvolved = 0;
             bool hasDespawned = false;
@@ -535,8 +535,8 @@ namespace DG.Tweening.Core
                 case FilterType.StringId:
                     isFilterCompliant = t.stringId == stringId;
                     break;
-                case FilterType.UnityObjectId:
-                    isFilterCompliant = t.objId == unityObjectId;
+                case FilterType.ObjectId:
+                    isFilterCompliant = t.objId == objId;
                     break;
                 }
                 if (isFilterCompliant) {

@@ -26,6 +26,6 @@ namespace DG.Tweening.Core.Enums
         All,
         Id,
         StringId,
-        UnityObjectId
+        ObjectId
     }
 }
