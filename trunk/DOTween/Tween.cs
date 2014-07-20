@@ -182,7 +182,7 @@ namespace DG.Tweening
         // Doesn't reset active state and activeId, since those are only touched only by TweenManager
         static void DoReset(Tween t)
         {
-            t.autoKill = DOTween.autoKill;
+            t.autoKill = DOTween.defaultAutoKill;
             t.timeScale = 1;
             t.isBackwards = false;
             t.objId = null;
