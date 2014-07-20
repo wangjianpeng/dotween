@@ -39,7 +39,7 @@ namespace DG.Tweening
         public bool isBackwards;
         public int id = -1;
         public string stringId;
-        public UnityEngine.Object unityObjectId;
+        public object objId;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
         public TweenCallback onStepComplete;
         public TweenCallback onComplete;
@@ -185,7 +185,7 @@ namespace DG.Tweening
             t.autoKill = DOTween.autoKill;
             t.timeScale = 1;
             t.isBackwards = false;
-            t.unityObjectId = null;
+            t.objId = null;
             t.stringId = null;
             t.id = -1;
             t.onStart = t.onComplete = null;

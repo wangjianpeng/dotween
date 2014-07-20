@@ -13,15 +13,6 @@ public class SequencesExperimentsBrain : BrainBase
 		CreateMultiCubeSequence();
 	}
 
-	void OnGUI()
-	{
-		DGUtils.OpenGUI();
-
-
-
-		DGUtils.CloseGUI();
-	}
-
 	void CreateMultiCubeSequence()
 	{
 		// Find and sort nested cubes from back to front, from TL clockwise

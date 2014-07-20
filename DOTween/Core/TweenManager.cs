@@ -536,7 +536,7 @@ namespace DG.Tweening.Core
                     isFilterCompliant = t.stringId == stringId;
                     break;
                 case FilterType.UnityObjectId:
-                    isFilterCompliant = t.unityObjectId == unityObjectId;
+                    isFilterCompliant = t.objId == unityObjectId;
                     break;
                 }
                 if (isFilterCompliant) {
