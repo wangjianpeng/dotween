@@ -21,6 +21,9 @@
 // 
 namespace DG.Tweening
 {
+    /// <summary>
+    /// Types of autoPlay behaviours
+    /// </summary>
     public enum AutoPlay
     {
         /// <summary>No tween is automatically played</summary>

@@ -21,6 +21,7 @@
 
 using DG.Tweening.Core;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins.Core
 {
     // Public so it can be extended by custom plugins

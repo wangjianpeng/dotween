@@ -40,6 +40,11 @@ namespace DG.DOTweenEditor
         {
             _src = target as DOTween;
             _title = "DOTween v" + DOTween.Version;
+#if DEBUG
+            _title += " [Debug build]";
+#else
+            _title += " [Release build]";
+#endif
         }
 
         override public void OnInspectorGUI()

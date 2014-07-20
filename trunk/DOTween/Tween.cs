@@ -35,13 +35,20 @@ namespace DG.Tweening
         // OPTIONS ///////////////////////////////////////////////////
 
         // Modifiable at runtime
+        /// <summary>TimeScale for the tween</summary>
         public float timeScale;
+        /// <summary>If TRUE the tween wil go backwards</summary>
         public bool isBackwards;
+        /// <summary>Int id (usable for filtering with DOTween static methods)</summary>
         public int id = -1;
+        /// <summary>String id (usable for filtering with DOTween static methods)</summary>
         public string stringId;
+        /// <summary>Object id (usable for filtering with DOTween static methods)</summary>
         public object objId;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
+        /// <summary>Called the moment the tween completes one loop cycle</summary>
         public TweenCallback onStepComplete;
+        /// <summary>Called the moment the tween reaches completion (loops included)</summary>
         public TweenCallback onComplete;
         // Fixed after creation
         internal bool autoKill;
@@ -78,15 +85,12 @@ namespace DG.Tweening
         internal bool delayComplete = true; // TRUE when the delay has elapsed or isn't set, also set by Delay extension method (shared by Sequences only for compatibility reasons, otherwise not used)
 
         // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
+        // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
 
-        public virtual void Reset()
+        internal virtual void Reset()
         {
             DoReset(this);
         }
-
-        // ===================================================================================
-        // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
 
         // Called by TweenManager in case a tween has a delay that needs to be updated.
         // Returns the eventual time in excess compared to the tween's delay time.

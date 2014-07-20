@@ -24,6 +24,7 @@ using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
     public class FloatPlugin : ABSTweenPlugin<float,float,PlugFloat.Options>

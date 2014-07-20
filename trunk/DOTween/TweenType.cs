@@ -21,11 +21,16 @@
 
 namespace DG.Tweening
 {
+    /// <summary>
+    /// Used internally
+    /// </summary>
     public enum TweenType
     {
+#pragma warning disable 1591
         Tweener,
         Sequence,
         Interval,
         Callback // Indicates a callback in a Sequence
+#pragma warning restore 1591
     }
 }

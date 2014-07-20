@@ -21,6 +21,9 @@
 
 namespace DG.Tweening
 {
+    /// <summary>
+    /// Update type
+    /// </summary>
     public enum UpdateType
     {
         /// <summary>Updates every frame, using Unity's timeScale</summary>

@@ -25,6 +25,7 @@ using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins
 {
     public struct PlugAlpha : IPlugSetter<Color, Color, AlphaPlugin, NoOptions>
@@ -50,6 +51,9 @@ namespace DG.Tweening.Plugins
     // ||| CLASS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+    /// <summary>
+    /// Alpha-only plugin
+    /// </summary>
     public class AlphaPlugin : ABSTweenPlugin<Color, Color, NoOptions>
     {
         public override Color ConvertT1toT2(NoOptions options, Color value)

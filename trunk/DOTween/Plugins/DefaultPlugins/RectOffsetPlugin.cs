@@ -25,6 +25,7 @@ using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
     // BEWARE: RectOffset seems a struct but is a class
