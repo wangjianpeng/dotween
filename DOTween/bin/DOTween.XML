@@ -4,6 +4,11 @@
         <name>DOTween</name>
     </assembly>
     <members>
+        <member name="T:DG.Tweening.DOTween">
+            <summary>
+            Main DOTween class
+            </summary>
+        </member>
         <member name="F:DG.Tweening.DOTween.inspectorUpdater">
             <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         </member>
@@ -607,6 +612,11 @@
             The eased value.
             </returns>
         </member>
+        <member name="T:DG.Tweening.Plugins.AlphaPlugin">
+            <summary>
+            Alpha-only plugin
+            </summary>
+        </member>
         <member name="T:DG.Tweening.Core.Easing.Strong">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
@@ -821,16 +831,109 @@
             The eased value.
             </returns>
         </member>
+        <member name="T:DG.Tweening.Tweener">
+            <summary>
+            Represents a tween of a single field or property
+            </summary>
+        </member>
         <member name="T:DG.Tweening.Tween">
             <summary>
             Shared by Tweeners and Sequences
             </summary>
+        </member>
+        <member name="F:DG.Tweening.Core.ABSSequentiable.onStart">
+            <summary>Called when the tween is set in a playing state the first time, after any eventual delay</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.timeScale">
+            <summary>TimeScale for the tween</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.isBackwards">
+            <summary>If TRUE the tween wil go backwards</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.id">
+            <summary>Int id (usable for filtering with DOTween static methods)</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.stringId">
+            <summary>String id (usable for filtering with DOTween static methods)</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.objId">
+            <summary>Object id (usable for filtering with DOTween static methods)</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onStepComplete">
+            <summary>Called the moment the tween completes one loop cycle</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onComplete">
+            <summary>Called the moment the tween reaches completion (loops included)</summary>
         </member>
         <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0)">
             <summary>
             Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
             and the endValue as the given one
             </summary>
+        </member>
+        <member name="T:DG.Tweening.Extensions">
+            <summary>
+            Miscellaneous extensions
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Complete(DG.Tweening.Tween)">
+            <summary>Completes the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Flip(DG.Tweening.Tween)">
+            <summary>Flips the direction of this tween (backwards if it was going forward or viceversa)</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Goto(DG.Tweening.Tween,System.Single,System.Boolean)">
+            <summary>Send the tween to the given position in time</summary>
+            <param name="to">Time position to reach
+            (if higher than the whole tween duration the tween will simply reach its end)</param>
+            <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Kill(DG.Tweening.Tween)">
+            <summary>Kills the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Pause``1(``0)">
+            <summary>Pauses the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Play``1(``0)">
+            <summary>Plays the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.PlayBackwards(DG.Tweening.Tween)">
+            <summary>Sets the tween in a forward direction and plays it</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.PlayForward(DG.Tweening.Tween)">
+            <summary>Sets the tween in a backwards direction and plays it</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Restart(DG.Tweening.Tween,System.Boolean)">
+            <summary>Restarts the tween from the beginning</summary>
+            <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Rewind(DG.Tweening.Tween,System.Boolean)">
+            <summary>Rewinds the tween</summary>
+            <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.TogglePause(DG.Tweening.Tween)">
+            <summary>Plays the tween if it was paused, pauses it if it was playing</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.CompletedLoops(DG.Tweening.Tween)">
+            <summary>Returns the total number of loops completed by this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Position(DG.Tweening.Tween)">
+            <summary>Returns the current position of this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Duration(DG.Tweening.Tween)">
+            <summary>Returns the duration of this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.FullDuration(DG.Tweening.Tween)">
+            <summary>Returns the full duration (loops included) of this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Elapsed(DG.Tweening.Tween)">
+            <summary>Returns the total elapsed time for this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.IsBackwards(DG.Tweening.Tween)">
+            <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.IsPlaying(DG.Tweening.Tween)">
+            <summary>Returns TRUE if this tween is playing</summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Quint">
             <summary>
@@ -902,6 +1005,17 @@
             <returns>
             The eased value.
             </returns>
+        </member>
+        <member name="T:DG.Tweening.LoopType">
+            <summary>
+            Types of loop
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.LoopType.Restart">
+            <summary>Each loop cycle restarts from the beginning</summary>
+        </member>
+        <member name="F:DG.Tweening.LoopType.Yoyo">
+            <summary>The tween moves forward and backwards at alternate cycles</summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Circ">
             <summary>
@@ -978,6 +1092,143 @@
             <summary>
             Shortcuts to DOTween plugins creations
             </summary>
+        </member>
+        <member name="M:DG.Tweening.Plug.FloatOptions(System.Boolean)">
+            <summary>Options for tweening a float</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.StringOptions(System.Boolean)">
+            <summary>Options for tweening a string</summary>
+            <param name="scramble">If TRUE, the tween will use a scramble effect for each character</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2Options(System.Boolean)">
+            <summary>Options for tweening a Vector2</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3Options(System.Boolean)">
+            <summary>Options for tweening a Vector3</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector4Options(System.Boolean)">
+            <summary>Options for tweening a Vector4</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.RectOptions(System.Boolean)">
+            <summary>Options for tweening a Rect</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2X(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},System.Single)">
+            <summary>Vector2X plugin. Tweens only the X value of a Vector2</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2X(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},System.Single,DG.Tweening.Plugins.PlugVector2X.Options)">
+            <summary>Vector2X plugin. Tweens only the X value of a Vector2</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+            <param name="options">Options. Example: <code>Plug.Vector2XOptions(true)</code></param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2XOptions(System.Boolean)">
+            <summary>Options for tweening a Plug.Vector2X custom plugin</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2Y(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},System.Single)">
+            <summary>Vector2Y plugin. Tweens only the Y value of a Vector2</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2Y(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},System.Single,DG.Tweening.Plugins.PlugVector2Y.Options)">
+            <summary>Vector2Y plugin. Tweens only the Y value of a Vector2</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+            <param name="options">Options. Example: <code>Plug.Vector2YOptions(true)</code></param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector2YOptions(System.Boolean)">
+            <summary>Options for tweening a Plug.Vector2Y custom plugin</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3X(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single)">
+            <summary>Vector3X plugin. Tweens only the X value of a Vector3</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3X(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,DG.Tweening.Plugins.PlugVector3X.Options)">
+            <summary>Vector3X plugin. Tweens only the X value of a Vector3</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+            <param name="options">Options. Example: <code>Plug.Vector3XOptions(true)</code></param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3XOptions(System.Boolean)">
+            <summary>Options for tweening a Plug.Vector3X custom plugin</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3Y(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single)">
+            <summary>Vector3Y plugin. Tweens only the Y value of a Vector3</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3Y(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,DG.Tweening.Plugins.PlugVector3Y.Options)">
+            <summary>Vector3Y plugin. Tweens only the Y value of a Vector3</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+            <param name="options">Options. Example: <code>Plug.Vector3YOptions(true)</code></param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3YOptions(System.Boolean)">
+            <summary>Options for tweening a Plug.Vector3Y custom plugin</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3Z(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single)">
+            <summary>Vector3Z plugin. Tweens only the Z value of a Vector3</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3Z(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,DG.Tweening.Plugins.PlugVector3Z.Options)">
+            <summary>Vector3Z plugin. Tweens only the Z value of a Vector3</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
+            <param name="options">Options. Example: <code>Plug.Vector3ZOptions(true)</code></param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Vector3ZOptions(System.Boolean)">
+            <summary>Options for tweening a Plug.Vector3Z custom plugin</summary>
+            <param name="snapping">If TRUE, the tween will snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.Plug.Alpha(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},System.Single)">
+            <summary>Alpha plugin. Tweens only the alpha value of a Color</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Cubic">
             <summary>
@@ -1126,6 +1377,16 @@
             <returns>
             The eased value.
             </returns>
+        </member>
+        <member name="T:DG.Tweening.TweenType">
+            <summary>
+            Used internally
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.LogBehaviour">
+            <summary>
+            Types of log behaviours
+            </summary>
         </member>
         <member name="F:DG.Tweening.LogBehaviour.Default">
             <summary>Log only warnings and errors</summary>
@@ -1376,7 +1637,7 @@
         </member>
         <member name="F:DG.Tweening.EaseType.AnimationCurve">
             <summary>
-            Don't assign this! It's assigned internally when setting the ease to an AnimationCurve
+            Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve
             </summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Linear">
@@ -1406,6 +1667,16 @@
             The eased value.
             </returns>
         </member>
+        <member name="T:DG.Tweening.Sequence">
+            <summary>
+            Controls a collection of tweens
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.AutoPlay">
+            <summary>
+            Types of autoPlay behaviours
+            </summary>
+        </member>
         <member name="F:DG.Tweening.AutoPlay.None">
             <summary>No tween is automatically played</summary>
         </member>
@@ -1418,17 +1689,182 @@
         <member name="F:DG.Tweening.AutoPlay.All">
             <summary>All tweens are automatically played</summary>
         </member>
+        <member name="T:DG.Tweening.TweenCreationExtensions">
+            <summary>
+            Extensions for the creation of tweens
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.AutoKill``1(``0,System.Boolean)">
+            <summary>Sets the autoKill behaviour of the tween</summary>
+            <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0,System.Object)">
+            <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0,System.Int32)">
+            <summary>Sets an int ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0,System.String)">
+            <summary>Sets a string ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0)">
+            <summary>Resets all ID types for this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Loops``1(``0,System.Int32,DG.Tweening.LoopType)">
+            <summary>Sets the looping options for the tween</summary>
+            <param name="loops">Number of cycles to play (-1 for infinite)</param>
+            <param name="loopType">Loop behaviour type</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.OnStart``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onStart callback for the tween
+            (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.OnStepComplete``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onStepComplete callback for the tween
+            (called the moment the tween completes one loop cycle)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.OnComplete``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onComplete callback for the tween
+            (called the moment the tween reaches completion, loops included)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
+            <summary>Adds the given tween to the end of the Sequence</summary>
+            <param name="t">The tween to append</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Prepend(DG.Tweening.Sequence,DG.Tweening.Tween)">
+            <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content</summary>
+            <param name="t">The tween to prepend</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Insert(DG.Tweening.Sequence,System.Single,DG.Tweening.Tween)">
+            <summary>Inserts the given tween at the given time position in the Sequence,
+            automatically adding an interval if needed</summary>
+            <param name="atPosition">The time position where the tween will be placed</param>
+            <param name="t">The tween to insert</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.AppendInterval(DG.Tweening.Sequence,System.Single)">
+            <summary>Adds the given interval to the end of the Sequence</summary>
+            <param name="interval">The interval duration</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.PrependInterval(DG.Tweening.Sequence,System.Single)">
+            <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content</summary>
+            <param name="interval">The interval duration</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.AppendCallback(DG.Tweening.Sequence,DG.Tweening.Core.TweenCallback)">
+            <summary>Adds the given callback to the end of the Sequence</summary>
+            <param name="callback">The callback to append</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.PrependCallback(DG.Tweening.Sequence,DG.Tweening.Core.TweenCallback)">
+            <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content</summary>
+            <param name="callback">The callback to prepend</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.InsertCallback(DG.Tweening.Sequence,System.Single,DG.Tweening.Core.TweenCallback)">
+            <summary>Inserts the given callback at the given time position in the Sequence,
+            automatically adding an interval if needed</summary>
+            <param name="atPosition">The time position where the callback will be placed</param>
+            <param name="callback">The callback to insert</param>
+        </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Delay``1(``0,System.Single)">
-            <summary>Has no effect on Sequences</summary>
+            <summary>Sets a delayed startup for the tween.
+            Has no effect on Sequences</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Relative``1(``0,System.Boolean)">
-            <summary>Has no effect on Sequences</summary>
+            <summary>If isRelative is TRUE sets the tween as relative
+            (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
+            Has no effect on Sequences</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Ease``1(``0,DG.Tweening.EaseType)">
-            <summary>Has no effect on Sequences</summary>
+            <summary>Sets the ease the tween.
+            Has no effect on Sequences</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Ease``1(``0,UnityEngine.AnimationCurve)">
-            <summary>Has no effect on Sequences</summary>
+            <summary>Sets the ease the tween using an AnimationCurve.
+            Has no effect on Sequences</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToX(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's X position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToY(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's Y position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToZ(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's Z position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalX(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's X localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalY(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's Y localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalZ(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's Z localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.RotateTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's rotation to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.RotateToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's localRotation to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToX(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's X localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToY(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's Y localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToZ(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Transform's Z localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ColorTo(UnityEngine.Material,UnityEngine.Color,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Material's color to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.FadeTo(UnityEngine.Material,System.Single,System.Single,DG.Tweening.UpdateType)">
+            <summary>Tweens a Material's alpha color to the given value
+            (will have no effect unless your material supports transparency)</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="T:DG.Tweening.UpdateType">
+            <summary>
+            Update type
+            </summary>
         </member>
         <member name="F:DG.Tweening.UpdateType.Default">
             <summary>Updates every frame, using Unity's timeScale</summary>

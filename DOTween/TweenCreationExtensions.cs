@@ -25,11 +25,16 @@ using UnityEngine;
 
 namespace DG.Tweening
 {
+    /// <summary>
+    /// Extensions for the creation of tweens
+    /// </summary>
     public static class TweenCreationExtensions
     {
         // ===================================================================================
         // TWEENER + SEQUENCES ---------------------------------------------------------------
 
+        /// <summary>Sets the autoKill behaviour of the tween</summary>
+        /// <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
         public static T AutoKill<T>(this T t, bool autoKillOnCompletion = true) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -38,6 +43,7 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         public static T Id<T>(this T t, object id) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -45,6 +51,7 @@ namespace DG.Tweening
             t.objId = id;
             return t;
         }
+        /// <summary>Sets an int ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         public static T Id<T>(this T t, int id) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -52,6 +59,7 @@ namespace DG.Tweening
             t.id = id;
             return t;
         }
+        /// <summary>Sets a string ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         public static T Id<T>(this T t, string id) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -59,17 +67,21 @@ namespace DG.Tweening
             t.stringId = id;
             return t;
         }
+        /// <summary>Resets all ID types for this tween</summary>
         public static T Id<T>(this T t) where T : Tween
         {
             if (t.creationLocked) return t;
 
-            // Resets all ids
+            // Reset all ids
             t.id = -1;
             t.stringId = null;
             t.objId = null;
             return t;
         }
 
+        /// <summary>Sets the looping options for the tween</summary>
+        /// <param name="loops">Number of cycles to play (-1 for infinite)</param>
+        /// <param name="loopType">Loop behaviour type</param>
         public static T Loops<T>(this T t, int loops, LoopType loopType = LoopType.Restart) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -82,6 +94,8 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets the onStart callback for the tween
+        /// (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
         public static T OnStart<T>(this T t, TweenCallback action) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -89,6 +103,9 @@ namespace DG.Tweening
             t.onStart = action;
             return t;
         }
+
+        /// <summary>Sets the onStepComplete callback for the tween
+        /// (called the moment the tween completes one loop cycle)</summary>
         public static T OnStepComplete<T>(this T t, TweenCallback action) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -96,6 +113,9 @@ namespace DG.Tweening
             t.onStepComplete = action;
             return t;
         }
+
+        /// <summary>Sets the onComplete callback for the tween
+        /// (called the moment the tween reaches completion, loops included)</summary>
         public static T OnComplete<T>(this T t, TweenCallback action) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -107,6 +127,8 @@ namespace DG.Tweening
         // ===================================================================================
         // SEQUENCES -------------------------------------------------------------------------
 
+        /// <summary>Adds the given tween to the end of the Sequence</summary>
+        /// <param name="t">The tween to append</param>
         public static Sequence Append(this Sequence s, Tween t)
         {
             if (s.creationLocked) return s;
@@ -115,6 +137,8 @@ namespace DG.Tweening
             Sequence.DoInsert(s, t, s.duration);
             return s;
         }
+        /// <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content</summary>
+        /// <param name="t">The tween to prepend</param>
         public static Sequence Prepend(this Sequence s, Tween t)
         {
             if (s.creationLocked) return s;
@@ -123,7 +147,10 @@ namespace DG.Tweening
             Sequence.DoPrepend(s, t);
             return s;
         }
-
+        /// <summary>Inserts the given tween at the given time position in the Sequence,
+        /// automatically adding an interval if needed</summary>
+        /// <param name="atPosition">The time position where the tween will be placed</param>
+        /// <param name="t">The tween to insert</param>
         public static Sequence Insert(this Sequence s, float atPosition, Tween t)
         {
             if (s.creationLocked) return s;
@@ -133,6 +160,8 @@ namespace DG.Tweening
             return s;
         }
 
+        /// <summary>Adds the given interval to the end of the Sequence</summary>
+        /// <param name="interval">The interval duration</param>
         public static Sequence AppendInterval(this Sequence s, float interval)
         {
             if (s.creationLocked) return s;
@@ -140,6 +169,8 @@ namespace DG.Tweening
             Sequence.DoAppendInterval(s, interval);
             return s;
         }
+        /// <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content</summary>
+        /// <param name="interval">The interval duration</param>
         public static Sequence PrependInterval(this Sequence s, float interval)
         {
             if (s.creationLocked) return s;
@@ -148,6 +179,8 @@ namespace DG.Tweening
             return s;
         }
 
+        /// <summary>Adds the given callback to the end of the Sequence</summary>
+        /// <param name="callback">The callback to append</param>
         public static Sequence AppendCallback(this Sequence s, TweenCallback callback)
         {
             if (s.creationLocked) return s;
@@ -156,6 +189,8 @@ namespace DG.Tweening
             Sequence.DoInsertCallback(s, callback, s.duration);
             return s;
         }
+        /// <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content</summary>
+        /// <param name="callback">The callback to prepend</param>
         public static Sequence PrependCallback(this Sequence s, TweenCallback callback)
         {
             if (s.creationLocked) return s;
@@ -164,7 +199,10 @@ namespace DG.Tweening
             Sequence.DoInsertCallback(s, callback, 0);
             return s;
         }
-
+        /// <summary>Inserts the given callback at the given time position in the Sequence,
+        /// automatically adding an interval if needed</summary>
+        /// <param name="atPosition">The time position where the callback will be placed</param>
+        /// <param name="callback">The callback to insert</param>
         public static Sequence InsertCallback(this Sequence s, float atPosition, TweenCallback callback)
         {
             if (s.creationLocked) return s;
@@ -177,7 +215,8 @@ namespace DG.Tweening
         // ===================================================================================
         // TWEENERS --------------------------------------------------------------------------
 
-        /// <summary>Has no effect on Sequences</summary>
+        /// <summary>Sets a delayed startup for the tween.
+        /// Has no effect on Sequences</summary>
         public static T Delay<T>(this T t, float delay) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -187,7 +226,9 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Has no effect on Sequences</summary>
+        /// <summary>If isRelative is TRUE sets the tween as relative
+        /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
+        /// Has no effect on Sequences</summary>
         public static T Relative<T>(this T t, bool isRelative = true) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -196,7 +237,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Has no effect on Sequences</summary>
+        /// <summary>Sets the ease the tween.
+        /// Has no effect on Sequences</summary>
         public static T Ease<T>(this T t, EaseType easeType) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -205,7 +247,8 @@ namespace DG.Tweening
             t.easeCurveEval = null;
             return t;
         }
-        /// <summary>Has no effect on Sequences</summary>
+        /// <summary>Sets the ease the tween using an AnimationCurve.
+        /// Has no effect on Sequences</summary>
         public static T Ease<T>(this T t, AnimationCurve animCurve) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -218,61 +261,103 @@ namespace DG.Tweening
         /////////////////////////////////////////////////////
         // Transform Shortcuts //////////////////////////////
 
+        /// <summary>Tweens a Transform's position to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveTo(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(() => transform.position, x => transform.position = x, endValue, duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's X position to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToX(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3X(() => transform.position, x => transform.position = x, endValue), duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's Y position to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToY(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3Y(() => transform.position, x => transform.position = x, endValue), duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's Z position to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToZ(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3Z(() => transform.position, x => transform.position = x, endValue), duration, updateType).Id(transform);
         }
 
+        /// <summary>Tweens a Transform's localPosition to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToLocal(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, endValue, duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's X localPosition to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToLocalX(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3X(() => transform.localPosition, x => transform.localPosition = x, endValue), duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's Y localPosition to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToLocalY(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3Y(() => transform.localPosition, x => transform.localPosition = x, endValue), duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's Z localPosition to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener MoveToLocalZ(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3Z(() => transform.localPosition, x => transform.localPosition = x, endValue), duration, updateType).Id(transform);
         }
 
+        /// <summary>Tweens a Transform's rotation to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener RotateTo(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(() => transform.rotation, x => transform.rotation = x, endValue, duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's localRotation to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener RotateToLocal(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(() => transform.localRotation, x => transform.localRotation = x, endValue, duration, updateType).Id(transform);
         }
 
+        /// <summary>Tweens a Transform's localScale to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener ScaleTo(this Transform transform, Vector3 endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(() => transform.localScale, x => transform.localScale = x, endValue, duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's X localScale to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener ScaleToX(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3X(() => transform.localScale, x => transform.localScale = x, endValue), duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's Y localScale to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener ScaleToY(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3Y(() => transform.localScale, x => transform.localScale = x, endValue), duration, updateType).Id(transform);
         }
+        /// <summary>Tweens a Transform's Z localScale to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener ScaleToZ(this Transform transform, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Vector3Z(() => transform.localScale, x => transform.localScale = x, endValue), duration, updateType).Id(transform);
@@ -281,11 +366,18 @@ namespace DG.Tweening
         /////////////////////////////////////////////////////
         // Material Shortcuts ///////////////////////////////
 
+        /// <summary>Tweens a Material's color to the given value</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener ColorTo(this Material material, Color endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(() => material.color, x => material.color = x, endValue, duration, updateType).Id(material);
         }
 
+        /// <summary>Tweens a Material's alpha color to the given value
+        /// (will have no effect unless your material supports transparency)</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="updateType">The type of update to use</param>
         public static Tweener FadeTo(this Material material, float endValue, float duration, UpdateType updateType = UpdateType.Default)
         {
             return DOTween.To(Plug.Alpha(() => material.color, x => material.color = x, endValue), duration, updateType).Id(material);

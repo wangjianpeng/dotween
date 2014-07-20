@@ -24,6 +24,7 @@ using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
     public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3,PlugVector3.Options>

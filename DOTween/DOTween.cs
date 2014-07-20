@@ -27,12 +27,15 @@ using UnityEngine;
 
 namespace DG.Tweening
 {
+    /// <summary>
+    /// Main DOTween class
+    /// </summary>
     public class DOTween : MonoBehaviour
     {
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.2.100";
+        public static readonly string Version = "0.5.100";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////

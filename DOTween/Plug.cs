@@ -34,35 +34,41 @@ namespace DG.Tweening
         ///////////////////////////////////////////////////////////////
         // DEFAULT PLUGINS (options only) /////////////////////////////
 
-        // Float
+        /// <summary>Options for tweening a float</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugFloat.Options FloatOptions(bool snapping)
         {
             return new PlugFloat.Options(snapping);
         }
 
-        // String
+        /// <summary>Options for tweening a string</summary>
+        /// <param name="scramble">If TRUE, the tween will use a scramble effect for each character</param>
         public static PlugString.Options StringOptions(bool scramble)
         {
             return new PlugString.Options(scramble);
         }
 
-        // Vector2
+        /// <summary>Options for tweening a Vector2</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector2.Options Vector2Options(bool snapping)
         {
             return new PlugVector2.Options(snapping);
         }
-        // Vector3
+        /// <summary>Options for tweening a Vector3</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector3.Options Vector3Options(bool snapping)
         {
             return new PlugVector3.Options(snapping);
         }
-        // Vector4
+        /// <summary>Options for tweening a Vector4</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector4.Options Vector4Options(bool snapping)
         {
             return new PlugVector4.Options(snapping);
         }
 
-        // Rect
+        /// <summary>Options for tweening a Rect</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugRect.Options RectOptions(bool snapping)
         {
             return new PlugRect.Options(snapping);
@@ -71,74 +77,158 @@ namespace DG.Tweening
         ///////////////////////////////////////////////////////////////
         // CUSTOM PLUGINS /////////////////////////////////////////////
 
-        // Vector2X
+        // Vector2XYZ /////////////////////////////////////////////////
+
+        /// <summary>Vector2X plugin. Tweens only the X value of a Vector2</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
         public static PlugVector2X Vector2X(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue)
         {
             return new PlugVector2X(getter, setter, endValue);
         }
+        /// <summary>Vector2X plugin. Tweens only the X value of a Vector2</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="options">Options. Example: <code>Plug.Vector2XOptions(true)</code></param>
         public static PlugVector2X Vector2X(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, PlugVector2X.Options options)
         {
             return new PlugVector2X(getter, setter, endValue, options);
         }
+        /// <summary>Options for tweening a Plug.Vector2X custom plugin</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector2X.Options Vector2XOptions(bool snapping)
         {
             return new PlugVector2X.Options(snapping);
         }
-        // Vector2Y
+
+        /// <summary>Vector2Y plugin. Tweens only the Y value of a Vector2</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
         public static PlugVector2Y Vector2Y(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue)
         {
             return new PlugVector2Y(getter, setter, endValue);
         }
+        /// <summary>Vector2Y plugin. Tweens only the Y value of a Vector2</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="options">Options. Example: <code>Plug.Vector2YOptions(true)</code></param>
         public static PlugVector2Y Vector2Y(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, PlugVector2Y.Options options)
         {
             return new PlugVector2Y(getter, setter, endValue, options);
         }
+        /// <summary>Options for tweening a Plug.Vector2Y custom plugin</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector2Y.Options Vector2YOptions(bool snapping)
         {
             return new PlugVector2Y.Options(snapping);
         }
 
-        // Vector3X
+        // Vector3XYZ /////////////////////////////////////////////////
+
+        /// <summary>Vector3X plugin. Tweens only the X value of a Vector3</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
         public static PlugVector3X Vector3X(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue)
         {
             return new PlugVector3X(getter, setter, endValue);
         }
+        /// <summary>Vector3X plugin. Tweens only the X value of a Vector3</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="options">Options. Example: <code>Plug.Vector3XOptions(true)</code></param>
         public static PlugVector3X Vector3X(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, PlugVector3X.Options options)
         {
             return new PlugVector3X(getter, setter, endValue, options);
         }
+        /// <summary>Options for tweening a Plug.Vector3X custom plugin</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector3X.Options Vector3XOptions(bool snapping)
         {
             return new PlugVector3X.Options(snapping);
         }
-        // Vector3Y
+
+        /// <summary>Vector3Y plugin. Tweens only the Y value of a Vector3</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
         public static PlugVector3Y Vector3Y(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue)
         {
             return new PlugVector3Y(getter, setter, endValue);
         }
+        /// <summary>Vector3Y plugin. Tweens only the Y value of a Vector3</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="options">Options. Example: <code>Plug.Vector3YOptions(true)</code></param>
         public static PlugVector3Y Vector3Y(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, PlugVector3Y.Options options)
         {
             return new PlugVector3Y(getter, setter, endValue, options);
         }
+        /// <summary>Options for tweening a Plug.Vector3Y custom plugin</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector3Y.Options Vector3YOptions(bool snapping)
         {
             return new PlugVector3Y.Options(snapping);
         }
-        // Vector3Z
+
+        /// <summary>Vector3Z plugin. Tweens only the Z value of a Vector3</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
         public static PlugVector3Z Vector3Z(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue)
         {
             return new PlugVector3Z(getter, setter, endValue);
         }
+        /// <summary>Vector3Z plugin. Tweens only the Z value of a Vector3</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="options">Options. Example: <code>Plug.Vector3ZOptions(true)</code></param>
         public static PlugVector3Z Vector3Z(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, PlugVector3Z.Options options)
         {
             return new PlugVector3Z(getter, setter, endValue, options);
         }
+        /// <summary>Options for tweening a Plug.Vector3Z custom plugin</summary>
+        /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
         public static PlugVector3Z.Options Vector3ZOptions(bool snapping)
         {
             return new PlugVector3Z.Options(snapping);
         }
 
-        // Alpha (no options)
+        // Alpha //////////////////////////////////////////////////////
+
+        /// <summary>Alpha plugin. Tweens only the alpha value of a Color</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param>
         public static PlugAlpha Alpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue)
         {
             return new PlugAlpha(getter, setter, endValue);

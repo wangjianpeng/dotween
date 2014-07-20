@@ -62,18 +62,6 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        // _tweenPlugin is not reset since it's useful to keep it as a reference
-        public override void Reset()
-        {
-            base.Reset();
-
-            isFrom = false;
-
-            getter = null;
-            setter = null;
-            plugOptions = new TPlugOptions();
-        }
-
         public override void ChangeEndValue<T>(T newEndValue)
         {
             if (typeof(T) != typeofT2) {
@@ -86,6 +74,18 @@ namespace DG.Tweening.Core
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
+
+        // _tweenPlugin is not reset since it's useful to keep it as a reference
+        internal override void Reset()
+        {
+            base.Reset();
+
+            isFrom = false;
+
+            getter = null;
+            setter = null;
+            plugOptions = new TPlugOptions();
+        }
 
         // CALLED BY TweenManager at each update.
         // Returns TRUE if the tween needs to be killed

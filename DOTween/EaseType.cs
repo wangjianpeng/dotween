@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 // 
+#pragma warning disable 1591
 namespace DG.Tweening
 {
     public enum EaseType
@@ -55,7 +56,7 @@ namespace DG.Tweening
         OutBounce,
         InOutBounce,
         /// <summary>
-        /// Don't assign this! It's assigned internally when setting the ease to an AnimationCurve
+        /// Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve
         /// </summary>
         AnimationCurve
     }

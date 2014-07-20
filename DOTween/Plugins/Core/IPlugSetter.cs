@@ -22,6 +22,7 @@
 
 using DG.Tweening.Core;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins.Core
 {
     public interface IPlugSetter<T1, out T2, TPlugin, out TPlugOptions>

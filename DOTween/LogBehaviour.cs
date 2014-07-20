@@ -21,6 +21,9 @@
 // 
 namespace DG.Tweening
 {
+    /// <summary>
+    /// Types of log behaviours
+    /// </summary>
     public enum LogBehaviour
     {
         /// <summary>Log only warnings and errors</summary>
