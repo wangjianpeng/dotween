@@ -3,7 +3,7 @@
 public static class DGUtils
 {
 	public static void Log(object o) {
-		Debug.Log(Time.realtimeSinceStartup + " : " + o);
+		Debug.Log(Time.frameCount + "/" + Time.realtimeSinceStartup + " : " + o);
 	}
 
 	public static void BeginGUI()

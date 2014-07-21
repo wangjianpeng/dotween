@@ -18,11 +18,6 @@ public class SequencesBrain : BrainBase
 		mainSequence = CreateSequence();
 	}
 
-	void Update()
-	{
-		Debug.Log("UPDATE " + Time.deltaTime);
-	}
-
 	void OnGUI()
 	{
 		DGUtils.BeginGUI();
@@ -107,6 +102,8 @@ public class SequencesBrain : BrainBase
 		);
 		seq.AppendInterval(0.5f);
 
+		seq.InsertCallback(1.25f, ()=> DGUtils.Log("1.25f Sequence callback"));
+
 		Sequence seqPre = DOTween.Sequence()
 			.Id("Sequence OUTER")
 			.OnStart(()=> DGUtils.Log("Sequence OUTER Start"))
@@ -125,6 +122,9 @@ public class SequencesBrain : BrainBase
 		target = ((GameObject)Instantiate(prefab)).transform;
 		target.position = new Vector3(-5, 0, 0);
 		mainSeq.Append(target.MoveTo(Vector3.zero, 1));
+
+		mainSeq.InsertCallback(1.75f, ()=> DGUtils.Log("1.75f MAINSEQUENCE callback"));
+		mainSeq.PrependCallback(()=> DGUtils.Log("1.75f MAINSEQUENCE prepended callback"));
 
 		return mainSeq;
 	}

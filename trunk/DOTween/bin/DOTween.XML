@@ -935,6 +935,12 @@
         <member name="M:DG.Tweening.Extensions.IsPlaying(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween is playing</summary>
         </member>
+        <member name="M:DG.Tweening.Extensions.SetAs(DG.Tweening.Tween,DG.Tweening.Tween)">
+            <summary>
+            Sets the parameters of the tween (ease, loops, delay, etc) as the parameters of the given one
+            </summary>
+            <param name="asTweener">Tweener from which to copy the parameters</param>
+        </member>
         <member name="T:DG.Tweening.Core.Easing.Quint">
             <summary>
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
