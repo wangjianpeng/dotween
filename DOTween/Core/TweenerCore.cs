@@ -31,10 +31,6 @@ namespace DG.Tweening.Core
     // TPlugOptions: options type
     internal sealed class TweenerCore<T1,T2,TPlugOptions> : Tweener where TPlugOptions : struct
     {
-        // OPTIONS ///////////////////////////////////////////////////
-
-        internal bool isFrom;
-
         // SETUP DATA ////////////////////////////////////////////////
 
         internal DOGetter<T1> getter;
@@ -79,8 +75,6 @@ namespace DG.Tweening.Core
         internal override void Reset()
         {
             base.Reset();
-
-            isFrom = false;
 
             getter = null;
             setter = null;

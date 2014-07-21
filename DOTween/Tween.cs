@@ -51,6 +51,7 @@ namespace DG.Tweening
         /// <summary>Called the moment the tween reaches completion (loops included)</summary>
         public TweenCallback onComplete;
         // Fixed after creation
+        internal bool isFrom;
         internal bool autoKill;
         internal float duration;
         internal int loops;
@@ -186,13 +187,14 @@ namespace DG.Tweening
         // Doesn't reset active state and activeId, since those are only touched only by TweenManager
         static void DoReset(Tween t)
         {
+            t.isFrom = false;
             t.autoKill = DOTween.defaultAutoKill;
             t.timeScale = 1;
             t.isBackwards = false;
             t.objId = null;
             t.stringId = null;
             t.id = -1;
-            t.onStart = t.onComplete = null;
+            t.onStart = t.onComplete = t.onStepComplete = null;
 
             t.duration = 0;
             t.loops = 1;
