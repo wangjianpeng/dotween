@@ -88,9 +88,31 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
 
+        // Doesn't reset active state and activeId, since those are only touched by TweenManager
         internal virtual void Reset()
         {
-            DoReset(this);
+            isFrom = false;
+            autoKill = DOTween.defaultAutoKill;
+            timeScale = 1;
+            isBackwards = false;
+            objId = null;
+            stringId = null;
+            id = -1;
+            onStart = onComplete = onStepComplete = null;
+
+            duration = 0;
+            loops = 1;
+            loopType = LoopType.Restart;
+            delay = 0;
+            isRelative = false;
+            easeCurveEval = null;
+            updateType = UpdateType.Default;
+            isSequenced = false;
+            creationLocked = startupDone = playedOnce = false;
+            position = fullDuration = completedLoops = 0;
+            isPlaying = isComplete = false;
+            elapsedDelay = 0;
+            delayComplete = true;
         }
 
         // Called by TweenManager in case a tween has a delay that needs to be updated.
@@ -179,36 +201,6 @@ namespace DG.Tweening
 
             // Return
             return t.autoKill && t.isComplete;
-        }
-
-        // ===================================================================================
-        // METHODS ---------------------------------------------------------------------------
-
-        // Doesn't reset active state and activeId, since those are only touched only by TweenManager
-        static void DoReset(Tween t)
-        {
-            t.isFrom = false;
-            t.autoKill = DOTween.defaultAutoKill;
-            t.timeScale = 1;
-            t.isBackwards = false;
-            t.objId = null;
-            t.stringId = null;
-            t.id = -1;
-            t.onStart = t.onComplete = t.onStepComplete = null;
-
-            t.duration = 0;
-            t.loops = 1;
-            t.loopType = LoopType.Restart;
-            t.delay = 0;
-            t.isRelative = false;
-            t.easeCurveEval = null;
-            t.updateType = UpdateType.Default;
-            t.isSequenced = false;
-            t.creationLocked = t.startupDone = t.playedOnce = false;
-            t.position = t.fullDuration = t.completedLoops = 0;
-            t.isPlaying = t.isComplete = false;
-            t.elapsedDelay = 0;
-            t.delayComplete = true;
         }
     }
 }
