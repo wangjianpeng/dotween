@@ -17,21 +17,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\bin\Editor\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\DOTweenEditor.XML</DocumentationFile>
+    <DocumentationFile>..\bin\Editor\DOTweenEditor.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\bin\Editor\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\DOTweenEditor.XML</DocumentationFile>
+    <DocumentationFile>..\bin\Editor\DOTweenEditor.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -59,9 +59,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set BinDir=bin.Global\DOTween\Editor
-set DestinationDir=$(SolutionDir)..\..\%25BinDir%25
+set DestinationDir=$(SolutionDir)..\%25BinDir%25
 set BinDirNoMeta=bin.Global_no_meta\DOTween\Editor
-set DestinationDirNoMeta=$(SolutionDir)..\..\%25BinDirNoMeta%25
+set DestinationDirNoMeta=$(SolutionDir)..\%25BinDirNoMeta%25
 set BinDirUnityTests=UnityTests.Unity4\Assets\Demigiant\DOTween\Editor
 set DestinationDirUnityTests=$(SolutionDir)%25BinDirUnityTests%25
 
@@ -77,13 +77,13 @@ DEL $(TargetName).pdb
 
 echo Exporting Assembly to %25DestinationDir%25
 echo Copying files to Destination...
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDir%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin\Editor" %25DestinationDir%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirNoMeta%25
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin\Editor" %25DestinationDirNoMeta%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirUnityTests%25
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirUnityTests%25 /Y /I /E</PostBuildEvent>
+echo f | xcopy "$(SolutionDir)\bin\Editor" %25DestinationDirUnityTests%25 /Y /I /E</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

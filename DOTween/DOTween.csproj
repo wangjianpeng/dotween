@@ -17,21 +17,21 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\DOTween.XML</DocumentationFile>
+    <DocumentationFile>..\bin\DOTween.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\DOTween.XML</DocumentationFile>
+    <DocumentationFile>..\bin\DOTween.XML</DocumentationFile>
     <NoWarn>1573</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -129,13 +129,13 @@ DEL $(TargetName).pdb
 
 echo Exporting Assembly to %25DestinationDir%25
 echo Copying files to Destination...
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDir%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin" %25DestinationDir%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirNoMeta%25
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirUnityTests%25
-echo f | xcopy "$(ProjectDir)\bin" %25DestinationDirUnityTests%25 /Y /I /E</PostBuildEvent>
+echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirUnityTests%25 /Y /I /E</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
