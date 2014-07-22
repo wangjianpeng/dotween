@@ -108,13 +108,14 @@ namespace DG.Tweening
                 // Startup immediately to set the correct FROM setup
                 if (!DoStartup(t)) return -1;
             }
-            t.elapsedDelay = elapsed;
-            if (elapsed > t.delay) {
+            float tweenDelay = t.delay;
+            if (elapsed > tweenDelay) {
                 // Delay complete
-                t.elapsedDelay = t.delay;
+                t.elapsedDelay = tweenDelay;
                 t.delayComplete = true;
-                return elapsed - t.delay;
+                return elapsed - tweenDelay;
             }
+            t.elapsedDelay = elapsed;
             return 0;
         }
 

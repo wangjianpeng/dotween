@@ -31,7 +31,7 @@ namespace DG.Tweening.Plugins.Core
     {
         // Default plugins. Contains internal dictionaries based on T2 types,
         // since there might be more plugins for the same type (like float to float and float to int)
-        // FIXME are there really multiple plugins for same type? Apparently not, so go back to more normal dictionary
+        // FIXME are there really multiple default plugins for same type? Apparently not, so go back to more normal dictionary
         static readonly Dictionary<Type, Dictionary<Type, ITweenPlugin>> _DefaultPlugins = new Dictionary<Type, Dictionary<Type, ITweenPlugin>>(10);
         // Advanced and custom plugins
         static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(20);
@@ -45,9 +45,14 @@ namespace DG.Tweening.Plugins.Core
 
             Type t1 = typeof(T1);
             Type t2 = typeof(T2);
-            bool hasT1 = _DefaultPlugins.ContainsKey(t1);
-            bool hasT2 = hasT1 && _DefaultPlugins[t1].ContainsKey(t2);
-            if (hasT2) return _DefaultPlugins[t1][t2] as ABSTweenPlugin<T1,T2,TPlugOptions>;
+            Dictionary<Type, ITweenPlugin> dictByT1;
+            _DefaultPlugins.TryGetValue(t1, out dictByT1);
+            bool hasT1 = dictByT1 != null;
+            if (hasT1) {
+                ITweenPlugin plugByT2;
+                dictByT1.TryGetValue(t2, out plugByT2);
+                if (plugByT2 != null) return plugByT2 as ABSTweenPlugin<T1, T2, TPlugOptions>;
+            }
 
             // Retrieve correct custom plugin
             ITweenPlugin plugin = null;
@@ -77,9 +82,8 @@ namespace DG.Tweening.Plugins.Core
             }
 
             if (plugin != null) {
-                if (!hasT1) _DefaultPlugins.Add(t1, new Dictionary<Type, ITweenPlugin>());
-                _DefaultPlugins[t1].Add(t2, plugin);
-                return plugin as ABSTweenPlugin<T1,T2,TPlugOptions>;
+                if (!hasT1) _DefaultPlugins.Add(t1, new Dictionary<Type, ITweenPlugin>() { { t2, plugin } });
+                return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
             }
 
             return null;
