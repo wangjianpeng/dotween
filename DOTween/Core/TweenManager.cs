@@ -28,7 +28,6 @@ namespace DG.Tweening.Core
 {
     internal static class TweenManager
     {
-        // FIXME reset original values
         const int _DefaultMaxTweeners = 200;
         const int _DefaultMaxSequences = 50;
         const string _MaxTweensReached = "Max number of Tweens has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
@@ -316,7 +315,6 @@ namespace DG.Tweening.Core
                 _PooledSequences.Add(t);
                 totPooledSequences++;
                 // Despawn sequenced tweens
-                // TODO verify that this works correctly
                 Sequence s = (Sequence)t;
                 int len = s.sequencedTweens.Count;
                 for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);

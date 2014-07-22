@@ -29,33 +29,23 @@ namespace DG.Tweening.Plugins.Core
 {
     internal static class PluginsManager
     {
-        // Default plugins. Contains internal dictionaries based on T2 types,
-        // since there might be more plugins for the same type (like float to float and float to int)
-        // FIXME are there really multiple default plugins for same type? Apparently not, so go back to more normal dictionary
-        static readonly Dictionary<Type, Dictionary<Type, ITweenPlugin>> _DefaultPlugins = new Dictionary<Type, Dictionary<Type, ITweenPlugin>>(10);
+        // Default plugins
+        static readonly Dictionary<Type, ITweenPlugin> _DefaultPlugins = new Dictionary<Type, ITweenPlugin>(20);
         // Advanced and custom plugins
-        static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(20);
+        static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(30);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
         internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetDefaultPlugin<T1,T2,TPlugOptions>()
         {
-            // TODO Improve
-
             Type t1 = typeof(T1);
-            Type t2 = typeof(T2);
-            Dictionary<Type, ITweenPlugin> dictByT1;
-            _DefaultPlugins.TryGetValue(t1, out dictByT1);
-            bool hasT1 = dictByT1 != null;
-            if (hasT1) {
-                ITweenPlugin plugByT2;
-                dictByT1.TryGetValue(t2, out plugByT2);
-                if (plugByT2 != null) return plugByT2 as ABSTweenPlugin<T1, T2, TPlugOptions>;
-            }
+            ITweenPlugin plugin;
+            _DefaultPlugins.TryGetValue(t1, out plugin);
+            if (plugin != null) return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
 
             // Retrieve correct custom plugin
-            ITweenPlugin plugin = null;
+            Type t2 = typeof(T2);
             if (t1 == typeof(Vector3)) {
                 plugin = new Vector3Plugin();
             } else if (t1 == typeof(Quaternion)) {
@@ -82,7 +72,7 @@ namespace DG.Tweening.Plugins.Core
             }
 
             if (plugin != null) {
-                if (!hasT1) _DefaultPlugins.Add(t1, new Dictionary<Type, ITweenPlugin>() { { t2, plugin } });
+                _DefaultPlugins.Add(t1, plugin);
                 return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
             }
 
