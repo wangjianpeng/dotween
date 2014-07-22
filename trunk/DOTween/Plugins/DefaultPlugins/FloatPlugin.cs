@@ -19,10 +19,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
-using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
@@ -47,7 +47,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
         public override float Evaluate(PlugFloat.Options options, Tween t, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration)
         {
             return options.snapping
-                ? Mathf.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0))
+                ? (float)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0))
                 : Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0);
         }
     }
