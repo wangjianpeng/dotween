@@ -8,6 +8,7 @@ public class TweenEnginesComparison : BrainBase
 {
 	enum State {
 		Menu,
+		NoEmitWITween,
 		ConfirmGoKit,
 		ConfirmITween,
 		CreatingObjects,
@@ -120,7 +121,7 @@ public class TweenEnginesComparison : BrainBase
 				GameObject go = (GameObject)Instantiate(prefab);
 				go.SetActive(true);
 				Transform t = go.transform;
-				t.position = rndStartupPos[i];
+				if (testSetup != TestSetup.Emit) t.position = rndStartupPos[i];
 				t.parent = container;
 				testObjsGos[i] = go;
 				testObjsTrans[i] = t;
@@ -147,21 +148,10 @@ public class TweenEnginesComparison : BrainBase
 		totCreationTime = Time.realtimeSinceStartup;
 		SetupTweens();
 		totCreationTime = Time.realtimeSinceStartup - totCreationTime;
-		if (testSetup == TestSetup.Emit) StartCoroutine(RestartCoroutine());
 		yield return null;
 		state = State.Running;
 		// Reset FPS so average is more correct
 		fpsGadget.ResetFps();
-	}
-
-	IEnumerator RestartCoroutine()
-	{
-		WaitForSeconds wfs = new WaitForSeconds(duration + 0.1f);
-		while (true) {
-			yield return wfs;
-			Reset(false);
-			SetupTweens();
-		}
 	}
 
 	void StopRun()
@@ -261,70 +251,203 @@ public class TweenEnginesComparison : BrainBase
 			break;
 		default:
 			for (int i = 0; i < numTweens; ++i) {
+				float twDuration = testSetup == TestSetup.Emit ? UnityEngine.Random.Range(0.25f, 1f) : duration;
 				Transform t = testObjsTrans[i];
+				GameObject go = testObjsGos[i]; // Used by LeanTween and iTween
 				switch (engine) {
 				case Engine.HOTween:
 					TweenParms tp = new TweenParms()
 						.Ease(hotweenEase)
 						.Loops(loops, hotweenLoopType);
-					if (positionTween) tp.Prop("position", rndPositions[i]);
-					if (rotationTween) tp.Prop("rotation", rndRotations[i]);
-					if (scaleTween) tp.Prop("localScale", rndScale);
-					HOTween.To(t, duration, tp);
+					if (positionTween) {
+						Vector3 toPos = rndPositions[i];
+						tp.Prop("position", toPos);
+						if (testSetup == TestSetup.Emit) tp.OnComplete(()=> EmitHOTweenPositionFor(t, toPos, twDuration, hotweenEase));
+					}
+					if (rotationTween) {
+						Vector3 toRot = rndRotations[i];
+						tp.Prop("rotation", toRot);
+						if (testSetup == TestSetup.Emit) tp.OnComplete(()=> EmitHOTweenRotationFor(t, toRot, twDuration, hotweenEase));
+					}
+					if (scaleTween) {
+						tp.Prop("localScale", rndScale);
+						if (testSetup == TestSetup.Emit) tp.OnComplete(()=> EmitHOTweenScaleFor(t, rndScale, twDuration, hotweenEase));
+					}
+					HOTween.To(t, twDuration, tp);
 					break;
 				case Engine.LeanTween:
-					if (positionTween) LeanTween.move(testObjsGos[i], rndPositions[i], duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
-					if (rotationTween) LeanTween.rotate(testObjsGos[i], rndRotations[i], duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
-					if (scaleTween) LeanTween.scale(testObjsGos[i], rndScale, duration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+					LTDescr leanTween;
+					if (positionTween) {
+						Vector3 toPos = rndPositions[i];
+						leanTween = LeanTween.move(go, rndPositions[i], twDuration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+						if (testSetup == TestSetup.Emit) leanTween.setOnComplete(()=> EmitLeanTweenPositionFor(t, go, toPos, twDuration, leanEase));
+					}
+					if (rotationTween) {
+						Vector3 toRot = rndRotations[i];
+						leanTween = LeanTween.rotate(go, rndRotations[i], twDuration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+						if (testSetup == TestSetup.Emit) leanTween.setOnComplete(()=> EmitLeanTweenRotationFor(t, go, toRot, twDuration, leanEase));
+					}
+					if (scaleTween) {
+						leanTween = LeanTween.scale(go, rndScale, twDuration).setEase(leanEase).setRepeat(loops).setLoopType(leanLoopType);
+						if (testSetup == TestSetup.Emit) leanTween.setOnComplete(()=> EmitLeanTweenScaleFor(t, go, rndScale, twDuration, leanEase));
+					}
 					break;
 				case Engine.GoKit:
 					GoTweenConfig goConfig = new GoTweenConfig()
 						.setEaseType(goEase)
 						.setIterations(loops, goLoopType);
-					if (positionTween) goConfig.addTweenProperty(new PositionTweenProperty(rndPositions[i]));
-					if (rotationTween) goConfig.addTweenProperty(new RotationTweenProperty(rndRotations[i]));
-					if (scaleTween) goConfig.addTweenProperty(new ScaleTweenProperty(rndScale));
-					Go.to(t, duration, goConfig);
+					if (positionTween) {
+						Vector3 toPos = rndPositions[i];
+						goConfig.addTweenProperty(new PositionTweenProperty(toPos));
+						if (testSetup == TestSetup.Emit) goConfig.onComplete(x=> EmitGoKitPositionFor(t, toPos, twDuration, goEase));
+					}
+					if (rotationTween) {
+						Vector3 toRot = rndRotations[i];
+						goConfig.addTweenProperty(new RotationTweenProperty(toRot));
+						if (testSetup == TestSetup.Emit) goConfig.onComplete(x=> EmitGoKitRotationFor(t, toRot, twDuration, goEase));
+					}
+					if (scaleTween) {
+						goConfig.addTweenProperty(new ScaleTweenProperty(rndScale));
+						if (testSetup == TestSetup.Emit) goConfig.onComplete(x=> EmitGoKitScaleFor(t, rndScale, twDuration, goEase));
+					}
+					Go.to(t, twDuration, goConfig);
 					break;
 				case Engine.iTween:
 					Hashtable hs;
 					if (positionTween) {
 						hs = new Hashtable();
 						hs.Add("position", rndPositions[i]);
-						hs.Add("time", duration);
+						hs.Add("time", twDuration);
 						hs.Add("looptype", iTweenLoopType);
 						hs.Add("easetype", iTweenEase);
-						iTween.MoveTo(testObjsGos[i], hs);
+						iTween.MoveTo(go, hs);
 					}
 					if (rotationTween) {
 						hs = new Hashtable();
 						hs.Add("rotation", rndRotations[i]);
-						hs.Add("time", duration);
+						hs.Add("time", twDuration);
 						hs.Add("looptype", iTweenLoopType);
 						hs.Add("easetype", iTweenEase);
-						iTween.RotateTo(testObjsGos[i], hs);
+						iTween.RotateTo(go, hs);
 					}
 					if (scaleTween) {
 						hs = new Hashtable();
 						hs.Add("scale", rndScale);
-						hs.Add("time", duration);
+						hs.Add("time", twDuration);
 						hs.Add("looptype", iTweenLoopType);
 						hs.Add("easetype", iTweenEase);
-						iTween.ScaleTo(testObjsGos[i], hs);
+						iTween.ScaleTo(go, hs);
 					}
 					break;
 				default:
 					// tCopy is needed to create correct closure object,
 					// otherwise closure will pass the same t to all the loop
 					Transform tCopy = t;
-					if (positionTween) tCopy.MoveTo(rndPositions[i], duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
-					if (rotationTween) tCopy.RotateTo(rndRotations[i], duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
-					if (scaleTween) tCopy.ScaleTo(rndScale, duration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+					DG.Tweening.Tween dotween;
+					if (positionTween) {
+						Vector3 toPos = rndPositions[i];
+						dotween = tCopy.MoveTo(toPos, twDuration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+						if (testSetup == TestSetup.Emit) dotween.OnComplete(()=> EmitDOTweenPositionFor(t, toPos, twDuration, dotweenEase));
+					}
+					if (rotationTween) {
+						Vector3 toRot = rndRotations[i];
+						dotween = tCopy.RotateTo(toRot, twDuration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+						if (testSetup == TestSetup.Emit) dotween.OnComplete(()=> EmitDOTweenRotationFor(t, toRot, twDuration, dotweenEase));
+					}
+					if (scaleTween) {
+						dotween = tCopy.ScaleTo(rndScale, twDuration).Ease(dotweenEase).Loops(loops, dotweenLoopType);
+						if (testSetup == TestSetup.Emit) dotween.OnComplete(()=> EmitDOTweenScaleFor(t, rndScale, twDuration, dotweenEase));
+					}
 					break;
 				}
 			}
 			break;
 		}
+	}
+
+	void EmitDOTweenPositionFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
+	{
+		t.position = Vector3.zero;
+		t.MoveTo(to, twDuration).Ease(ease).OnComplete(()=> EmitDOTweenPositionFor(t, to, twDuration, ease));
+	}
+	void EmitDOTweenRotationFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
+	{
+		t.rotation = Quaternion.identity;
+		t.RotateTo(to, twDuration).Ease(ease).OnComplete(()=> EmitDOTweenRotationFor(t, to, twDuration, ease));
+	}
+	void EmitDOTweenScaleFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
+	{
+		t.localScale = Vector3.one;
+		t.ScaleTo(to, twDuration).Ease(ease).OnComplete(()=> EmitDOTweenScaleFor(t, to, twDuration, ease));
+	}
+
+	void EmitHOTweenPositionFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)
+	{
+		t.position = Vector3.zero;
+		HOTween.To(t, twDuration, new TweenParms()
+			.Prop("position", to)
+			.Ease(ease)
+			.OnComplete(()=> EmitHOTweenPositionFor(t, to, twDuration, ease))
+		);
+	}
+	void EmitHOTweenRotationFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)
+	{
+		t.rotation = Quaternion.identity;
+		HOTween.To(t, twDuration, new TweenParms()
+			.Prop("rotation", to)
+			.Ease(ease)
+			.OnComplete(()=> EmitHOTweenRotationFor(t, to, twDuration, ease))
+		);
+	}
+	void EmitHOTweenScaleFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)
+	{
+		t.localScale = Vector3.one;
+		HOTween.To(t, twDuration, new TweenParms()
+			.Prop("localScale", to)
+			.Ease(ease)
+			.OnComplete(()=> EmitHOTweenScaleFor(t, to, twDuration, ease))
+		);
+	}
+
+	void EmitLeanTweenPositionFor(Transform t, GameObject go, Vector3 to, float twDuration, LeanTweenType ease)
+	{
+		t.position = Vector3.zero;
+		LeanTween.move(go, to, twDuration).setEase(ease).setOnComplete(()=> EmitLeanTweenPositionFor(t, go, to, twDuration, ease));
+	}
+	void EmitLeanTweenRotationFor(Transform t, GameObject go, Vector3 to, float twDuration, LeanTweenType ease)
+	{
+		t.rotation = Quaternion.identity;
+		LeanTween.rotate(go, to, twDuration).setEase(ease).setOnComplete(()=> EmitLeanTweenRotationFor(t, go, to, twDuration, ease));
+	}
+	void EmitLeanTweenScaleFor(Transform t, GameObject go, Vector3 to, float twDuration, LeanTweenType ease)
+	{
+		t.localScale = Vector3.one;
+		LeanTween.scale(go, to, twDuration).setEase(ease).setOnComplete(()=> EmitLeanTweenScaleFor(t, go, to, twDuration, ease));
+	}
+
+	void EmitGoKitPositionFor(Transform t, Vector3 to, float twDuration, GoEaseType ease)
+	{
+		t.position = Vector3.zero;
+		Go.to(t, twDuration, new GoTweenConfig()
+			.addTweenProperty(new PositionTweenProperty(to))
+			.onComplete(x=> EmitGoKitPositionFor(t, to, twDuration, ease))
+		);
+	}
+	void EmitGoKitRotationFor(Transform t, Vector3 to, float twDuration, GoEaseType ease)
+	{
+		t.rotation = Quaternion.identity;
+		Go.to(t, twDuration, new GoTweenConfig()
+			.addTweenProperty(new RotationTweenProperty(to))
+			.onComplete(x=> EmitGoKitRotationFor(t, to, twDuration, ease))
+		);
+	}
+	void EmitGoKitScaleFor(Transform t, Vector3 to, float twDuration, GoEaseType ease)
+	{
+		t.localScale = Vector3.one;
+		Go.to(t, twDuration, new GoTweenConfig()
+			.addTweenProperty(new ScaleTweenProperty(to))
+			.onComplete(x=> EmitGoKitScaleFor(t, to, twDuration, ease))
+		);
 	}
 
 	Vector3 RandomVector3(float rangeX, float rangeY, float rangeZ)
@@ -369,6 +492,9 @@ public class TweenEnginesComparison : BrainBase
 		case State.Running:
 			DrawRunningGUI();
 			break;
+		case State.NoEmitWITween:
+			DrawNoEmitWITweenGUI();
+			break;
 		case State.ConfirmGoKit:
 			DrawConfirmGoKitGUI();
 			break;
@@ -406,6 +532,7 @@ public class TweenEnginesComparison : BrainBase
 		GUILayout.Space(vspace);
 		GUILayout.Label("Test Type", labelStyle);
 		testType = (TestType)GUILayout.Toolbar((int)testType, testTypeList);
+		if (testType == TestType.Floats && testSetup == TestSetup.Emit) testSetup = TestSetup.Loop;
 		GUILayout.Space(vspace);
 		GUILayout.Label("Test Setup", labelStyle);
 		testSetup = (TestSetup)GUILayout.Toolbar((int)testSetup, testSetupList);
@@ -422,9 +549,28 @@ public class TweenEnginesComparison : BrainBase
 		if (GUILayout.Button("START")) {
 			numTweens = Convert.ToInt32(numTweensList[numTweensSelId]);
 			if (engine == Engine.GoKit && testType == TestType.Floats && numTweens >= 8000) state = State.ConfirmGoKit;
-			else if (engine == Engine.iTween && numTweens > 4000) state = State.ConfirmITween;
+			else if (engine == Engine.iTween) {
+				if (testSetup == TestSetup.Emit) state = State.NoEmitWITween;
+				else if (numTweens > 4000) state = State.ConfirmITween;
+				else StartCoroutine(StartRun());
+			}
 			else StartCoroutine(StartRun());
 		}
+
+		GUILayout.FlexibleSpace();
+		GUILayout.EndVertical();
+	}
+
+	void DrawNoEmitWITweenGUI()
+	{
+		GUILayout.BeginVertical();
+		GUILayout.FlexibleSpace();
+
+		GUILayout.Label("Sorry, but iTween doesn't allow to create a good Emit test");
+		GUILayout.Space(8);
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Ok")) state = State.Menu;
+		GUILayout.EndHorizontal();
 
 		GUILayout.FlexibleSpace();
 		GUILayout.EndVertical();

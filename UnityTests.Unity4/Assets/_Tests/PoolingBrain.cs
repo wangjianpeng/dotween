@@ -65,9 +65,20 @@ public class PoolingBrain : BrainBase
 	    GUILayout.EndHorizontal();
 	    GUILayout.Space(5);
 
+	    GUILayout.Label("Emit Particles Tweens");
+		GUILayout.BeginHorizontal();
+	    if (GUILayout.Button("Spawn 1")) SpawnParticles(1);
+	    if (GUILayout.Button("Spawn 10")) SpawnParticles(10);
+	    if (GUILayout.Button("Spawn 100")) SpawnParticles(100);
+	    if (GUILayout.Button("Spawn 300")) SpawnParticles(300);
+	    if (GUILayout.Button("Spawn 1000")) SpawnParticles(1000);
+	    GUILayout.EndHorizontal();
+	    GUILayout.Space(5);
+
 	    GUILayout.BeginHorizontal();
 	    if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
-	    if (GUILayout.Button("Clear")) DOTween.Clear();
+	    if (GUILayout.Button("Kill")) DOTween.Kill();
+	    if (GUILayout.Button("Clear")) Clear();
 	    GUILayout.EndHorizontal();
 
 	    GUILayout.EndVertical();
@@ -86,6 +97,7 @@ public class PoolingBrain : BrainBase
             t.position = RandomVector3();
             DOTween.To(() => t.position, x => t.position = x, RandomVector3(), 1f).OnComplete(() => Destroy(go));
         }
+        fpsGadget.ResetFps();
 	}
 	void SpawnPositionX(int tot, bool snapping = false)
 	{
@@ -101,6 +113,7 @@ public class PoolingBrain : BrainBase
         		DOTween.To(Plug.Vector3X(() => t.position, x => t.position = x, RandomFloat()), 1f).OnComplete(() => Destroy(go));
         	}
         }
+        fpsGadget.ResetFps();
 	}
 	void SpawnPositionY(int tot, bool snapping = false)
 	{
@@ -116,6 +129,7 @@ public class PoolingBrain : BrainBase
         		DOTween.To(Plug.Vector3Y(() => t.position, x => t.position = x, RandomFloat()), 1f).OnComplete(() => Destroy(go));
         	}
         }
+        fpsGadget.ResetFps();
 	}
 	void SpawnRotation(int tot)
 	{
@@ -127,6 +141,39 @@ public class PoolingBrain : BrainBase
             t.position = RandomVector3();
             DOTween.To(() => t.rotation, x => t.rotation = x, RandomVector3(720), 1f).OnComplete(() => Destroy(go));
         }
+        fpsGadget.ResetFps();
+	}
+
+	void SpawnParticles(int tot)
+	{
+		for (int i = 0; i < tot; i++) {
+			GameObject go = Instantiate(prefab) as GameObject;
+	    	go.name += i;
+	        Transform t = go.transform;
+	        t.parent = spawnsParent;
+	        Material m = t.gameObject.renderer.material;
+			ResetParticleAndAssignTween(t, m);
+		}
+		fpsGadget.ResetFps();
+	}
+	void ResetParticleAndAssignTween(Transform t, Material m)
+	{
+		t.position = Vector3.zero;
+		Color col = m.color;
+		col.a = 1;
+		m.color = col;
+		float duration = Random.Range(0.2f, 2f);
+        m.FadeTo(0, duration);
+        t.MoveTo(RandomVector3(), duration).OnComplete(()=> ResetParticleAndAssignTween(t, m));
+	}
+
+	void Clear()
+	{
+		DOTween.Clear();
+		Transform[] ts = spawnsParent.GetComponentsInChildren<Transform>();
+		foreach (Transform t in ts) {
+			if (t != spawnsParent) Destroy(t.gameObject);
+		}
 	}
 
 	Vector3 RandomVector3(float limit = 10)
