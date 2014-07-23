@@ -1700,23 +1700,23 @@
             Extensions for the creation of tweens
             </summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.AutoKill``1(``0,System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetAutoKill``1(``0,System.Boolean)">
             <summary>Sets the autoKill behaviour of the tween</summary>
             <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0,System.Object)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.Object)">
             <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0,System.Int32)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.Int32)">
             <summary>Sets an int ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0,System.String)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.String)">
             <summary>Sets a string ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Id``1(``0)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0)">
             <summary>Resets all ID types for this tween</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Loops``1(``0,System.Int32,DG.Tweening.LoopType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetLoops``1(``0,System.Int32,DG.Tweening.LoopType)">
             <summary>Sets the looping options for the tween</summary>
             <param name="loops">Number of cycles to play (-1 for infinite)</param>
             <param name="loopType">Loop behaviour type</param>
@@ -1769,20 +1769,20 @@
             <param name="atPosition">The time position where the callback will be placed</param>
             <param name="callback">The callback to insert</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Delay``1(``0,System.Single)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetDelay``1(``0,System.Single)">
             <summary>Sets a delayed startup for the tween.
             Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Relative``1(``0,System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetRelative``1(``0,System.Boolean)">
             <summary>If isRelative is TRUE sets the tween as relative
             (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
             Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Ease``1(``0,DG.Tweening.EaseType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetEase``1(``0,DG.Tweening.EaseType)">
             <summary>Sets the ease the tween.
             Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.Ease``1(``0,UnityEngine.AnimationCurve)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetEase``1(``0,UnityEngine.AnimationCurve)">
             <summary>Sets the ease the tween using an AnimationCurve.
             Has no effect on Sequences</summary>
         </member>

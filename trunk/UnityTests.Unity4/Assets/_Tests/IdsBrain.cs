@@ -15,16 +15,16 @@ public class IdsBrain : BrainBase
 			Transform t = ((GameObject)Instantiate(prefab)).transform;
 			ts[i] = t;
 			t.position = new Vector3(startX + 3 * i, 0, 0);
-			Tween tween = t.MoveToY(4, 1).Loops(-1, LoopType.Yoyo);
+			Tween tween = t.MoveToY(4, 1).SetLoops(-1, LoopType.Yoyo);
 			switch (i) {
 			case 0:
-				tween.Id(0);
+				tween.SetId(0);
 				break;
 			case 1:
-				tween.Id("string");
+				tween.SetId("string");
 				break;
 			case 2:
-				tween.Id(this);
+				tween.SetId(this);
 				break;
 			}
 		}

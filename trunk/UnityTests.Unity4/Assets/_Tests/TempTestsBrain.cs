@@ -22,17 +22,17 @@ public class TempTestsBrain : BrainBase
 		// Using NEW
 		tween = DOTween.To(new PlugVector3X(()=>target.position, x=> target.position = x, 3f, new PlugVector3X.Options(false)), 1.5f)
 			// .Delay(delay).Relative()
-			.Loops(loops, loopType).AutoKill(false)
+			.SetLoops(loops, loopType).SetAutoKill(false)
 			.OnStart(()=> Debug.Log("Start"))
 			.OnStepComplete(()=> Debug.Log("Step Complete"))
 			.OnComplete(()=> Debug.Log("Complete"))
 			.Pause();
 		// Using Plug shortcuts (and no delays)
 		DOTween.To(Plug.Vector3Y(()=>target.position, x=> target.position = x, 3f, Plug.Vector3YOptions(true)), 1.5f)
-			.Relative().Loops(loops, loopType).AutoKill(false)
+			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
 			.Pause();
 		DOTween.To(Plug.Vector3Z(()=>target.position, x=> target.position = x, 3f), 1.5f)
-			.Relative().Loops(loops, loopType).AutoKill(false)
+			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
 			.Pause();
 	}
 
