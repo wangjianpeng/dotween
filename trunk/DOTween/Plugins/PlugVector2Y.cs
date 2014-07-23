@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 // 
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
@@ -92,7 +93,7 @@ namespace DG.Tweening.Plugins
         {
             Vector2 res = getter();
             res.y = Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0);
-            if (options.snapping) res.y = Mathf.Round(res.y);
+            if (options.snapping) res.y = (float)Math.Round(res.y);
             return res;
         }
     }

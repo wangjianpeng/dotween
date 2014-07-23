@@ -20,11 +20,12 @@
 // THE SOFTWARE.
 // 
 
+using System;
 using System.Text;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
@@ -55,7 +56,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
-            int len = Mathf.RoundToInt(Ease.Apply(t, elapsed, 0, changeValueLen, duration, 0, 0));
+            int len = (int)Math.Round(Ease.Apply(t, elapsed, 0, changeValueLen, duration, 0, 0));
 
             if (isRelative) {
                 _Buffer.Append(startValue);
