@@ -28,9 +28,7 @@ namespace DG.Tweening
     {
         /// <summary>Updates every frame, using Unity's timeScale</summary>
         Default,
-        /// <summary>Updates at every physics interval</summary>
-        Fixed,
         /// <summary>Updates every frame, but ignores Unity's timeScale</summary>
-        TimeScaleIndependent
+        Independent
     }
 }

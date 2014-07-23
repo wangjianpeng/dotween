@@ -49,7 +49,7 @@ namespace DG.DOTweenEditor
 
         override public void OnInspectorGUI()
         {
-            int totActiveTweens = TweenManager.TotActiveTweens();
+            int totActiveTweens = TweenManager.totActiveTweens;
             int totPlayingTweens = TweenManager.TotPlayingTweens();
             int totPausedTweens = totActiveTweens - totPlayingTweens;
 
