@@ -1875,10 +1875,7 @@
         <member name="F:DG.Tweening.UpdateType.Default">
             <summary>Updates every frame, using Unity's timeScale</summary>
         </member>
-        <member name="F:DG.Tweening.UpdateType.Fixed">
-            <summary>Updates at every physics interval</summary>
-        </member>
-        <member name="F:DG.Tweening.UpdateType.TimeScaleIndependent">
+        <member name="F:DG.Tweening.UpdateType.Independent">
             <summary>Updates every frame, but ignores Unity's timeScale</summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Quart">

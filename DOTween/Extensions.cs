@@ -65,7 +65,7 @@ namespace DG.Tweening
         {
             if (!t.active) return;
 
-            if (TweenManager.isUpdateLoop && TweenManager.updateLoopType == t.updateType) {
+            if (TweenManager.isUpdateLoop) {
                 // Just mark it for killing, so the update loop will take care of it
                 t.active = false;
             } else TweenManager.Despawn(t);

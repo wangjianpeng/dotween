@@ -81,15 +81,9 @@ namespace DG.Tweening
 
         void Update()
         {
-            if (TweenManager.hasActiveDefaultTweens) TweenManager.Update(Time.deltaTime);
-            if (TweenManager.hasActiveIndependentTweens) TweenManager.TimeScaleIndependentUpdate(Time.realtimeSinceStartup - _timeScaleIndependentTime);
+            if (TweenManager.hasActiveTweens) TweenManager.Update(Time.deltaTime * timeScale, (Time.realtimeSinceStartup - _timeScaleIndependentTime) * timeScale);
             _timeScaleIndependentTime = Time.realtimeSinceStartup;
             if (isUnityEditor) inspectorUpdater++;
-        }
-
-        void FixedUpdate()
-        {
-            if (TweenManager.hasActiveFixedTweens) TweenManager.FixedUpdate(Time.fixedDeltaTime);
         }
 
         // ===================================================================================
