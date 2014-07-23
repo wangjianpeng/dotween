@@ -10,7 +10,7 @@ public class CustomPluginExampleBrain : BrainBase
 	{
 		// DOTween.To(()=>target.position, x=> target.position = x, new Vector3(4, 4, 0), 1.5f)
 		DOTween.To(new PlugCustomPlugin(()=>target.position, x=> target.position = x, 4), 1.5f)
-			.Delay(2).Relative().Loops(5, LoopType.Yoyo).AutoKill(false)
+			.SetDelay(2).SetRelative().SetLoops(5, LoopType.Yoyo).SetAutoKill(false)
 			.OnStart(()=> Debug.Log("Start"))
 			.OnStepComplete(()=> Debug.Log("Step Complete"))
 			.OnComplete(()=> Debug.Log("Complete"));

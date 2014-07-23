@@ -73,29 +73,29 @@ public class SequencesBrain : BrainBase
 		Material mat = target.gameObject.renderer.material;
 
 		Sequence seq = DOTween.Sequence()
-			.Id("Sequence INNER")
+			.SetId("Sequence INNER")
 			.OnStart(()=> DGUtils.Log("Sequence INNER Start"))
 			.OnStepComplete(()=> { stepCompleteS2++; DGUtils.Log("SEQUENCE INNER Step Complete"); })
 			.OnComplete(()=> { completeS2++; });
 
 		seq.AppendInterval(0.5f);
 		seq.Append(
-			target.MoveTo(new Vector3(2, 2, 2), 1f).Loops(1, LoopType.Yoyo)
-			.Id("Move")
+			target.MoveTo(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
+			.SetId("Move")
 			.OnStart(()=> DGUtils.Log("Move Start"))
 			.OnStepComplete(()=> { stepCompleteT1++; DGUtils.Log("Move Step Complete"); })
 			.OnComplete(()=> { completeT1++; })
 		);
 		seq.Append(
 			target.RotateTo(new Vector3(0, 225, 2), 1)
-			.Id("Rotate")
+			.SetId("Rotate")
 			.OnStart(()=> DGUtils.Log("Rotate Start"))
 			.OnStepComplete(()=> { stepCompleteT2++; DGUtils.Log("Rotate Step Complete"); })
 			.OnComplete(()=> { completeT2++; })
 		);
 		seq.Insert(
 			0.5f, mat.ColorTo(Color.green, 1)
-			.Id("Color")
+			.SetId("Color")
 			.OnStart(()=> DGUtils.Log("Color Start"))
 			.OnStepComplete(()=> { stepCompleteT3++; DGUtils.Log("Color Step Complete"); })
 			.OnComplete(()=> { completeT3++; })
@@ -105,15 +105,15 @@ public class SequencesBrain : BrainBase
 		seq.InsertCallback(1.25f, ()=> DGUtils.Log("1.25f Sequence callback"));
 
 		Sequence seqPre = DOTween.Sequence()
-			.Id("Sequence OUTER")
+			.SetId("Sequence OUTER")
 			.OnStart(()=> DGUtils.Log("Sequence OUTER Start"))
 			.OnStepComplete(()=> { stepCompleteS1++; DGUtils.Log("Sequence OUTER Step Complete"); })
 			.OnComplete(()=> { completeS1++; });
 		seqPre.Append(seq);
 		seqPre.PrependInterval(1);
 
-		Sequence mainSeq = DOTween.Sequence(UpdateType.TimeScaleIndependent).Loops(loops, loopType).AutoKill(false)
-			.Id("MAIN SEQUENCE")
+		Sequence mainSeq = DOTween.Sequence(UpdateType.TimeScaleIndependent).SetLoops(loops, loopType).SetAutoKill(false)
+			.SetId("MAIN SEQUENCE")
 			.OnStart(()=> DGUtils.Log("MAINSequence Start"))
 			.OnStepComplete(()=> { stepCompleteMS++; DGUtils.Log("MAINSEQUENCE Step Complete"); })
 			.OnComplete(()=> { completeMS++; });
@@ -133,9 +133,9 @@ public class SequencesBrain : BrainBase
 	{
 		Transform target = ((GameObject)Instantiate(prefab)).transform;
 
-		target.MoveTo(new Vector3(2, 2, 2), 1f).Loops(1, LoopType.Yoyo)
-			.Id("Move (Tween)")
-			.Loops(3)
+		target.MoveTo(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
+			.SetId("Move (Tween)")
+			.SetLoops(3)
 			.OnComplete(()=> Destroy(target.gameObject));
 	}
 
