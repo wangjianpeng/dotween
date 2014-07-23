@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 // 
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
@@ -47,7 +48,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
         public override int Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<int> getter, float elapsed, int startValue, int changeValue, float duration)
         {
-            return Mathf.RoundToInt(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));
+            return (int)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));
         }
     }
 }

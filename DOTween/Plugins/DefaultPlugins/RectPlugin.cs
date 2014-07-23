@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 // 
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
@@ -60,10 +61,10 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             startValue.width = Ease.Apply(t, elapsed, startValue.width, changeValue.width, duration, 0, 0);
             startValue.height = Ease.Apply(t, elapsed, startValue.height, changeValue.height, duration, 0, 0);
             if (options.snapping) {
-                startValue.x = Mathf.Round(startValue.x);
-                startValue.y = Mathf.Round(startValue.y);
-                startValue.width = Mathf.Round(startValue.width);
-                startValue.height = Mathf.Round(startValue.height);
+                startValue.x = (float)Math.Round(startValue.x);
+                startValue.y = (float)Math.Round(startValue.y);
+                startValue.width = (float)Math.Round(startValue.width);
+                startValue.height = (float)Math.Round(startValue.height);
             }
             return startValue;
         }
