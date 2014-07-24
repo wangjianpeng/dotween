@@ -33,7 +33,8 @@ namespace DG.Tweening
         // ===================================================================================
         // TWEENER + SEQUENCES ---------------------------------------------------------------
 
-        /// <summary>Sets the autoKill behaviour of the tween</summary>
+        /// <summary>Sets the autoKill behaviour of the tween. 
+        /// Has no effect if the tween has already started</summary>
         /// <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
         public static T SetAutoKill<T>(this T t, bool autoKillOnCompletion = true) where T : Tween
         {
@@ -46,32 +47,24 @@ namespace DG.Tweening
         /// <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         public static T SetId<T>(this T t, object id) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.objId = id;
             return t;
         }
         /// <summary>Sets an int ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         public static T SetId<T>(this T t, int id) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.id = id;
             return t;
         }
         /// <summary>Sets a string ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         public static T SetId<T>(this T t, string id) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.stringId = id;
             return t;
         }
         /// <summary>Resets all ID types for this tween</summary>
         public static T SetId<T>(this T t) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             // Reset all ids
             t.id = -1;
             t.stringId = null;
@@ -79,7 +72,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the looping options for the tween</summary>
+        /// <summary>Sets the looping options for the tween. 
+        /// Has no effect if the tween has already started</summary>
         /// <param name="loops">Number of cycles to play (-1 for infinite)</param>
         /// <param name="loopType">Loop behaviour type</param>
         public static T SetLoops<T>(this T t, int loops, LoopType loopType = LoopType.Restart) where T : Tween
@@ -98,8 +92,6 @@ namespace DG.Tweening
         /// (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
         public static T OnStart<T>(this T t, TweenCallback action) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.onStart = action;
             return t;
         }
@@ -108,8 +100,6 @@ namespace DG.Tweening
         /// (called the moment the tween completes one loop cycle)</summary>
         public static T OnStepComplete<T>(this T t, TweenCallback action) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.onStepComplete = action;
             return t;
         }
@@ -118,8 +108,6 @@ namespace DG.Tweening
         /// (called the moment the tween reaches completion, loops included)</summary>
         public static T OnComplete<T>(this T t, TweenCallback action) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.onComplete = action;
             return t;
         }
@@ -127,7 +115,8 @@ namespace DG.Tweening
         // ===================================================================================
         // SEQUENCES -------------------------------------------------------------------------
 
-        /// <summary>Adds the given tween to the end of the Sequence</summary>
+        /// <summary>Adds the given tween to the end of the Sequence. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="t">The tween to append</param>
         public static Sequence Append(this Sequence s, Tween t)
         {
@@ -137,7 +126,8 @@ namespace DG.Tweening
             Sequence.DoInsert(s, t, s.duration);
             return s;
         }
-        /// <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content</summary>
+        /// <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="t">The tween to prepend</param>
         public static Sequence Prepend(this Sequence s, Tween t)
         {
@@ -148,7 +138,8 @@ namespace DG.Tweening
             return s;
         }
         /// <summary>Inserts the given tween at the given time position in the Sequence,
-        /// automatically adding an interval if needed</summary>
+        /// automatically adding an interval if needed. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="atPosition">The time position where the tween will be placed</param>
         /// <param name="t">The tween to insert</param>
         public static Sequence Insert(this Sequence s, float atPosition, Tween t)
@@ -160,7 +151,8 @@ namespace DG.Tweening
             return s;
         }
 
-        /// <summary>Adds the given interval to the end of the Sequence</summary>
+        /// <summary>Adds the given interval to the end of the Sequence. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="interval">The interval duration</param>
         public static Sequence AppendInterval(this Sequence s, float interval)
         {
@@ -169,7 +161,8 @@ namespace DG.Tweening
             Sequence.DoAppendInterval(s, interval);
             return s;
         }
-        /// <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content</summary>
+        /// <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="interval">The interval duration</param>
         public static Sequence PrependInterval(this Sequence s, float interval)
         {
@@ -179,7 +172,8 @@ namespace DG.Tweening
             return s;
         }
 
-        /// <summary>Adds the given callback to the end of the Sequence</summary>
+        /// <summary>Adds the given callback to the end of the Sequence. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="callback">The callback to append</param>
         public static Sequence AppendCallback(this Sequence s, TweenCallback callback)
         {
@@ -189,7 +183,8 @@ namespace DG.Tweening
             Sequence.DoInsertCallback(s, callback, s.duration);
             return s;
         }
-        /// <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content</summary>
+        /// <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="callback">The callback to prepend</param>
         public static Sequence PrependCallback(this Sequence s, TweenCallback callback)
         {
@@ -200,7 +195,8 @@ namespace DG.Tweening
             return s;
         }
         /// <summary>Inserts the given callback at the given time position in the Sequence,
-        /// automatically adding an interval if needed</summary>
+        /// automatically adding an interval if needed. 
+        /// Has no effect if the Sequence has already started</summary>
         /// <param name="atPosition">The time position where the callback will be placed</param>
         /// <param name="callback">The callback to insert</param>
         public static Sequence InsertCallback(this Sequence s, float atPosition, TweenCallback callback)
@@ -216,7 +212,7 @@ namespace DG.Tweening
         // TWEENERS --------------------------------------------------------------------------
 
         /// <summary>Sets a delayed startup for the tween.
-        /// Has no effect on Sequences</summary>
+        /// Has no effect on Sequences or if the tween has already started</summary>
         public static T SetDelay<T>(this T t, float delay) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -228,7 +224,7 @@ namespace DG.Tweening
 
         /// <summary>If isRelative is TRUE sets the tween as relative
         /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
-        /// Has no effect on Sequences</summary>
+        /// Has no effect on Sequences or if the tween has already started</summary>
         public static T SetRelative<T>(this T t, bool isRelative = true) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -241,8 +237,6 @@ namespace DG.Tweening
         /// Has no effect on Sequences</summary>
         public static T SetEase<T>(this T t, EaseType easeType) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.easeType = easeType;
             t.easeCurveEval = null;
             return t;
@@ -251,8 +245,6 @@ namespace DG.Tweening
         /// Has no effect on Sequences</summary>
         public static T SetEase<T>(this T t, AnimationCurve animCurve) where T : Tween
         {
-            if (t.creationLocked) return t;
-
             t.easeType = EaseType.AnimationCurve;
             t.easeCurveEval = new EaseCurve(animCurve).Evaluate;
             return t;

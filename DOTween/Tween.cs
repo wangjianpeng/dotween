@@ -50,6 +50,7 @@ namespace DG.Tweening
         public TweenCallback onStepComplete;
         /// <summary>Called the moment the tween reaches completion (loops included)</summary>
         public TweenCallback onComplete;
+        
         // Fixed after creation
         internal bool isFrom;
         internal bool autoKill;
