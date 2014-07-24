@@ -1701,7 +1701,8 @@
             </summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetAutoKill``1(``0,System.Boolean)">
-            <summary>Sets the autoKill behaviour of the tween</summary>
+            <summary>Sets the autoKill behaviour of the tween. 
+            Has no effect if the tween has already started</summary>
             <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.Object)">
@@ -1717,7 +1718,8 @@
             <summary>Resets all ID types for this tween</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetLoops``1(``0,System.Int32,DG.Tweening.LoopType)">
-            <summary>Sets the looping options for the tween</summary>
+            <summary>Sets the looping options for the tween. 
+            Has no effect if the tween has already started</summary>
             <param name="loops">Number of cycles to play (-1 for infinite)</param>
             <param name="loopType">Loop behaviour type</param>
         </member>
@@ -1734,49 +1736,57 @@
             (called the moment the tween reaches completion, loops included)</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
-            <summary>Adds the given tween to the end of the Sequence</summary>
+            <summary>Adds the given tween to the end of the Sequence. 
+            Has no effect if the Sequence has already started</summary>
             <param name="t">The tween to append</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Prepend(DG.Tweening.Sequence,DG.Tweening.Tween)">
-            <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content</summary>
+            <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content. 
+            Has no effect if the Sequence has already started</summary>
             <param name="t">The tween to prepend</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Insert(DG.Tweening.Sequence,System.Single,DG.Tweening.Tween)">
             <summary>Inserts the given tween at the given time position in the Sequence,
-            automatically adding an interval if needed</summary>
+            automatically adding an interval if needed. 
+            Has no effect if the Sequence has already started</summary>
             <param name="atPosition">The time position where the tween will be placed</param>
             <param name="t">The tween to insert</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.AppendInterval(DG.Tweening.Sequence,System.Single)">
-            <summary>Adds the given interval to the end of the Sequence</summary>
+            <summary>Adds the given interval to the end of the Sequence. 
+            Has no effect if the Sequence has already started</summary>
             <param name="interval">The interval duration</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.PrependInterval(DG.Tweening.Sequence,System.Single)">
-            <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content</summary>
+            <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content. 
+            Has no effect if the Sequence has already started</summary>
             <param name="interval">The interval duration</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.AppendCallback(DG.Tweening.Sequence,DG.Tweening.Core.TweenCallback)">
-            <summary>Adds the given callback to the end of the Sequence</summary>
+            <summary>Adds the given callback to the end of the Sequence. 
+            Has no effect if the Sequence has already started</summary>
             <param name="callback">The callback to append</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.PrependCallback(DG.Tweening.Sequence,DG.Tweening.Core.TweenCallback)">
-            <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content</summary>
+            <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content. 
+            Has no effect if the Sequence has already started</summary>
             <param name="callback">The callback to prepend</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.InsertCallback(DG.Tweening.Sequence,System.Single,DG.Tweening.Core.TweenCallback)">
             <summary>Inserts the given callback at the given time position in the Sequence,
-            automatically adding an interval if needed</summary>
+            automatically adding an interval if needed. 
+            Has no effect if the Sequence has already started</summary>
             <param name="atPosition">The time position where the callback will be placed</param>
             <param name="callback">The callback to insert</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetDelay``1(``0,System.Single)">
             <summary>Sets a delayed startup for the tween.
-            Has no effect on Sequences</summary>
+            Has no effect on Sequences or if the tween has already started</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetRelative``1(``0,System.Boolean)">
             <summary>If isRelative is TRUE sets the tween as relative
             (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
-            Has no effect on Sequences</summary>
+            Has no effect on Sequences or if the tween has already started</summary>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetEase``1(``0,DG.Tweening.EaseType)">
             <summary>Sets the ease the tween.
