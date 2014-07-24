@@ -38,7 +38,7 @@ public class BasicsBrain : BrainBase
 			switch (i) {
 			case 0:
 				default:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetUpdate(UpdateType.Independent);
 				break;
 			case 1:
 				// Red cube (rotation)
