@@ -57,7 +57,7 @@ namespace DG.Tweening.Core
 
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
-        internal static TweenerCore<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>(UpdateType updateType)
+        internal static TweenerCore<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>()
             where TPlugOptions : struct
         {
             Tween tween;
@@ -73,7 +73,7 @@ namespace DG.Tweening.Core
                         // Pooled Tweener exists: spawn it
                         t = (TweenerCore<T1, T2, TPlugOptions>)tween;
                         t.active = true;
-                        AddActiveTween(t, updateType);
+                        AddActiveTween(t);
                         _PooledTweeners.RemoveAt(i);
                         totPooledTweeners--;
                         return t;
@@ -96,7 +96,7 @@ namespace DG.Tweening.Core
             t = new TweenerCore<T1,T2,TPlugOptions>();
             totTweeners++;
             t.active = true;
-            AddActiveTween(t, updateType);
+            AddActiveTween(t);
             return t;
         }
 
@@ -108,7 +108,7 @@ namespace DG.Tweening.Core
             if (totPooledSequences > 0) {
                 s = (Sequence)_PooledSequences[0];
                 s.active = true;
-                AddActiveTween(s, updateType);
+                AddActiveTween(s);
                 _PooledSequences.RemoveAt(0);
                 totPooledSequences--;
                 return s;
@@ -122,7 +122,7 @@ namespace DG.Tweening.Core
             s = new Sequence();
             totSequences++;
             s.active = true;
-            AddActiveTween(s, updateType);
+            AddActiveTween(s);
             return s;
         }
 
@@ -302,6 +302,25 @@ namespace DG.Tweening.Core
         {
             if (t.isPlaying) return Pause(t);
             return Play(t);
+        }
+
+        internal static void SetUpdateType(Tween t, UpdateType updateType)
+        {
+            if (!t.active || t.updateType == updateType) {
+                t.updateType = updateType;
+                return;
+            }
+
+            if (t.updateType == UpdateType.Default) {
+                totActiveDefaultTweens--;
+                hasActiveDefaultTweens = totActiveDefaultTweens > 0;
+            } else {
+                totActiveIndependentTweens--;
+                hasActiveIndependentTweens = totActiveIndependentTweens > 0;
+            }
+            t.updateType = updateType;
+            if (updateType == UpdateType.Independent) hasActiveIndependentTweens = true;
+            else hasActiveDefaultTweens = true;
         }
 
         // Removes the given tween from the active tweens list
@@ -508,21 +527,16 @@ namespace DG.Tweening.Core
             _KillList.Add(t);
         }
 
-        // Adds the given tween to the active tweens list
-        static void AddActiveTween(Tween t, UpdateType updateType)
+        // Adds the given tween to the active tweens list (updateType is always Default, but can be changed by SetUpdateType)
+        static void AddActiveTween(Tween t)
         {
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
 
-            t.updateType = updateType;
+            t.updateType = UpdateType.Default;
             t.activeId = _maxActiveLookupId = totActiveTweens;
             _activeTweens[totActiveTweens] = t;
-            if (updateType == UpdateType.Default) {
-                hasActiveDefaultTweens = true;
-                totActiveDefaultTweens++;
-            } else {
-                hasActiveIndependentTweens = true;
-                totActiveIndependentTweens++;
-            }
+            hasActiveDefaultTweens = true;
+            totActiveDefaultTweens++;
             totActiveTweens++;
             hasActiveTweens = true;
         }
