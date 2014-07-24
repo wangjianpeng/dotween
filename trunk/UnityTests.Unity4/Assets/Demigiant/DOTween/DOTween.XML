@@ -68,41 +68,37 @@
             <param name="sequencesCapacity">Max Sequences capacity.
             Default: 50</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
@@ -112,15 +108,6 @@
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
-        </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
@@ -128,15 +115,6 @@
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
@@ -146,23 +124,13 @@
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
@@ -172,34 +140,23 @@
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field to the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.To``3(DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,``2,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To``3(DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,``2,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins with additional options</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
@@ -208,49 +165,43 @@
             <param name="endValue">The end value to reach</param>
             <param name="options">Options. Example (for a float value): <code>Plug.FloatOptions(true)</code></param>
             <param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.To``4(DG.Tweening.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.To``4(DG.Tweening.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single)">
             <summary>Tweens a property or field to the given value using a custom plugin with eventual options</summary>
             <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
             <param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
@@ -260,15 +211,6 @@
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field from the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
-        </member>
         <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
@@ -276,15 +218,6 @@
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field from the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
@@ -294,23 +227,13 @@
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field from the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
@@ -320,34 +243,23 @@
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
             <param name="setter">A setter for the field or property to tween
             Example usage with lambda: <code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single,DG.Tweening.UpdateType)">
-            <summary>Tweens a property or field from the given value using default plugins</summary>
-            <param name="getter">A getter for the field or property to tween.
-            Example usage with lambda: <code>()=> myProperty</code></param>
-            <param name="setter">A setter for the field or property to tween
-            Example usage with lambda: <code>x=> myProperty = x</code></param>
-            <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.From``3(DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,``2,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From``3(DG.Tweening.Core.DOGetter{``0},DG.Tweening.Core.DOSetter{``0},``1,``2,System.Single)">
             <summary>Tweens a property or field from the given value using default plugins with additional options</summary>
             <param name="getter">A getter for the field or property to tween.
             Example usage with lambda: <code>()=> myProperty</code></param>
@@ -356,13 +268,11 @@
             <param name="fromValue">The value to start from</param>
             <param name="options">Options. Example (for a float value): <code>Plug.FloatOptions(true)</code></param>
             <param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.From``4(DG.Tweening.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.From``4(DG.Tweening.Plugins.Core.IPlugSetter{``0,``1,``2,``3},System.Single)">
             <summary>Tweens a property or field from the given value using a custom plugin with eventual options</summary>
             <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
             <param name="duration">The tween's duration</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)">
             <summary>
@@ -1723,6 +1633,10 @@
             <param name="loops">Number of cycles to play (-1 for infinite)</param>
             <param name="loopType">Loop behaviour type</param>
         </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetUpdate``1(``0,DG.Tweening.UpdateType)">
+            <summary>Sets the type of update (default or independent) for the tween</summary>
+            <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
+        </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.OnStart``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onStart callback for the tween
             (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
@@ -1796,86 +1710,70 @@
             <summary>Sets the ease the tween using an AnimationCurve.
             Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToX(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToY(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToZ(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalX(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalY(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalZ(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.RotateTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.RotateTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's rotation to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.RotateToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.RotateToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localRotation to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToX(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToY(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToZ(UnityEngine.Transform,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.ColorTo(UnityEngine.Material,UnityEngine.Color,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.ColorTo(UnityEngine.Material,UnityEngine.Color,System.Single)">
             <summary>Tweens a Material's color to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.FadeTo(UnityEngine.Material,System.Single,System.Single,DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.FadeTo(UnityEngine.Material,System.Single,System.Single)">
             <summary>Tweens a Material's alpha color to the given value
             (will have no effect unless your material supports transparency)</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="T:DG.Tweening.UpdateType">
             <summary>
