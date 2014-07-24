@@ -45,6 +45,8 @@ namespace DG.Tweening
         public string stringId;
         /// <summary>Object id (usable for filtering with DOTween static methods)</summary>
         public object objId;
+        // Update type (changed via TweenManager.SetUpdateType)
+        internal UpdateType updateType;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
         /// <summary>Called the moment the tween completes one loop cycle</summary>
         public TweenCallback onStepComplete;
@@ -65,7 +67,6 @@ namespace DG.Tweening
 
         // SETUP DATA ////////////////////////////////////////////////
 
-        internal UpdateType updateType;
         internal Type typeofT1; // Only used by Tweeners
         internal Type typeofT2; // Only used by Tweeners
         internal Type typeofTPlugOptions; // Only used by Tweeners
@@ -96,9 +97,10 @@ namespace DG.Tweening
             autoKill = DOTween.defaultAutoKill;
             timeScale = 1;
             isBackwards = false;
-            objId = null;
-            stringId = null;
             id = -1;
+            stringId = null;
+            objId = null;
+            updateType = UpdateType.Default;
             onStart = onComplete = onStepComplete = null;
 
             duration = 0;
@@ -107,7 +109,6 @@ namespace DG.Tweening
             delay = 0;
             isRelative = false;
             easeCurveEval = null;
-            updateType = UpdateType.Default;
             isSequenced = false;
             creationLocked = startupDone = playedOnce = false;
             position = fullDuration = completedLoops = 0;
