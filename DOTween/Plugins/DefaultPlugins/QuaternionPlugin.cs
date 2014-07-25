@@ -20,37 +20,54 @@
 // THE SOFTWARE.
 // 
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3,NoOptions>
+    public class QuaternionPlugin : ABSTweenPlugin<Quaternion>
     {
-        public override Vector3 ConvertT1toT2(NoOptions options, Quaternion value)
+        Vector3 _res;
+
+        public override void SetStartValue(TweenerCore<Quaternion> t)
         {
-            return value.eulerAngles;
+            t.startValueV4 = GetTargetValue(t).eulerAngles;
         }
 
-        public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
+        public override void Evaluate(TweenerCore<Quaternion> t, float elapsed)
         {
-            return startValue + changeValue;
+            _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+            _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+            _res.z = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
+            
+            // Apply to eventual known type
+            switch (t.targetType) {
+            case TargetType.TransformRotation:
+                t.targetTransform.eulerAngles = _res;
+                break;
+            case TargetType.TransformLocalRotation:
+                t.targetTransform.localEulerAngles = _res;
+                break;
+            default:
+                t.setter(Quaternion.Euler(_res));
+                break;
+            }
         }
 
-        public override Vector3 GetChangeValue(NoOptions options, Vector3 startValue, Vector3 endValue)
+        static Quaternion GetTargetValue(TweenerCore<Quaternion> t)
         {
-            return endValue - startValue;
-        }
-
-        public override Quaternion Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
-        {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.z = Ease.Apply(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
-            return Quaternion.Euler(startValue);
+            switch (t.targetType) {
+            case TargetType.TransformRotation:
+                return t.targetTransform.rotation;
+            case TargetType.TransformLocalRotation:
+                return t.targetTransform.localRotation;
+            }
+            return t.getter();
         }
     }
 }

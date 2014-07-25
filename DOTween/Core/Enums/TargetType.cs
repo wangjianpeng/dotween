@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/06/29 19:25
+// Created: 2014/07/24 19:19
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,18 +18,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
+// 
 #pragma warning disable 1591
-namespace DG.Tweening
+namespace DG.Tweening.Core.Enums
 {
     /// <summary>
-    /// Used internally
+    /// Public to allow plugins to access it
     /// </summary>
-    public enum TweenType
+    public enum TargetType
     {
-        Tweener,
-        Sequence,
-        Interval,
-        Callback // Indicates a callback in a Sequence
+        Custom,
+        TransformPosition,
+        TransformLocalPosition,
+        TransformRotation,
+        TransformLocalRotation,
+        TransformScale,
+        MaterialColor
     }
 }

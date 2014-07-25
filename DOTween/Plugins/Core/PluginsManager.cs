@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening.Core;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.DefaultPlugins;
 using UnityEngine;
 
@@ -30,53 +31,58 @@ namespace DG.Tweening.Plugins.Core
     internal static class PluginsManager
     {
         // Default plugins
-        static readonly Dictionary<Type, ITweenPlugin> _DefaultPlugins = new Dictionary<Type, ITweenPlugin>(20);
+        static readonly Dictionary<DefaultPluginType, ITweenPlugin> _DefaultPlugins = new Dictionary<DefaultPluginType, ITweenPlugin>(16);
         // Advanced and custom plugins
         static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(30);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetDefaultPlugin<T1,T2,TPlugOptions>()
+        internal static ABSTweenPlugin<T> GetDefaultPlugin<T>(DefaultPluginType pluginType)
         {
-            Type t1 = typeof(T1);
             ITweenPlugin plugin;
-            _DefaultPlugins.TryGetValue(t1, out plugin);
-            if (plugin != null) return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
+            _DefaultPlugins.TryGetValue(pluginType, out plugin);
+            if (plugin != null) return plugin as ABSTweenPlugin<T>;
 
             // Retrieve correct custom plugin
-            Type t2 = typeof(T2);
-            if (t1 == typeof(Vector3)) {
-                plugin = new Vector3Plugin();
-            } else if (t1 == typeof(Quaternion)) {
-                if (t2 == typeof(Quaternion)) Debugger.LogError("Quaternion tweens require a Vector3 endValue");
-                else plugin = new QuaternionPlugin();
-            } else if (t1 == typeof(Vector2)) {
-                plugin = new Vector2Plugin();
-            } else if (t1 == typeof(float)) {
+            switch (pluginType) {
+            case DefaultPluginType.Float:
                 plugin = new FloatPlugin();
-            } else if (t1 == typeof(Color)) {
-                plugin = new ColorPlugin();
-            } else if (t1 == typeof(int)) {
+                break;
+            case DefaultPluginType.Int:
                 plugin = new IntPlugin();
-            } else if (t1 == typeof(Vector4)) {
-                plugin = new Vector4Plugin();
-            } else if (t1 == typeof(Rect)) {
-                plugin = new RectPlugin();
-            } else if (t1 == typeof(RectOffset)) {
-                plugin = new RectOffsetPlugin();
-            } else if (t1 == typeof(uint)) {
+                break;
+            case DefaultPluginType.Uint:
                 plugin = new UintPlugin();
-            } else if (t1 == typeof(string)) {
+                break;
+            case DefaultPluginType.Vector2:
+                plugin = new Vector2Plugin();
+                break;
+            case DefaultPluginType.Vector3:
+                plugin = new Vector3Plugin();
+                break;
+            case DefaultPluginType.Vector4:
+                plugin = new Vector4Plugin();
+                break;
+            case DefaultPluginType.Quaternion:
+                plugin = new QuaternionPlugin();
+                break;
+            case DefaultPluginType.Color:
+                plugin = new ColorPlugin();
+                break;
+            case DefaultPluginType.Rect:
+                plugin = new RectPlugin();
+                break;
+            case DefaultPluginType.RectOffset:
+                plugin = new RectOffsetPlugin();
+                break;
+            case DefaultPluginType.String:
                 plugin = new StringPlugin();
+                break;
             }
 
-            if (plugin != null) {
-                _DefaultPlugins.Add(t1, plugin);
-                return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
-            }
-
-            return null;
+            _DefaultPlugins.Add(pluginType, plugin);
+            return plugin as ABSTweenPlugin<T>;
         }
 
         internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)

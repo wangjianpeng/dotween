@@ -23,38 +23,74 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class Vector2Plugin : ABSTweenPlugin<Vector2, Vector2, PlugVector2.Options>
+    public class Vector2Plugin : ABSTweenPlugin<Vector2>
     {
-        public override Vector2 ConvertT1toT2(PlugVector2.Options options, Vector2 value)
+        Vector2 _res;
+
+        public override void SetStartValue(TweenerCore<Vector2> t)
         {
-            return value;
+            t.startValueV4 = GetTargetValue(t);
         }
 
-        public override Vector2 GetRelativeEndValue(PlugVector2.Options options, Vector2 startValue, Vector2 changeValue)
+        public override void Evaluate(TweenerCore<Vector2> t, float elapsed)
         {
-            return startValue + changeValue;
-        }
+            if (t.axisConstraint == AxisConstraint.None) {
+                _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+                _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+                if (t.optionsBool0) {
+                    // Snapping
+                    _res.x = (float)Math.Round(_res.x);
+                    _res.y = (float)Math.Round(_res.y);
+                }
+            } else {
+                _res = GetTargetValue(t);
+                switch (t.axisConstraint) {
+                case AxisConstraint.X:
+                    _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+                    if (t.optionsBool0) _res.x = (float)Math.Round(_res.x);
+                    break;
+                default:
+                    _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+                    if (t.optionsBool0) _res.y = (float)Math.Round(_res.y);
+                    break;
+                }
 
-        public override Vector2 GetChangeValue(PlugVector2.Options options, Vector2 startValue, Vector2 endValue)
-        {
-            return endValue - startValue;
-        }
-
-        public override Vector2 Evaluate(PlugVector2.Options options, Tween t, bool isRelative, DOGetter<Vector2> getter, float elapsed, Vector2 startValue, Vector2 changeValue, float duration)
-        {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            if (options.snapping) {
-                startValue.x = (float)Math.Round(startValue.x);
-                startValue.y = (float)Math.Round(startValue.y);
             }
-            return startValue;
+            // Apply to eventual known type
+            switch (t.targetType) {
+            case TargetType.TransformPosition:
+                t.targetTransform.position = _res;
+                break;
+            case TargetType.TransformLocalPosition:
+                t.targetTransform.localPosition = _res;
+                break;
+            case TargetType.TransformScale:
+                t.targetTransform.localScale = _res;
+                break;
+            default:
+                t.setter(_res);
+                break;
+            }
+        }
+
+        static Vector3 GetTargetValue(TweenerCore<Vector2> t)
+        {
+            switch (t.targetType) {
+            case TargetType.TransformPosition:
+                return t.targetTransform.position;
+            case TargetType.TransformLocalPosition:
+                return t.targetTransform.localPosition;
+            case TargetType.TransformScale:
+                return t.targetTransform.localScale;
+            }
+            return t.getter();
         }
     }
 }

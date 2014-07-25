@@ -23,50 +23,39 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class RectPlugin : ABSTweenPlugin<Rect, Rect, PlugRect.Options>
+    public class RectPlugin : ABSTweenPlugin<Rect>
     {
-        public override Rect ConvertT1toT2(PlugRect.Options options, Rect value)
+        Rect _res;
+
+        public override void SetStartValue(TweenerCore<Rect> t)
         {
-            return value;
+            Rect r = t.getter();
+            t.startValueV4 = new Vector4(r.x, r.y, r.width, r.height);
         }
 
-        public override Rect GetRelativeEndValue(PlugRect.Options options, Rect startValue, Rect changeValue)
+        public override void Evaluate(TweenerCore<Rect> t, float elapsed)
         {
-            startValue.x += changeValue.x;
-            startValue.y += changeValue.y;
-            startValue.width += changeValue.width;
-            startValue.height += changeValue.height;
-            return startValue;
-        }
-
-        public override Rect GetChangeValue(PlugRect.Options options, Rect startValue, Rect endValue)
-        {
-            endValue.x -= startValue.x;
-            endValue.y -= startValue.y;
-            endValue.width -= startValue.width;
-            endValue.height -= startValue.height;
-            return endValue;
-        }
-
-        public override Rect Evaluate(PlugRect.Options options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
-        {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.width = Ease.Apply(t, elapsed, startValue.width, changeValue.width, duration, 0, 0);
-            startValue.height = Ease.Apply(t, elapsed, startValue.height, changeValue.height, duration, 0, 0);
-            if (options.snapping) {
-                startValue.x = (float)Math.Round(startValue.x);
-                startValue.y = (float)Math.Round(startValue.y);
-                startValue.width = (float)Math.Round(startValue.width);
-                startValue.height = (float)Math.Round(startValue.height);
+            _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+            _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+            _res.width = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
+            _res.height = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
+            
+            if (t.optionsBool0) {
+                // Snapping
+                _res.x = (float)Math.Round(_res.x);
+                _res.y = (float)Math.Round(_res.y);
+                _res.width = (float)Math.Round(_res.width);
+                _res.height = (float)Math.Round(_res.height);
             }
-            return startValue;
+
+            t.setter(_res);
         }
     }
 }

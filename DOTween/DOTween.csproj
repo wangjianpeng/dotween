@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoPlay.cs" />
+    <Compile Include="AxisConstraint.cs" />
     <Compile Include="Core\ABSSequentiable.cs" />
     <Compile Include="Core\Delegates.cs" />
     <Compile Include="Core\Debugger.cs" />
@@ -60,15 +61,19 @@
     <Compile Include="Core\Easing\Quint.cs" />
     <Compile Include="Core\Easing\Sine.cs" />
     <Compile Include="Core\Easing\Strong.cs" />
+    <Compile Include="Core\Enums\DefaultPluginType.cs" />
     <Compile Include="Core\Enums\FilterType.cs" />
     <Compile Include="Core\Enums\OperationType.cs" />
+    <Compile Include="Core\Enums\TargetType.cs" />
     <Compile Include="Core\Enums\UpdateMode.cs" />
     <Compile Include="Core\SequenceCallback.cs" />
+    <Compile Include="Core\TweenerCore.cs" />
     <Compile Include="Core\TweenManager.cs" />
     <Compile Include="DOTween.cs" />
     <Compile Include="EaseType.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="LoopType.cs" />
+    <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\ColorPlugin.cs" />
     <Compile Include="Plugins\Core\IPlugSetter.cs" />
     <Compile Include="Plugins\Core\ITweenPlugin.cs" />
@@ -97,13 +102,13 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />
-    <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />
+    <Compile Include="Plugins\Core\ABSTweenPluginBkp.cs" />
     <Compile Include="Plugins\Core\PluginsManager.cs" />
     <Compile Include="Plugins\DefaultPlugins\FloatPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\Vector3Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tween.cs" />
-    <Compile Include="Core\TweenerCore.cs" />
+    <Compile Include="Core\TweenerCoreBkp.cs" />
     <Compile Include="Tweener.cs" />
     <Compile Include="TweenType.cs" />
     <Compile Include="UpdateType.cs" />
