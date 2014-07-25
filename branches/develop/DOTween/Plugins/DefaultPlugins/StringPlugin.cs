@@ -31,41 +31,32 @@ using Random = UnityEngine.Random;
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
-    public class StringPlugin : ABSTweenPlugin<string, string, PlugString.Options>
+    public class StringPlugin : ABSTweenPlugin<string>
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
-        public override string ConvertT1toT2(PlugString.Options options, string value)
+        public override void SetStartValue(TweenerCore<string> t)
         {
-            return value;
+            t.startString = t.getter();
         }
 
-        public override string GetRelativeEndValue(PlugString.Options options, string startValue, string changeValue)
-        {
-            return changeValue;
-        }
-
-        public override string GetChangeValue(PlugString.Options options, string startValue, string endValue)
-        {
-            return endValue;
-        }
-
-        // ChangeValue is the same as endValue in this plugin
-        public override string Evaluate(PlugString.Options options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
+        public override void Evaluate(TweenerCore<string> t, float elapsed)
         {
             _Buffer.Remove(0, _Buffer.Length);
-            int startValueLen = startValue.Length;
-            int changeValueLen = changeValue.Length;
-            int len = (int)Math.Round(Ease.Apply(t, elapsed, 0, changeValueLen, duration, 0, 0));
+            int startValueLen = t.startString.Length;
+            int changeValueLen = t.changeString.Length;
+            int len = (int)Math.Round(Ease.Apply(t, elapsed, 0, changeValueLen, t.duration, 0, 0));
 
-            if (isRelative) {
-                _Buffer.Append(startValue);
-                if (options.scramble) return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
-                return _Buffer.Append(changeValue, 0, len).ToString();
+            if (t.isRelative) {
+                _Buffer.Append(t.startString);
+                if (t.optionsBool0) t.setter(_Buffer.Append(t.changeString, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                else t.setter(_Buffer.Append(t.changeString, 0, len).ToString());
+                return;
             }
 
-            if (options.scramble) {
-                return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
+            if (t.optionsBool0) {
+                t.setter(_Buffer.Append(t.changeString, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                return;
             }
 
             int diff = startValueLen - changeValueLen;
@@ -75,10 +66,61 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 float perc = (float)len / changeValueLen;
                 startValueMaxLen -= (int)(startValueMaxLen * perc);
             } else startValueMaxLen -= len;
-            _Buffer.Append(changeValue, 0, len);
-            if (len < changeValueLen && len < startValueLen) _Buffer.Append(startValue, len, startValueMaxLen);
-            return _Buffer.ToString();
+            _Buffer.Append(t.changeString, 0, len);
+            if (len < changeValueLen && len < startValueLen) _Buffer.Append(t.startString, len, startValueMaxLen);
+            t.setter(_Buffer.ToString());
         }
+
+
+
+
+
+
+
+//        public override string ConvertT1toT2(PlugString.Options options, string value)
+//        {
+//            return value;
+//        }
+//
+//        public override string GetRelativeEndValue(PlugString.Options options, string startValue, string changeValue)
+//        {
+//            return changeValue;
+//        }
+//
+//        public override string GetChangeValue(PlugString.Options options, string startValue, string endValue)
+//        {
+//            return endValue;
+//        }
+//
+//        // ChangeValue is the same as endValue in this plugin
+//        public override string Evaluate(PlugString.Options options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
+//        {
+//            _Buffer.Remove(0, _Buffer.Length);
+//            int startValueLen = startValue.Length;
+//            int changeValueLen = changeValue.Length;
+//            int len = (int)Math.Round(Ease.Apply(t, elapsed, 0, changeValueLen, duration, 0, 0));
+//
+//            if (isRelative) {
+//                _Buffer.Append(startValue);
+//                if (options.scramble) return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
+//                return _Buffer.Append(changeValue, 0, len).ToString();
+//            }
+//
+//            if (options.scramble) {
+//                return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
+//            }
+//
+//            int diff = startValueLen - changeValueLen;
+//            int startValueMaxLen = startValueLen;
+//            if (diff > 0) {
+//                // String to be replaced is longer than endValue: remove parts of it while tweening
+//                float perc = (float)len / changeValueLen;
+//                startValueMaxLen -= (int)(startValueMaxLen * perc);
+//            } else startValueMaxLen -= len;
+//            _Buffer.Append(changeValue, 0, len);
+//            if (len < changeValueLen && len < startValueLen) _Buffer.Append(startValue, len, startValueMaxLen);
+//            return _Buffer.ToString();
+//        }
     }
 
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

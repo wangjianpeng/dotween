@@ -20,38 +20,46 @@
 // THE SOFTWARE.
 // 
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class ColorPlugin : ABSTweenPlugin<Color, Color, NoOptions>
+    public class ColorPlugin : ABSTweenPlugin<Color>
     {
-        public override Color ConvertT1toT2(NoOptions options, Color value)
+        Color _res;
+
+        public override void SetStartValue(TweenerCore<Color> t)
         {
-            return value;
+            t.startValueV4 = GetTargetValue(t);
         }
 
-        public override Color GetRelativeEndValue(NoOptions options, Color startValue, Color changeValue)
+        public override void Evaluate(TweenerCore<Color> t, float elapsed)
         {
-            return startValue + changeValue;
+            if (!t.optionsBool0) {
+                _res.r = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+                _res.g = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+                _res.b = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
+                _res.a = Ease.Apply(t, elapsed, t.startValueV4.w, t.changeValueV4.w, t.duration, 0, 0);
+            } else {
+                // Alpha only
+                _res = GetTargetValue(t);
+                _res.a = Ease.Apply(t, elapsed, t.startValueV4.w, t.startValueV4.w, t.duration, 0, 0);
+            }
+            // Apply to eventual known type
+            if (t.targetType == TargetType.MaterialColor) t.targetMaterial.color = _res;
+            else t.setter(_res);
         }
 
-        public override Color GetChangeValue(NoOptions options, Color startValue, Color endValue)
+        static Color GetTargetValue(TweenerCore<Color> t)
         {
-            return endValue - startValue;
-        }
-
-        public override Color Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
-        {
-            startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
-            startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
-            startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
-            startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
-            return startValue;
+            if (t.targetType == TargetType.MaterialColor) return t.targetMaterial.color;
+            return t.getter();
         }
     }
 }

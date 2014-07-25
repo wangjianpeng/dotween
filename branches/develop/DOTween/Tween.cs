@@ -59,6 +59,7 @@ namespace DG.Tweening
         internal float duration;
         internal int loops;
         internal LoopType loopType;
+
         // Tweeners-only (shared by Sequences only for compatibility reasons, otherwise not used)
         internal float delay;
         internal bool isRelative;
@@ -68,8 +69,6 @@ namespace DG.Tweening
         // SETUP DATA ////////////////////////////////////////////////
 
         internal Type typeofT1; // Only used by Tweeners
-        internal Type typeofT2; // Only used by Tweeners
-        internal Type typeofTPlugOptions; // Only used by Tweeners
         internal bool active; // FALSE when tween is despawned - set only by TweenManager
         internal bool isSequenced; // Set by Sequence when adding a Tween to it
         internal int activeId = -1; // Index inside its active list (touched only by TweenManager)

@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/05/07 12:56
+// Created: 2014/07/25 10:49
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,55 +18,27 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+// 
 
-using System;
+using System.ComponentModel;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.DefaultPlugins;
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Core
 {
-    // T1: type of value to tween
-    // T2: format in which value is stored while tweening
-    // TPlugOptions: options type
-    internal sealed class TweenerCore<T1,T2,TPlugOptions> : Tweener where TPlugOptions : struct
+    /// <summary>
+    /// Cast is as a Tweener
+    /// </summary>
+    /// Public so that external custom plugins can get data from it
+    public class TweenerCore<T> : Tweener
     {
-        // SETUP DATA ////////////////////////////////////////////////
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<T> getter;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<T> setter;
 
-        internal DOGetter<T1> getter;
-        internal DOSetter<T1> setter;
-        internal T2 startValue, endValue, changeValue;
-        internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
-        internal TPlugOptions plugOptions;
-
-        // PLAY DATA /////////////////////////////////////////////////
-
-
-        // ***********************************************************************************
-        // CONSTRUCTOR
-        // ***********************************************************************************
-
-        internal TweenerCore()
-        {
-            typeofT1 = typeof(T1);
-            typeofT2 = typeof(T2);
-            typeofTPlugOptions = typeof(TPlugOptions);
-            tweenType = TweenType.Tweener;
-            Reset();
-        }
-
-        // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
-
-        public override void ChangeEndValue<T>(T newEndValue)
-        {
-            if (typeof(T) != typeofT2) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
-                return;
-            }
-
-            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2));
-        }
+        internal ABSTweenPlugin<T> plugin;
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
@@ -76,42 +48,63 @@ namespace DG.Tweening.Core
         {
             base.Reset();
 
+            targetTransform = null;
+            targetMaterial = null;
+            axisConstraint = AxisConstraint.None;
+            optionsBool0 = false;
+            startString = endString = null;
+
             getter = null;
             setter = null;
-            plugOptions = new TPlugOptions();
         }
 
-        // CALLED BY TweenManager at each update.
-        // Returns TRUE if the tween needs to be killed
-        internal override float UpdateDelay(float elapsed)
-        {
-            return DoUpdateDelay(this, elapsed);
-        }
-
-        // CALLED BY Tween the moment the tween starts, AFTER any delay has elapsed
-        // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
-        // Returns TRUE in case of success,
-        // FALSE if there are missing references and the tween needs to be killed
+        // Starts up the tween for the first time
         internal override bool Startup()
         {
-            return DoStartup(this);
+            startupDone = true;
+            fullDuration = loops > -1 ? duration * loops : Mathf.Infinity;
+            if (DOTween.useSafeMode) {
+                try {
+                    plugin.SetStartValue(this);
+                } catch (UnassignedReferenceException) {
+                    // Target/field doesn't exist: kill tween
+                    return false;
+                }
+            } else plugin.SetStartValue(this);
+            if (isRelative) {
+                endValue = startValue + endValue;
+                endValueV4 = startValueV4 + endValueV4;
+            }
+            if (isFrom) {
+                // Switch start and end value and jump immediately to new start value, regardless of delays
+                Vector4 prevStartValueV4 = startValueV4;
+                startValueV4 = endValueV4;
+                endValueV4 = prevStartValueV4;
+                changeValueV4 = endValueV4 - startValueV4;
+                float prevStartValue = startValue;
+                startValue = endValue;
+                endValue = prevStartValue;
+                changeValue = endValue - startValue;
+                // Jump (no need for safeMode check since it already happened when assigning start value
+                plugin.Evaluate(this, 0);
+            } else changeValueV4 = endValueV4 - startValueV4;
+            return true;
         }
 
-        // Applies the tween set by DoGoto.
-        // Returns TRUE if the tween needs to be killed
+        // Returns TRUE if tween needs to be killed
         internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
             float updatePosition = useInversePosition ? duration - position : position;
+
             if (DOTween.useSafeMode) {
                 try {
-                    setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
+                    plugin.Evaluate(this, updatePosition);
                 } catch (MissingReferenceException) {
-                    // Target/field doesn't exist anymore: kill tween
+                    // Target doesn't exist anymore: kill tween
                     return true;
                 }
-            } else {
-                setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
-            }
+            } else plugin.Evaluate(this, updatePosition);
+
             return false;
         }
     }

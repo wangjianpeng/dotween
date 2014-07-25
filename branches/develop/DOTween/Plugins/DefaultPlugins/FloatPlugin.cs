@@ -22,33 +22,28 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
+using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class FloatPlugin : ABSTweenPlugin<float,float,PlugFloat.Options>
+    public class FloatPlugin : ABSTweenPlugin<float>
     {
-        public override float ConvertT1toT2(PlugFloat.Options options, float value)
+        public override void SetStartValue(TweenerCore<float> t)
         {
-            return value;
+            t.startValue = t.getter();
         }
 
-        public override float GetRelativeEndValue(PlugFloat.Options options, float startValue, float changeValue)
+        public override void Evaluate(TweenerCore<float> t, float elapsed)
         {
-            return startValue + changeValue;
-        }
-
-        public override float GetChangeValue(PlugFloat.Options options, float startValue, float endValue)
-        {
-            return endValue - startValue;
-        }
-
-        public override float Evaluate(PlugFloat.Options options, Tween t, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration)
-        {
-            return options.snapping
-                ? (float)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0))
-                : Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0);
+            if (!t.optionsBool0) {
+                t.setter(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0));
+            } else {
+                // Snapping
+                t.setter((float)Math.Round(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0)));
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/06/29 19:25
+// Created: 2014/07/25 18:28
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,18 +18,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#pragma warning disable 1591
-namespace DG.Tweening
+// 
+namespace DG.Tweening.Core.Enums
 {
-    /// <summary>
-    /// Used internally
-    /// </summary>
-    public enum TweenType
+    internal enum DefaultPluginType
     {
-        Tweener,
-        Sequence,
-        Interval,
-        Callback // Indicates a callback in a Sequence
+        Float,
+        Int,
+        Uint,
+        Vector2,
+        Vector3,
+        Vector4,
+        Quaternion,
+        Color,
+        Rect,
+        RectOffset,
+        String
     }
 }

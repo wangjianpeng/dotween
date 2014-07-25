@@ -22,40 +22,80 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3,PlugVector3.Options>
+    public class Vector3Plugin : ABSTweenPlugin<Vector3>
     {
-        public override Vector3 ConvertT1toT2(PlugVector3.Options options, Vector3 value)
+        Vector3 _res;
+
+        public override void SetStartValue(TweenerCore<Vector3> t)
         {
-            return value;
+            t.startValueV4 = GetTargetValue(t);
         }
 
-        public override Vector3 GetRelativeEndValue(PlugVector3.Options options, Vector3 startValue, Vector3 changeValue)
+        public override void Evaluate(TweenerCore<Vector3> t, float elapsed)
         {
-            return startValue + changeValue;
-        }
-
-        public override Vector3 GetChangeValue(PlugVector3.Options options, Vector3 startValue, Vector3 endValue)
-        {
-            return endValue - startValue;
-        }
-
-        public override Vector3 Evaluate(PlugVector3.Options options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
-        {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.z = Ease.Apply(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
-            if (options.snapping) {
-                startValue.x = (float)Math.Round(startValue.x);
-                startValue.y = (float)Math.Round(startValue.y);
-                startValue.z = (float)Math.Round(startValue.z);
+            if (t.axisConstraint == AxisConstraint.None) {
+                _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+                _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+                _res.z = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
+                if (t.optionsBool0) {
+                    // Snapping
+                    _res.x = (float)Math.Round(_res.x);
+                    _res.y = (float)Math.Round(_res.y);
+                    _res.z = (float)Math.Round(_res.z);
+                }
+            } else {
+                _res = GetTargetValue(t);
+                switch (t.axisConstraint) {
+                case AxisConstraint.X:
+                    _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
+                    if (t.optionsBool0) _res.x = (float)Math.Round(_res.x);
+                    break;
+                case AxisConstraint.Y:
+                    _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
+                    if (t.optionsBool0) _res.y = (float)Math.Round(_res.y);
+                    break;
+                default:
+                    _res.z = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
+                    if (t.optionsBool0) _res.z = (float)Math.Round(_res.z);
+                    break;
+                }
+                
             }
-            return startValue;
+            // Apply to eventual known type
+            switch (t.targetType) {
+            case TargetType.TransformPosition:
+                t.targetTransform.position = _res;
+                break;
+            case TargetType.TransformLocalPosition:
+                t.targetTransform.localPosition = _res;
+                break;
+            case TargetType.TransformScale:
+                t.targetTransform.localScale = _res;
+                break;
+            default:
+                t.setter(_res);
+                break;
+            }
+        }
+
+        static Vector3 GetTargetValue(TweenerCore<Vector3> t)
+        {
+            switch (t.targetType) {
+            case TargetType.TransformPosition:
+                return t.targetTransform.position;
+            case TargetType.TransformLocalPosition:
+                return t.targetTransform.localPosition;
+            case TargetType.TransformScale:
+                return t.targetTransform.localScale;
+            }
+            return t.getter();
         }
     }
 }

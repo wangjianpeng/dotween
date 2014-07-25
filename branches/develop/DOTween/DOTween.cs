@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins;
@@ -35,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.5.200";
+        public static readonly string Version = "0.5.300";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -152,30 +153,191 @@ namespace DG.Tweening
         /////////////////////////////////////////////////////////////////////
         // TWEENER TO ///////////////////////////////////////////////////////
 
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
+        /// <summary>Tweens a float to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<float> getter, DOSetter<float> setter, float endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new PlugFloat.Options(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
+        public static TweenerCore<float> To(DOGetter<float> getter, DOSetter<float> setter, float endValue, float duration)
+        {
+            TweenerCore<float> t = TweenManager.GetTweener<float>();
+            t.targetType = TargetType.Custom;
+            t.endValue = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<float>(DefaultPluginType.Float);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens an int to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<int> getter, DOSetter<int> setter, int endValue,float duration)
-        { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
+        public static Tweener To(DOGetter<int> getter, DOSetter<int> setter, int endValue, float duration)
+        {
+            TweenerCore<int> t = TweenManager.GetTweener<int>();
+            t.targetType = TargetType.Custom;
+            t.endValue = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<int>(DefaultPluginType.Int);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens an uint to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         public static Tweener To(DOGetter<uint> getter, DOSetter<uint> setter, uint endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, false); }
+        {
+            TweenerCore<uint> t = TweenManager.GetTweener<uint>();
+            t.targetType = TargetType.Custom;
+            t.endValue = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<uint>(DefaultPluginType.Uint);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Vector2 to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue, float duration)
+        {
+            TweenerCore<Vector2> t = TweenManager.GetTweener<Vector2>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<Vector2>(DefaultPluginType.Vector2);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Vector2 on a single axis to the given value using default plugins.
+        /// Chain the <c>Options</c> method right after this one to choose which axis to use</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, float duration)
+        {
+            TweenerCore<Vector2> t = TweenManager.GetTweener<Vector2>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = new Vector4(endValue, endValue);
+            t.plugin = PluginsManager.GetDefaultPlugin<Vector2>(DefaultPluginType.Vector2);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Vector3 to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue, float duration)
+        {
+            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Vector3 on a single axis to the given value using default plugins.
+        /// Chain the <c>Options</c> method right after this one to choose which axis to use</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, float duration)
+        {
+            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = new Vector4(endValue, endValue, endValue);
+            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Vector4 to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue, float duration)
+        {
+            TweenerCore<Vector4> t = TweenManager.GetTweener<Vector4>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<Vector4>(DefaultPluginType.Vector4);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Vector4 on a single axis to the given value using default plugins.
+        /// Chain the <c>Options</c> method right after this one to choose which axis to use</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, float endValue, float duration)
+        {
+            TweenerCore<Vector4> t = TweenManager.GetTweener<Vector4>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = new Vector4(endValue, endValue, endValue, endValue);
+            t.plugin = PluginsManager.GetDefaultPlugin<Vector4>(DefaultPluginType.Vector4);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Quaternion to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue, float duration)
+        {
+            TweenerCore<Quaternion> t = TweenManager.GetTweener<Quaternion>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<Quaternion>(DefaultPluginType.Quaternion);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Color to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Color> getter, DOSetter<Color> setter, Color endValue, float duration)
+        {
+            TweenerCore<Color> t = TweenManager.GetTweener<Color>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<Color>(DefaultPluginType.Color);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a Rect to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue, float duration)
+        {
+            TweenerCore<Rect> t = TweenManager.GetTweener<Rect>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = new Vector4(endValue.x, endValue.y, endValue.width, endValue.height);
+            t.plugin = PluginsManager.GetDefaultPlugin<Rect>(DefaultPluginType.Rect);
+            return SetupTween(t, false, duration, getter, setter);
+        }
+        /// <summary>Tweens a RectOffset to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
+        {
+            TweenerCore<RectOffset> t = TweenManager.GetTweener<RectOffset>();
+            t.targetType = TargetType.Custom;
+            t.endValueV4 = new Vector4(endValue.left, endValue.right, endValue.top, endValue.bottom);
+            t.plugin = PluginsManager.GetDefaultPlugin<RectOffset>(DefaultPluginType.RectOffset);
+            return SetupTween(t, false, duration, getter, setter);
+        }
         /// <summary>Tweens a property or field to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
@@ -183,193 +345,143 @@ namespace DG.Tweening
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         public static Tweener To(DOGetter<string> getter, DOSetter<string> setter, string endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new PlugString.Options(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new PlugVector2.Options(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new PlugVector3.Options(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new PlugVector4.Options(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Color> getter, DOSetter<Color> setter, Color endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new PlugRect.Options(), duration, false); }
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
-        { return ApplyTo(getter, setter, endValue, new NoOptions(), duration, false); }
+        {
+            TweenerCore<string> t = TweenManager.GetTweener<string>();
+            t.targetType = TargetType.Custom;
+            t.endString = endValue;
+            t.plugin = PluginsManager.GetDefaultPlugin<string>(DefaultPluginType.String);
+            return SetupTween(t, false, duration, getter, setter);
+        }
 
-        /// <summary>Tweens a property or field to the given value using default plugins with additional options</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param>
-        /// <param name="options">Options. Example (for a float value): <code>Plug.FloatOptions(true)</code></param>
-        /// <param name="duration">The tween's duration</param>
-        public static Tweener To<T1, T2, TPlugOptions>(DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
-            where TPlugOptions : struct
-        { return ApplyTo(getter, setter, endValue, options, duration, false); }
-
-        /// <summary>Tweens a property or field to the given value using a custom plugin with eventual options</summary>
-        /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
-        /// <param name="duration">The tween's duration</param>
-        public static Tweener To<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
-            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
-        { return ApplyTo(plugSetter, duration, false); }
+//        /// <summary>Tweens a property or field to the given value using default plugins with additional options</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="endValue">The end value to reach</param>
+//        /// <param name="options">Options. Example (for a float value): <code>Plug.FloatOptions(true)</code></param>
+//        /// <param name="duration">The tween's duration</param>
+//        public static Tweener To<T1, T2, TPlugOptions>(DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
+//            where TPlugOptions : struct
+//        { return ApplyTo(getter, setter, endValue, options, duration, false); }
+//
+//        /// <summary>Tweens a property or field to the given value using a custom plugin with eventual options</summary>
+//        /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
+//        /// <param name="duration">The tween's duration</param>
+//        public static Tweener To<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
+//            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
+//        { return ApplyTo(plugSetter, duration, false); }
 
         /////////////////////////////////////////////////////////////////////
         // TWEENER FROM /////////////////////////////////////////////////////
 
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<float> getter, DOSetter<float> setter, float fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new PlugFloat.Options(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<int> getter, DOSetter<int> setter, int fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<uint> getter, DOSetter<uint> setter, uint fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<string> getter, DOSetter<string> setter, string fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new PlugString.Options(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new PlugVector2.Options(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new PlugVector3.Options(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new PlugVector4.Options(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Color> getter, DOSetter<Color> setter, Color fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new PlugRect.Options(), duration, true); }
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset fromValue, float duration)
-        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
-
-        /// <summary>Tweens a property or field from the given value using default plugins with additional options</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// Example usage with lambda: <code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param>
-        /// <param name="options">Options. Example (for a float value): <code>Plug.FloatOptions(true)</code></param>
-        /// <param name="duration">The tween's duration</param>
-        public static Tweener From<T1, T2, TPlugOptions>(DOGetter<T1> getter, DOSetter<T1> setter, T2 fromValue, TPlugOptions options, float duration)
-            where TPlugOptions : struct
-        { return ApplyTo(getter, setter, fromValue, options, duration, true); }
-
-        /// <summary>Tweens a property or field from the given value using a custom plugin with eventual options</summary>
-        /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
-        /// <param name="duration">The tween's duration</param>
-        public static Tweener From<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
-            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
-        { return ApplyTo(plugSetter, duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<float> getter, DOSetter<float> setter, float fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new PlugFloat.Options(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<int> getter, DOSetter<int> setter, int fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<uint> getter, DOSetter<uint> setter, uint fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<string> getter, DOSetter<string> setter, string fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new PlugString.Options(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new PlugVector2.Options(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new PlugVector3.Options(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new PlugVector4.Options(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<Color> getter, DOSetter<Color> setter, Color fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new PlugRect.Options(), duration, true); }
+//        /// <summary>Tweens a property or field from the given value using default plugins</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+//        public static Tweener From(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset fromValue, float duration)
+//        { return ApplyTo(getter, setter, fromValue, new NoOptions(), duration, true); }
+//
+//        /// <summary>Tweens a property or field from the given value using default plugins with additional options</summary>
+//        /// <param name="getter">A getter for the field or property to tween.
+//        /// Example usage with lambda: <code>()=> myProperty</code></param>
+//        /// <param name="setter">A setter for the field or property to tween
+//        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+//        /// <param name="fromValue">The value to start from</param>
+//        /// <param name="options">Options. Example (for a float value): <code>Plug.FloatOptions(true)</code></param>
+//        /// <param name="duration">The tween's duration</param>
+//        public static Tweener From<T1, T2, TPlugOptions>(DOGetter<T1> getter, DOSetter<T1> setter, T2 fromValue, TPlugOptions options, float duration)
+//            where TPlugOptions : struct
+//        { return ApplyTo(getter, setter, fromValue, options, duration, true); }
+//
+//        /// <summary>Tweens a property or field from the given value using a custom plugin with eventual options</summary>
+//        /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
+//        /// <param name="duration">The tween's duration</param>
+//        public static Tweener From<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
+//            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
+//        { return ApplyTo(plugSetter, duration, true); }
 
         /////////////////////////////////////////////////////////////////////
         // NEW SEQUENCES ////////////////////////////////////////////////////
@@ -694,37 +806,51 @@ namespace DG.Tweening
         }
 
         // Tweens a property using default plugins with options
-        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugOptions>(
-            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options,
-            float duration, bool isFrom
-        )
-            where TPlugOptions : struct
+        // TweenCreationExtensions might acces it
+        internal static TweenerCore<T> SetupTween<T>(TweenerCore<T> t, bool isFrom, float duration, DOGetter<T> getter = null, DOSetter<T> setter = null)
         {
             InitCheck();
-            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
-            tweener.isFrom = isFrom;
-            if (!Tweener.Setup(tweener, getter, setter, endValue, options, duration)) {
-                TweenManager.Despawn(tweener);
-                return null;
-            }
-            return tweener;
+            t.isFrom = isFrom;
+            t.getter = getter;
+            t.setter = setter;
+            t.duration = duration;
+            t.loopType = defaultLoopType;
+            t.isPlaying = defaultAutoPlayBehaviour == AutoPlay.All || defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
+            return t;
         }
-        // Tweens a property using a custom plugin with eventual options
-        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugin, TPlugOptions>(
-            IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter,
-            float duration, bool isFrom
-        )
-            where TPlugin : ITweenPlugin, new()
-            where TPlugOptions : struct
-        {
-            InitCheck();
-            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
-            tweener.isFrom = isFrom;
-            if (!Tweener.Setup(tweener, plugSetter, duration)) {
-                TweenManager.Despawn(tweener);
-                return null;
-            }
-            return tweener;
-        }
+
+//        // Tweens a property using default plugins with options
+//        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugOptions>(
+//            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options,
+//            float duration, bool isFrom
+//        )
+//            where TPlugOptions : struct
+//        {
+//            InitCheck();
+//            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
+//            tweener.isFrom = isFrom;
+//            if (!Tweener.Setup(tweener, getter, setter, endValue, options, duration)) {
+//                TweenManager.Despawn(tweener);
+//                return null;
+//            }
+//            return tweener;
+//        }
+//        // Tweens a property using a custom plugin with eventual options
+//        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugin, TPlugOptions>(
+//            IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter,
+//            float duration, bool isFrom
+//        )
+//            where TPlugin : ITweenPlugin, new()
+//            where TPlugOptions : struct
+//        {
+//            InitCheck();
+//            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
+//            tweener.isFrom = isFrom;
+//            if (!Tweener.Setup(tweener, plugSetter, duration)) {
+//                TweenManager.Despawn(tweener);
+//                return null;
+//            }
+//            return tweener;
+//        }
     }
 }
