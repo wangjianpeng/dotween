@@ -62,10 +62,10 @@ namespace DG.Tweening.Core
             Tweener t;
             // Search inside pool
             if (totPooledTweeners > 0) {
-                t = _PooledTweeners[0];
+                t = _PooledTweeners[totPooledTweeners - 1];
                 t.active = true;
                 AddActiveTween(t);
-                _PooledTweeners.RemoveAt(0);
+                _PooledTweeners.RemoveAt(totPooledTweeners - 1);
                 totPooledTweeners--;
                 return t;
             }
@@ -89,10 +89,10 @@ namespace DG.Tweening.Core
         {
             Sequence s;
             if (totPooledSequences > 0) {
-                s = (Sequence)_PooledSequences[0];
+                s = (Sequence)_PooledSequences[totPooledSequences - 1];
                 s.active = true;
                 AddActiveTween(s);
-                _PooledSequences.RemoveAt(0);
+                _PooledSequences.RemoveAt(totPooledSequences - 1);
                 totPooledSequences--;
                 return s;
             }
