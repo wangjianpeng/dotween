@@ -30,16 +30,16 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class ColorPlugin : ABSTweenPlugin<Color>
+    public class ColorPlugin : ABSTweenPlugin
     {
         Color _res;
 
-        public override void SetStartValue(TweenerCore<Color> t)
+        public override void SetStartValue(TweenerCore t)
         {
             t.startValueV4 = GetTargetValue(t);
         }
 
-        public override void Evaluate(TweenerCore<Color> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             if (!t.optionsBool0) {
                 _res.r = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -53,13 +53,13 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             }
             // Apply to eventual known type
             if (t.targetType == TargetType.MaterialColor) t.targetMaterial.color = _res;
-            else t.setter(_res);
+            else t.setterVector4(_res);
         }
 
-        static Color GetTargetValue(TweenerCore<Color> t)
+        static Color GetTargetValue(TweenerCore t)
         {
             if (t.targetType == TargetType.MaterialColor) return t.targetMaterial.color;
-            return t.getter();
+            return t.getterVector4();
         }
     }
 }

@@ -30,17 +30,17 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class RectPlugin : ABSTweenPlugin<Rect>
+    public class RectPlugin : ABSTweenPlugin
     {
         Rect _res;
 
-        public override void SetStartValue(TweenerCore<Rect> t)
+        public override void SetStartValue(TweenerCore t)
         {
-            Rect r = t.getter();
+            Rect r = t.getterRect();
             t.startValueV4 = new Vector4(r.x, r.y, r.width, r.height);
         }
 
-        public override void Evaluate(TweenerCore<Rect> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
             _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
@@ -55,7 +55,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 _res.height = (float)Math.Round(_res.height);
             }
 
-            t.setter(_res);
+            t.setterRect(_res);
         }
     }
 }

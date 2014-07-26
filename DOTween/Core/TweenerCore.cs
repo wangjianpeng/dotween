@@ -33,12 +33,26 @@ namespace DG.Tweening.Core
     /// Cast is as a Tweener
     /// </summary>
     /// Public so that external custom plugins can get data from it
-    public sealed class TweenerCore<T> : Tweener
+    public sealed class TweenerCore : Tweener
     {
-        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<T> getter;
-        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<T> setter;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<float> getterFloat;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<float> setterFloat;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<int> getterInt;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<int> setterInt;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<uint> getterUint;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<uint> setterUint;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<Vector4> getterVector4;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<Vector4> setterVector4;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<Quaternion> getterQuaternion;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<Quaternion> setterQuaternion;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<Rect> getterRect;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<Rect> setterRect;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<RectOffset> getterRectOffset;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<RectOffset> setterRectOffset;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<string> getterString;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<string> setterString;
 
-        internal ABSTweenPlugin<T> plugin;
+        internal ABSTweenPlugin plugin;
 
         // ***********************************************************************************
         // CONSTRUCTOR
@@ -46,7 +60,7 @@ namespace DG.Tweening.Core
 
         internal TweenerCore()
         {
-            typeofT1 = typeof(T);
+//            typeofT1 = typeof(T);
             tweenType = TweenType.Tweener;
             Reset();
         }
@@ -79,8 +93,16 @@ namespace DG.Tweening.Core
             optionsBool0 = false;
             startString = endString = null;
 
-            getter = null;
-            setter = null;
+            getterFloat = null;
+            getterVector4 = null;
+            getterRect = null;
+            getterRectOffset = null; 
+            getterString = null;
+            setterFloat = null;
+            setterVector4 = null; 
+            setterRect = null;
+            setterRectOffset = null; 
+            setterString = null;
         }
 
         // Starts up the tween for the first time

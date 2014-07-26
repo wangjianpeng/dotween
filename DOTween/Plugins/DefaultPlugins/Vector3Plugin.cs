@@ -29,16 +29,16 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class Vector3Plugin : ABSTweenPlugin<Vector3>
+    public class Vector3Plugin : ABSTweenPlugin
     {
         Vector3 _res;
 
-        public override void SetStartValue(TweenerCore<Vector3> t)
+        public override void SetStartValue(TweenerCore t)
         {
             t.startValueV4 = GetTargetValue(t);
         }
 
-        public override void Evaluate(TweenerCore<Vector3> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             if (t.axisConstraint == AxisConstraint.None) {
                 _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -80,12 +80,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 t.targetTransform.localScale = _res;
                 break;
             default:
-                t.setter(_res);
+                t.setterVector4(_res);
                 break;
             }
         }
 
-        static Vector3 GetTargetValue(TweenerCore<Vector3> t)
+        static Vector3 GetTargetValue(TweenerCore t)
         {
             switch (t.targetType) {
             case TargetType.TransformPosition:
@@ -95,7 +95,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             case TargetType.TransformScale:
                 return t.targetTransform.localScale;
             }
-            return t.getter();
+            return t.getterVector4();
         }
     }
 }

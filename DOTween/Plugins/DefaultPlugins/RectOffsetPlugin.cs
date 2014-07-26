@@ -32,17 +32,17 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 {
     // BEWARE: RectOffset seems a struct but is a class
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
-    public class RectOffsetPlugin : ABSTweenPlugin<RectOffset>
+    public class RectOffsetPlugin : ABSTweenPlugin
     {
-        public override void SetStartValue(TweenerCore<RectOffset> t)
+        public override void SetStartValue(TweenerCore t)
         {
-            RectOffset r = t.getter();
+            RectOffset r = t.getterRectOffset();
             t.startValueV4 = new Vector4(r.left, r.right, r.top, r.bottom);
         }
 
-        public override void Evaluate(TweenerCore<RectOffset> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
-            t.setter(new RectOffset(
+            t.setterRectOffset(new RectOffset(
                 (int)Math.Round(Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0)),
                 (int)Math.Round(Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0)),
                 (int)Math.Round(Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0)),

@@ -49,43 +49,43 @@ namespace DG.Tweening.Plugins.Core
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static ABSTweenPlugin<T> GetDefaultPlugin<T>(DefaultPluginType pluginType)
+        internal static ABSTweenPlugin GetDefaultPlugin(DefaultPluginType pluginType)
         {
             // Retrieve correct custom plugin
             switch (pluginType) {
             case DefaultPluginType.Int:
                 if (_intPlugin == null) _intPlugin = new IntPlugin();
-                return _intPlugin as ABSTweenPlugin<T>;
+                return _intPlugin;
             case DefaultPluginType.Uint:
                 if (_uintPlugin == null) _uintPlugin = new UintPlugin();
-                return _uintPlugin as ABSTweenPlugin<T>;
+                return _uintPlugin;
             case DefaultPluginType.Vector2:
                 if (_vector2Plugin == null) _vector2Plugin = new Vector2Plugin();
-                return _vector2Plugin as ABSTweenPlugin<T>;
+                return _vector2Plugin;
             case DefaultPluginType.Vector3:
                 if (_vector3Plugin == null) _vector3Plugin = new Vector3Plugin();
-                return _vector3Plugin as ABSTweenPlugin<T>;
+                return _vector3Plugin;
             case DefaultPluginType.Vector4:
                 if (_vector4Plugin == null) _vector4Plugin = new Vector4Plugin();
-                return _vector4Plugin as ABSTweenPlugin<T>;
+                return _vector4Plugin;
             case DefaultPluginType.Quaternion:
                 if (_quaternionPlugin == null) _quaternionPlugin = new QuaternionPlugin();
-                return _quaternionPlugin as ABSTweenPlugin<T>;
+                return _quaternionPlugin;
             case DefaultPluginType.Color:
                 if (_colorPlugin == null) _colorPlugin = new ColorPlugin();
-                return _colorPlugin as ABSTweenPlugin<T>;
+                return _colorPlugin;
             case DefaultPluginType.Rect:
                 if (_rectPlugin == null) _rectPlugin = new RectPlugin();
-                return _rectPlugin as ABSTweenPlugin<T>;
+                return _rectPlugin;
             case DefaultPluginType.RectOffset:
                 if (_rectOffsetPlugin == null) _rectOffsetPlugin = new RectOffsetPlugin();
-                return _rectOffsetPlugin as ABSTweenPlugin<T>;
+                return _rectOffsetPlugin;
             case DefaultPluginType.String:
                 if (_stringPlugin == null) _stringPlugin = new StringPlugin();
-                return _stringPlugin as ABSTweenPlugin<T>;
+                return _stringPlugin;
             default:
                 if (_floatPlugin == null) _floatPlugin = new FloatPlugin();
-                return _floatPlugin as ABSTweenPlugin<T>;
+                return _floatPlugin;
             }
         }
 
