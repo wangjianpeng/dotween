@@ -67,92 +67,6 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-//        // CALLED BY DOTween when spawning/creating a new Tweener.
-//        // Returns TRUE if the setup is successful
-//        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration)
-//            where TPlugOptions : struct
-//        {
-//            if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
-//            if (t.tweenPlugin == null) {
-//                // No suitable plugin found. Kill
-//                Debugger.LogError("No suitable plugin found for this type");
-//                return false;
-//            }
-//
-//            t.getter = getter;
-//            t.setter = setter;
-//            t.endValueV4 = endValue;
-//            t.duration = duration;
-//            t.loopType = DOTween.defaultLoopType;
-//            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
-//            return true;
-//        }
-//        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
-//            where TPlugOptions : struct
-//        {
-//            if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
-//            if (t.tweenPlugin == null) {
-//                // No suitable plugin found. Kill
-//                Debugger.LogError("No suitable plugin found for this type");
-//                return false;
-//            }
-//
-//            t.getter = getter;
-//            t.setter = setter;
-//            t.endValueV4 = endValue;
-//            t.plugOptions = options;
-//            t.duration = duration;
-//            t.loopType = DOTween.defaultLoopType;
-//            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
-//            return true;
-//        }
-//        internal static bool Setup<T1, T2, TPlugOptions, TPlugin>(TweenerCore<T1, T2, TPlugOptions> t, IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter, float duration)
-//            where TPlugOptions : struct where TPlugin : ITweenPlugin, new()
-//        {
-//            t.getter = plugSetter.Getter();
-//            t.setter = plugSetter.Setter();
-//            t.endValueV4 = plugSetter.EndValue();
-//            t.plugOptions = plugSetter.GetOptions();
-//            t.duration = duration;
-//            t.loopType = DOTween.defaultLoopType;
-//            t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
-//            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
-//            return true;
-//        }
-
-//        internal static bool Setup<T>(
-//            TweenerCore<T> t, TargetType targetType, Type pluginType, float endValue, float duration,
-//            DOGetter<T> getter, DOSetter<T> setter
-//        )
-//        {
-//            t.targetType = targetType;
-//            t.endValue = endValue;
-//            t.duration = duration;
-//            t.getter = getter;
-//            t.setter = setter;
-//            t.loopType = DOTween.defaultLoopType;
-//            // FIXME reimplement correct plugin
-////            t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
-//            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
-//            return true;
-//        }
-//        internal static bool Setup<T>(
-//            TweenerCore<T> t, TargetType targetType, Type pluginType, Vector4 endValue, float duration,
-//            DOGetter<T> getter, DOSetter<T> setter
-//        )
-//        {
-//            t.targetType = targetType;
-//            t.endValueV4 = endValue;
-//            t.duration = duration;
-//            t.getter = getter;
-//            t.setter = setter;
-//            t.loopType = DOTween.defaultLoopType;
-//            // FIXME reimplement correct plugin
-//            // t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
-//            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
-//            return true;
-//        }
-
         // CALLED BY TweenManager
         // Returns the elapsed time minus delay in case of success,
         // -1 if there are missing references and the tween needs to be killed
@@ -172,37 +86,6 @@ namespace DG.Tweening
             elapsedDelay = elapsed;
             return 0;
         }
-
-//        // CALLED VIA Tween the moment the tween starts, AFTER any delay has elapsed
-//        // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
-//        // Returns TRUE in case of success,
-//        // FALSE if there are missing references and the tween needs to be killed
-//        internal static bool DoStartup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
-//        {
-//            t.startupDone = true;
-//            t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-//            if (DOTween.useSafeMode) {
-//                try {
-//                    t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
-//                } catch (UnassignedReferenceException) {
-//                    // Target/field doesn't exist: kill tween
-//                    return false;
-//                }
-//            } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
-//            if (t.isRelative) {
-//                t.endValue = t.tweenPlugin.GetRelativeEndValue(t.plugOptions, t.startValue, t.endValue);
-//            }
-//            if (t.isFrom) {
-//                // Switch start and end value and jump immediately to new start value, regardless of delays
-//                T2 prevStartValue = t.startValue;
-//                t.startValue = t.endValue;
-//                t.endValue = prevStartValue;
-//                t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
-//                // Jump (no need for safeMode checks since they already happened when assigning start value
-//                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, t.duration));
-//            } else t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
-//            return true;
-//        }
 
         // CALLED BY TweenerCore
         // FIXME reimplement
