@@ -44,8 +44,8 @@ namespace DG.Tweening.Core
         // Tweens contained in Sequences are not inside the active lists
         // Arrays are organized (max once per update) so that existing elements are next to each other from 0 to (totActiveTweens - 1)
         static Tween[] _activeTweens = new Tween[_DefaultMaxTweeners];
-        static readonly List<Tweener> _PooledTweeners = new List<Tweener>(_DefaultMaxTweeners);
-        static readonly List<Tween> _PooledSequences = new List<Tween>(_DefaultMaxSequences);
+        static readonly Stack<Tweener> _PooledTweeners = new Stack<Tweener>();
+        static readonly Stack<Tween> _PooledSequences = new Stack<Tween>();
 
         static readonly List<Tween> _KillList = new List<Tween>(_DefaultMaxTweeners);
         static int _maxActiveLookupId = -1; // Highest full ID in _activeTweens
@@ -62,10 +62,9 @@ namespace DG.Tweening.Core
             Tweener t;
             // Search inside pool
             if (totPooledTweeners > 0) {
-                t = _PooledTweeners[totPooledTweeners - 1];
+                t = _PooledTweeners.Pop();
                 t.active = true;
                 AddActiveTween(t);
-                _PooledTweeners.RemoveAt(totPooledTweeners - 1);
                 totPooledTweeners--;
                 return t;
             }
@@ -89,10 +88,9 @@ namespace DG.Tweening.Core
         {
             Sequence s;
             if (totPooledSequences > 0) {
-                s = (Sequence)_PooledSequences[totPooledSequences - 1];
+                s = (Sequence)_PooledSequences.Pop();
                 s.active = true;
                 AddActiveTween(s);
-                _PooledSequences.RemoveAt(totPooledSequences - 1);
                 totPooledSequences--;
                 return s;
             }
@@ -337,7 +335,7 @@ namespace DG.Tweening.Core
             }
             switch (t.tweenType) {
             case TweenType.Sequence:
-                _PooledSequences.Add(t);
+                _PooledSequences.Push(t);
                 totPooledSequences++;
                 // Despawn sequenced tweens
                 Sequence s = (Sequence)t;
@@ -345,7 +343,7 @@ namespace DG.Tweening.Core
                 for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
                 break;
             case TweenType.Tweener:
-                _PooledTweeners.Add((Tweener)t);
+                _PooledTweeners.Push((Tweener)t);
                 totPooledTweeners++;
                 break;
             }
@@ -479,8 +477,8 @@ namespace DG.Tweening.Core
             maxTweeners = tweenersCapacity;
             maxSequences = sequencesCapacity;
             Array.Resize(ref _activeTweens, maxActive);
-            _PooledTweeners.Capacity = tweenersCapacity;
-            _PooledSequences.Capacity = sequencesCapacity;
+//            _PooledTweeners.Capacity = tweenersCapacity;
+//            _PooledSequences.Capacity = sequencesCapacity;
             _KillList.Capacity = maxActive;
         }
 
@@ -594,19 +592,19 @@ namespace DG.Tweening.Core
             case CapacityIncreaseMode.TweenersOnly:
                 killAdd += _DefaultMaxTweeners;
                 maxTweeners += _DefaultMaxTweeners;
-                _PooledTweeners.Capacity += _DefaultMaxTweeners;
+//                _PooledTweeners.Capacity += _DefaultMaxTweeners;
                 break;
             case CapacityIncreaseMode.SequencesOnly:
                 killAdd += _DefaultMaxSequences;
                 maxSequences += _DefaultMaxSequences;
-                _PooledSequences.Capacity += _DefaultMaxSequences;
+//                _PooledSequences.Capacity += _DefaultMaxSequences;
                 break;
             default:
                 killAdd += _DefaultMaxTweeners;
                 maxTweeners += _DefaultMaxTweeners;
                 maxSequences += _DefaultMaxSequences;
-                _PooledTweeners.Capacity += _DefaultMaxTweeners;
-                _PooledSequences.Capacity += _DefaultMaxSequences;
+//                _PooledTweeners.Capacity += _DefaultMaxTweeners;
+//                _PooledSequences.Capacity += _DefaultMaxSequences;
                 break;
             }
             maxActive = maxTweeners;
