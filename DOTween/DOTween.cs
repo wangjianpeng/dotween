@@ -815,6 +815,7 @@ namespace DG.Tweening
             t.setter = setter;
             t.duration = duration;
             t.loopType = defaultLoopType;
+            t.easeType = defaultEaseType;
             t.isPlaying = defaultAutoPlayBehaviour == AutoPlay.All || defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return t;
         }

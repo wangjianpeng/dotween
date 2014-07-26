@@ -79,7 +79,6 @@
     <Compile Include="Plugins\Core\ITweenPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\IntPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\QuaternionPlugin.cs" />
-    <Compile Include="Plugins\Core\NoOptions.cs" />
     <Compile Include="Plugins\DefaultPlugins\RectOffsetPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\RectPlugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\UintPlugin.cs" />
