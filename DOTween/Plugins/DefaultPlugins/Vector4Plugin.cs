@@ -34,12 +34,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     {
         Vector4 _res;
 
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startValueV4 = t.getterVector4();
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             if (t.axisConstraint == AxisConstraint.None) {
                 _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);

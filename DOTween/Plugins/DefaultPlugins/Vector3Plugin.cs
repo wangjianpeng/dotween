@@ -33,12 +33,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     {
         Vector3 _res;
 
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startValueV4 = GetTargetValue(t);
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             if (t.axisConstraint == AxisConstraint.None) {
                 _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -85,7 +85,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             }
         }
 
-        static Vector3 GetTargetValue(TweenerCore t)
+        static Vector3 GetTargetValue(Tweener t)
         {
             switch (t.targetType) {
             case TargetType.TransformPosition:

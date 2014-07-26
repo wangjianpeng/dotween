@@ -662,7 +662,7 @@
         <member name="F:DG.Tweening.Tween.onComplete">
             <summary>Called the moment the tween reaches completion (loops included)</summary>
         </member>
-        <member name="M:DG.Tweening.Tweener.UpdateDelay(System.Single)">
+        <member name="M:DG.Tweening.Tweener.Reset">
             <summary>
             Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
             and the endValue as the given one
@@ -1058,12 +1058,6 @@
         </member>
         <member name="F:DG.Tweening.LogBehaviour.ErrorsOnly">
             <summary>Log only errors</summary>
-        </member>
-        <member name="T:DG.Tweening.Core.TweenerCore">
-            <summary>
-            Cast is as a Tweener
-            </summary>
-            Public so that external custom plugins can get data from it
         </member>
         <member name="T:DG.Tweening.Core.Easing.EaseCurve">
             <summary>

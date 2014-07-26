@@ -34,12 +34,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     {
         Color _res;
 
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startValueV4 = GetTargetValue(t);
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             if (!t.optionsBool0) {
                 _res.r = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -56,7 +56,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             else t.setterVector4(_res);
         }
 
-        static Color GetTargetValue(TweenerCore t)
+        static Color GetTargetValue(Tweener t)
         {
             if (t.targetType == TargetType.MaterialColor) return t.targetMaterial.color;
             return t.getterVector4();

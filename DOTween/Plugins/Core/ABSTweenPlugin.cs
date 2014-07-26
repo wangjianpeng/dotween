@@ -30,7 +30,7 @@ namespace DG.Tweening.Plugins.Core
     /// </summary>
     public abstract class ABSTweenPlugin : ITweenPlugin
     {
-        public abstract void SetStartValue(TweenerCore t);
-        public abstract void Evaluate(TweenerCore t, float elapsed);
+        public abstract void SetStartValue(Tweener t);
+        public abstract void Evaluate(Tweener t, float elapsed);
     }
 }

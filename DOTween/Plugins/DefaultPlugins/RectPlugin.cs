@@ -34,13 +34,13 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     {
         Rect _res;
 
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             Rect r = t.getterRect();
             t.startValueV4 = new Vector4(r.x, r.y, r.width, r.height);
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
             _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);

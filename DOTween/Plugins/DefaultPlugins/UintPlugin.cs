@@ -31,12 +31,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 {
     public class UintPlugin : ABSTweenPlugin
     {
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startValue = t.getterUint();
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             t.setterUint((uint)Math.Round(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0)));
         }

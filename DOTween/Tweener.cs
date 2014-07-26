@@ -32,7 +32,7 @@ namespace DG.Tweening
     /// <summary>
     /// Represents a tween of a single field or property
     /// </summary>
-    public abstract class Tweener : Tween
+    public sealed class Tweener : Tween
     {
         // Target type and eventual known objects references (public but hidden so external plugins can access them)
 #pragma warning disable 1591
@@ -46,13 +46,36 @@ namespace DG.Tweening
         [EditorBrowsable(EditorBrowsableState.Never)] public float startValue, endValue, changeValue;
         [EditorBrowsable(EditorBrowsableState.Never)] public Vector4 startValueV4, endValueV4, changeValueV4;
         [EditorBrowsable(EditorBrowsableState.Never)] public string startString, endString, changeString;
+        // Getters/setters
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<float> getterFloat;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<float> setterFloat;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<int> getterInt;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<int> setterInt;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<uint> getterUint;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<uint> setterUint;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<Vector4> getterVector4;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<Vector4> setterVector4;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<Quaternion> getterQuaternion;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<Quaternion> setterQuaternion;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<Rect> getterRect;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<Rect> setterRect;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<RectOffset> getterRectOffset;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<RectOffset> setterRectOffset;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<string> getterString;
+        [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<string> setterString;
 #pragma warning restore 1591
+
+        internal ABSTweenPlugin plugin;
 
         // ***********************************************************************************
         // CONSTRUCTOR
         // ***********************************************************************************
 
-        internal Tweener() {}
+        internal Tweener()
+        {
+            tweenType = TweenType.Tweener;
+            Reset();
+        }
 
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
@@ -66,6 +89,61 @@ namespace DG.Tweening
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
+
+        internal override void Reset()
+        {
+            base.Reset();
+
+            targetTransform = null;
+            targetMaterial = null;
+            axisConstraint = AxisConstraint.None;
+            optionsBool0 = false;
+            startString = endString = null;
+
+            getterFloat = null;
+            getterVector4 = null;
+            getterRect = null;
+            getterRectOffset = null;
+            getterString = null;
+            setterFloat = null;
+            setterVector4 = null;
+            setterRect = null;
+            setterRectOffset = null;
+            setterString = null;
+        }
+
+        // Starts up the tween for the first time
+        internal override bool Startup()
+        {
+            startupDone = true;
+            fullDuration = loops > -1 ? duration * loops : Mathf.Infinity;
+            if (DOTween.useSafeMode) {
+                try {
+                    plugin.SetStartValue(this);
+                } catch (UnassignedReferenceException) {
+                    // Target/field doesn't exist: kill tween
+                    return false;
+                }
+            } else plugin.SetStartValue(this);
+            if (isRelative) {
+                endValue = startValue + endValue;
+                endValueV4 = startValueV4 + endValueV4;
+            }
+            if (isFrom) {
+                // Switch start and end value and jump immediately to new start value, regardless of delays
+                Vector4 prevStartValueV4 = startValueV4;
+                startValueV4 = endValueV4;
+                endValueV4 = prevStartValueV4;
+                changeValueV4 = endValueV4 - startValueV4;
+                float prevStartValue = startValue;
+                startValue = endValue;
+                endValue = prevStartValue;
+                changeValue = endValue - startValue;
+                // Jump (no need for safeMode check since it already happened when assigning start value
+                plugin.Evaluate(this, 0);
+            } else changeValueV4 = endValueV4 - startValueV4;
+            return true;
+        }
 
         // CALLED BY TweenManager
         // Returns the elapsed time minus delay in case of success,
@@ -85,6 +163,23 @@ namespace DG.Tweening
             }
             elapsedDelay = elapsed;
             return 0;
+        }
+
+        // Returns TRUE if tween needs to be killed
+        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
+        {
+            float updatePosition = useInversePosition ? duration - position : position;
+
+            if (DOTween.useSafeMode) {
+                try {
+                    plugin.Evaluate(this, updatePosition);
+                } catch (MissingReferenceException) {
+                    // Target doesn't exist anymore: kill tween
+                    return true;
+                }
+            } else plugin.Evaluate(this, updatePosition);
+
+            return false;
         }
 
         // CALLED BY TweenerCore

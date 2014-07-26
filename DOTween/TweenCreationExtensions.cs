@@ -328,7 +328,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveTo(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
@@ -339,7 +339,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToX(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -350,7 +350,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToY(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -361,7 +361,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToZ(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -373,7 +373,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocal(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
@@ -384,7 +384,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalX(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -395,7 +395,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalY(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -406,7 +406,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalZ(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -418,7 +418,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener RotateTo(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformRotation;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
@@ -429,7 +429,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener RotateToLocal(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalRotation;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
@@ -441,7 +441,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleTo(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
@@ -452,7 +452,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToX(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -464,7 +464,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToY(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -475,7 +475,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToZ(this Transform transform, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
@@ -490,7 +490,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ColorTo(this Material material, Color endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.MaterialColor;
             t.targetMaterial = material;
             t.endValueV4 = endValue;
@@ -502,7 +502,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener FadeTo(this Material material, float endValue, float duration)
         {
-            TweenerCore t = TweenManager.GetTweener();
+            Tweener t = TweenManager.GetTweener();
             t.targetType = TargetType.MaterialColor;
             t.targetMaterial = material;
             t.endValueV4 = new Vector4(endValue, endValue, endValue, endValue);

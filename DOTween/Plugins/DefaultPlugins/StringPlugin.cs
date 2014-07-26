@@ -35,12 +35,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startString = t.getterString();
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = t.startString.Length;
