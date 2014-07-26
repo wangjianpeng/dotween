@@ -492,7 +492,7 @@ namespace DG.Tweening
         /// <param name="updateType">The type of update to use</param>
         public static Sequence Sequence(UpdateType updateType = UpdateType.Default)
         {
-            InitCheck();
+            if (!_initialized) AutoInit();
             Sequence sequence = TweenManager.GetSequence(updateType);
             Tweening.Sequence.Setup(sequence);
             return sequence;
@@ -797,10 +797,8 @@ namespace DG.Tweening
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
-        static void InitCheck()
+        static void AutoInit()
         {
-            if (_initialized) return;
-
             Init();
             Debugger.LogWarning("DOTween auto-initialized with default settings (defaultAutoKill: " + defaultAutoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
         }
@@ -809,7 +807,7 @@ namespace DG.Tweening
         // TweenCreationExtensions might acces it
         internal static TweenerCore<T> SetupTween<T>(TweenerCore<T> t, bool isFrom, float duration, DOGetter<T> getter = null, DOSetter<T> setter = null)
         {
-            InitCheck();
+            if (!_initialized) AutoInit();
             t.isFrom = isFrom;
             t.getter = getter;
             t.setter = setter;
@@ -819,39 +817,5 @@ namespace DG.Tweening
             t.isPlaying = defaultAutoPlayBehaviour == AutoPlay.All || defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return t;
         }
-
-//        // Tweens a property using default plugins with options
-//        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugOptions>(
-//            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options,
-//            float duration, bool isFrom
-//        )
-//            where TPlugOptions : struct
-//        {
-//            InitCheck();
-//            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
-//            tweener.isFrom = isFrom;
-//            if (!Tweener.Setup(tweener, getter, setter, endValue, options, duration)) {
-//                TweenManager.Despawn(tweener);
-//                return null;
-//            }
-//            return tweener;
-//        }
-//        // Tweens a property using a custom plugin with eventual options
-//        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugin, TPlugOptions>(
-//            IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter,
-//            float duration, bool isFrom
-//        )
-//            where TPlugin : ITweenPlugin, new()
-//            where TPlugOptions : struct
-//        {
-//            InitCheck();
-//            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
-//            tweener.isFrom = isFrom;
-//            if (!Tweener.Setup(tweener, plugSetter, duration)) {
-//                TweenManager.Despawn(tweener);
-//                return null;
-//            }
-//            return tweener;
-//        }
     }
 }
