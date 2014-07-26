@@ -31,16 +31,16 @@ using Random = UnityEngine.Random;
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
-    public class StringPlugin : ABSTweenPlugin<string>
+    public class StringPlugin : ABSTweenPlugin
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
-        public override void SetStartValue(TweenerCore<string> t)
+        public override void SetStartValue(TweenerCore t)
         {
-            t.startString = t.getter();
+            t.startString = t.getterString();
         }
 
-        public override void Evaluate(TweenerCore<string> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = t.startString.Length;
@@ -49,13 +49,13 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
             if (t.isRelative) {
                 _Buffer.Append(t.startString);
-                if (t.optionsBool0) t.setter(_Buffer.Append(t.changeString, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
-                else t.setter(_Buffer.Append(t.changeString, 0, len).ToString());
+                if (t.optionsBool0) t.setterString(_Buffer.Append(t.changeString, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                else t.setterString(_Buffer.Append(t.changeString, 0, len).ToString());
                 return;
             }
 
             if (t.optionsBool0) {
-                t.setter(_Buffer.Append(t.changeString, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                t.setterString(_Buffer.Append(t.changeString, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
                 return;
             }
 
@@ -68,7 +68,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             } else startValueMaxLen -= len;
             _Buffer.Append(t.changeString, 0, len);
             if (len < changeValueLen && len < startValueLen) _Buffer.Append(t.startString, len, startValueMaxLen);
-            t.setter(_Buffer.ToString());
+            t.setterString(_Buffer.ToString());
         }
 
 

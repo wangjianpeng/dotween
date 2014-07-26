@@ -29,20 +29,20 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class FloatPlugin : ABSTweenPlugin<float>
+    public class FloatPlugin : ABSTweenPlugin
     {
-        public override void SetStartValue(TweenerCore<float> t)
+        public override void SetStartValue(TweenerCore t)
         {
-            t.startValue = t.getter();
+            t.startValue = t.getterFloat();
         }
 
-        public override void Evaluate(TweenerCore<float> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             if (!t.optionsBool0) {
-                t.setter(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0));
+                t.setterFloat(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0));
             } else {
                 // Snapping
-                t.setter((float)Math.Round(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0)));
+                t.setterFloat((float)Math.Round(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0)));
             }
         }
     }

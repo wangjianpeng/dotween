@@ -260,66 +260,66 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets specific options for a float tween</summary>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<float> t, bool snapping)
-        {
-            t.optionsBool0 = snapping;
-            return t;
-        }
-        /// <summary>Sets specific options for a Vector2 tween</summary>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector2> t, bool snapping)
-        { return SetOptions(t, AxisConstraint.None, snapping); }
-        /// <summary>Sets specific options for a Vector2 tween</summary>
-        /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector2> t, AxisConstraint axisConstraint, bool snapping = false)
-        {
-            t.axisConstraint = axisConstraint;
-            t.optionsBool0 = snapping;
-            return t;
-        }
-        /// <summary>Sets specific options for a Vector3 tween</summary>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector3> t, bool snapping)
-        { return SetOptions(t, AxisConstraint.None, snapping); }
-        /// <summary>Sets specific options for a Vector3 tween</summary>
-        /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector3> t, AxisConstraint axisConstraint, bool snapping = false)
-        {
-            t.axisConstraint = axisConstraint;
-            t.optionsBool0 = snapping;
-            return t;
-        }
-        /// <summary>Sets specific options for a Vector4 tween</summary>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector4> t, bool snapping)
-        { return SetOptions(t, AxisConstraint.None, snapping); }
-        /// <summary>Sets specific options for a Vector4 tween</summary>
-        /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
-        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector4> t, AxisConstraint axisConstraint, bool snapping = false)
-        {
-            t.axisConstraint = axisConstraint;
-            t.optionsBool0 = snapping;
-            return t;
-        }
-        /// <summary>Sets specific options for a Color tween</summary>
-        /// <param name="alphaOnly">If TRUE only the alpha value will be tweened</param>
-        public static Tweener SetOptions(this TweenerCore<Color> t, bool alphaOnly)
-        {
-            t.optionsBool0 = alphaOnly;
-            return t;
-        }
-        /// <summary>Sets specific options for a Color tween</summary>
-        /// <param name="scramble">If TRUE the characters will change with a scramble effect instead than just be replaced</param>
-        public static Tweener SetOptions(this TweenerCore<string> t, bool scramble)
-        {
-            t.optionsBool0 = scramble;
-            return t;
-        }
+//        /// <summary>Sets specific options for a float tween</summary>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<float> t, bool snapping)
+//        {
+//            t.optionsBool0 = snapping;
+//            return t;
+//        }
+//        /// <summary>Sets specific options for a Vector2 tween</summary>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<Vector2> t, bool snapping)
+//        { return SetOptions(t, AxisConstraint.None, snapping); }
+//        /// <summary>Sets specific options for a Vector2 tween</summary>
+//        /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<Vector2> t, AxisConstraint axisConstraint, bool snapping = false)
+//        {
+//            t.axisConstraint = axisConstraint;
+//            t.optionsBool0 = snapping;
+//            return t;
+//        }
+//        /// <summary>Sets specific options for a Vector3 tween</summary>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<Vector3> t, bool snapping)
+//        { return SetOptions(t, AxisConstraint.None, snapping); }
+//        /// <summary>Sets specific options for a Vector3 tween</summary>
+//        /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<Vector3> t, AxisConstraint axisConstraint, bool snapping = false)
+//        {
+//            t.axisConstraint = axisConstraint;
+//            t.optionsBool0 = snapping;
+//            return t;
+//        }
+//        /// <summary>Sets specific options for a Vector4 tween</summary>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<Vector4> t, bool snapping)
+//        { return SetOptions(t, AxisConstraint.None, snapping); }
+//        /// <summary>Sets specific options for a Vector4 tween</summary>
+//        /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
+//        /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+//        public static Tweener SetOptions(this TweenerCore<Vector4> t, AxisConstraint axisConstraint, bool snapping = false)
+//        {
+//            t.axisConstraint = axisConstraint;
+//            t.optionsBool0 = snapping;
+//            return t;
+//        }
+//        /// <summary>Sets specific options for a Color tween</summary>
+//        /// <param name="alphaOnly">If TRUE only the alpha value will be tweened</param>
+//        public static Tweener SetOptions(this TweenerCore<Color> t, bool alphaOnly)
+//        {
+//            t.optionsBool0 = alphaOnly;
+//            return t;
+//        }
+//        /// <summary>Sets specific options for a Color tween</summary>
+//        /// <param name="scramble">If TRUE the characters will change with a scramble effect instead than just be replaced</param>
+//        public static Tweener SetOptions(this TweenerCore<string> t, bool scramble)
+//        {
+//            t.optionsBool0 = scramble;
+//            return t;
+//        }
 
         /////////////////////////////////////////////////////
         // Transform Shortcuts //////////////////////////////
@@ -328,158 +328,159 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveTo(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's X position to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToX(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.X).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's Y position to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToY(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.Y).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's Z position to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToZ(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.Z).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
 
         /// <summary>Tweens a Transform's localPosition to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocal(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's X localPosition to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalX(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.X).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's Y localPosition to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalY(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.Y).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's Z localPosition to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalZ(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalPosition;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.Z).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
 
         /// <summary>Tweens a Transform's rotation to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener RotateTo(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore<Quaternion> t = TweenManager.GetTweener<Quaternion>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformRotation;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
-            t.plugin = PluginsManager.GetDefaultPlugin<Quaternion>(DefaultPluginType.Quaternion);
-            return DOTween.SetupTween(t, false, duration).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Quaternion);
+            return DOTween.SetupTween<Quaternion>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's localRotation to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener RotateToLocal(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore<Quaternion> t = TweenManager.GetTweener<Quaternion>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformLocalRotation;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
-            t.plugin = PluginsManager.GetDefaultPlugin<Quaternion>(DefaultPluginType.Quaternion);
-            return DOTween.SetupTween(t, false, duration).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Quaternion);
+            return DOTween.SetupTween<Quaternion>(t, false, duration).SetId(transform);
         }
 
         /// <summary>Tweens a Transform's localScale to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleTo(this Transform transform, Vector3 endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = endValue;
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's X localScale to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToX(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.X).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
+//            return DOTween.SetupTween<Vector3>(t, false, duration).SetOptions(AxisConstraint.X).SetId(transform);
         }
         /// <summary>Tweens a Transform's Y localScale to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToY(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.Y).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
         /// <summary>Tweens a Transform's Z localScale to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToZ(this Transform transform, float endValue, float duration)
         {
-            TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.TransformScale;
             t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Vector3>(DefaultPluginType.Vector3);
-            return DOTween.SetupTween(t, false, duration).SetOptions(AxisConstraint.Z).SetId(transform);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
+            return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
         }
 
         /////////////////////////////////////////////////////
@@ -489,24 +490,24 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ColorTo(this Material material, Color endValue, float duration)
         {
-            TweenerCore<Color> t = TweenManager.GetTweener<Color>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.MaterialColor;
             t.targetMaterial = material;
             t.endValueV4 = endValue;
-            t.plugin = PluginsManager.GetDefaultPlugin<Color>(DefaultPluginType.Color);
-            return DOTween.SetupTween(t, false, duration).SetId(material);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Color);
+            return DOTween.SetupTween<Color>(t, false, duration).SetId(material);
         }
         /// <summary>Tweens a Material's alpha color to the given value
         /// (will have no effect unless your material supports transparency)</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener FadeTo(this Material material, float endValue, float duration)
         {
-            TweenerCore<Color> t = TweenManager.GetTweener<Color>();
+            TweenerCore t = TweenManager.GetTweener();
             t.targetType = TargetType.MaterialColor;
             t.targetMaterial = material;
             t.endValueV4 = new Vector4(endValue, endValue, endValue, endValue);
-            t.plugin = PluginsManager.GetDefaultPlugin<Color>(DefaultPluginType.Color);
-            return DOTween.SetupTween(t, false, duration).SetOptions(true).SetId(material);
+            t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Color);
+            return DOTween.SetupTween<Color>(t, false, duration).SetId(material);
         }
     }
 }

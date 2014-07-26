@@ -30,16 +30,16 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class QuaternionPlugin : ABSTweenPlugin<Quaternion>
+    public class QuaternionPlugin : ABSTweenPlugin
     {
         Vector3 _res;
 
-        public override void SetStartValue(TweenerCore<Quaternion> t)
+        public override void SetStartValue(TweenerCore t)
         {
             t.startValueV4 = GetTargetValue(t).eulerAngles;
         }
 
-        public override void Evaluate(TweenerCore<Quaternion> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
             _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
@@ -54,12 +54,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 t.targetTransform.localEulerAngles = _res;
                 break;
             default:
-                t.setter(Quaternion.Euler(_res));
+                t.setterQuaternion(Quaternion.Euler(_res));
                 break;
             }
         }
 
-        static Quaternion GetTargetValue(TweenerCore<Quaternion> t)
+        static Quaternion GetTargetValue(TweenerCore t)
         {
             switch (t.targetType) {
             case TargetType.TransformRotation:
@@ -67,7 +67,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             case TargetType.TransformLocalRotation:
                 return t.targetTransform.localRotation;
             }
-            return t.getter();
+            return t.getterQuaternion();
         }
     }
 }

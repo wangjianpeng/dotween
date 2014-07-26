@@ -29,16 +29,16 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class IntPlugin : ABSTweenPlugin<int>
+    public class IntPlugin : ABSTweenPlugin
     {
-        public override void SetStartValue(TweenerCore<int> t)
+        public override void SetStartValue(TweenerCore t)
         {
-            t.startValue = t.getter();
+            t.startValue = t.getterInt();
         }
 
-        public override void Evaluate(TweenerCore<int> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
-            t.setter((int)Math.Round(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0)));
+            t.setterInt((int)Math.Round(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0)));
         }
     }
 }

@@ -30,16 +30,16 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class Vector4Plugin : ABSTweenPlugin<Vector4>
+    public class Vector4Plugin : ABSTweenPlugin
     {
         Vector4 _res;
 
-        public override void SetStartValue(TweenerCore<Vector4> t)
+        public override void SetStartValue(TweenerCore t)
         {
-            t.startValueV4 = t.getter();
+            t.startValueV4 = t.getterVector4();
         }
 
-        public override void Evaluate(TweenerCore<Vector4> t, float elapsed)
+        public override void Evaluate(TweenerCore t, float elapsed)
         {
             if (t.axisConstraint == AxisConstraint.None) {
                 _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -54,7 +54,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                     _res.w = (float)Math.Round(_res.w);
                 }
             } else {
-                _res = t.getter();
+                _res = t.getterVector4();
                 switch (t.axisConstraint) {
                 case AxisConstraint.X:
                     _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -76,7 +76,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
             }
 
-            t.setter(_res);
+            t.setterVector4(_res);
         }
     }
 }
