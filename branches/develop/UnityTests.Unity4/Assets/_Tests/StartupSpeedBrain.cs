@@ -35,6 +35,10 @@ public class StartupSpeedBrain : BrainBase
 		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Startup 10 position tweens")) StartCoroutine(StartupPos(10));
+		if (GUILayout.Button("Startup 10 float tweens")) StartCoroutine(StartupFloats(10));
+		GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Startup 2,000 position tweens")) StartCoroutine(StartupPos(2000));
 		if (GUILayout.Button("Startup 2,000 float tweens")) StartCoroutine(StartupFloats(2000));
 		GUILayout.EndHorizontal();

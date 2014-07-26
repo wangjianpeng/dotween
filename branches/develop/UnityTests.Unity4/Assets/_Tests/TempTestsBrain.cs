@@ -20,7 +20,8 @@ public class TempTestsBrain : BrainBase
 
 		// PlugVector3X
 		// Using NEW
-		tween = DOTween.To(()=>target.position, x=> target.position = x, new Vector3(3,0,0), 1.5f).SetOptions(AxisConstraint.X)
+		tween = DOTween.To(()=>target.position, x=> target.position = x, new Vector3(3,0,0), 1.5f)
+			// .SetOptions(AxisConstraint.X)
 			.SetEase(EaseType.OutQuint)
 			.SetDelay(delay).SetRelative()
 			.SetLoops(loops, loopType).SetAutoKill(false)
@@ -29,12 +30,14 @@ public class TempTestsBrain : BrainBase
 			.OnComplete(()=> Debug.Log("Complete"))
 			.Pause();
 		// Using Plug shortcuts (and no delays)
-		DOTween.To(()=>target.position, x=> target.position = x, new Vector3(0,3,0), 1.5f).SetOptions(AxisConstraint.Y, true)
-			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
-			.Pause();
-		DOTween.To(()=>target.position, x=> target.position = x, new Vector3(0,0,3), 1.5f).SetOptions(AxisConstraint.Z)
-			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
-			.Pause();
+		// DOTween.To(()=>target.position, x=> target.position = x, new Vector3(0,3,0), 1.5f)
+		// 	// .SetOptions(AxisConstraint.Y, true)
+		// 	.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
+		// 	.Pause();
+		// DOTween.To(()=>target.position, x=> target.position = x, new Vector3(0,0,3), 1.5f)
+		// 	// .SetOptions(AxisConstraint.Z)
+		// 	.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
+		// 	.Pause();
 	}
 
 	void OnGUI()

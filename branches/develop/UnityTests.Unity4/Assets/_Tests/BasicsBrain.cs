@@ -45,7 +45,9 @@ public class BasicsBrain : BrainBase
 				tweens[i] = DOTween.To(()=> t.rotation, x=> t.rotation = x, toRotation, 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false);
 				break;
 			case 2:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetOptions(true).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f)
+					// .SetOptions(true)
+					.SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo);
 				break;
 			}
 			Tween tween = tweens[i];
@@ -83,7 +85,7 @@ public class BasicsBrain : BrainBase
 		// Color
 		DOTween.To(()=> guiTexColor.color, x=> guiTexColor.color = x, Color.green, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Alpha
-		DOTween.To(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetOptions(true).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		// DOTween.To(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetOptions(true).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String
 		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String
