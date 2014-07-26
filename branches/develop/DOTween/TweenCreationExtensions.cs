@@ -32,12 +32,6 @@ namespace DG.Tweening
     /// </summary>
     public static class TweenCreationExtensions
     {
-        // FIXME implement correctly for all To/From types
-        public static TweenerCore<float> Options(this TweenerCore<float> t, bool snapping)
-        {
-            t.optionsBool0 = snapping;
-        }
-
         // ===================================================================================
         // TWEENER + SEQUENCES ---------------------------------------------------------------
 
@@ -268,19 +262,19 @@ namespace DG.Tweening
 
         /// <summary>Sets specific options for a float tween</summary>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<float> SetOptions(this TweenerCore<float> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<float> t, bool snapping)
         {
             t.optionsBool0 = snapping;
             return t;
         }
         /// <summary>Sets specific options for a Vector2 tween</summary>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<Vector2> SetOptions(this TweenerCore<Vector2> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<Vector2> t, bool snapping)
         { return SetOptions(t, AxisConstraint.None, snapping); }
         /// <summary>Sets specific options for a Vector2 tween</summary>
         /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<Vector2> SetOptions(this TweenerCore<Vector2> t, AxisConstraint axisConstraint, bool snapping = false)
+        public static Tweener SetOptions(this TweenerCore<Vector2> t, AxisConstraint axisConstraint, bool snapping = false)
         {
             t.axisConstraint = axisConstraint;
             t.optionsBool0 = snapping;
@@ -288,12 +282,12 @@ namespace DG.Tweening
         }
         /// <summary>Sets specific options for a Vector3 tween</summary>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<Vector3> SetOptions(this TweenerCore<Vector3> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<Vector3> t, bool snapping)
         { return SetOptions(t, AxisConstraint.None, snapping); }
         /// <summary>Sets specific options for a Vector3 tween</summary>
         /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<Vector3> SetOptions(this TweenerCore<Vector3> t, AxisConstraint axisConstraint, bool snapping = false)
+        public static Tweener SetOptions(this TweenerCore<Vector3> t, AxisConstraint axisConstraint, bool snapping = false)
         {
             t.axisConstraint = axisConstraint;
             t.optionsBool0 = snapping;
@@ -301,12 +295,12 @@ namespace DG.Tweening
         }
         /// <summary>Sets specific options for a Vector4 tween</summary>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<Vector4> SetOptions(this TweenerCore<Vector4> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<Vector4> t, bool snapping)
         { return SetOptions(t, AxisConstraint.None, snapping); }
         /// <summary>Sets specific options for a Vector4 tween</summary>
         /// <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
         /// <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
-        public static TweenerCore<Vector4> SetOptions(this TweenerCore<Vector4> t, AxisConstraint axisConstraint, bool snapping = false)
+        public static Tweener SetOptions(this TweenerCore<Vector4> t, AxisConstraint axisConstraint, bool snapping = false)
         {
             t.axisConstraint = axisConstraint;
             t.optionsBool0 = snapping;
@@ -314,9 +308,16 @@ namespace DG.Tweening
         }
         /// <summary>Sets specific options for a Color tween</summary>
         /// <param name="alphaOnly">If TRUE only the alpha value will be tweened</param>
-        public static TweenerCore<Color> SetOptions(this TweenerCore<Color> t, bool alphaOnly)
+        public static Tweener SetOptions(this TweenerCore<Color> t, bool alphaOnly)
         {
             t.optionsBool0 = alphaOnly;
+            return t;
+        }
+        /// <summary>Sets specific options for a Color tween</summary>
+        /// <param name="scramble">If TRUE the characters will change with a scramble effect instead than just be replaced</param>
+        public static Tweener SetOptions(this TweenerCore<string> t, bool scramble)
+        {
+            t.optionsBool0 = scramble;
             return t;
         }
 

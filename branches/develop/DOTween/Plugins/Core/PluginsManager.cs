@@ -85,16 +85,16 @@ namespace DG.Tweening.Plugins.Core
             return plugin as ABSTweenPlugin<T>;
         }
 
-        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)
-            where TPlugin : ITweenPlugin, new()
-        {
-            Type t = typeof(TPlugin);
-            if (_CustomPlugins.ContainsKey(t)) return _CustomPlugins[t] as ABSTweenPlugin<T1,T2,TPlugOptions>;
-            
-            TPlugin plugin = new TPlugin();
-            _CustomPlugins.Add(t, plugin);
-            return plugin as ABSTweenPlugin<T1,T2,TPlugOptions>;
-        }
+//        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)
+//            where TPlugin : ITweenPlugin, new()
+//        {
+//            Type t = typeof(TPlugin);
+//            if (_CustomPlugins.ContainsKey(t)) return _CustomPlugins[t] as ABSTweenPlugin<T1,T2,TPlugOptions>;
+//            
+//            TPlugin plugin = new TPlugin();
+//            _CustomPlugins.Add(t, plugin);
+//            return plugin as ABSTweenPlugin<T1,T2,TPlugOptions>;
+//        }
 
         // Un-caches all plugins
         internal static void PurgeAll()

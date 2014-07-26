@@ -26,93 +26,93 @@ using UnityEngine;
 
 namespace DG.Tweening.Core
 {
-    // T1: type of value to tween
-    // T2: format in which value is stored while tweening
-    // TPlugOptions: options type
-    internal sealed class TweenerCoreBkp<T1,T2,TPlugOptions>
-    {
-        // SETUP DATA ////////////////////////////////////////////////
-
-        internal DOGetter<T1> getter;
-        internal DOSetter<T1> setter;
-        internal T2 startValue, endValue, changeValue;
-        internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
-        internal TPlugOptions plugOptions;
-
-        // PLAY DATA /////////////////////////////////////////////////
-
-
-        // ***********************************************************************************
-        // CONSTRUCTOR
-        // ***********************************************************************************
-
-        internal TweenerCoreBkp()
-        {
-            typeofT1 = typeof(T1);
-            typeofT2 = typeof(T2);
-            typeofTPlugOptions = typeof(TPlugOptions);
-            tweenType = TweenType.Tweener;
-            Reset();
-        }
-
-        // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
-
-        public override void ChangeEndValue<T>(T newEndValue)
-        {
-            if (typeof(T) != typeofT2) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
-                return;
-            }
-
-            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2));
-        }
-
-        // ===================================================================================
-        // INTERNAL METHODS ------------------------------------------------------------------
-
-        // _tweenPlugin is not reset since it's useful to keep it as a reference
-        internal override void Reset()
-        {
-            base.Reset();
-
-            getter = null;
-            setter = null;
-            plugOptions = new TPlugOptions();
-        }
-
-        // CALLED BY TweenManager at each update.
-        // Returns TRUE if the tween needs to be killed
-        internal override float UpdateDelay(float elapsed)
-        {
-            return DoUpdateDelay(this, elapsed);
-        }
-
-        // CALLED BY Tween the moment the tween starts, AFTER any delay has elapsed
-        // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
-        // Returns TRUE in case of success,
-        // FALSE if there are missing references and the tween needs to be killed
-        internal override bool Startup()
-        {
-            return DoStartup(this);
-        }
-
-        // Applies the tween set by DoGoto.
-        // Returns TRUE if the tween needs to be killed
-        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
-        {
-            float updatePosition = useInversePosition ? duration - position : position;
-            if (DOTween.useSafeMode) {
-                try {
-                    setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
-                } catch (MissingReferenceException) {
-                    // Target/field doesn't exist anymore: kill tween
-                    return true;
-                }
-            } else {
-                setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
-            }
-            return false;
-        }
-    }
+//    // T1: type of value to tween
+//    // T2: format in which value is stored while tweening
+//    // TPlugOptions: options type
+//    internal sealed class TweenerCoreBkp<T1,T2,TPlugOptions>
+//    {
+//        // SETUP DATA ////////////////////////////////////////////////
+//
+//        internal DOGetter<T1> getter;
+//        internal DOSetter<T1> setter;
+//        internal T2 startValue, endValue, changeValue;
+//        internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
+//        internal TPlugOptions plugOptions;
+//
+//        // PLAY DATA /////////////////////////////////////////////////
+//
+//
+//        // ***********************************************************************************
+//        // CONSTRUCTOR
+//        // ***********************************************************************************
+//
+//        internal TweenerCoreBkp()
+//        {
+//            typeofT1 = typeof(T1);
+//            typeofT2 = typeof(T2);
+//            typeofTPlugOptions = typeof(TPlugOptions);
+//            tweenType = TweenType.Tweener;
+//            Reset();
+//        }
+//
+//        // ===================================================================================
+//        // PUBLIC METHODS --------------------------------------------------------------------
+//
+//        public override void ChangeEndValue<T>(T newEndValue)
+//        {
+//            if (typeof(T) != typeofT2) {
+//                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+//                return;
+//            }
+//
+//            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2));
+//        }
+//
+//        // ===================================================================================
+//        // INTERNAL METHODS ------------------------------------------------------------------
+//
+//        // _tweenPlugin is not reset since it's useful to keep it as a reference
+//        internal override void Reset()
+//        {
+//            base.Reset();
+//
+//            getter = null;
+//            setter = null;
+//            plugOptions = new TPlugOptions();
+//        }
+//
+//        // CALLED BY TweenManager at each update.
+//        // Returns TRUE if the tween needs to be killed
+//        internal override float UpdateDelay(float elapsed)
+//        {
+//            return DoUpdateDelay(this, elapsed);
+//        }
+//
+//        // CALLED BY Tween the moment the tween starts, AFTER any delay has elapsed
+//        // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
+//        // Returns TRUE in case of success,
+//        // FALSE if there are missing references and the tween needs to be killed
+//        internal override bool Startup()
+//        {
+//            return DoStartup(this);
+//        }
+//
+//        // Applies the tween set by DoGoto.
+//        // Returns TRUE if the tween needs to be killed
+//        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
+//        {
+//            float updatePosition = useInversePosition ? duration - position : position;
+//            if (DOTween.useSafeMode) {
+//                try {
+//                    setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
+//                } catch (MissingReferenceException) {
+//                    // Target/field doesn't exist anymore: kill tween
+//                    return true;
+//                }
+//            } else {
+//                setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
+//            }
+//            return false;
+//        }
+//    }
 }

@@ -37,7 +37,8 @@ public class RecycleBrain : BrainBase
 			.SetLoops(-1, LoopType.Yoyo).SetEase(EaseType.Linear);
 				break;
 			case RecycleMode.ChangeEndValue:
-				tween.ChangeEndValue(newEndValue);
+				Debug.LogWarning("ChangeEndValue needs to be reimplemented");
+				// tween.ChangeEndValue(newEndValue);
 				break;
 			}
 		}
