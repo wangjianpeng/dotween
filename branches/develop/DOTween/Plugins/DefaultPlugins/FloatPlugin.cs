@@ -31,12 +31,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 {
     public class FloatPlugin : ABSTweenPlugin
     {
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startValue = t.getterFloat();
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             if (!t.optionsBool0) {
                 t.setterFloat(Ease.Apply(t, elapsed, t.startValue, t.changeValue, t.duration, 0, 0));

@@ -34,12 +34,12 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     {
         Vector3 _res;
 
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             t.startValueV4 = GetTargetValue(t).eulerAngles;
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
             _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
@@ -59,7 +59,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             }
         }
 
-        static Quaternion GetTargetValue(TweenerCore t)
+        static Quaternion GetTargetValue(Tweener t)
         {
             switch (t.targetType) {
             case TargetType.TransformRotation:

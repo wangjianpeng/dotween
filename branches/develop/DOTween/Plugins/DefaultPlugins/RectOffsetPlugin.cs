@@ -34,13 +34,13 @@ namespace DG.Tweening.Plugins.DefaultPlugins
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
     public class RectOffsetPlugin : ABSTweenPlugin
     {
-        public override void SetStartValue(TweenerCore t)
+        public override void SetStartValue(Tweener t)
         {
             RectOffset r = t.getterRectOffset();
             t.startValueV4 = new Vector4(r.left, r.right, r.top, r.bottom);
         }
 
-        public override void Evaluate(TweenerCore t, float elapsed)
+        public override void Evaluate(Tweener t, float elapsed)
         {
             t.setterRectOffset(new RectOffset(
                 (int)Math.Round(Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0)),

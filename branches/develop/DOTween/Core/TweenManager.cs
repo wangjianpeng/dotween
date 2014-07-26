@@ -44,7 +44,7 @@ namespace DG.Tweening.Core
         // Tweens contained in Sequences are not inside the active lists
         // Arrays are organized (max once per update) so that existing elements are next to each other from 0 to (totActiveTweens - 1)
         static Tween[] _activeTweens = new Tween[_DefaultMaxTweeners];
-        static readonly List<Tween> _PooledTweeners = new List<Tween>(_DefaultMaxTweeners);
+        static readonly List<Tweener> _PooledTweeners = new List<Tweener>(_DefaultMaxTweeners);
         static readonly List<Tween> _PooledSequences = new List<Tween>(_DefaultMaxSequences);
 
         static readonly List<Tween> _KillList = new List<Tween>(_DefaultMaxTweeners);
@@ -55,93 +55,28 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-//        // Returns a new Tweener, from the pool if there's one available,
-//        // otherwise by instantiating a new one
-//        internal static TweenerCore<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>()
-//            where TPlugOptions : struct
-//        {
-//            Tween tween;
-//            TweenerCore<T1,T2,TPlugOptions> t;
-//            // Search inside pool
-//            if (totPooledTweeners > 0) {
-//                Type typeofT1 = typeof(T1);
-//                Type typeofT2 = typeof(T2);
-//                Type typeofTPlugOptions = typeof(TPlugOptions);
-//                for (int i = 0; i < totPooledTweeners; ++i) {
-//                    tween = _PooledTweeners[i];
-//                    if (tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
-//                        // Pooled Tweener exists: spawn it
-//                        t = (TweenerCore<T1, T2, TPlugOptions>)tween;
-//                        t.active = true;
-//                        AddActiveTween(t);
-//                        _PooledTweeners.RemoveAt(i);
-//                        totPooledTweeners--;
-//                        return t;
-//                    }
-//                }
-//                // Not found: remove a tween from the pool in case it's full
-//                if (totTweeners >= maxTweeners) {
-//                    _PooledTweeners.RemoveAt(0);
-//                    totPooledTweeners--;
-//                    totTweeners--;
-//                }
-//            } else {
-//                // Increase capacity in case max number of Tweeners has already been reached, then continue
-//                if (totTweeners >= maxTweeners) {
-//                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
-//                    IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
-//                }
-//            }
-//            // Not found: create new TweenerController
-//            t = new TweenerCore<T1,T2,TPlugOptions>();
-//            totTweeners++;
-//            t.active = true;
-//            AddActiveTween(t);
-//            return t;
-//        }
-
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
-        internal static TweenerCore GetTweener()
+        internal static Tweener GetTweener()
         {
-            Tween tween;
-            TweenerCore t;
+            Tweener t;
             // Search inside pool
             if (totPooledTweeners > 0) {
-                t = (TweenerCore)_PooledTweeners[0];
+                t = _PooledTweeners[0];
                 t.active = true;
                 AddActiveTween(t);
                 _PooledTweeners.RemoveAt(0);
                 totPooledTweeners--;
                 return t;
-//                Type typeofT1 = typeof(T);
-//                for (int i = 0; i < totPooledTweeners; ++i) {
-//                    tween = _PooledTweeners[i];
-//                    if (tween.typeofT1 == typeofT1) {
-//                        // Pooled Tweener exists: spawn it
-//                        t = (TweenerCore<T>)tween;
-//                        t.active = true;
-//                        AddActiveTween(t);
-//                        _PooledTweeners.RemoveAt(i);
-//                        totPooledTweeners--;
-//                        return t;
-//                    }
-//                }
-//                // Not found: remove a tween from the pool in case it's full
-//                if (totTweeners >= maxTweeners) {
-//                    _PooledTweeners.RemoveAt(0);
-//                    totPooledTweeners--;
-//                    totTweeners--;
-//                }
-            } else {
-                // Increase capacity in case max number of Tweeners has already been reached, then continue
-                if (totTweeners >= maxTweeners) {
-                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
-                    IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
-                }
+            }
+
+            // Increase capacity in case max number of Tweeners has already been reached, then continue
+            if (totTweeners >= maxTweeners) {
+                if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
+                IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
             }
             // Not found: create new TweenerController
-            t = new TweenerCore();
+            t = new Tweener();
             totTweeners++;
             t.active = true;
             AddActiveTween(t);
@@ -410,7 +345,7 @@ namespace DG.Tweening.Core
                 for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
                 break;
             case TweenType.Tweener:
-                _PooledTweeners.Add(t);
+                _PooledTweeners.Add((Tweener)t);
                 totPooledTweeners++;
                 break;
             }
