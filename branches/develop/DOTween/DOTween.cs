@@ -153,12 +153,6 @@ namespace DG.Tweening
         /////////////////////////////////////////////////////////////////////
         // TWEENER TO ///////////////////////////////////////////////////////
 
-        void TestDeleteMe()
-        {
-            Transform t = new GameObject().transform;
-            DOTween.To(() => t.position, x => t.position = x, 10f, 2f).SetOptions(AxisConstraint.Y);
-        }
-
         /// <summary>Tweens a float to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
