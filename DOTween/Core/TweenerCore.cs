@@ -33,12 +33,26 @@ namespace DG.Tweening.Core
     /// Cast is as a Tweener
     /// </summary>
     /// Public so that external custom plugins can get data from it
-    public class TweenerCore<T> : Tweener
+    public sealed class TweenerCore<T> : Tweener
     {
         [EditorBrowsable(EditorBrowsableState.Never)] public DOGetter<T> getter;
         [EditorBrowsable(EditorBrowsableState.Never)] public DOSetter<T> setter;
 
         internal ABSTweenPlugin<T> plugin;
+
+        // ===================================================================================
+        // PUBLIC METHODS --------------------------------------------------------------------
+
+        // FIXME reimplement
+//        public override void ChangeEndValue<T>(T newEndValue)
+//        {
+//            if (typeof(T) != typeofT2) {
+//                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+//                return;
+//            }
+//
+//            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2));
+//        }
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------

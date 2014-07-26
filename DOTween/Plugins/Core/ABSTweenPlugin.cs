@@ -28,7 +28,7 @@ namespace DG.Tweening.Plugins.Core
     /// <summary>
     /// Public so external plugins can inherit from it
     /// </summary>
-    public abstract class ABSTweenPlugin<T>
+    public abstract class ABSTweenPlugin<T> : ITweenPlugin
     {
         public abstract void SetStartValue(TweenerCore<T> t);
         public abstract void Evaluate(TweenerCore<T> t, float elapsed);

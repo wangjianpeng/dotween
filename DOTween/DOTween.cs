@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.5.300";
+        public static readonly string Version = "0.6.000";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -153,6 +153,12 @@ namespace DG.Tweening
         /////////////////////////////////////////////////////////////////////
         // TWEENER TO ///////////////////////////////////////////////////////
 
+        void TestDeleteMe()
+        {
+            Transform t = new GameObject().transform;
+            DOTween.To(() => t.position, x => t.position = x, 10f, 2f).SetOptions(AxisConstraint.Y);
+        }
+
         /// <summary>Tweens a float to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
@@ -173,7 +179,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<int> getter, DOSetter<int> setter, int endValue, float duration)
+        public static TweenerCore<int> To(DOGetter<int> getter, DOSetter<int> setter, int endValue, float duration)
         {
             TweenerCore<int> t = TweenManager.GetTweener<int>();
             t.targetType = TargetType.Custom;
@@ -187,7 +193,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<uint> getter, DOSetter<uint> setter, uint endValue, float duration)
+        public static TweenerCore<uint> To(DOGetter<uint> getter, DOSetter<uint> setter, uint endValue, float duration)
         {
             TweenerCore<uint> t = TweenManager.GetTweener<uint>();
             t.targetType = TargetType.Custom;
@@ -201,7 +207,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue, float duration)
+        public static TweenerCore<Vector2> To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, Vector2 endValue, float duration)
         {
             TweenerCore<Vector2> t = TweenManager.GetTweener<Vector2>();
             t.targetType = TargetType.Custom;
@@ -216,7 +222,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, float duration)
+        public static TweenerCore<Vector2> To(DOGetter<Vector2> getter, DOSetter<Vector2> setter, float endValue, float duration)
         {
             TweenerCore<Vector2> t = TweenManager.GetTweener<Vector2>();
             t.targetType = TargetType.Custom;
@@ -230,7 +236,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue, float duration)
+        public static TweenerCore<Vector3> To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 endValue, float duration)
         {
             TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
             t.targetType = TargetType.Custom;
@@ -245,7 +251,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, float duration)
+        public static TweenerCore<Vector3> To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, float duration)
         {
             TweenerCore<Vector3> t = TweenManager.GetTweener<Vector3>();
             t.targetType = TargetType.Custom;
@@ -259,7 +265,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue, float duration)
+        public static TweenerCore<Vector4> To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue, float duration)
         {
             TweenerCore<Vector4> t = TweenManager.GetTweener<Vector4>();
             t.targetType = TargetType.Custom;
@@ -274,7 +280,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, float endValue, float duration)
+        public static TweenerCore<Vector4> To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, float endValue, float duration)
         {
             TweenerCore<Vector4> t = TweenManager.GetTweener<Vector4>();
             t.targetType = TargetType.Custom;
@@ -288,7 +294,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue, float duration)
+        public static TweenerCore<Quaternion> To(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue, float duration)
         {
             TweenerCore<Quaternion> t = TweenManager.GetTweener<Quaternion>();
             t.targetType = TargetType.Custom;
@@ -302,7 +308,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Color> getter, DOSetter<Color> setter, Color endValue, float duration)
+        public static TweenerCore<Color> To(DOGetter<Color> getter, DOSetter<Color> setter, Color endValue, float duration)
         {
             TweenerCore<Color> t = TweenManager.GetTweener<Color>();
             t.targetType = TargetType.Custom;
@@ -316,7 +322,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue, float duration)
+        public static TweenerCore<Rect> To(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue, float duration)
         {
             TweenerCore<Rect> t = TweenManager.GetTweener<Rect>();
             t.targetType = TargetType.Custom;
@@ -330,7 +336,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
+        public static TweenerCore<RectOffset> To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
         {
             TweenerCore<RectOffset> t = TweenManager.GetTweener<RectOffset>();
             t.targetType = TargetType.Custom;
@@ -344,7 +350,7 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<string> getter, DOSetter<string> setter, string endValue, float duration)
+        public static TweenerCore<string> To(DOGetter<string> getter, DOSetter<string> setter, string endValue, float duration)
         {
             TweenerCore<string> t = TweenManager.GetTweener<string>();
             t.targetType = TargetType.Custom;
