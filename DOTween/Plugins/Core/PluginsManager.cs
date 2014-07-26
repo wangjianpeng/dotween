@@ -31,7 +31,18 @@ namespace DG.Tweening.Plugins.Core
     internal static class PluginsManager
     {
         // Default plugins
-        static readonly Dictionary<DefaultPluginType, ITweenPlugin> _DefaultPlugins = new Dictionary<DefaultPluginType, ITweenPlugin>(16);
+        static FloatPlugin _floatPlugin;
+        static IntPlugin _intPlugin;
+        static UintPlugin _uintPlugin;
+        static Vector2Plugin _vector2Plugin;
+        static Vector3Plugin _vector3Plugin;
+        static Vector4Plugin _vector4Plugin;
+        static QuaternionPlugin _quaternionPlugin;
+        static ColorPlugin _colorPlugin;
+        static RectPlugin _rectPlugin;
+        static RectOffsetPlugin _rectOffsetPlugin;
+        static StringPlugin _stringPlugin;
+
         // Advanced and custom plugins
         static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(30);
 
@@ -40,49 +51,42 @@ namespace DG.Tweening.Plugins.Core
 
         internal static ABSTweenPlugin<T> GetDefaultPlugin<T>(DefaultPluginType pluginType)
         {
-            ITweenPlugin plugin;
-            _DefaultPlugins.TryGetValue(pluginType, out plugin);
-            if (plugin != null) return plugin as ABSTweenPlugin<T>;
-
             // Retrieve correct custom plugin
             switch (pluginType) {
-            case DefaultPluginType.Float:
-                plugin = new FloatPlugin();
-                break;
             case DefaultPluginType.Int:
-                plugin = new IntPlugin();
-                break;
+                if (_intPlugin == null) _intPlugin = new IntPlugin();
+                return _intPlugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Uint:
-                plugin = new UintPlugin();
-                break;
+                if (_uintPlugin == null) _uintPlugin = new UintPlugin();
+                return _uintPlugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Vector2:
-                plugin = new Vector2Plugin();
-                break;
+                if (_vector2Plugin == null) _vector2Plugin = new Vector2Plugin();
+                return _vector2Plugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Vector3:
-                plugin = new Vector3Plugin();
-                break;
+                if (_vector3Plugin == null) _vector3Plugin = new Vector3Plugin();
+                return _vector3Plugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Vector4:
-                plugin = new Vector4Plugin();
-                break;
+                if (_vector4Plugin == null) _vector4Plugin = new Vector4Plugin();
+                return _vector4Plugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Quaternion:
-                plugin = new QuaternionPlugin();
-                break;
+                if (_quaternionPlugin == null) _quaternionPlugin = new QuaternionPlugin();
+                return _quaternionPlugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Color:
-                plugin = new ColorPlugin();
-                break;
+                if (_colorPlugin == null) _colorPlugin = new ColorPlugin();
+                return _colorPlugin as ABSTweenPlugin<T>;
             case DefaultPluginType.Rect:
-                plugin = new RectPlugin();
-                break;
+                if (_rectPlugin == null) _rectPlugin = new RectPlugin();
+                return _rectPlugin as ABSTweenPlugin<T>;
             case DefaultPluginType.RectOffset:
-                plugin = new RectOffsetPlugin();
-                break;
+                if (_rectOffsetPlugin == null) _rectOffsetPlugin = new RectOffsetPlugin();
+                return _rectOffsetPlugin as ABSTweenPlugin<T>;
             case DefaultPluginType.String:
-                plugin = new StringPlugin();
-                break;
+                if (_stringPlugin == null) _stringPlugin = new StringPlugin();
+                return _stringPlugin as ABSTweenPlugin<T>;
+            default:
+                if (_floatPlugin == null) _floatPlugin = new FloatPlugin();
+                return _floatPlugin as ABSTweenPlugin<T>;
             }
-
-            _DefaultPlugins.Add(pluginType, plugin);
-            return plugin as ABSTweenPlugin<T>;
         }
 
 //        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)
@@ -99,7 +103,19 @@ namespace DG.Tweening.Plugins.Core
         // Un-caches all plugins
         internal static void PurgeAll()
         {
-            _DefaultPlugins.Clear();
+            _floatPlugin = null;
+            _intPlugin = null;
+            _uintPlugin = null;
+            _vector2Plugin = null;
+            _vector3Plugin = null;
+            _vector4Plugin = null;
+            _quaternionPlugin = null;
+            _colorPlugin = null;
+            _rectPlugin = null;
+            _rectOffsetPlugin = null;
+            _stringPlugin = null;
+
+
             _CustomPlugins.Clear();
         }
     }
