@@ -1,0 +1,1699 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DOTween</name>
+    </assembly>
+    <members>
+        <member name="T:DG.Tweening.DOTween">
+            <summary>
+            Main DOTween class
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.inspectorUpdater">
+            <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.Version">
+            <summary>DOTween's version</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.useSafeMode">
+            <summary>
+            If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
+            (like targets becoming null while a tween is playing)
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.timeScale">
+            <summary>Global DOTween timeScale</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultEaseType">
+            <summary>Default ease applied to all new tweens</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultLoopType">
+            <summary>Default loopType applied to all new tweens</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultAutoPlayBehaviour">
+            <summary>Default autoPlay behaviour for new tweens</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultAutoKill">
+            <summary>Default autoKillOnComplete behaviour for new tweens</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Init(System.Boolean,System.Boolean,DG.Tweening.LogBehaviour)">
+            <summary>
+            Must be called once, before the first ever DOTween call/reference,
+            otherwise, it will be called automatically and will use default options.
+            Calling it a second time won't have any effect.
+            </summary>
+            <param name="autoKill">All newly created tweens will have their autoKill property set accordingly
+            (TRUE: they are automatically killed when complete, FALSE: you will need to kill them manually).
+            You can change this setting at any time by changing the <see cref="F:DG.Tweening.DOTween.defaultAutoKill"/> property.
+            Default: TRUE</param>
+            <param name="useSafeMode">If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
+            (like targets becoming null while a tween is playing).
+            You can change this setting at any time by changing the <see cref="F:DG.Tweening.DOTween.useSafeMode"/> property.
+            Default: FALSE</param>
+            <param name="logBehaviour">Type of logging to use.
+            You can change this setting at any time by changing the <see cref="P:DG.Tweening.DOTween.logBehaviour"/> property.
+            Default: Default</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
+            <summary>
+            Directly sets the current max capacity of Tweeners and Sequences,
+            so that DOTween doesn't need to automatically increase them in case the max is reached
+            (which might lead to hiccups when that happens).
+            Sequences capacity must be less or equal to Tweeners capacity
+            (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
+            Beware: use this method only when there are no tweens running.
+            </summary>
+            <param name="tweenersCapacity">Max Tweeners capacity.
+            Default: 200</param>
+            <param name="sequencesCapacity">Max Sequences capacity.
+            Default: 50</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
+            <summary>Tweens a float to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Int32},DG.Tweening.Core.DOSetter{System.Int32},System.Int32,System.Single)">
+            <summary>Tweens an int to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.UInt32},DG.Tweening.Core.DOSetter{System.UInt32},System.UInt32,System.Single)">
+            <summary>Tweens an uint to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},UnityEngine.Vector2,System.Single)">
+            <summary>Tweens a Vector2 to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector2},DG.Tweening.Core.DOSetter{UnityEngine.Vector2},System.Single,System.Single)">
+            <summary>Tweens a Vector2 on a single axis to the given value using default plugins.
+            Chain the <c>Options</c> method right after this one to choose which axis to use</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Vector3 to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,System.Single)">
+            <summary>Tweens a Vector3 on a single axis to the given value using default plugins.
+            Chain the <c>Options</c> method right after this one to choose which axis to use</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},UnityEngine.Vector4,System.Single)">
+            <summary>Tweens a Vector4 to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Vector4},DG.Tweening.Core.DOSetter{UnityEngine.Vector4},System.Single,System.Single)">
+            <summary>Tweens a Vector4 on a single axis to the given value using default plugins.
+            Chain the <c>Options</c> method right after this one to choose which axis to use</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Quaternion},DG.Tweening.Core.DOSetter{UnityEngine.Quaternion},UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Quaternion to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Color},DG.Tweening.Core.DOSetter{UnityEngine.Color},UnityEngine.Color,System.Single)">
+            <summary>Tweens a Color to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.Rect},DG.Tweening.Core.DOSetter{UnityEngine.Rect},UnityEngine.Rect,System.Single)">
+            <summary>Tweens a Rect to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{UnityEngine.RectOffset},DG.Tweening.Core.DOSetter{UnityEngine.RectOffset},UnityEngine.RectOffset,System.Single)">
+            <summary>Tweens a RectOffset to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.String},DG.Tweening.Core.DOSetter{System.String},System.String,System.Single)">
+            <summary>Tweens a property or field to the given value using default plugins</summary>
+            <param name="getter">A getter for the field or property to tween.
+            Example usage with lambda: <code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            Example usage with lambda: <code>x=> myProperty = x</code></param>
+            <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)">
+            <summary>
+            Returns a new <see cref="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)"/> to be used for tween groups
+            </summary>
+            <param name="updateType">The type of update to use</param>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Clear">
+            <summary>
+            Kills all tweens and clears the pools containing eventually cached tweens
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Complete">
+            <summary>Completes all tweens and returns the number of actual tweens completed
+            (meaning tweens that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Complete(System.Int32)">
+            <summary>Completes all tweens with the given ID and returns the number of actual tweens completed
+            (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Complete(System.String)">
+            <summary>Completes all tweens with the given string ID and returns the number of actual tweens completed
+            (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Complete(System.Object)">
+            <summary>Completes all tweens with the given object ID and returns the number of actual tweens completed
+            (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Flip">
+            <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Flip(System.Int32)">
+            <summary>Flips the tweens with the given ID (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Flip(System.String)">
+            <summary>Flips the tweens with the given string ID (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Flip(System.Object)">
+            <summary>Flips the tweens with the given object ID (changing their direction to forward if it was backwards and viceversa),
+            then returns the number of actual tweens flipped</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Goto(System.Single,System.Boolean)">
+            <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Goto(System.Int32,System.Single,System.Boolean)">
+            <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Goto(System.String,System.Single,System.Boolean)">
+            <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Goto(System.Object,System.Single,System.Boolean)">
+            <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Kill">
+            <summary>Kills all tweens and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Kill(System.Int32)">
+            <summary>Kills all tweens with the given ID and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Kill(System.String)">
+            <summary>Kills all tweens with the given string ID and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Kill(System.Object)">
+            <summary>Kills all tweens with the given object ID and returns the number of actual tweens killed</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Pause">
+            <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Pause(System.Int32)">
+            <summary>Pauses all tweens with the given ID and returns the number of actual tweens paused
+            (meaning the tweens that were actually playing and have been paused)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Pause(System.String)">
+            <summary>Pauses all tweens with the given string ID and returns the number of actual tweens paused
+            (meaning the tweens with the given id that were actually playing and have been paused)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Pause(System.Object)">
+            <summary>Pauses all tweens with the given object ID and returns the number of actual tweens paused
+            (meaning the tweens with the given id that were actually playing and have been paused)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Play">
+            <summary>Plays all tweens and returns the number of actual tweens played
+            (meaning tweens that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Play(System.Int32)">
+            <summary>Plays all tweens with the given ID and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Play(System.String)">
+            <summary>Plays all tweens with the given string ID and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Play(System.Object)">
+            <summary>Plays all tweens with the given object ID and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayBackwards">
+            <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
+            (meaning tweens that were not already started, playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayBackwards(System.Int32)">
+            <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayBackwards(System.String)">
+            <summary>Plays all tweens with the given string ID in backwards direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayBackwards(System.Object)">
+            <summary>Plays all tweens with the given object ID in backwards direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayForward">
+            <summary>Plays all tweens in forward direction and returns the number of actual tweens played
+            (meaning tweens that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayForward(System.Int32)">
+            <summary>Plays all tweens with the given ID in forward direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayForward(System.String)">
+            <summary>Plays all tweens with the given string ID in forward direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PlayForward(System.Object)">
+            <summary>Plays all tweens with the given object ID in forward direction and returns the number of actual tweens played
+            (meaning the tweens with the given id that were not already playing forward or complete)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Restart(System.Boolean)">
+            <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Restart(System.Int32,System.Boolean)">
+            <summary>Restarts all tweens with the given ID, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Restart(System.String,System.Boolean)">
+            <summary>Restarts all tweens with the given string ID, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Restart(System.Object,System.Boolean)">
+            <summary>Restarts all tweens with the given object ID, then returns the number of actual tweens restarted</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Rewind(System.Boolean)">
+            <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
+            (meaning tweens that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Rewind(System.Int32,System.Boolean)">
+            <summary>Rewinds and pauses all tweens with the given ID, then returns the number of actual tweens rewinded
+            (meaning the tweens with the given id that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Rewind(System.String,System.Boolean)">
+            <summary>Rewinds and pauses all tweens with the given string ID, then returns the number of actual tweens rewinded
+            (meaning the tweens with the given id that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.Rewind(System.Object,System.Boolean)">
+            <summary>Rewinds and pauses all tweens with the given object ID, then returns the number of actual tweens rewinded
+            (meaning the tweens with the given id that were not already rewinded)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause">
+            <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
+            (meaning tweens that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause(System.Int32)">
+            <summary>Toggles the play state of all tweens with the given ID and returns the number of actual tweens toggled
+            (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause(System.String)">
+            <summary>Toggles the play state of all tweens with the given string ID and returns the number of actual tweens toggled
+            (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TogglePause(System.Object)">
+            <summary>Toggles the play state of all tweens with the given object ID and returns the number of actual tweens toggled
+            (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
+        </member>
+        <member name="P:DG.Tweening.DOTween.logBehaviour">
+            <summary>DOTween's log behaviour</summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Quad">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quad.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quadratic (t^2) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quad.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quadratic (t^2) easing out: decelerating to zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quad.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quadratic (t^2) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Plugins.Core.ABSTweenPlugin`1">
+            <summary>
+            Public so external plugins can inherit from it
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Enums.TargetType">
+            <summary>
+            Public to allow plugins to access it
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Strong">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Strong.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Tween.
+            </summary>
+            <param name="time">
+            Time.
+            </param>
+            <param name="startValue">
+            Begin value.
+            </param>
+            <param name="changeValue">
+            Change value.
+            </param>
+            <param name="duration">
+            Duration.
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            A <see cref="T:System.Single"/>
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Strong.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Tween.
+            </summary>
+            <param name="time">
+            Time.
+            </param>
+            <param name="startValue">
+            Begin value.
+            </param>
+            <param name="changeValue">
+            Change value.
+            </param>
+            <param name="duration">
+            Duration.
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            A <see cref="T:System.Single"/>
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Strong.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Tween.
+            </summary>
+            <param name="time">
+            Time.
+            </param>
+            <param name="startValue">
+            Begin value.
+            </param>
+            <param name="changeValue">
+            Change value.
+            </param>
+            <param name="duration">
+            Duration.
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            A <see cref="T:System.Single"/>
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Elastic">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Elastic.EaseIn(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Elastic.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="amplitude">
+            Amplitude.
+            </param>
+            <param name="period">
+            Period.
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Elastic.EaseOut(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Elastic.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="amplitude">
+            Amplitude.
+            </param>
+            <param name="period">
+            Period.
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Elastic.EaseInOut(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Elastic.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an elastic (exponentially decaying sine wave) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="amplitude">
+            Amplitude.
+            </param>
+            <param name="period">
+            Period.
+            </param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Tweener">
+            <summary>
+            Represents a tween of a single field or property
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Tween">
+            <summary>
+            Shared by Tweeners and Sequences
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.Core.ABSSequentiable.onStart">
+            <summary>Called when the tween is set in a playing state the first time, after any eventual delay</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.timeScale">
+            <summary>TimeScale for the tween</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.isBackwards">
+            <summary>If TRUE the tween wil go backwards</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.id">
+            <summary>Int id (usable for filtering with DOTween static methods)</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.stringId">
+            <summary>String id (usable for filtering with DOTween static methods)</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.objId">
+            <summary>Object id (usable for filtering with DOTween static methods)</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onStepComplete">
+            <summary>Called the moment the tween completes one loop cycle</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onComplete">
+            <summary>Called the moment the tween reaches completion (loops included)</summary>
+        </member>
+        <member name="M:DG.Tweening.Tweener.UpdateDelay(System.Single)">
+            <summary>
+            Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
+            and the endValue as the given one
+            </summary>
+            FIXME reimplement
+        </member>
+        <member name="T:DG.Tweening.Extensions">
+            <summary>
+            Miscellaneous extensions
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Complete(DG.Tweening.Tween)">
+            <summary>Completes the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Flip(DG.Tweening.Tween)">
+            <summary>Flips the direction of this tween (backwards if it was going forward or viceversa)</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Goto(DG.Tweening.Tween,System.Single,System.Boolean)">
+            <summary>Send the tween to the given position in time</summary>
+            <param name="to">Time position to reach
+            (if higher than the whole tween duration the tween will simply reach its end)</param>
+            <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Kill(DG.Tweening.Tween)">
+            <summary>Kills the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Pause``1(``0)">
+            <summary>Pauses the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Play``1(``0)">
+            <summary>Plays the tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.PlayBackwards(DG.Tweening.Tween)">
+            <summary>Sets the tween in a forward direction and plays it</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.PlayForward(DG.Tweening.Tween)">
+            <summary>Sets the tween in a backwards direction and plays it</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Restart(DG.Tweening.Tween,System.Boolean)">
+            <summary>Restarts the tween from the beginning</summary>
+            <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Rewind(DG.Tweening.Tween,System.Boolean)">
+            <summary>Rewinds the tween</summary>
+            <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.TogglePause(DG.Tweening.Tween)">
+            <summary>Plays the tween if it was paused, pauses it if it was playing</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.CompletedLoops(DG.Tweening.Tween)">
+            <summary>Returns the total number of loops completed by this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Position(DG.Tweening.Tween)">
+            <summary>Returns the current position of this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Duration(DG.Tweening.Tween)">
+            <summary>Returns the duration of this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.FullDuration(DG.Tweening.Tween)">
+            <summary>Returns the full duration (loops included) of this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.Elapsed(DG.Tweening.Tween)">
+            <summary>Returns the total elapsed time for this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.IsBackwards(DG.Tweening.Tween)">
+            <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.IsPlaying(DG.Tweening.Tween)">
+            <summary>Returns TRUE if this tween is playing</summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.SetAs(DG.Tweening.Tween,DG.Tweening.Tween)">
+            <summary>
+            Sets the parameters of the tween (ease, loops, delay, etc) as the parameters of the given one
+            </summary>
+            <param name="asTweener">Tweener from which to copy the parameters</param>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Quint">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quint.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quintic (t^5) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quint.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quintic (t^5) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quint.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quintic (t^5) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.LoopType">
+            <summary>
+            Types of loop
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.LoopType.Restart">
+            <summary>Each loop cycle restarts from the beginning</summary>
+        </member>
+        <member name="F:DG.Tweening.LoopType.Yoyo">
+            <summary>The tween moves forward and backwards at alternate cycles</summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Circ">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Circ.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a circular (sqrt(1-t^2)) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Circ.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a circular (sqrt(1-t^2)) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Circ.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a circular (sqrt(1-t^2)) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Cubic">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Cubic.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a cubic (t^3) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Cubic.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a cubic (t^3) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Cubic.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a cubic (t^3) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Back">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Back.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="overshoot">
+            Overshoot ammount: higher means greater overshoot (0 produces cubic easing with no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent).
+            </param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Back.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="overshoot">
+            Overshoot ammount: higher means greater overshoot (0 produces cubic easing with no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent).
+            </param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Back.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="overshoot">
+            Overshoot ammount: higher means greater overshoot (0 produces cubic easing with no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent).
+            </param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.TweenType">
+            <summary>
+            Used internally
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.LogBehaviour">
+            <summary>
+            Types of log behaviours
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.LogBehaviour.Default">
+            <summary>Log only warnings and errors</summary>
+        </member>
+        <member name="F:DG.Tweening.LogBehaviour.Verbose">
+            <summary>Log warnings, errors and additional infos</summary>
+        </member>
+        <member name="F:DG.Tweening.LogBehaviour.ErrorsOnly">
+            <summary>Log only errors</summary>
+        </member>
+        <member name="T:DG.Tweening.Core.TweenerCore`1">
+            <summary>
+            Cast is as a Tweener
+            </summary>
+            Public so that external custom plugins can get data from it
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.EaseCurve">
+            <summary>
+            Used to interpret AnimationCurves as eases.
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.DOGetter`1">
+            <summary>
+            Used in place of <c>System.Action</c>.
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.DOSetter`1">
+            <summary>
+            Used in place of <c>System.Func</c>, which is not available in mscorlib.
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.TweenCallback">
+            <summary>
+            Used for tween callbacks
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.EaseFunction">
+            <summary>
+            Used for animationCurve-based ease functions
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Bounce">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Sine">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Sine.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a sinusoidal (sin(t)) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Sine.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a sinusoidal (sin(t)) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Sine.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a sinusoidal (sin(t)) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Expo">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Expo.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an exponential (2^t) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Expo.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an exponential (2^t) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Expo.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for an exponential (2^t) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="F:DG.Tweening.EaseType.AnimationCurve">
+            <summary>
+            Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Linear">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Linear.EaseNone(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a simple linear tweening, with no easing.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.Sequence">
+            <summary>
+            Controls a collection of tweens
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.AutoPlay">
+            <summary>
+            Types of autoPlay behaviours
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.AutoPlay.None">
+            <summary>No tween is automatically played</summary>
+        </member>
+        <member name="F:DG.Tweening.AutoPlay.AutoPlaySequences">
+            <summary>Only Sequences are automatically played</summary>
+        </member>
+        <member name="F:DG.Tweening.AutoPlay.AutoPlayTweeners">
+            <summary>Only Tweeners are automatically played</summary>
+        </member>
+        <member name="F:DG.Tweening.AutoPlay.All">
+            <summary>All tweens are automatically played</summary>
+        </member>
+        <member name="T:DG.Tweening.TweenCreationExtensions">
+            <summary>
+            Extensions for the creation of tweens
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetAutoKill``1(``0,System.Boolean)">
+            <summary>Sets the autoKill behaviour of the tween. 
+            Has no effect if the tween has already started</summary>
+            <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.Object)">
+            <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.Int32)">
+            <summary>Sets an int ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0,System.String)">
+            <summary>Sets a string ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetId``1(``0)">
+            <summary>Resets all ID types for this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetLoops``1(``0,System.Int32,DG.Tweening.LoopType)">
+            <summary>Sets the looping options for the tween. 
+            Has no effect if the tween has already started</summary>
+            <param name="loops">Number of cycles to play (-1 for infinite)</param>
+            <param name="loopType">Loop behaviour type</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetUpdate``1(``0,DG.Tweening.UpdateType)">
+            <summary>Sets the type of update (default or independent) for the tween</summary>
+            <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.OnStart``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onStart callback for the tween
+            (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.OnStepComplete``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onStepComplete callback for the tween
+            (called the moment the tween completes one loop cycle)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.OnComplete``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onComplete callback for the tween
+            (called the moment the tween reaches completion, loops included)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
+            <summary>Adds the given tween to the end of the Sequence. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="t">The tween to append</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Prepend(DG.Tweening.Sequence,DG.Tweening.Tween)">
+            <summary>Adds the given tween to the beginning of the Sequence, pushing forward the other nested content. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="t">The tween to prepend</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.Insert(DG.Tweening.Sequence,System.Single,DG.Tweening.Tween)">
+            <summary>Inserts the given tween at the given time position in the Sequence,
+            automatically adding an interval if needed. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="atPosition">The time position where the tween will be placed</param>
+            <param name="t">The tween to insert</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.AppendInterval(DG.Tweening.Sequence,System.Single)">
+            <summary>Adds the given interval to the end of the Sequence. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="interval">The interval duration</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.PrependInterval(DG.Tweening.Sequence,System.Single)">
+            <summary>Adds the given interval to the beginning of the Sequence, pushing forward the other nested content. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="interval">The interval duration</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.AppendCallback(DG.Tweening.Sequence,DG.Tweening.Core.TweenCallback)">
+            <summary>Adds the given callback to the end of the Sequence. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="callback">The callback to append</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.PrependCallback(DG.Tweening.Sequence,DG.Tweening.Core.TweenCallback)">
+            <summary>Adds the given callback to the beginning of the Sequence, pushing forward the other nested content. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="callback">The callback to prepend</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.InsertCallback(DG.Tweening.Sequence,System.Single,DG.Tweening.Core.TweenCallback)">
+            <summary>Inserts the given callback at the given time position in the Sequence,
+            automatically adding an interval if needed. 
+            Has no effect if the Sequence has already started</summary>
+            <param name="atPosition">The time position where the callback will be placed</param>
+            <param name="callback">The callback to insert</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetDelay``1(``0,System.Single)">
+            <summary>Sets a delayed startup for the tween.
+            Has no effect on Sequences or if the tween has already started</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetRelative``1(``0,System.Boolean)">
+            <summary>If isRelative is TRUE sets the tween as relative
+            (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
+            Has no effect on Sequences or if the tween has already started</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetEase``1(``0,DG.Tweening.EaseType)">
+            <summary>Sets the ease the tween.
+            Has no effect on Sequences</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetEase``1(``0,UnityEngine.AnimationCurve)">
+            <summary>Sets the ease the tween using an AnimationCurve.
+            Has no effect on Sequences</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single},System.Boolean)">
+            <summary>Sets specific options for a float tween</summary>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2},System.Boolean)">
+            <summary>Sets specific options for a Vector2 tween</summary>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2},DG.Tweening.AxisConstraint,System.Boolean)">
+            <summary>Sets specific options for a Vector2 tween</summary>
+            <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3},System.Boolean)">
+            <summary>Sets specific options for a Vector3 tween</summary>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3},DG.Tweening.AxisConstraint,System.Boolean)">
+            <summary>Sets specific options for a Vector3 tween</summary>
+            <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4},System.Boolean)">
+            <summary>Sets specific options for a Vector4 tween</summary>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4},DG.Tweening.AxisConstraint,System.Boolean)">
+            <summary>Sets specific options for a Vector4 tween</summary>
+            <param name="axisConstraint">Constrains the tween only to the given axis, leaving the others untouched</param>
+            <param name="snapping">If TRUE all number will be smoothly snapped to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Color},System.Boolean)">
+            <summary>Sets specific options for a Color tween</summary>
+            <param name="alphaOnly">If TRUE only the alpha value will be tweened</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String},System.Boolean)">
+            <summary>Sets specific options for a Color tween</summary>
+            <param name="scramble">If TRUE the characters will change with a scramble effect instead than just be replaced</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToX(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToY(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToZ(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalX(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalY(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.MoveToLocalZ(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.RotateTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's rotation to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.RotateToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localRotation to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToX(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToY(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ScaleToZ(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.ColorTo(UnityEngine.Material,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Material's color to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.FadeTo(UnityEngine.Material,System.Single,System.Single)">
+            <summary>Tweens a Material's alpha color to the given value
+            (will have no effect unless your material supports transparency)</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="T:DG.Tweening.UpdateType">
+            <summary>
+            Update type
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.UpdateType.Default">
+            <summary>Updates every frame, using Unity's timeScale</summary>
+        </member>
+        <member name="F:DG.Tweening.UpdateType.Independent">
+            <summary>Updates every frame, but ignores Unity's timeScale</summary>
+        </member>
+        <member name="T:DG.Tweening.Core.Easing.Quart">
+            <summary>
+            This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quart.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quartic (t^4) easing in: accelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quart.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quartic (t^4) easing out: decelerating from zero velocity.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.Quart.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Easing equation function for a quartic (t^4) easing in/out: acceleration until halfway, then deceleration.
+            </summary>
+            <param name="time">
+            Current time (in frames or seconds).
+            </param>
+            <param name="startValue">
+            Starting value.
+            </param>
+            <param name="changeValue">
+            Change needed in value.
+            </param>
+            <param name="duration">
+            Expected easing duration (in frames or seconds).
+            </param>
+            <param name="unusedOvershootOrAmplitude">Unused: here to keep same delegate for all ease types.</param>
+            <param name="unusedPeriod">Unused: here to keep same delegate for all ease types.</param>
+            <returns>
+            The eased value.
+            </returns>
+        </member>
+        <member name="T:DG.Tweening.AxisConstraint">
+            <summary>
+            Type of axis constraint to use while tweening
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.AxisConstraint.None">
+            <summary>No constraint</summary>
+        </member>
+        <member name="F:DG.Tweening.AxisConstraint.X">
+            <summary>X only</summary>
+        </member>
+        <member name="F:DG.Tweening.AxisConstraint.Y">
+            <summary>Y only</summary>
+        </member>
+        <member name="F:DG.Tweening.AxisConstraint.Z">
+            <summary>Z only</summary>
+        </member>
+        <member name="F:DG.Tweening.AxisConstraint.W">
+            <summary>W only</summary>
+        </member>
+    </members>
+</doc>
