@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.6.020";
+        public static readonly string Version = "0.6.021";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
