@@ -74,7 +74,7 @@ namespace DG.Tweening
         internal Tweener()
         {
             tweenType = TweenType.Tweener;
-            Reset();
+            Reset(this);
         }
 
         // ===================================================================================
@@ -90,94 +90,98 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal override void Reset()
+        internal static void Reset(Tweener t)
         {
-            base.Reset();
+            Tween.Reset(t);
 
-            targetTransform = null;
-            targetMaterial = null;
-            axisConstraint = AxisConstraint.None;
-            optionsBool0 = false;
-            startString = endString = null;
+            t.targetTransform = null;
+            t.targetMaterial = null;
+            t.axisConstraint = AxisConstraint.None;
+            t.optionsBool0 = false;
+            t.startString = t.endString = null;
 
-            getterFloat = null;
-            getterVector4 = null;
-            getterRect = null;
-            getterRectOffset = null;
-            getterString = null;
-            setterFloat = null;
-            setterVector4 = null;
-            setterRect = null;
-            setterRectOffset = null;
-            setterString = null;
+            t.getterFloat = null;
+            t.getterInt = null;
+            t.getterUint = null;
+            t.getterVector4 = null;
+            t.getterRect = null;
+            t.getterRectOffset = null;
+            t.getterString = null;
+            t.setterFloat = null;
+            t.setterInt = null;
+            t.setterUint = null;
+            t.setterVector4 = null;
+            t.setterRect = null;
+            t.setterRectOffset = null;
+            t.setterString = null;
         }
 
         // Starts up the tween for the first time
-        internal override bool Startup()
+        internal static bool Startup(Tweener t)
         {
-            startupDone = true;
-            fullDuration = loops > -1 ? duration * loops : Mathf.Infinity;
+            t.startupDone = true;
+            t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
             if (DOTween.useSafeMode) {
                 try {
-                    plugin.SetStartValue(this);
+                    t.plugin.SetStartValue(t);
                 } catch (UnassignedReferenceException) {
                     // Target/field doesn't exist: kill tween
                     return false;
                 }
-            } else plugin.SetStartValue(this);
-            if (isRelative) {
-                endValue = startValue + endValue;
-                endValueV4 = startValueV4 + endValueV4;
+            } else t.plugin.SetStartValue(t);
+            if (t.isRelative) {
+                t.endValue = t.startValue + t.endValue;
+                t.endValueV4 = t.startValueV4 + t.endValueV4;
             }
-            if (isFrom) {
+            if (t.isFrom) {
                 // Switch start and end value and jump immediately to new start value, regardless of delays
-                Vector4 prevStartValueV4 = startValueV4;
-                startValueV4 = endValueV4;
-                endValueV4 = prevStartValueV4;
-                changeValueV4 = endValueV4 - startValueV4;
-                float prevStartValue = startValue;
-                startValue = endValue;
-                endValue = prevStartValue;
-                changeValue = endValue - startValue;
+                Vector4 prevStartValueV4 = t.startValueV4;
+                t.startValueV4 = t.endValueV4;
+                t.endValueV4 = prevStartValueV4;
+                t.changeValueV4 = t.endValueV4 - t.startValueV4;
+                float prevStartValue = t.startValue;
+                t.startValue = t.endValue;
+                t.endValue = prevStartValue;
+                t.changeValue = t.endValue - t.startValue;
                 // Jump (no need for safeMode check since it already happened when assigning start value
-                plugin.Evaluate(this, 0);
-            } else changeValueV4 = endValueV4 - startValueV4;
+                t.plugin.Evaluate(t, 0);
+            } else t.changeValueV4 = t.endValueV4 - t.startValueV4;
             return true;
         }
 
         // CALLED BY TweenManager
         // Returns the elapsed time minus delay in case of success,
         // -1 if there are missing references and the tween needs to be killed
-        internal override float UpdateDelay(float elapsed)
+        internal static float UpdateDelay(Tweener t, float elapsed)
         {
-            if (isFrom && !startupDone) {
+            if (t.isFrom && !t.startupDone) {
                 // Startup immediately to set the correct FROM setup
-                if (!Startup()) return -1;
+                if (!Startup(t)) return -1;
             }
-            float tweenDelay = delay;
+            float tweenDelay = t.delay;
             if (elapsed > tweenDelay) {
                 // Delay complete
-                elapsedDelay = tweenDelay;
-                delayComplete = true;
+                t.elapsedDelay = tweenDelay;
+                t.delayComplete = true;
                 return elapsed - tweenDelay;
             }
-            elapsedDelay = elapsed;
+            t.elapsedDelay = elapsed;
             return 0;
         }
 
         // Returns TRUE if tween needs to be killed
-        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
+        internal static bool ApplyTween(Tweener t, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
-            float updatePosition = useInversePosition ? duration - position : position;
+            float updatePosition = useInversePosition ? t.duration - t.position : t.position;
 
             if (DOTween.useSafeMode) {
                 try {
-                    plugin.Evaluate(this, updatePosition);
+                    t.plugin.Evaluate(t, updatePosition);
                 } catch (MissingReferenceException) {
                     // Target doesn't exist anymore: kill tween
                     return true;
                 }
-            } else plugin.Evaluate(this, updatePosition);
+            } else t.plugin.Evaluate(t, updatePosition);
 
             return false;
         }

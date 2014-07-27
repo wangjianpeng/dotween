@@ -125,7 +125,7 @@ namespace DG.Tweening.Core
                 t.creationLocked = true; // Lock tween creation methods from now on
                 float tDeltaTime = (t.updateType == UpdateType.Default ? deltaTime : independentTime) * t.timeScale;
                 if (!t.delayComplete) {
-                    tDeltaTime = t.UpdateDelay(t.elapsedDelay + tDeltaTime);
+                    tDeltaTime = Tweener.UpdateDelay((Tweener)t, t.elapsedDelay + tDeltaTime);
                     if (tDeltaTime <= -1) {
                         // Error during startup (can happen with FROM tweens): mark tween for killing
                         willKill = true;
@@ -341,14 +341,16 @@ namespace DG.Tweening.Core
                 Sequence s = (Sequence)t;
                 int len = s.sequencedTweens.Count;
                 for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
+                Tweener.Reset(s);
                 break;
             case TweenType.Tweener:
-                _PooledTweeners.Push((Tweener)t);
+                Tweener tweener = (Tweener)t;
+                _PooledTweeners.Push(tweener);
                 totPooledTweeners++;
+                Tweener.Reset(tweener);
                 break;
             }
             t.active = false;
-            t.Reset();
         }
 
         internal static int FilteredOperation(
