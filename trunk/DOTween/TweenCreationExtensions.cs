@@ -23,6 +23,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using UnityEngine;
 
+#pragma warning disable 1573
 namespace DG.Tweening
 {
     /// <summary>

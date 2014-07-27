@@ -21,7 +21,6 @@
 // 
 
 using DG.Tweening.Core;
-using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
