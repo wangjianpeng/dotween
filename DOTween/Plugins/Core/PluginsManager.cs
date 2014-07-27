@@ -30,9 +30,21 @@ namespace DG.Tweening.Plugins.Core
     internal static class PluginsManager
     {
         // Default plugins
-        static readonly Dictionary<Type, ITweenPlugin> _DefaultPlugins = new Dictionary<Type, ITweenPlugin>(20);
+        static FloatPlugin _floatPlugin;
+        static IntPlugin _intPlugin;
+        static UintPlugin _uintPlugin;
+        static Vector2Plugin _vector2Plugin;
+        static Vector3Plugin _vector3Plugin;
+        static Vector4Plugin _vector4Plugin;
+        static QuaternionPlugin _quaternionPlugin;
+        static ColorPlugin _colorPlugin;
+        static RectPlugin _rectPlugin;
+        static RectOffsetPlugin _rectOffsetPlugin;
+        static StringPlugin _stringPlugin;
+
         // Advanced and custom plugins
-        static readonly Dictionary<Type, ITweenPlugin> _CustomPlugins = new Dictionary<Type, ITweenPlugin>(30);
+        const int _MaxCustomPlugins = 20;
+        static Dictionary<Type, ITweenPlugin> _customPlugins;
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
@@ -40,41 +52,48 @@ namespace DG.Tweening.Plugins.Core
         internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetDefaultPlugin<T1,T2,TPlugOptions>()
         {
             Type t1 = typeof(T1);
-            ITweenPlugin plugin;
-            _DefaultPlugins.TryGetValue(t1, out plugin);
-            if (plugin != null) return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
-
-            // Retrieve correct custom plugin
             Type t2 = typeof(T2);
+            ITweenPlugin plugin = null;
+
             if (t1 == typeof(Vector3)) {
-                plugin = new Vector3Plugin();
+                if (_vector3Plugin == null) _vector3Plugin = new Vector3Plugin();
+                plugin = _vector3Plugin;
             } else if (t1 == typeof(Quaternion)) {
                 if (t2 == typeof(Quaternion)) Debugger.LogError("Quaternion tweens require a Vector3 endValue");
-                else plugin = new QuaternionPlugin();
+                else {
+                    if (_quaternionPlugin == null) _quaternionPlugin = new QuaternionPlugin();
+                    plugin = _quaternionPlugin;
+                }
             } else if (t1 == typeof(Vector2)) {
-                plugin = new Vector2Plugin();
+                if (_vector2Plugin == null) _vector2Plugin = new Vector2Plugin();
+                plugin = _vector2Plugin;
             } else if (t1 == typeof(float)) {
-                plugin = new FloatPlugin();
+                if (_floatPlugin == null) _floatPlugin = new FloatPlugin();
+                plugin = _floatPlugin;
             } else if (t1 == typeof(Color)) {
-                plugin = new ColorPlugin();
+                if (_colorPlugin == null) _colorPlugin = new ColorPlugin();
+                plugin = _colorPlugin;
             } else if (t1 == typeof(int)) {
-                plugin = new IntPlugin();
+                if (_intPlugin == null) _intPlugin = new IntPlugin();
+                plugin = _intPlugin;
             } else if (t1 == typeof(Vector4)) {
-                plugin = new Vector4Plugin();
+                if (_vector4Plugin == null) _vector4Plugin = new Vector4Plugin();
+                plugin = _vector4Plugin;
             } else if (t1 == typeof(Rect)) {
-                plugin = new RectPlugin();
+                if (_rectPlugin == null) _rectPlugin = new RectPlugin();
+                plugin = _rectPlugin;
             } else if (t1 == typeof(RectOffset)) {
-                plugin = new RectOffsetPlugin();
+                if (_rectOffsetPlugin == null) _rectOffsetPlugin = new RectOffsetPlugin();
+                plugin = _rectOffsetPlugin;
             } else if (t1 == typeof(uint)) {
-                plugin = new UintPlugin();
+                if (_uintPlugin == null) _uintPlugin = new UintPlugin();
+                plugin = _uintPlugin;
             } else if (t1 == typeof(string)) {
-                plugin = new StringPlugin();
+                if (_stringPlugin == null) _stringPlugin = new StringPlugin();
+                plugin = _stringPlugin;
             }
 
-            if (plugin != null) {
-                _DefaultPlugins.Add(t1, plugin);
-                return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
-            }
+            if (plugin != null) return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
 
             return null;
         }
@@ -83,18 +102,32 @@ namespace DG.Tweening.Plugins.Core
             where TPlugin : ITweenPlugin, new()
         {
             Type t = typeof(TPlugin);
-            if (_CustomPlugins.ContainsKey(t)) return _CustomPlugins[t] as ABSTweenPlugin<T1,T2,TPlugOptions>;
-            
-            TPlugin plugin = new TPlugin();
-            _CustomPlugins.Add(t, plugin);
-            return plugin as ABSTweenPlugin<T1,T2,TPlugOptions>;
+            ITweenPlugin plugin;
+
+            if (_customPlugins == null) _customPlugins = new Dictionary<Type, ITweenPlugin>(_MaxCustomPlugins);
+            else if (_customPlugins.TryGetValue(t, out plugin)) return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
+
+            plugin = new TPlugin();
+            _customPlugins.Add(t, plugin);
+            return plugin as ABSTweenPlugin<T1, T2, TPlugOptions>;
         }
 
         // Un-caches all plugins
         internal static void PurgeAll()
         {
-            _DefaultPlugins.Clear();
-            _CustomPlugins.Clear();
+            _floatPlugin = null;
+            _intPlugin = null;
+            _uintPlugin = null;
+            _vector2Plugin = null;
+            _vector3Plugin = null;
+            _vector4Plugin = null;
+            _quaternionPlugin = null;
+            _colorPlugin = null;
+            _rectPlugin = null;
+            _rectOffsetPlugin = null;
+            _stringPlugin = null;
+
+            _customPlugins.Clear();
         }
     }
 }
