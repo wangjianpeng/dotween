@@ -67,7 +67,7 @@ namespace DG.Tweening.Core
                 Type typeofT1 = typeof(T1);
                 Type typeofT2 = typeof(T2);
                 Type typeofTPlugOptions = typeof(TPlugOptions);
-                for (int i = 0; i < totPooledTweeners; ++i) {
+                for (int i = totPooledTweeners - 1; i > - 1; --i) {
                     tween = _PooledTweeners[i];
                     if (tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
                         // Pooled Tweener exists: spawn it
@@ -109,7 +109,7 @@ namespace DG.Tweening.Core
                 s = (Sequence)_PooledSequences[0];
                 s.active = true;
                 AddActiveTween(s);
-                _PooledSequences.RemoveAt(0);
+                _PooledSequences.RemoveAt(totPooledSequences - 1);
                 totPooledSequences--;
                 return s;
             }
