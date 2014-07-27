@@ -40,7 +40,7 @@ namespace DG.Tweening
         internal Sequence()
         {
             tweenType = TweenType.Sequence;
-            Reset();
+            Reset(this);
         }
 
         // ===================================================================================
@@ -109,34 +109,17 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal override void Reset()
+        internal static void Reset(Sequence s)
         {
-            base.Reset();
+            Tween.Reset(s);
 
-            sequencedTweens.Clear();
-            _sequencedObjs.Clear();
+            s.sequencedTweens.Clear();
+            s._sequencedObjs.Clear();
         }
 
         // CALLED BY Tween the moment the tween starts.
         // Returns TRUE in case of success (always TRUE for Sequences)
-        internal override bool Startup()
-        {
-            return DoStartup(this);
-        }
-
-        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
-        {
-            return DoApplyTween(this, prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode);
-        }
-
-        // Called by DOTween when spawning/creating a new Sequence.
-        internal static void Setup(Sequence s)
-        {
-            s.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlaySequences;
-            s.loopType = DOTween.defaultLoopType;
-        }
-
-        internal static bool DoStartup(Sequence s)
+        internal static bool Startup(Sequence s)
         {
             s.startupDone = true;
             s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
@@ -145,9 +128,7 @@ namespace DG.Tweening
             return true;
         }
 
-        // Applies the tween set by DoGoto.
-        // Returns TRUE if the tween needs to be killed
-        internal static bool DoApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
+        internal static bool ApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
             float from, to = 0;
             if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
@@ -159,7 +140,7 @@ namespace DG.Tweening
                     && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
                 if (s.isBackwards) isInverse = !isInverse; // TEST
                 while (cyclesDone < cycles) {
-//                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
+                    //                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
                     if (cyclesDone > 0) from = to;
                     else if (isInverse && !s.isBackwards) from = s.duration - from;
                     to = isInverse ? 0 : s.duration;
@@ -169,11 +150,57 @@ namespace DG.Tweening
                 }
             }
             // Run current cycle
-//            Debug.Log("::::::::::::: UPDATING");
+            //            Debug.Log("::::::::::::: UPDATING");
             if (newCompletedSteps > 0) from = useInversePosition ? s.duration : 0;
             else from = useInversePosition ? s.duration - prevPosition : prevPosition;
             return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
         }
+
+        // Called by DOTween when spawning/creating a new Sequence.
+        internal static void Setup(Sequence s)
+        {
+            s.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlaySequences;
+            s.loopType = DOTween.defaultLoopType;
+        }
+
+//        internal static bool DoStartup(Sequence s)
+//        {
+//            s.startupDone = true;
+//            s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
+//            // Order sequencedObjs by start position
+//            s._sequencedObjs.Sort(SortSequencedObjs);
+//            return true;
+//        }
+
+//        // Applies the tween set by DoGoto.
+//        // Returns TRUE if the tween needs to be killed
+//        internal static bool DoApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
+//        {
+//            float from, to = 0;
+//            if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
+//                // Run all cycles elapsed since last update
+//                int cycles = newCompletedSteps;
+//                int cyclesDone = 0;
+//                from = prevPosition;
+//                bool isInverse = s.loopType == LoopType.Yoyo
+//                    && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
+//                if (s.isBackwards) isInverse = !isInverse; // TEST
+//                while (cyclesDone < cycles) {
+////                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
+//                    if (cyclesDone > 0) from = to;
+//                    else if (isInverse && !s.isBackwards) from = s.duration - from;
+//                    to = isInverse ? 0 : s.duration;
+//                    if (ApplyInternalCycle(s, from, to, updateMode)) return true;
+//                    cyclesDone++;
+//                    if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
+//                }
+//            }
+//            // Run current cycle
+////            Debug.Log("::::::::::::: UPDATING");
+//            if (newCompletedSteps > 0) from = useInversePosition ? s.duration : 0;
+//            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
+//            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
+//        }
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------

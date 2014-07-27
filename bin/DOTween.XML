@@ -662,7 +662,7 @@
         <member name="F:DG.Tweening.Tween.onComplete">
             <summary>Called the moment the tween reaches completion (loops included)</summary>
         </member>
-        <member name="M:DG.Tweening.Tweener.Reset">
+        <member name="M:DG.Tweening.Tweener.Reset(DG.Tweening.Tweener)">
             <summary>
             Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
             and the endValue as the given one
