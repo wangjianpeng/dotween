@@ -40,7 +40,7 @@ namespace DG.Tweening
         internal Sequence()
         {
             tweenType = TweenType.Sequence;
-            Reset(this);
+            Reset();
         }
 
         // ===================================================================================
@@ -109,26 +109,28 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static void Reset(Sequence s)
+        internal override void Reset()
         {
-            Tween.Reset(s);
+            base.Reset();
 
-            s.sequencedTweens.Clear();
-            s._sequencedObjs.Clear();
+            sequencedTweens.Clear();
+            _sequencedObjs.Clear();
         }
 
         // CALLED BY Tween the moment the tween starts.
         // Returns TRUE in case of success (always TRUE for Sequences)
-        internal static bool Startup(Sequence s)
+        internal override bool Startup()
         {
-            s.startupDone = true;
-            s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
+            startupDone = true;
+            fullDuration = loops > -1 ? duration * loops : Mathf.Infinity;
             // Order sequencedObjs by start position
-            s._sequencedObjs.Sort(SortSequencedObjs);
+            _sequencedObjs.Sort(SortSequencedObjs);
             return true;
         }
 
-        internal static bool ApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
+        // Applies the tween set by DoGoto.
+        // Returns TRUE if the tween needs to be killed
+        internal override bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
             float from, to = 0;
             if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
@@ -136,82 +138,43 @@ namespace DG.Tweening
                 int cycles = newCompletedSteps;
                 int cyclesDone = 0;
                 from = prevPosition;
-                bool isInverse = s.loopType == LoopType.Yoyo
-                    && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
-                if (s.isBackwards) isInverse = !isInverse; // TEST
+                bool isInverse = loopType == LoopType.Yoyo
+                    && (prevPosition < duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
+                if (isBackwards) isInverse = !isInverse; // TEST
                 while (cyclesDone < cycles) {
-                    //                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
+                    //                    Debug.Log("::::::::::::: CYCLING : " + stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
                     if (cyclesDone > 0) from = to;
-                    else if (isInverse && !s.isBackwards) from = s.duration - from;
-                    to = isInverse ? 0 : s.duration;
-                    if (ApplyInternalCycle(s, from, to, updateMode)) return true;
+                    else if (isInverse && !isBackwards) from = duration - from;
+                    to = isInverse ? 0 : duration;
+                    if (ApplyInternalCycle(from, to, updateMode)) return true;
                     cyclesDone++;
-                    if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
+                    if (loopType == LoopType.Yoyo) isInverse = !isInverse;
                 }
             }
             // Run current cycle
             //            Debug.Log("::::::::::::: UPDATING");
-            if (newCompletedSteps > 0) from = useInversePosition ? s.duration : 0;
-            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
-            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
+            if (newCompletedSteps > 0) from = useInversePosition ? duration : 0;
+            else from = useInversePosition ? duration - prevPosition : prevPosition;
+            return ApplyInternalCycle(from, useInversePosition ? duration - position : position, updateMode);
         }
 
         // Called by DOTween when spawning/creating a new Sequence.
-        internal static void Setup(Sequence s)
+        internal void Setup()
         {
-            s.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlaySequences;
-            s.loopType = DOTween.defaultLoopType;
+            isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlaySequences;
+            loopType = DOTween.defaultLoopType;
         }
-
-//        internal static bool DoStartup(Sequence s)
-//        {
-//            s.startupDone = true;
-//            s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
-//            // Order sequencedObjs by start position
-//            s._sequencedObjs.Sort(SortSequencedObjs);
-//            return true;
-//        }
-
-//        // Applies the tween set by DoGoto.
-//        // Returns TRUE if the tween needs to be killed
-//        internal static bool DoApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
-//        {
-//            float from, to = 0;
-//            if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
-//                // Run all cycles elapsed since last update
-//                int cycles = newCompletedSteps;
-//                int cyclesDone = 0;
-//                from = prevPosition;
-//                bool isInverse = s.loopType == LoopType.Yoyo
-//                    && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
-//                if (s.isBackwards) isInverse = !isInverse; // TEST
-//                while (cyclesDone < cycles) {
-////                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
-//                    if (cyclesDone > 0) from = to;
-//                    else if (isInverse && !s.isBackwards) from = s.duration - from;
-//                    to = isInverse ? 0 : s.duration;
-//                    if (ApplyInternalCycle(s, from, to, updateMode)) return true;
-//                    cyclesDone++;
-//                    if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
-//                }
-//            }
-//            // Run current cycle
-////            Debug.Log("::::::::::::: UPDATING");
-//            if (newCompletedSteps > 0) from = useInversePosition ? s.duration : 0;
-//            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
-//            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
-//        }
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
-        static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode)
+        bool ApplyInternalCycle(float fromPos, float toPos, UpdateMode updateMode)
         {
             bool isGoingBackwards = toPos < fromPos;
             if (isGoingBackwards) {
-                int len = s._sequencedObjs.Count - 1;
+                int len = _sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
-                    ABSSequentiable sequentiable = s._sequencedObjs[i];
+                    ABSSequentiable sequentiable = _sequencedObjs[i];
                     if (updateMode == UpdateMode.Update && (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos)) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
@@ -225,9 +188,9 @@ namespace DG.Tweening
                     }
                 }
             } else {
-                int len = s._sequencedObjs.Count;
+                int len = _sequencedObjs.Count;
                 for (int i = 0; i < len; ++i) {
-                    ABSSequentiable sequentiable = s._sequencedObjs[i];
+                    ABSSequentiable sequentiable = _sequencedObjs[i];
                     if (updateMode == UpdateMode.Update && (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos)) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
