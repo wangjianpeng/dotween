@@ -35,7 +35,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
         public override void SetStartValue(Tweener t)
         {
-            t.startValueV4 = GetTargetValue(t);
+            t.startValueV4 = t.getterVector4();
         }
 
         public override void Evaluate(Tweener t, float elapsed)
@@ -51,7 +51,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                     _res.z = (float)Math.Round(_res.z);
                 }
             } else {
-                _res = GetTargetValue(t);
+                _res = t.getterVector4();
                 switch (t.axisConstraint) {
                 case AxisConstraint.X:
                     _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
@@ -68,34 +68,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 }
                 
             }
-            // Apply to eventual known type
-            switch (t.targetType) {
-            case TargetType.TransformPosition:
-                t.targetTransform.position = _res;
-                break;
-            case TargetType.TransformLocalPosition:
-                t.targetTransform.localPosition = _res;
-                break;
-            case TargetType.TransformScale:
-                t.targetTransform.localScale = _res;
-                break;
-            default:
-                t.setterVector4(_res);
-                break;
-            }
-        }
-
-        static Vector3 GetTargetValue(Tweener t)
-        {
-            switch (t.targetType) {
-            case TargetType.TransformPosition:
-                return t.targetTransform.position;
-            case TargetType.TransformLocalPosition:
-                return t.targetTransform.localPosition;
-            case TargetType.TransformScale:
-                return t.targetTransform.localScale;
-            }
-            return t.getterVector4();
+            t.setterVector4(_res);
         }
     }
 }

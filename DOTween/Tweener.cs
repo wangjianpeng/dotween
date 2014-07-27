@@ -36,9 +36,9 @@ namespace DG.Tweening
     {
         // Target type and eventual known objects references (public but hidden so external plugins can access them)
 #pragma warning disable 1591
-        [EditorBrowsable(EditorBrowsableState.Never)] public TargetType targetType;
-        [EditorBrowsable(EditorBrowsableState.Never)] public Transform targetTransform;
-        [EditorBrowsable(EditorBrowsableState.Never)] public Material targetMaterial;
+//        [EditorBrowsable(EditorBrowsableState.Never)] public TargetType targetType;
+//        [EditorBrowsable(EditorBrowsableState.Never)] public Transform targetTransform;
+//        [EditorBrowsable(EditorBrowsableState.Never)] public Material targetMaterial;
         // Eventual options (public but hidden so external plugins can access them)
         [EditorBrowsable(EditorBrowsableState.Never)] public AxisConstraint axisConstraint;
         [EditorBrowsable(EditorBrowsableState.Never)] public bool optionsBool0;
@@ -94,8 +94,8 @@ namespace DG.Tweening
         {
             base.Reset();
 
-            targetTransform = null;
-            targetMaterial = null;
+//            targetTransform = null;
+//            targetMaterial = null;
             axisConstraint = AxisConstraint.None;
             optionsBool0 = false;
             startString = endString = null;
