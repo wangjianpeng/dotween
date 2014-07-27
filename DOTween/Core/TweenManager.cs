@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening.Core.Enums;
-using UnityEngine;
 
 namespace DG.Tweening.Core
 {
@@ -44,13 +43,15 @@ namespace DG.Tweening.Core
         // Tweens contained in Sequences are not inside the active lists
         // Arrays are organized (max once per update) so that existing elements are next to each other from 0 to (totActiveTweens - 1)
         static Tween[] _activeTweens = new Tween[_DefaultMaxTweeners];
-        static readonly List<Tween> _PooledTweeners = new List<Tween>(_DefaultMaxTweeners);
-        static readonly List<Tween> _PooledSequences = new List<Tween>(_DefaultMaxSequences);
+        static Tween[] _pooledTweeners = new Tween[_DefaultMaxTweeners];
+        static readonly Stack<Tween> _PooledSequences = new Stack<Tween>();
 
         static readonly List<Tween> _KillList = new List<Tween>(_DefaultMaxTweeners);
         static int _maxActiveLookupId = -1; // Highest full ID in _activeTweens
         static bool _requiresActiveReorganization; // True when _activeTweens need to be reorganized to fill empty spaces
         static int _reorganizeFromId = -1; // First null ID from which to reorganize
+        static int _minPooledTweenerId = -1; // Lowest PooledTweeners id that is actually full
+        static int _maxPooledTweenerId = -1; // Highest PooledTweeners id that is actually full
 
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
@@ -67,21 +68,26 @@ namespace DG.Tweening.Core
                 Type typeofT1 = typeof(T1);
                 Type typeofT2 = typeof(T2);
                 Type typeofTPlugOptions = typeof(TPlugOptions);
-                for (int i = totPooledTweeners - 1; i > - 1; --i) {
-                    tween = _PooledTweeners[i];
-                    if (tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
+                for (int i = _maxPooledTweenerId; i > _minPooledTweenerId - 1; --i) {
+                    tween = _pooledTweeners[i];
+                    if (tween != null && tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
                         // Pooled Tweener exists: spawn it
                         t = (TweenerCore<T1, T2, TPlugOptions>)tween;
                         t.active = true;
                         AddActiveTween(t);
-                        _PooledTweeners.RemoveAt(i);
+                        _pooledTweeners[i] = null;
+                        if (_maxPooledTweenerId != _minPooledTweenerId) {
+                            if (i == _maxPooledTweenerId) _maxPooledTweenerId--;
+                            else if (i == _minPooledTweenerId) _minPooledTweenerId++;
+                        }
                         totPooledTweeners--;
                         return t;
                     }
                 }
                 // Not found: remove a tween from the pool in case it's full
                 if (totTweeners >= maxTweeners) {
-                    _PooledTweeners.RemoveAt(0);
+                    _pooledTweeners[_maxPooledTweenerId] = null;
+                    _maxPooledTweenerId--;
                     totPooledTweeners--;
                     totTweeners--;
                 }
@@ -106,10 +112,9 @@ namespace DG.Tweening.Core
         {
             Sequence s;
             if (totPooledSequences > 0) {
-                s = (Sequence)_PooledSequences[0];
+                s = (Sequence)_PooledSequences.Pop();
                 s.active = true;
                 AddActiveTween(s);
-                _PooledSequences.RemoveAt(totPooledSequences - 1);
                 totPooledSequences--;
                 return s;
             }
@@ -354,7 +359,7 @@ namespace DG.Tweening.Core
             }
             switch (t.tweenType) {
             case TweenType.Sequence:
-                _PooledSequences.Add(t);
+                _PooledSequences.Push(t);
                 totPooledSequences++;
                 // Despawn sequenced tweens
                 Sequence s = (Sequence)t;
@@ -362,7 +367,23 @@ namespace DG.Tweening.Core
                 for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
                 break;
             case TweenType.Tweener:
-                _PooledTweeners.Add(t);
+                if (_maxPooledTweenerId == -1) {
+                    _maxPooledTweenerId = maxTweeners - 1;
+                    _minPooledTweenerId = maxTweeners - 1;
+                }
+                if (_maxPooledTweenerId < maxTweeners - 1) {
+                    _pooledTweeners[_maxPooledTweenerId + 1] = t;
+                    _maxPooledTweenerId++;
+                    if (_minPooledTweenerId > _maxPooledTweenerId) _minPooledTweenerId = _maxPooledTweenerId;
+                } else {
+                    for (int i = _maxPooledTweenerId; i > -1; --i) {
+                        if (_pooledTweeners[i] != null) continue;
+                        _pooledTweeners[i] = t;
+                        if (i < _minPooledTweenerId) _minPooledTweenerId = i;
+                        if (_maxPooledTweenerId < _minPooledTweenerId) _maxPooledTweenerId = _minPooledTweenerId;
+                        break;
+                    }
+                }
                 totPooledTweeners++;
                 break;
             }
@@ -478,7 +499,7 @@ namespace DG.Tweening.Core
         {
             totTweeners -= totPooledTweeners;
             totSequences -= totPooledSequences;
-            _PooledTweeners.Clear();
+            ClearTweenArray(_pooledTweeners);
             _PooledSequences.Clear();
             totPooledTweeners = totPooledSequences = 0;
         }
@@ -496,8 +517,7 @@ namespace DG.Tweening.Core
             maxTweeners = tweenersCapacity;
             maxSequences = sequencesCapacity;
             Array.Resize(ref _activeTweens, maxActive);
-            _PooledTweeners.Capacity = tweenersCapacity;
-            _PooledSequences.Capacity = sequencesCapacity;
+            Array.Resize(ref _pooledTweeners, tweenersCapacity);
             _KillList.Capacity = maxActive;
         }
 
@@ -611,19 +631,17 @@ namespace DG.Tweening.Core
             case CapacityIncreaseMode.TweenersOnly:
                 killAdd += _DefaultMaxTweeners;
                 maxTweeners += _DefaultMaxTweeners;
-                _PooledTweeners.Capacity += _DefaultMaxTweeners;
+                Array.Resize(ref _pooledTweeners, maxTweeners);
                 break;
             case CapacityIncreaseMode.SequencesOnly:
                 killAdd += _DefaultMaxSequences;
                 maxSequences += _DefaultMaxSequences;
-                _PooledSequences.Capacity += _DefaultMaxSequences;
                 break;
             default:
                 killAdd += _DefaultMaxTweeners;
                 maxTweeners += _DefaultMaxTweeners;
                 maxSequences += _DefaultMaxSequences;
-                _PooledTweeners.Capacity += _DefaultMaxTweeners;
-                _PooledSequences.Capacity += _DefaultMaxSequences;
+                Array.Resize(ref _pooledTweeners, maxTweeners);
                 break;
             }
             maxActive = maxTweeners;

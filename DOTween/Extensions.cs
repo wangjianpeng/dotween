@@ -21,10 +21,8 @@
 // 
 
 using DG.Tweening.Core;
-using DG.Tweening.Plugins;
-using DG.Tweening.Plugins.Core;
-using UnityEngine;
 
+#pragma warning disable 1573
 namespace DG.Tweening
 {
     /// <summary>

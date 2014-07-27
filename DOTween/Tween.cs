@@ -21,9 +21,7 @@
 
 using System;
 using DG.Tweening.Core;
-using DG.Tweening.Core.Easing;
 using DG.Tweening.Core.Enums;
-using UnityEngine;
 
 namespace DG.Tweening
 {
