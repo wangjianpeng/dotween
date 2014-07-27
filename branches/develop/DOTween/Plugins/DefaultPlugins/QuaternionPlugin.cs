@@ -36,7 +36,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
         public override void SetStartValue(Tweener t)
         {
-            t.startValueV4 = GetTargetValue(t).eulerAngles;
+            t.startValueV4 = t.getterQuaternion().eulerAngles;
         }
 
         public override void Evaluate(Tweener t, float elapsed)
@@ -44,30 +44,8 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             _res.x = Ease.Apply(t, elapsed, t.startValueV4.x, t.changeValueV4.x, t.duration, 0, 0);
             _res.y = Ease.Apply(t, elapsed, t.startValueV4.y, t.changeValueV4.y, t.duration, 0, 0);
             _res.z = Ease.Apply(t, elapsed, t.startValueV4.z, t.changeValueV4.z, t.duration, 0, 0);
-            
-            // Apply to eventual known type
-            switch (t.targetType) {
-            case TargetType.TransformRotation:
-                t.targetTransform.eulerAngles = _res;
-                break;
-            case TargetType.TransformLocalRotation:
-                t.targetTransform.localEulerAngles = _res;
-                break;
-            default:
-                t.setterQuaternion(Quaternion.Euler(_res));
-                break;
-            }
-        }
 
-        static Quaternion GetTargetValue(Tweener t)
-        {
-            switch (t.targetType) {
-            case TargetType.TransformRotation:
-                return t.targetTransform.rotation;
-            case TargetType.TransformLocalRotation:
-                return t.targetTransform.localRotation;
-            }
-            return t.getterQuaternion();
+            t.setterQuaternion(Quaternion.Euler(_res));
         }
     }
 }

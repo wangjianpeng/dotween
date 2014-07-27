@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.6.030";
+        public static readonly string Version = "0.6.040";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -162,7 +162,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<float> getter, DOSetter<float> setter, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValue = endValue;
             t.getterFloat = getter;
             t.setterFloat = setter;
@@ -178,7 +178,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<int> getter, DOSetter<int> setter, int endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValue = endValue;
             t.getterInt = getter;
             t.setterInt = setter;
@@ -194,7 +194,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<uint> getter, DOSetter<uint> setter, uint endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValue = endValue;
             t.getterUint = getter;
             t.setterUint = setter;
@@ -210,7 +210,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector2 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = endValue;
             t.getterVector4 = getter;
             t.setterVector4 = setter;
@@ -243,7 +243,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = endValue;
             t.getterVector4 = getter;
             t.setterVector4 = setter;
@@ -274,7 +274,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Vector4 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = endValue;
             t.getterVector4 = getter;
             t.setterVector4 = setter;
@@ -305,7 +305,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = endValue;
             t.getterQuaternion = getter;
             t.setterQuaternion = setter;
@@ -321,7 +321,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<Vector4> getter, DOSetter<Vector4> setter, Color endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = endValue;
             t.getterVector4 = getter;
             t.setterVector4 = setter;
@@ -337,7 +337,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<Rect> getter, DOSetter<Rect> setter, Rect endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = new Vector4(endValue.x, endValue.y, endValue.width, endValue.height);
             t.getterRect = getter;
             t.setterRect = setter;
@@ -353,7 +353,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endValueV4 = new Vector4(endValue.left, endValue.right, endValue.top, endValue.bottom);
             t.getterRectOffset = getter;
             t.setterRectOffset = setter;
@@ -369,7 +369,7 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<string> getter, DOSetter<string> setter, string endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.Custom;
+//            t.targetType = TargetType.Custom;
             t.endString = endValue;
             t.getterString = getter;
             t.setterString = setter;

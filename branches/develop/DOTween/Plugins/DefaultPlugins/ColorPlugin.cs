@@ -36,7 +36,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
         public override void SetStartValue(Tweener t)
         {
-            t.startValueV4 = GetTargetValue(t);
+            t.startValueV4 = t.getterVector4();
         }
 
         public override void Evaluate(Tweener t, float elapsed)
@@ -48,18 +48,11 @@ namespace DG.Tweening.Plugins.DefaultPlugins
                 _res.a = Ease.Apply(t, elapsed, t.startValueV4.w, t.changeValueV4.w, t.duration, 0, 0);
             } else {
                 // Alpha only
-                _res = GetTargetValue(t);
+                _res = t.getterVector4();
                 _res.a = Ease.Apply(t, elapsed, t.startValueV4.w, t.startValueV4.w, t.duration, 0, 0);
             }
             // Apply to eventual known type
-            if (t.targetType == TargetType.MaterialColor) t.targetMaterial.color = _res;
-            else t.setterVector4(_res);
-        }
-
-        static Color GetTargetValue(Tweener t)
-        {
-            if (t.targetType == TargetType.MaterialColor) return t.targetMaterial.color;
-            return t.getterVector4();
+            t.setterVector4(_res);
         }
     }
 }

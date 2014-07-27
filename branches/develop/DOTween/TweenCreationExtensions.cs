@@ -329,8 +329,10 @@ namespace DG.Tweening
         public static Tweener MoveTo(this Transform transform, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.position;
+            t.setterVector4 = x => transform.position = x;
+//            t.targetType = TargetType.TransformPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = endValue;
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -340,8 +342,10 @@ namespace DG.Tweening
         public static Tweener MoveToX(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.position;
+            t.setterVector4 = x => transform.position = x;
+//            t.targetType = TargetType.TransformPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -351,8 +355,10 @@ namespace DG.Tweening
         public static Tweener MoveToY(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.position;
+            t.setterVector4 = x => transform.position = x;
+//            t.targetType = TargetType.TransformPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -362,8 +368,10 @@ namespace DG.Tweening
         public static Tweener MoveToZ(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.position;
+            t.setterVector4 = x => transform.position = x;
+//            t.targetType = TargetType.TransformPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -374,8 +382,10 @@ namespace DG.Tweening
         public static Tweener MoveToLocal(this Transform transform, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformLocalPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localPosition;
+            t.setterVector4 = x => transform.localPosition = x;
+//            t.targetType = TargetType.TransformLocalPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = endValue;
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -385,8 +395,10 @@ namespace DG.Tweening
         public static Tweener MoveToLocalX(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformLocalPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localPosition;
+            t.setterVector4 = x => transform.localPosition = x;
+//            t.targetType = TargetType.TransformLocalPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -396,8 +408,10 @@ namespace DG.Tweening
         public static Tweener MoveToLocalY(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformLocalPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localPosition;
+            t.setterVector4 = x => transform.localPosition = x;
+//            t.targetType = TargetType.TransformLocalPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -407,8 +421,10 @@ namespace DG.Tweening
         public static Tweener MoveToLocalZ(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformLocalPosition;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localPosition;
+            t.setterVector4 = x => transform.localPosition = x;
+//            t.targetType = TargetType.TransformLocalPosition;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -419,8 +435,10 @@ namespace DG.Tweening
         public static Tweener RotateTo(this Transform transform, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformRotation;
-            t.targetTransform = transform;
+            t.getterQuaternion = () => transform.rotation;
+            t.setterQuaternion = x => transform.rotation = x;
+//            t.targetType = TargetType.TransformRotation;
+//            t.targetTransform = transform;
             t.endValueV4 = endValue;
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Quaternion);
             return DOTween.SetupTween<Quaternion>(t, false, duration).SetId(transform);
@@ -430,8 +448,10 @@ namespace DG.Tweening
         public static Tweener RotateToLocal(this Transform transform, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformLocalRotation;
-            t.targetTransform = transform;
+            t.getterQuaternion = () => transform.localRotation;
+            t.setterQuaternion = x => transform.localRotation = x;
+//            t.targetType = TargetType.TransformLocalRotation;
+//            t.targetTransform = transform;
             t.endValueV4 = endValue;
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Quaternion);
             return DOTween.SetupTween<Quaternion>(t, false, duration).SetId(transform);
@@ -442,8 +462,10 @@ namespace DG.Tweening
         public static Tweener ScaleTo(this Transform transform, Vector3 endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformScale;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localScale;
+            t.setterVector4 = x => transform.localScale = x;
+//            t.targetType = TargetType.TransformScale;
+//            t.targetTransform = transform;
             t.endValueV4 = endValue;
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -453,8 +475,10 @@ namespace DG.Tweening
         public static Tweener ScaleToX(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformScale;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localScale;
+            t.setterVector4 = x => transform.localScale = x;
+//            t.targetType = TargetType.TransformScale;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -465,8 +489,10 @@ namespace DG.Tweening
         public static Tweener ScaleToY(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformScale;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localScale;
+            t.setterVector4 = x => transform.localScale = x;
+//            t.targetType = TargetType.TransformScale;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -476,8 +502,10 @@ namespace DG.Tweening
         public static Tweener ScaleToZ(this Transform transform, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.TransformScale;
-            t.targetTransform = transform;
+            t.getterVector4 = () => transform.localScale;
+            t.setterVector4 = x => transform.localScale = x;
+//            t.targetType = TargetType.TransformScale;
+//            t.targetTransform = transform;
             t.endValueV4 = new Vector4(endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Vector3);
             return DOTween.SetupTween<Vector3>(t, false, duration).SetId(transform);
@@ -491,8 +519,10 @@ namespace DG.Tweening
         public static Tweener ColorTo(this Material material, Color endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.MaterialColor;
-            t.targetMaterial = material;
+            t.getterVector4 = () => material.color;
+            t.setterVector4 = x => material.color = x;
+//            t.targetType = TargetType.MaterialColor;
+//            t.targetMaterial = material;
             t.endValueV4 = endValue;
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Color);
             return DOTween.SetupTween<Color>(t, false, duration).SetId(material);
@@ -503,8 +533,10 @@ namespace DG.Tweening
         public static Tweener FadeTo(this Material material, float endValue, float duration)
         {
             Tweener t = TweenManager.GetTweener();
-            t.targetType = TargetType.MaterialColor;
-            t.targetMaterial = material;
+            t.getterVector4 = () => material.color;
+            t.setterVector4 = x => material.color = x;
+//            t.targetType = TargetType.MaterialColor;
+//            t.targetMaterial = material;
             t.endValueV4 = new Vector4(endValue, endValue, endValue, endValue);
             t.plugin = PluginsManager.GetDefaultPlugin(DefaultPluginType.Color);
             return DOTween.SetupTween<Color>(t, false, duration).SetId(material);
