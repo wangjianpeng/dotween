@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.6.024";
+        public static readonly string Version = "0.6.030";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -518,7 +518,7 @@ namespace DG.Tweening
         {
             if (!_initialized) AutoInit();
             Sequence sequence = TweenManager.GetSequence(updateType);
-            Tweening.Sequence.Setup(sequence);
+            sequence.Setup();
             return sequence;
         }
 

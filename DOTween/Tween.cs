@@ -90,126 +90,115 @@ namespace DG.Tweening
         // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
 
         // Doesn't reset active state and activeId, since those are only touched by TweenManager
-        internal static void Reset(Tween t)
+        internal virtual void Reset()
         {
-            t.isFrom = false;
-            t.autoKill = DOTween.defaultAutoKill;
-            t.timeScale = 1;
-            t.isBackwards = false;
-            t.id = -1;
-            t.stringId = null;
-            t.objId = null;
-            t.updateType = UpdateType.Default;
-            t.onStart = t.onComplete = t.onStepComplete = null;
+            isFrom = false;
+            autoKill = DOTween.defaultAutoKill;
+            timeScale = 1;
+            isBackwards = false;
+            id = -1;
+            stringId = null;
+            objId = null;
+            updateType = UpdateType.Default;
+            onStart = onComplete = onStepComplete = null;
 
-            t.duration = 0;
-            t.loops = 1;
-            t.loopType = LoopType.Restart;
-            t.delay = 0;
-            t.isRelative = false;
-            t.easeCurveEval = null;
-            t.isSequenced = false;
-            t.creationLocked = t.startupDone = t.playedOnce = false;
-            t.position = t.fullDuration = t.completedLoops = 0;
-            t.isPlaying = t.isComplete = false;
-            t.elapsedDelay = 0;
-            t.delayComplete = true;
+            duration = 0;
+            loops = 1;
+            loopType = LoopType.Restart;
+            delay = 0;
+            isRelative = false;
+            easeCurveEval = null;
+            isSequenced = false;
+            creationLocked = startupDone = playedOnce = false;
+            position = fullDuration = completedLoops = 0;
+            isPlaying = isComplete = false;
+            elapsedDelay = 0;
+            delayComplete = true;
         }
 
         // Called by TweenManager in case a tween has a delay that needs to be updated.
         // Returns the eventual time in excess compared to the tween's delay time.
         // Shared also by Sequences even if they don't use it, in order to make it compatible with Tween.
-//        internal virtual float UpdateDelay(float elapsed) { return 0; }
+        internal virtual float UpdateDelay(float elapsed) { return 0; }
 
         // Called the moment the tween starts.
         // For tweeners, that means AFTER any delay has elapsed
         // (unless it's a FROM tween, in which case it will be called BEFORE any eventual delay).
         // Returns TRUE in case of success,
         // FALSE if there are missing references and the tween needs to be killed
-//        internal abstract bool Startup();
+        internal abstract bool Startup();
 
         // Applies the tween set by DoGoto.
         // Returns TRUE if the tween needs to be killed
-//        internal abstract bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode);
-
-        // ===================================================================================
-        // INTERNAL STATIC METHODS -----------------------------------------------------------
+        internal abstract bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode);
 
         // Instead of advancing the tween from the previous position each time,
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
         // Executes regardless of whether the tween is playing.
         // Returns TRUE if the tween needs to be killed
-        internal static bool DoGoto(Tween t, float toPosition, int toCompletedLoops, UpdateMode updateMode)
+        internal bool Goto(float toPosition, int toCompletedLoops, UpdateMode updateMode)
         {
             // Startup
-            if (!t.startupDone) {
-                if (t.tweenType == TweenType.Tweener) {
-                    if (!Tweener.Startup((Tweener)t)) return true;
-                } else {
-                    if (!Sequence.Startup((Sequence)t)) return true;
-                }
+            if (!startupDone) {
+                if (!Startup()) return true;
             }
             // OnStart callback
-            if (!t.playedOnce && updateMode == UpdateMode.Update) {
-                t.playedOnce = true;
-                if (t.onStart != null) {
-                    t.onStart();
+            if (!playedOnce && updateMode == UpdateMode.Update) {
+                playedOnce = true;
+                if (onStart != null) {
+                    onStart();
                     // Tween might have been killed by onStart callback: verify
-                    if (!t.active) return true;
+                    if (!active) return true;
                 }
             }
 
-            float prevPosition = t.position;
-            int prevCompletedLoops = t.completedLoops;
-            t.completedLoops = toCompletedLoops;
-            bool wasRewinded = t.position <= 0 && prevCompletedLoops <= 0;
-            bool wasComplete = t.isComplete;
+            float prevPosition = position;
+            int prevCompletedLoops = completedLoops;
+            completedLoops = toCompletedLoops;
+            bool wasRewinded = position <= 0 && prevCompletedLoops <= 0;
+            bool wasComplete = isComplete;
             // Determine if it will be complete after update
-            if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
+            if (loops != -1) isComplete = completedLoops == loops;
             // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
             int newCompletedSteps = 0;
-            if (t.onStepComplete != null && updateMode == UpdateMode.Update) {
-                if (t.isBackwards) {
-                    newCompletedSteps = t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (toPosition <= 0 && !wasRewinded ? 1 : 0);
+            if (onStepComplete != null && updateMode == UpdateMode.Update) {
+                if (isBackwards) {
+                    newCompletedSteps = completedLoops < prevCompletedLoops ? prevCompletedLoops - completedLoops : (toPosition <= 0 && !wasRewinded ? 1 : 0);
                     if (wasComplete) newCompletedSteps--;
-                } else newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
+                } else newCompletedSteps = completedLoops > prevCompletedLoops ? completedLoops - prevCompletedLoops : 0;
             }
 
             // Set position (makes position 0 equal to position "end" when looping)
-            t.position = toPosition;
-            if (t.position > t.duration) t.position = t.duration;
-            else if (t.position <= 0) {
-                if (t.completedLoops > 0 || t.isComplete) t.position = t.duration;
-                else t.position = 0;
+            position = toPosition;
+            if (position > duration) position = duration;
+            else if (position <= 0) {
+                if (completedLoops > 0 || isComplete) position = duration;
+                else position = 0;
             }
             // Set playing state after update
-            if (t.isPlaying) {
-                if (!t.isBackwards) t.isPlaying = !t.isComplete; // Reached the end
-                else t.isPlaying = !(t.completedLoops == 0 && t.position <= 0); // Rewinded
+            if (isPlaying) {
+                if (!isBackwards) isPlaying = !isComplete; // Reached the end
+                else isPlaying = !(completedLoops == 0 && position <= 0); // Rewinded
             }
 
             // updatePosition is different in case of Yoyo loop under certain circumstances
-            bool useInversePosition = t.loopType == LoopType.Yoyo
-                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0);
+            bool useInversePosition = loopType == LoopType.Yoyo
+                && (position < duration ? completedLoops % 2 != 0 : completedLoops % 2 == 0);
 
             // Get values from plugin and set them
-            if (t.tweenType == TweenType.Tweener) {
-                if (Tweener.ApplyTween((Tweener)t, prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode)) return true;
-            } else {
-                if (Sequence.ApplyTween((Sequence)t, prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode)) return true;
-            }
+            if (ApplyTween(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode)) return true;
 
             // Additional callbacks
             if (newCompletedSteps > 0) {
                 // Already verified that onStepComplete is present
-                for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
+                for (int i = 0; i < newCompletedSteps; ++i) onStepComplete();
             }
-            if (t.isComplete && !wasComplete) {
-                if (t.onComplete != null) t.onComplete();
+            if (isComplete && !wasComplete) {
+                if (onComplete != null) onComplete();
             }
 
             // Return
-            return t.autoKill && t.isComplete;
+            return autoKill && isComplete;
         }
     }
 }

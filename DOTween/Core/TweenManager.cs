@@ -125,7 +125,7 @@ namespace DG.Tweening.Core
                 t.creationLocked = true; // Lock tween creation methods from now on
                 float tDeltaTime = (t.updateType == UpdateType.Default ? deltaTime : independentTime) * t.timeScale;
                 if (!t.delayComplete) {
-                    tDeltaTime = Tweener.UpdateDelay((Tweener)t, t.elapsedDelay + tDeltaTime);
+                    tDeltaTime = t.UpdateDelay(t.elapsedDelay + tDeltaTime);
                     if (tDeltaTime <= -1) {
                         // Error during startup (can happen with FROM tweens): mark tween for killing
                         willKill = true;
@@ -159,7 +159,7 @@ namespace DG.Tweening.Core
                     if (t.loops != -1 && toCompletedLoops >= t.loops) toPosition = t.duration;
                 }
                 // Goto
-                bool needsKilling = Tween.DoGoto(t, toPosition, toCompletedLoops, UpdateMode.Update);
+                bool needsKilling = t.Goto(toPosition, toCompletedLoops, UpdateMode.Update);
                 if (needsKilling) {
                     willKill = true;
                     MarkForKilling(t);
@@ -179,7 +179,7 @@ namespace DG.Tweening.Core
         {
             if (t.loops == -1) return false;
             if (!t.isComplete) {
-                Tween.DoGoto(t, t.duration, t.loops, UpdateMode.Goto);
+                t.Goto(t.duration, t.loops, UpdateMode.Goto);
                 t.isPlaying = false;
                 // Despawn if needed
                 if (t.autoKill) Despawn(t, modifyActiveLists);
@@ -206,7 +206,7 @@ namespace DG.Tweening.Core
                 toCompletedLoops = t.loops;
                 toPosition = t.duration;
             } else if (toPosition >= t.duration) toPosition = 0;
-            return Tween.DoGoto(t, toPosition, toCompletedLoops, updateMode);
+            return t.Goto(toPosition, toCompletedLoops, updateMode);
         }
 
         // Returns TRUE if the given tween was not already paused
@@ -274,7 +274,7 @@ namespace DG.Tweening.Core
             }
             if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
                 rewinded = true;
-                Tween.DoGoto(t, 0, 0, UpdateMode.Goto);
+                t.Goto(0, 0, UpdateMode.Goto);
             }
             return rewinded;
         }
@@ -341,16 +341,14 @@ namespace DG.Tweening.Core
                 Sequence s = (Sequence)t;
                 int len = s.sequencedTweens.Count;
                 for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
-                Tweener.Reset(s);
                 break;
             case TweenType.Tweener:
-                Tweener tweener = (Tweener)t;
-                _PooledTweeners.Push(tweener);
+                _PooledTweeners.Push((Tweener)t);
                 totPooledTweeners++;
-                Tweener.Reset(tweener);
                 break;
             }
             t.active = false;
+            t.Reset();
         }
 
         internal static int FilteredOperation(
