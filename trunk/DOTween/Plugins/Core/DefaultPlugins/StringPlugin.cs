@@ -50,6 +50,13 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return endValue;
         }
 
+        public override float GetSpeedBasedDuration(float unitsXSecond, string changeValue)
+        {
+            float res = changeValue.Length / unitsXSecond;
+            if (res < 0) res = -res;
+            return res;
+        }
+
         // ChangeValue is the same as endValue in this plugin
         public override string Evaluate(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
         {

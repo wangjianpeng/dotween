@@ -130,7 +130,6 @@ namespace DG.Tweening
         internal static bool DoStartup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
         {
             t.startupDone = true;
-            t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
 
             if (!t.hasManuallySetStartValue) {
                 // Take start value from current target value
@@ -155,8 +154,11 @@ namespace DG.Tweening
                 t.endValue = prevStartValue;
                 t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
                 // Jump (no need for safeMode checks since they already happened when assigning start value
-                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, t.duration));
+                t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, 1));
             } else t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+
+            if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.duration, t.changeValue);
+            t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
             
             return true;
         }
@@ -169,12 +171,16 @@ namespace DG.Tweening
         {
             t.hasManuallySetStartValue = true;
             t.startValue = newStartValue;
-            if (newDuration > 0) {
-                t.duration = newDuration;
-                if (t.startupDone) t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-            }
 
             if (t.startupDone) t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+
+            if (newDuration > 0) {
+                t.duration = newDuration;
+                if (t.startupDone) {
+                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(newDuration, t.changeValue);
+                    t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+                }
+            }
 
             // Force rewind
             DoGoto(t, 0, 0, UpdateMode.Goto);
@@ -188,10 +194,6 @@ namespace DG.Tweening
         {
             t.endValue = newEndValue;
             t.isRelative = false;
-            if (newDuration > 0) {
-                t.duration = newDuration;
-                if (t.startupDone) t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-            }
 
             if (t.startupDone) {
                 if (snapStartValue) {
@@ -212,6 +214,14 @@ namespace DG.Tweening
                 }
             }
 
+            if (newDuration > 0) {
+                t.duration = newDuration;
+                if (t.startupDone) {
+                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(newDuration, t.changeValue);
+                    t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+                }
+            }
+
             // Force rewind
             DoGoto(t, 0, 0, UpdateMode.Goto);
         }
@@ -225,12 +235,16 @@ namespace DG.Tweening
             t.isRelative = t.isFrom = false;
             t.startValue = newStartValue;
             t.endValue = newEndValue;
-            if (newDuration > 0) {
-                t.duration = newDuration;
-                if (t.startupDone) t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-            }
 
             if (t.startupDone) t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+
+            if (newDuration > 0) {
+                t.duration = newDuration;
+                if (t.startupDone) {
+                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(newDuration, t.changeValue);
+                    t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+                }
+            }
 
             // Force rewind
             DoGoto(t, 0, 0, UpdateMode.Goto);

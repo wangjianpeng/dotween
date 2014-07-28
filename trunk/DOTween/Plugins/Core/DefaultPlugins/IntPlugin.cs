@@ -45,6 +45,13 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return endValue - startValue;
         }
 
+        public override float GetSpeedBasedDuration(float unitsXSecond, int changeValue)
+        {
+            float res = changeValue / unitsXSecond;
+            if (res < 0) res = -res;
+            return res;
+        }
+
         public override int Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<int> getter, float elapsed, int startValue, int changeValue, float duration)
         {
             return (int)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));

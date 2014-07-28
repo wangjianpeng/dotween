@@ -45,6 +45,11 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return endValue - startValue;
         }
 
+        public override float GetSpeedBasedDuration(float unitsXSecond, Color changeValue)
+        {
+            return 1f / unitsXSecond;
+        }
+
         public override Color Evaluate(ColorOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
         {
             if (!options.alphaOnly) {

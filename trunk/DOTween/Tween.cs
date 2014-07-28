@@ -53,6 +53,7 @@ namespace DG.Tweening
         
         // Fixed after creation
         internal bool isFrom;
+        internal bool isSpeedBased;
         internal bool autoKill;
         internal float duration;
         internal int loops;
@@ -91,8 +92,6 @@ namespace DG.Tweening
         // Doesn't reset active state and activeId, since those are only touched by TweenManager
         internal virtual void Reset()
         {
-            isFrom = false;
-            autoKill = DOTween.defaultAutoKill;
             timeScale = 1;
             isBackwards = false;
             id = -1;
@@ -101,6 +100,8 @@ namespace DG.Tweening
             updateType = UpdateType.Default;
             onStart = onComplete = onStepComplete = null;
 
+            isFrom = isSpeedBased = false;
+            autoKill = DOTween.defaultAutoKill;
             duration = 0;
             loops = 1;
             loopType = LoopType.Restart;
