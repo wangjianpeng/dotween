@@ -45,6 +45,13 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return endValue - startValue;
         }
 
+        public override float GetSpeedBasedDuration(float unitsXSecond, Vector3 changeValue)
+        {
+            float res = changeValue.magnitude / unitsXSecond;
+            if (res < 0) res = -res;
+            return res;
+        }
+
         public override Vector3 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
             switch (options.axisConstraint) {

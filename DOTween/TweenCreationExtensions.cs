@@ -245,6 +245,17 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>If isSpeedBased is TRUE sets the tween as speed based
+        /// (the duration will represent the number of units the tween moves x second).
+        /// Has no effect on Sequences or if the tween has already started</summary>
+        public static T SetSpeedBased<T>(this T t, bool isSpeedBased = true) where T : Tween
+        {
+            if (t.creationLocked) return t;
+
+            t.isSpeedBased = isSpeedBased;
+            return t;
+        }
+
         /// <summary>Sets the ease the tween.
         /// Has no effect on Sequences</summary>
         public static T SetEase<T>(this T t, EaseType easeType) where T : Tween

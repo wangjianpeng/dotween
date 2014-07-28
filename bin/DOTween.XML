@@ -1821,6 +1821,11 @@
             (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
             Has no effect on Sequences or if the tween has already started</summary>
         </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetSpeedBased``1(``0,System.Boolean)">
+            <summary>If isSpeedBased is TRUE sets the tween as speed based
+            (the duration will represent the number of units the tween moves x second).
+            Has no effect on Sequences or if the tween has already started</summary>
+        </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.SetEase``1(``0,DG.Tweening.EaseType)">
             <summary>Sets the ease the tween.
             Has no effect on Sequences</summary>

@@ -46,6 +46,13 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return endValue - startValue;
         }
 
+        public override float GetSpeedBasedDuration(float unitsXSecond, Vector4 changeValue)
+        {
+            float res = changeValue.magnitude / unitsXSecond;
+            if (res < 0) res = -res;
+            return res;
+        }
+
         public override Vector4 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
         {
             startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);

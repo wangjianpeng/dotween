@@ -54,6 +54,15 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return endValue;
         }
 
+        public override float GetSpeedBasedDuration(float unitsXSecond, Rect changeValue)
+        {
+            // Uses length of diagonal to calculate units.
+            float diffW = changeValue.width;
+            float diffH = changeValue.height;
+            float diag = (float)Math.Sqrt(diffW * diffW + diffH * diffH);
+            return diag / unitsXSecond;
+        }
+
         public override Rect Evaluate(RectOptions options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
         {
             startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);

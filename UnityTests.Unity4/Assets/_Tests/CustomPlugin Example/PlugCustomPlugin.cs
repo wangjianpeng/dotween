@@ -47,6 +47,13 @@ public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
         return endValue;
     }
 
+    public override float GetSpeedBasedDuration(float unitsXSecond, Vector3 changeValue)
+    {
+        float res = changeValue.magnitude / unitsXSecond;
+        if (res < 0) res = -res;
+        return res;
+    }
+
     public override Vector3 Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
     {
         Vector3 res = getter();
