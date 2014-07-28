@@ -45,7 +45,7 @@ public class BasicsBrain : BrainBase
 				tweens[i] = DOTween.To(()=> t.rotation, x=> t.rotation = x, toRotation, 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false);
 				break;
 			case 2:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), Plug.Vector3Options(true), 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetOptions(true).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo);
 				break;
 			}
 			Tween tween = tweens[i];

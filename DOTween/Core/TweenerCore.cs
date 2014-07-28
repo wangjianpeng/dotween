@@ -24,12 +24,14 @@ using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Core
 {
+    // Public so it can be used with SetOptions to show the correct overload
     // T1: type of value to tween
     // T2: format in which value is stored while tweening
     // TPlugOptions: options type
-    internal sealed class TweenerCore<T1,T2,TPlugOptions> : Tweener where TPlugOptions : struct
+    public class TweenerCore<T1,T2,TPlugOptions> : Tweener where TPlugOptions : struct
     {
         // SETUP DATA ////////////////////////////////////////////////
 

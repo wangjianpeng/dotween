@@ -19,9 +19,9 @@ public class StringsBrain : BrainBase
 		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
 		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
 		// String scramble
-		DOTween.To(()=> stringToTween3, x=> stringToTween3 = x, "Hello I'm a new string!", Plug.StringOptions(true), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
-		DOTween.To(()=> stringToTween4, x=> stringToTween4 = x, "Hello I'm a new string!", Plug.StringOptions(true), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
-		DOTween.To(()=> stringToTween5, x=> stringToTween5 = x, "Hello I'm a new string!", Plug.StringOptions(true), 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween3, x=> stringToTween3 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween4, x=> stringToTween4 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween5, x=> stringToTween5 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
 
 		// Additional string
 		strings = new string[500];
