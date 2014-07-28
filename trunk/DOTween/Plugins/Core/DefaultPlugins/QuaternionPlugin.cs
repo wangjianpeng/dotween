@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/10 14:33
+// Created: 2014/07/07 20:02
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -22,43 +22,35 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
-    public class ColorPlugin : ABSTweenPlugin<Color, Color, PlugColor.Options>
+    public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3,NoOptions>
     {
-        public override Color ConvertT1toT2(PlugColor.Options options, Color value)
+        public override Vector3 ConvertT1toT2(NoOptions options, Quaternion value)
         {
-            return value;
+            return value.eulerAngles;
         }
 
-        public override Color GetRelativeEndValue(PlugColor.Options options, Color startValue, Color changeValue)
+        public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
         {
             return startValue + changeValue;
         }
 
-        public override Color GetChangeValue(PlugColor.Options options, Color startValue, Color endValue)
+        public override Vector3 GetChangeValue(NoOptions options, Vector3 startValue, Vector3 endValue)
         {
             return endValue - startValue;
         }
 
-        public override Color Evaluate(PlugColor.Options options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
+        public override Quaternion Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
-            if (!options.alphaOnly) {
-                startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
-                startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
-                startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
-                startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
-                return startValue;
-            }
-
-            // Alpha only
-            Color res = getter();
-            res.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
-            return res;
+            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.z = Ease.Apply(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
+            return Quaternion.Euler(startValue);
         }
     }
 }

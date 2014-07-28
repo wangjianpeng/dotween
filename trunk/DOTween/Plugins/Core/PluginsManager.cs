@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening.Core;
-using DG.Tweening.Plugins.DefaultPlugins;
+using DG.Tweening.Plugins.Core.DefaultPlugins;
 using UnityEngine;
 
 namespace DG.Tweening.Plugins.Core

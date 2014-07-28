@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/05/06 16:33
+// Created: 2014/07/10 14:33
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,37 +18,47 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+// 
 
-using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
+using UnityEngine;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
-    public class FloatPlugin : ABSTweenPlugin<float,float,PlugFloat.Options>
+    public class ColorPlugin : ABSTweenPlugin<Color, Color, ColorOptions>
     {
-        public override float ConvertT1toT2(PlugFloat.Options options, float value)
+        public override Color ConvertT1toT2(ColorOptions options, Color value)
         {
             return value;
         }
 
-        public override float GetRelativeEndValue(PlugFloat.Options options, float startValue, float changeValue)
+        public override Color GetRelativeEndValue(ColorOptions options, Color startValue, Color changeValue)
         {
             return startValue + changeValue;
         }
 
-        public override float GetChangeValue(PlugFloat.Options options, float startValue, float endValue)
+        public override Color GetChangeValue(ColorOptions options, Color startValue, Color endValue)
         {
             return endValue - startValue;
         }
 
-        public override float Evaluate(PlugFloat.Options options, Tween t, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration)
+        public override Color Evaluate(ColorOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
         {
-            return !options.snapping
-                ? Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0)
-                : (float)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));
+            if (!options.alphaOnly) {
+                startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
+                startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
+                startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
+                startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
+                return startValue;
+            }
+
+            // Alpha only
+            Color res = getter();
+            res.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
+            return res;
         }
     }
 }

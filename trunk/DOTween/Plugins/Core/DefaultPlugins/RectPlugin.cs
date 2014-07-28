@@ -23,20 +23,20 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
-    public class RectPlugin : ABSTweenPlugin<Rect, Rect, PlugRect.Options>
+    public class RectPlugin : ABSTweenPlugin<Rect, Rect, RectOptions>
     {
-        public override Rect ConvertT1toT2(PlugRect.Options options, Rect value)
+        public override Rect ConvertT1toT2(RectOptions options, Rect value)
         {
             return value;
         }
 
-        public override Rect GetRelativeEndValue(PlugRect.Options options, Rect startValue, Rect changeValue)
+        public override Rect GetRelativeEndValue(RectOptions options, Rect startValue, Rect changeValue)
         {
             startValue.x += changeValue.x;
             startValue.y += changeValue.y;
@@ -45,7 +45,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return startValue;
         }
 
-        public override Rect GetChangeValue(PlugRect.Options options, Rect startValue, Rect endValue)
+        public override Rect GetChangeValue(RectOptions options, Rect startValue, Rect endValue)
         {
             endValue.x -= startValue.x;
             endValue.y -= startValue.y;
@@ -54,7 +54,7 @@ namespace DG.Tweening.Plugins.DefaultPlugins
             return endValue;
         }
 
-        public override Rect Evaluate(PlugRect.Options options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
+        public override Rect Evaluate(RectOptions options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
         {
             startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
             startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);

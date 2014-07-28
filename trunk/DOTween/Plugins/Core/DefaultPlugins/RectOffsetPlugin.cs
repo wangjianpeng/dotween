@@ -23,11 +23,11 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     // BEWARE: RectOffset seems a struct but is a class
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
