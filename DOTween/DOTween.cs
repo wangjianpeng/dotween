@@ -35,7 +35,7 @@ namespace DG.Tweening
         /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.020";
+        public static readonly string Version = "0.7.021";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -222,8 +222,8 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Color> getter, DOSetter<Color> setter, Color endValue, float duration)
-        { return ApplyTo<Color, Color, NoOptions>(getter, setter, endValue, duration, false); }
+        public static TweenerCore<Color, Color, PlugColor.Options> To(DOGetter<Color> getter, DOSetter<Color> setter, Color endValue, float duration)
+        { return ApplyTo<Color, Color, PlugColor.Options>(getter, setter, endValue, duration, false); }
         /// <summary>Tweens a property or field to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
@@ -247,6 +247,28 @@ namespace DG.Tweening
         public static Tweener To<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
             where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
         { return ApplyTo(plugSetter, duration, false); }
+
+        /// <summary>Tweens only one axis of a Vector3 to the given value using default plugins.
+        /// Use SetOptions to choose which axis to tween (default: X)</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static TweenerCore<Vector3, Vector3, PlugVector.Options> ToAxis(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, float duration)
+        {
+            TweenerCore<Vector3, Vector3, PlugVector.Options> t = ApplyTo<Vector3, Vector3, PlugVector.Options>(getter, setter, new Vector3(endValue, endValue, endValue), duration, false);
+            t.plugOptions = new PlugVector.Options(AxisConstraint.X, false);
+            return t;
+        }
+        /// <summary>Tweens only the alpha of a Color to the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static Tweener ToAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue, float duration)
+        { return ApplyTo<Color, Color, PlugColor.Options>(getter, setter, new Color(0, 0, 0, endValue), duration, false).SetOptions(true); }
 
         /////////////////////////////////////////////////////////////////////
         // TWEENER FROM /////////////////////////////////////////////////////
@@ -321,8 +343,8 @@ namespace DG.Tweening
         /// <param name="setter">A setter for the field or property to tween
         /// Example usage with lambda: <code>x=> myProperty = x</code></param>
         /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Color> getter, DOSetter<Color> setter, Color fromValue, float duration)
-        { return ApplyTo<Color, Color, NoOptions>(getter, setter, fromValue, duration, true); }
+        public static TweenerCore<Color, Color, PlugColor.Options> From(DOGetter<Color> getter, DOSetter<Color> setter, Color fromValue, float duration)
+        { return ApplyTo<Color, Color, PlugColor.Options>(getter, setter, fromValue, duration, true); }
         /// <summary>Tweens a property or field from the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// Example usage with lambda: <code>()=> myProperty</code></param>
@@ -346,6 +368,28 @@ namespace DG.Tweening
         public static Tweener From<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
             where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
         { return ApplyTo(plugSetter, duration, true); }
+
+        /// <summary>Tweens only one axis of a Vector3 from the given value using default plugins.
+        /// Use SetOptions to choose which axis to tween (default: X)</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+        public static TweenerCore<Vector3, Vector3, PlugVector.Options> FromAxis(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float fromValue, float duration)
+        {
+            TweenerCore<Vector3, Vector3, PlugVector.Options> t = ApplyTo<Vector3, Vector3, PlugVector.Options>(getter, setter, new Vector3(fromValue, fromValue, fromValue), duration, true);
+            t.plugOptions = new PlugVector.Options(AxisConstraint.X, false);
+            return t;
+        }
+        /// <summary>Tweens only the alpha of a Color from the given value using default plugins</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// Example usage with lambda: <code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// Example usage with lambda: <code>x=> myProperty = x</code></param>
+        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
+        public static Tweener FromAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float fromValue, float duration)
+        { return ApplyTo<Color, Color, PlugColor.Options>(getter, setter, new Color(0, 0, 0, fromValue), duration, true).SetOptions(true); }
 
         /////////////////////////////////////////////////////////////////////
         // NEW SEQUENCES ////////////////////////////////////////////////////

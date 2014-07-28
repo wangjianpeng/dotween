@@ -18,20 +18,19 @@ public class TempTestsBrain : BrainBase
 		DOTween.useSafeMode = useSafeMode;
 		Debug.Log("USE SAFE MODE " + DOTween.useSafeMode);
 
-		// PlugVector3X
-		// Using NEW
-		tween = DOTween.To(new PlugVector3X(()=>target.position, x=> target.position = x, 3f, new PlugVector3X.Options(false)), 1.5f)
+		tween = DOTween.ToAxis(()=>target.position, x=> target.position = x, 3f, 1.5f)
 			// .Delay(delay).Relative()
 			.SetLoops(loops, loopType).SetAutoKill(false)
 			.OnStart(()=> Debug.Log("Start"))
 			.OnStepComplete(()=> Debug.Log("Step Complete"))
 			.OnComplete(()=> Debug.Log("Complete"))
 			.Pause();
-		// Using Plug shortcuts (and no delays)
-		DOTween.To(Plug.Vector3Y(()=>target.position, x=> target.position = x, 3f, Plug.Vector3YOptions(true)), 1.5f)
+		DOTween.ToAxis(()=>target.position, x=> target.position = x, 3f, 1.5f)
+			.SetOptions(AxisConstraint.Y, true)
 			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
 			.Pause();
-		DOTween.To(Plug.Vector3Z(()=>target.position, x=> target.position = x, 3f), 1.5f)
+		DOTween.ToAxis(()=>target.position, x=> target.position = x, 30f, 1.5f)
+			.SetOptions(AxisConstraint.Z)
 			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
 			.Pause();
 	}

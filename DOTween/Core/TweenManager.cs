@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening.Core.Enums;
+using UnityEngine;
 
 namespace DG.Tweening.Core
 {
@@ -604,7 +605,7 @@ namespace DG.Tweening.Core
 
             t.activeId = -1;
             _requiresActiveReorganization = true;
-            _reorganizeFromId = index;
+            if (_reorganizeFromId == -1 || _reorganizeFromId > index) _reorganizeFromId = index;
             _activeTweens[index] = null;
 
             if (t.updateType == UpdateType.Default) {
