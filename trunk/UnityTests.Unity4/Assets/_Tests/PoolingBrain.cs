@@ -108,9 +108,9 @@ public class PoolingBrain : BrainBase
             t.parent = spawnsParent;
             t.position = RandomVector3();
             if (snapping) {
-            	DOTween.To(Plug.Vector3X(() => t.position, x => t.position = x, RandomFloat(), Plug.Vector3XOptions(true)), 1f).OnComplete(() => Destroy(go));
+            	DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).SetOptions(true).OnComplete(() => Destroy(go));
         	} else {
-        		DOTween.To(Plug.Vector3X(() => t.position, x => t.position = x, RandomFloat()), 1f).OnComplete(() => Destroy(go));
+        		DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).OnComplete(() => Destroy(go));
         	}
         }
         fpsGadget.ResetFps();
@@ -124,9 +124,9 @@ public class PoolingBrain : BrainBase
             t.parent = spawnsParent;
             t.position = RandomVector3();
             if (snapping) {
-            	DOTween.To(Plug.Vector3Y(() => t.position, x => t.position = x, RandomFloat(), Plug.Vector3YOptions(true)), 1f).OnComplete(() => Destroy(go));
+            	DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).SetOptions(AxisConstraint.Y, true).OnComplete(() => Destroy(go));
         	} else {
-        		DOTween.To(Plug.Vector3Y(() => t.position, x => t.position = x, RandomFloat()), 1f).OnComplete(() => Destroy(go));
+        		DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).SetOptions(AxisConstraint.Y).OnComplete(() => Destroy(go));
         	}
         }
         fpsGadget.ResetFps();

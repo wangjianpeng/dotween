@@ -83,7 +83,7 @@ public class BasicsBrain : BrainBase
 		// Color
 		DOTween.To(()=> guiTexColor.color, x=> guiTexColor.color = x, Color.green, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Alpha
-		DOTween.To(Plug.Alpha(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.ToAlpha(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String
 		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String

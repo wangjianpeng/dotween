@@ -25,21 +25,27 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToX(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3X(() => transform.position, x => transform.position = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.position, x => transform.position = x, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's Y position to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToY(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3Y(() => transform.position, x => transform.position = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.position, x => transform.position = x, new Vector3(0, endValue, 0), duration)
+                .SetOptions(AxisConstraint.Y)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's Z position to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToZ(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3Z(() => transform.position, x => transform.position = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.position, x => transform.position = x, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's localPosition to the given value</summary>
@@ -53,21 +59,27 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalX(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3X(() => transform.localPosition, x => transform.localPosition = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's Y localPosition to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalY(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3Y(() => transform.localPosition, x => transform.localPosition = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, new Vector3(0, endValue, 0), duration)
+                .SetOptions(AxisConstraint.Y)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's Z localPosition to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener MoveToLocalZ(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3Z(() => transform.localPosition, x => transform.localPosition = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's rotation to the given value</summary>
@@ -95,21 +107,27 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToX(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3X(() => transform.localScale, x => transform.localScale = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.localScale, x => transform.localScale = x, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's Y localScale to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToY(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3Y(() => transform.localScale, x => transform.localScale = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.localScale, x => transform.localScale = x, new Vector3(0, endValue, 0), duration)
+                .SetOptions(AxisConstraint.Y)
+                .SetId(transform);
         }
 
         /// <summary>Tweens a Transform's Z localScale to the given value</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener ScaleToZ(this Transform transform, float endValue, float duration)
         {
-            return DOTween.To(Plug.Vector3Z(() => transform.localScale, x => transform.localScale = x, endValue), duration).SetId(transform);
+            return DOTween.To(() => transform.localScale, x => transform.localScale = x, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z)
+                .SetId(transform);
         }
 
         /////////////////////////////////////////////////////
@@ -127,7 +145,8 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener FadeTo(this Material material, float endValue, float duration)
         {
-            return DOTween.To(Plug.Alpha(() => material.color, x => material.color = x, endValue), duration).SetId(material);
+            return DOTween.ToAlpha(() => material.color, x => material.color = x, endValue, duration)
+                .SetId(material);
         }
     }
 }

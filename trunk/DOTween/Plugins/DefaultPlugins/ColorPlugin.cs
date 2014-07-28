@@ -28,30 +28,37 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class ColorPlugin : ABSTweenPlugin<Color, Color, NoOptions>
+    public class ColorPlugin : ABSTweenPlugin<Color, Color, PlugColor.Options>
     {
-        public override Color ConvertT1toT2(NoOptions options, Color value)
+        public override Color ConvertT1toT2(PlugColor.Options options, Color value)
         {
             return value;
         }
 
-        public override Color GetRelativeEndValue(NoOptions options, Color startValue, Color changeValue)
+        public override Color GetRelativeEndValue(PlugColor.Options options, Color startValue, Color changeValue)
         {
             return startValue + changeValue;
         }
 
-        public override Color GetChangeValue(NoOptions options, Color startValue, Color endValue)
+        public override Color GetChangeValue(PlugColor.Options options, Color startValue, Color endValue)
         {
             return endValue - startValue;
         }
 
-        public override Color Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
+        public override Color Evaluate(PlugColor.Options options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
         {
-            startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
-            startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
-            startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
-            startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
-            return startValue;
+            if (!options.alphaOnly) {
+                startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
+                startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
+                startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
+                startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
+                return startValue;
+            }
+
+            // Alpha only
+            Color res = getter();
+            res.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
+            return res;
         }
     }
 }
