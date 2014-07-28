@@ -46,9 +46,9 @@ namespace DG.Tweening.Plugins.DefaultPlugins
 
         public override float Evaluate(PlugFloat.Options options, Tween t, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration)
         {
-            return options.snapping
-                ? (float)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0))
-                : Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0);
+            return !options.snapping
+                ? Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0)
+                : (float)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));
         }
     }
 }

@@ -29,24 +29,24 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class Vector4Plugin : ABSTweenPlugin<Vector4, Vector4, PlugVector4.Options>
+    public class Vector4Plugin : ABSTweenPlugin<Vector4, Vector4, PlugVector.Options>
     {
-        public override Vector4 ConvertT1toT2(PlugVector4.Options options, Vector4 value)
+        public override Vector4 ConvertT1toT2(PlugVector.Options options, Vector4 value)
         {
             return value;
         }
 
-        public override Vector4 GetRelativeEndValue(PlugVector4.Options options, Vector4 startValue, Vector4 changeValue)
+        public override Vector4 GetRelativeEndValue(PlugVector.Options options, Vector4 startValue, Vector4 changeValue)
         {
             return startValue + changeValue;
         }
 
-        public override Vector4 GetChangeValue(PlugVector4.Options options, Vector4 startValue, Vector4 endValue)
+        public override Vector4 GetChangeValue(PlugVector.Options options, Vector4 startValue, Vector4 endValue)
         {
             return endValue - startValue;
         }
 
-        public override Vector4 Evaluate(PlugVector4.Options options, Tween t, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
+        public override Vector4 Evaluate(PlugVector.Options options, Tween t, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
         {
             startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
             startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);

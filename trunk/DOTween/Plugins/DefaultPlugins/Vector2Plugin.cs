@@ -29,32 +29,45 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.DefaultPlugins
 {
-    public class Vector2Plugin : ABSTweenPlugin<Vector2, Vector2, PlugVector2.Options>
+    public class Vector2Plugin : ABSTweenPlugin<Vector2, Vector2, PlugVector.Options>
     {
-        public override Vector2 ConvertT1toT2(PlugVector2.Options options, Vector2 value)
+        public override Vector2 ConvertT1toT2(PlugVector.Options options, Vector2 value)
         {
             return value;
         }
 
-        public override Vector2 GetRelativeEndValue(PlugVector2.Options options, Vector2 startValue, Vector2 changeValue)
+        public override Vector2 GetRelativeEndValue(PlugVector.Options options, Vector2 startValue, Vector2 changeValue)
         {
             return startValue + changeValue;
         }
 
-        public override Vector2 GetChangeValue(PlugVector2.Options options, Vector2 startValue, Vector2 endValue)
+        public override Vector2 GetChangeValue(PlugVector.Options options, Vector2 startValue, Vector2 endValue)
         {
             return endValue - startValue;
         }
 
-        public override Vector2 Evaluate(PlugVector2.Options options, Tween t, bool isRelative, DOGetter<Vector2> getter, float elapsed, Vector2 startValue, Vector2 changeValue, float duration)
+        public override Vector2 Evaluate(PlugVector.Options options, Tween t, bool isRelative, DOGetter<Vector2> getter, float elapsed, Vector2 startValue, Vector2 changeValue, float duration)
         {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            if (options.snapping) {
-                startValue.x = (float)Math.Round(startValue.x);
-                startValue.y = (float)Math.Round(startValue.y);
+            switch (options.axisConstraint) {
+            case AxisConstraint.X:
+                Vector2 resX = getter();
+                resX.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+                if (options.snapping) resX.x = (float)Math.Round(resX.x);
+                return resX;
+            case AxisConstraint.Y:
+                Vector2 resY = getter();
+                resY.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+                if (options.snapping) resY.y = (float)Math.Round(resY.y);
+                return resY;
+            default:
+                startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+                startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+                if (options.snapping) {
+                    startValue.x = (float)Math.Round(startValue.x);
+                    startValue.y = (float)Math.Round(startValue.y);
+                }
+                return startValue;
             }
-            return startValue;
         }
     }
 }

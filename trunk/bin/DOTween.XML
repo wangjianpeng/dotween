@@ -1694,15 +1694,27 @@
             <summary>Options for float tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.PlugVector2.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.PlugVector.Options},System.Boolean)">
             <summary>Options for Vector2 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.PlugVector3.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.PlugVector.Options},DG.Tweening.AxisConstraint,System.Boolean)">
+            <summary>Options for Vector2 tweens</summary>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.PlugVector.Options},System.Boolean)">
             <summary>Options for Vector3 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.PlugVector4.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.PlugVector.Options},DG.Tweening.AxisConstraint,System.Boolean)">
+            <summary>Options for Vector3 tweens</summary>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.PlugVector.Options},System.Boolean)">
+            <summary>Options for Vector4 tweens</summary>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.PlugVector.Options},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
@@ -1865,6 +1877,11 @@
             <summary>Tweens a Material's alpha color to the given value
             (will have no effect unless your material supports transparency)</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="T:DG.Tweening.AxisConstraint">
+            <summary>
+            What axis to constrain in case of Vector tweens
+            </summary>
         </member>
     </members>
 </doc>
