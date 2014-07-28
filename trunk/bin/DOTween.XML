@@ -1707,67 +1707,67 @@
             Extensions for creating tweens via various shortcuts
             </summary>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToX(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToY(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToZ(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z position to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToLocalX(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToLocalY(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.MoveToLocalZ(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z localPosition to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.RotateTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's rotation to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.RotateToLocal(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localRotation to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.ScaleTo(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScale(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.ScaleToX(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.ScaleToY(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.ScaleToZ(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z localScale to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.ColorTo(UnityEngine.Material,UnityEngine.Color,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOColor(UnityEngine.Material,UnityEngine.Color,System.Single)">
             <summary>Tweens a Material's color to the given value</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.FadeTo(UnityEngine.Material,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOFade(UnityEngine.Material,System.Single,System.Single)">
             <summary>Tweens a Material's alpha color to the given value
             (will have no effect unless your material supports transparency)</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>

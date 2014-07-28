@@ -11,21 +11,21 @@ public class ShortcutsBrain : MonoBehaviour
 		// Transform shortcuts /////////////////////
 
 		// Position
-		NewTransform().MoveTo(RandomVector3(), 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().DOMove(RandomVector3(), 1).SetLoops(-1, LoopType.Yoyo);
 		// X Position
-		NewTransform().MoveToX(Random.Range(-10f, 10f), 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().DOMoveX(Random.Range(-10f, 10f), 1).SetLoops(-1, LoopType.Yoyo);
 		// Local position
-		NewTransform().MoveToLocal(RandomVector3(), 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().DOLocalMove(RandomVector3(), 1).SetLoops(-1, LoopType.Yoyo);
 		// Rotation
-		NewTransform().RotateTo(RandomVector3(720), 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().DORotate(RandomVector3(720), 1).SetLoops(-1, LoopType.Yoyo);
 		// Local rotation
-		NewTransform().RotateToLocal(RandomVector3(720), 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().DOLocalRotate(RandomVector3(720), 1).SetLoops(-1, LoopType.Yoyo);
 		// Scale
-		NewTransform().ScaleTo(RandomVector3(3), 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().DOScale(RandomVector3(3), 1).SetLoops(-1, LoopType.Yoyo);
 		// Color
-		NewTransform().renderer.material.ColorTo(Color.green, 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().renderer.material.DOColor(Color.green, 1).SetLoops(-1, LoopType.Yoyo);
 		// Alpha
-		NewTransform().renderer.material.FadeTo(0, 1).SetLoops(-1, LoopType.Yoyo);
+		NewTransform().renderer.material.DOFade(0, 1).SetLoops(-1, LoopType.Yoyo);
 	}
 
 	Transform NewTransform(bool randomPos = true)

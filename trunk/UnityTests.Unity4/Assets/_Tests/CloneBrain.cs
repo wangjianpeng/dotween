@@ -9,7 +9,7 @@ public class CloneBrain : BrainBase
 	void Start()
 	{
 		Transform t = NewTransform();
-		Tween tween = t.MoveToY(5f, 1)
+		Tween tween = t.DOMoveY(5f, 1)
 			.SetDelay(2f)
 			.SetRelative()
 			.SetEase(animCurve)
@@ -18,7 +18,7 @@ public class CloneBrain : BrainBase
 		for (int i = 0; i < 4; ++i) {
 			t = NewTransform();
 			Transform t2 = t;
-			t2.MoveToY(5f, 1).SetAs(tween);
+			t2.DOMoveY(5f, 1).SetAs(tween);
 		}
 	}
 

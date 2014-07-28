@@ -34,14 +34,14 @@ public class SequencesExperimentsBrain : BrainBase
 		const EaseType easeType = EaseType.InCubic;
 		Sequence seq = DOTween.Sequence().SetLoops(-1, LoopType.Yoyo).OnStepComplete(()=> Debug.Log("MultiCube :: Step Complete"));
 		seq.AppendInterval(delay);
-		seq.Insert(delay + (duration * 0.25f), multiCube.RotateTo(new Vector3(0,450,45), (duration * 0.75f)).SetEase(easeType));
-		seq.Insert(delay + (duration * 0.25f), multiCube.ScaleTo(new Vector3(0.001f,2,2), (duration * 0.75f)).SetEase(easeType));
+		seq.Insert(delay + (duration * 0.25f), multiCube.DORotate(new Vector3(0,450,45), (duration * 0.75f)).SetEase(easeType));
+		seq.Insert(delay + (duration * 0.25f), multiCube.DOScale(new Vector3(0.001f,2,2), (duration * 0.75f)).SetEase(easeType));
 		foreach (Transform t in ts) {
 			Vector3 to = t.localPosition;
 			to *= 4;
-			seq.Insert(delay, t.MoveToLocal(to, duration).SetEase(easeType));
-			seq.Insert(delay, t.RotateToLocal(new Vector3(0,360,0), duration).SetEase(easeType));
-			seq.Insert(delay + (duration * 0.75f), t.gameObject.renderer.material.ColorTo(cam.backgroundColor, duration * 0.25f));
+			seq.Insert(delay, t.DOLocalMove(to, duration).SetEase(easeType));
+			seq.Insert(delay, t.DOLocalRotate(new Vector3(0,360,0), duration).SetEase(easeType));
+			seq.Insert(delay + (duration * 0.75f), t.gameObject.renderer.material.DOColor(cam.backgroundColor, duration * 0.25f));
 		}
 		seq.Insert(delay + (duration * 0.75f), DOTween.To(()=> cam.backgroundColor, x=> cam.backgroundColor = x, Color.black, duration * 0.25f));
 		seq.AppendInterval(0.5f);
