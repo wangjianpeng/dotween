@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/10 16:52
+// Created: 2014/07/28 11:33
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,20 +18,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-// 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins
+namespace DG.Tweening
 {
-    public struct PlugVector4
+    /// <summary>
+    /// What axis to constrain in case of Vector tweens
+    /// </summary>
+    public enum AxisConstraint
     {
-        public struct Options
-        {
-            public bool snapping;
-
-            public Options(bool snapping)
-            {
-                this.snapping = snapping;
-            }
-        } 
+        None,
+        X,
+        Y,
+        Z,
+        W
     }
 }

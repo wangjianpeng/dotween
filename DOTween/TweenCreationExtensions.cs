@@ -270,23 +270,44 @@ namespace DG.Tweening
         }
         /// <summary>Options for Vector2 tweens</summary>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector2, Vector2, PlugVector2.Options> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<Vector2, Vector2, PlugVector.Options> t, bool snapping)
         {
-            t.plugOptions = new PlugVector2.Options(snapping);
+            t.plugOptions = new PlugVector.Options(AxisConstraint.None, snapping);
+            return t;
+        }
+        /// <summary>Options for Vector2 tweens</summary>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener SetOptions(this TweenerCore<Vector2, Vector2, PlugVector.Options> t, AxisConstraint axisConstraint, bool snapping)
+        {
+            t.plugOptions = new PlugVector.Options(axisConstraint, snapping);
             return t;
         }
         /// <summary>Options for Vector3 tweens</summary>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector3, Vector3, PlugVector3.Options> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<Vector3, Vector3, PlugVector.Options> t, bool snapping)
         {
-            t.plugOptions = new PlugVector3.Options(snapping);
+            t.plugOptions = new PlugVector.Options(AxisConstraint.None, snapping);
+            return t;
+        }
+        /// <summary>Options for Vector3 tweens</summary>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener SetOptions(this TweenerCore<Vector3, Vector3, PlugVector.Options> t, AxisConstraint axisConstraint, bool snapping)
+        {
+            t.plugOptions = new PlugVector.Options(axisConstraint, snapping);
             return t;
         }
         /// <summary>Options for Vector4 tweens</summary>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener SetOptions(this TweenerCore<Vector4, Vector4, PlugVector4.Options> t, bool snapping)
+        public static Tweener SetOptions(this TweenerCore<Vector4, Vector4, PlugVector.Options> t, bool snapping)
         {
-            t.plugOptions = new PlugVector4.Options(snapping);
+            t.plugOptions = new PlugVector.Options(AxisConstraint.None, snapping);
+            return t;
+        }
+        /// <summary>Options for Vector4 tweens</summary>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener SetOptions(this TweenerCore<Vector4, Vector4, PlugVector.Options> t, AxisConstraint axisConstraint, bool snapping)
+        {
+            t.plugOptions = new PlugVector.Options(axisConstraint, snapping);
             return t;
         }
         /// <summary>Options for Vector4 tweens</summary>

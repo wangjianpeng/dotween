@@ -50,21 +50,21 @@ namespace DG.Tweening
 
         /// <summary>Options for tweening a Vector2</summary>
         /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
-        public static PlugVector2.Options Vector2Options(bool snapping)
+        public static PlugVector.Options Vector2Options(bool snapping)
         {
-            return new PlugVector2.Options(snapping);
+            return new PlugVector.Options(AxisConstraint.None, snapping);
         }
         /// <summary>Options for tweening a Vector3</summary>
         /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
-        public static PlugVector3.Options Vector3Options(bool snapping)
+        public static PlugVector.Options Vector3Options(bool snapping)
         {
-            return new PlugVector3.Options(snapping);
+            return new PlugVector.Options(AxisConstraint.None, snapping);
         }
         /// <summary>Options for tweening a Vector4</summary>
         /// <param name="snapping">If TRUE, the tween will snap all values to integers</param>
-        public static PlugVector4.Options Vector4Options(bool snapping)
+        public static PlugVector.Options Vector4Options(bool snapping)
         {
-            return new PlugVector4.Options(snapping);
+            return new PlugVector.Options(AxisConstraint.None, snapping);
         }
 
         /// <summary>Options for tweening a Rect</summary>
