@@ -24,34 +24,34 @@ using System;
 using System.Text;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using Random = UnityEngine.Random;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
-    public class StringPlugin : ABSTweenPlugin<string, string, PlugString.Options>
+    public class StringPlugin : ABSTweenPlugin<string, string, StringOptions>
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
-        public override string ConvertT1toT2(PlugString.Options options, string value)
+        public override string ConvertT1toT2(StringOptions options, string value)
         {
             return value;
         }
 
-        public override string GetRelativeEndValue(PlugString.Options options, string startValue, string changeValue)
+        public override string GetRelativeEndValue(StringOptions options, string startValue, string changeValue)
         {
             return changeValue;
         }
 
-        public override string GetChangeValue(PlugString.Options options, string startValue, string endValue)
+        public override string GetChangeValue(StringOptions options, string startValue, string endValue)
         {
             return endValue;
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override string Evaluate(PlugString.Options options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
+        public override string Evaluate(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
         {
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;

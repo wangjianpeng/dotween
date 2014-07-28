@@ -790,6 +790,76 @@
             and the endValue as the given one
             </summary>
         </member>
+        <member name="T:DG.Tweening.ShortcutsExtensions">
+            <summary>
+            Extensions for creating tweens via various shortcuts
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveX(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveY(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveZ(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z position to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveX(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveY(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveZ(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z localPosition to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's rotation to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localRotation to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScale(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleX(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleY(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleZ(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z localScale to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOColor(UnityEngine.Material,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Material's color to the given value</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutsExtensions.DOFade(UnityEngine.Material,System.Single,System.Single)">
+            <summary>Tweens a Material's alpha color to the given value
+            (will have no effect unless your material supports transparency)</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="T:DG.Tweening.Extensions">
             <summary>
             Miscellaneous extensions
@@ -1577,46 +1647,46 @@
             <summary>Sets the ease the tween using an AnimationCurve.
             Has no effect on Sequences</summary>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single,System.Single,DG.Tweening.Plugins.PlugFloat.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single,System.Single,DG.Tweening.Plugins.Core.DefaultPlugins.Options.FloatOptions},System.Boolean)">
             <summary>Options for float tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.PlugVector.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},System.Boolean)">
             <summary>Options for Vector2 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.PlugVector.Options},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector2 tweens</summary>
             <param name="axisConstraint">Selecting an axis will tween the vector only on that axis, leaving the others untouched</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.PlugVector.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},System.Boolean)">
             <summary>Options for Vector3 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.PlugVector.Options},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector3 tweens</summary>
             <param name="axisConstraint">Selecting an axis will tween the vector only on that axis, leaving the others untouched</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.PlugVector.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.PlugVector.Options},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="axisConstraint">Selecting an axis will tween the vector only on that axis, leaving the others untouched</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Color,UnityEngine.Color,DG.Tweening.Plugins.PlugColor.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Color,UnityEngine.Color,DG.Tweening.Plugins.Core.DefaultPlugins.Options.ColorOptions},System.Boolean)">
             <summary>Options for Color tweens</summary>
             <param name="alphaOnly">If TRUE only the alpha value of the color will be tweened</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Rect,UnityEngine.Rect,DG.Tweening.Plugins.PlugRect.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Rect,UnityEngine.Rect,DG.Tweening.Plugins.Core.DefaultPlugins.Options.RectOptions},System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String,System.String,DG.Tweening.Plugins.PlugString.Options},System.Boolean)">
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String,System.String,DG.Tweening.Plugins.Core.DefaultPlugins.Options.StringOptions},System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="scramble">If TRUE the string will appear from a random animation of characters</param>
         </member>
@@ -1701,76 +1771,6 @@
             <returns>
             The eased value.
             </returns>
-        </member>
-        <member name="T:DG.Tweening.ShortcutsExtensions">
-            <summary>
-            Extensions for creating tweens via various shortcuts
-            </summary>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's position to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveX(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's X position to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveY(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's Y position to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOMoveZ(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's Z position to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's localPosition to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveX(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's X localPosition to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveY(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's Y localPosition to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalMoveZ(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's Z localPosition to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's rotation to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's localRotation to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOScale(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's localScale to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleX(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's X localScale to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleY(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's Y localScale to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOScaleZ(UnityEngine.Transform,System.Single,System.Single)">
-            <summary>Tweens a Transform's Z localScale to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOColor(UnityEngine.Material,UnityEngine.Color,System.Single)">
-            <summary>Tweens a Material's color to the given value</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutsExtensions.DOFade(UnityEngine.Material,System.Single,System.Single)">
-            <summary>Tweens a Material's alpha color to the given value
-            (will have no effect unless your material supports transparency)</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="T:DG.Tweening.AxisConstraint">
             <summary>

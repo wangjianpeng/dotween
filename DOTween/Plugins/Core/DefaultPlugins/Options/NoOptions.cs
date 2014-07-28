@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/13 16:37
+// Created: 2014/07/08 17:34
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,18 +20,7 @@
 // THE SOFTWARE.
 // 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
 {
-    public struct PlugString
-    {
-        public struct Options
-        {
-            public bool scramble;
-
-            public Options(bool scramble)
-            {
-                this.scramble = scramble;
-            }
-        } 
-    }
+    public struct NoOptions {}
 }

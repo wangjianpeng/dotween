@@ -20,18 +20,15 @@
 // THE SOFTWARE.
 //
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
 {
-    public struct PlugFloat
+    public struct FloatOptions
     {
-        public struct Options
-        {
-            public bool snapping;
+        public bool snapping;
 
-            public Options(bool snapping)
-            {
-                this.snapping = snapping;
-            }
+        public FloatOptions(bool snapping)
+        {
+            this.snapping = snapping;
         }
     }
 }

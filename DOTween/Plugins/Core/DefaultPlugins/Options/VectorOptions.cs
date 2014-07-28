@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/10 14:15
+// Created: 2014/07/28 11:23
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,36 +18,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-// 
-
-using System;
-using DG.Tweening.Core;
-using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core;
-
+//
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.DefaultPlugins
+namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
 {
-    public class IntPlugin : ABSTweenPlugin<int, int, NoOptions>
+    public struct VectorOptions
     {
-        public override int ConvertT1toT2(NoOptions options, int value)
-        {
-            return value;
-        }
+        public AxisConstraint axisConstraint;
+        public bool snapping;
 
-        public override int GetRelativeEndValue(NoOptions options, int startValue, int changeValue)
+        public VectorOptions(AxisConstraint axisConstraint, bool snapping)
         {
-            return startValue + changeValue;
-        }
-
-        public override int GetChangeValue(NoOptions options, int startValue, int endValue)
-        {
-            return endValue - startValue;
-        }
-
-        public override int Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<int> getter, float elapsed, int startValue, int changeValue, float duration)
-        {
-            return (int)Math.Round(Ease.Apply(t, elapsed, startValue, changeValue, duration, 0, 0));
+            this.axisConstraint = axisConstraint;
+            this.snapping = snapping;
         }
     }
 }

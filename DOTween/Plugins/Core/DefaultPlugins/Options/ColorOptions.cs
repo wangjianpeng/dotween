@@ -1,5 +1,5 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
-// Created: 2014/07/08 17:34
+// Created: 2014/07/28 12:27
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,12 +18,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-// 
+
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.Core
+namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
 {
-    public struct NoOptions
+    public struct ColorOptions
     {
-         
+        public bool alphaOnly;
+
+        public ColorOptions(bool alphaOnly)
+        {
+            this.alphaOnly = alphaOnly;
+        }
     }
 }
