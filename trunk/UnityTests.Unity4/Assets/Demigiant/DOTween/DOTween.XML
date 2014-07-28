@@ -784,11 +784,31 @@
         <member name="F:DG.Tweening.Tween.onComplete">
             <summary>Called the moment the tween reaches completion (loops included)</summary>
         </member>
-        <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0)">
-            <summary>
-            Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
-            and the endValue as the given one
-            </summary>
+        <member name="M:DG.Tweening.Tweener.ChangeStartValue``1(``0,System.Single)">
+            <summary>Changes the start value of a tween and rewinds it.
+            Has no effect with tweens that are inside Sequences</summary>
+            <param name="newStartValue">The new start value</param>
+            <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
+        </member>
+        <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0,System.Single,System.Boolean)">
+            <summary>Changes the end value of a tween and rewinds it.
+            Has no effect with tweens that are inside Sequences</summary>
+            <param name="newEndValue">The new end value</param>
+            <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
+            <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
+        </member>
+        <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0,System.Boolean)">
+            <summary>Changes the end value of a tween and rewinds it.
+            Has no effect with tweens that are inside Sequences</summary>
+            <param name="newEndValue">The new end value</param>
+            <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
+        </member>
+        <member name="M:DG.Tweening.Tweener.ChangeValues``1(``0,``0,System.Single)">
+            <summary>Changes the start and end value of a tween and rewinds it.
+            Has no effect with tweens that are inside Sequences</summary>
+            <param name="newStartValue">The new start value</param>
+            <param name="newEndValue">The new end value</param>
+            <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
         </member>
         <member name="T:DG.Tweening.ShortcutsExtensions">
             <summary>

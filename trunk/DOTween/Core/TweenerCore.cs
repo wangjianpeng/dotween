@@ -40,9 +40,7 @@ namespace DG.Tweening.Core
         internal T2 startValue, endValue, changeValue;
         internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
         internal TPlugOptions plugOptions;
-
-        // PLAY DATA /////////////////////////////////////////////////
-
+        internal bool hasManuallySetStartValue; // TRUE when start value has been changed via ChangeStart/Values (allows DoStartup to take it into account)
 
         // ***********************************************************************************
         // CONSTRUCTOR
@@ -60,27 +58,63 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        public override void ChangeEndValue<T>(T newEndValue)
+        public override void ChangeStartValue<T>(T newStartValue, float newDuration)
         {
+            if (isSequenced) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
+                return;
+            }
+            if (typeof(T) != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newStartValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+                return;
+            }
+
+            DoChangeStartValue(this, (T2)Convert.ChangeType(newStartValue, typeofT2), newDuration);
+        }
+
+        public override void ChangeEndValue<T>(T newEndValue, bool snapStartValue)
+        { ChangeEndValue(newEndValue, -1, snapStartValue); }
+
+        public override void ChangeEndValue<T>(T newEndValue, float newDuration, bool snapStartValue = false)
+        {
+            if (isSequenced) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
+                return;
+            }
             if (typeof(T) != typeofT2) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
                 return;
             }
 
-            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2));
+            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration, snapStartValue);
+        }
+
+        public override void ChangeValues<T>(T newStartValue, T newEndValue, float newDuration)
+        {
+            if (isSequenced) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
+                return;
+            }
+            if (typeof(T) != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeValues: incorrect value type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+                return;
+            }
+
+            DoChangeValues(this, (T2)Convert.ChangeType(newStartValue, typeofT2), (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration);
         }
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
         // _tweenPlugin is not reset since it's useful to keep it as a reference
-        internal override void Reset()
+        internal override sealed void Reset()
         {
             base.Reset();
 
             getter = null;
             setter = null;
             plugOptions = new TPlugOptions();
+            hasManuallySetStartValue = false;
         }
 
         // CALLED BY TweenManager at each update.

@@ -21,6 +21,7 @@
 // 
 
 using DG.Tweening.Core;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
 
@@ -36,11 +37,30 @@ namespace DG.Tweening
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        /// <summary>
-        /// Sets the start value of the tween as its current position (in order to smoothly transition to the new endValue)
-        /// and the endValue as the given one
-        /// </summary>
-        public abstract void ChangeEndValue<T>(T newEndValue);
+        /// <summary>Changes the start value of a tween and rewinds it.
+        /// Has no effect with tweens that are inside Sequences</summary>
+        /// <param name="newStartValue">The new start value</param>
+        /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
+        public abstract void ChangeStartValue<T>(T newStartValue, float newDuration = -1);
+
+        /// <summary>Changes the end value of a tween and rewinds it.
+        /// Has no effect with tweens that are inside Sequences</summary>
+        /// <param name="newEndValue">The new end value</param>
+        /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
+        /// <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
+        public abstract void ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false);
+        /// <summary>Changes the end value of a tween and rewinds it.
+        /// Has no effect with tweens that are inside Sequences</summary>
+        /// <param name="newEndValue">The new end value</param>
+        /// <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
+        public abstract void ChangeEndValue<T>(T newEndValue, bool snapStartValue);
+
+        /// <summary>Changes the start and end value of a tween and rewinds it.
+        /// Has no effect with tweens that are inside Sequences</summary>
+        /// <param name="newStartValue">The new start value</param>
+        /// <param name="newEndValue">The new end value</param>
+        /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
+        public abstract void ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
@@ -111,17 +131,23 @@ namespace DG.Tweening
         {
             t.startupDone = true;
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-            if (DOTween.useSafeMode) {
-                try {
-                    t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
-                } catch (UnassignedReferenceException) {
-                    // Target/field doesn't exist: kill tween
-                    return false;
-                }
-            } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+
+            if (!t.hasManuallySetStartValue) {
+                // Take start value from current target value
+                if (DOTween.useSafeMode) {
+                    try {
+                        t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+                    } catch (UnassignedReferenceException) {
+                        // Target/field doesn't exist: kill tween
+                        return false;
+                    }
+                } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+            }
+
             if (t.isRelative) {
                 t.endValue = t.tweenPlugin.GetRelativeEndValue(t.plugOptions, t.startValue, t.endValue);
             }
+
             if (t.isFrom) {
                 // Switch start and end value and jump immediately to new start value, regardless of delays
                 T2 prevStartValue = t.startValue;
@@ -131,17 +157,83 @@ namespace DG.Tweening
                 // Jump (no need for safeMode checks since they already happened when assigning start value
                 t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, t.duration));
             } else t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+            
             return true;
         }
 
         // CALLED BY TweenerCore
-        internal static void DoChangeEndValue<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, T2 newEndValue) where TPlugOptions : struct
+        internal static void DoChangeStartValue<T1, T2, TPlugOptions>(
+            TweenerCore<T1, T2, TPlugOptions> t, T2 newStartValue, float newDuration
+        )
+            where TPlugOptions : struct
         {
-            // Assign new end value and reset position
+            t.hasManuallySetStartValue = true;
+            t.startValue = newStartValue;
+            if (newDuration > 0) {
+                t.duration = newDuration;
+                if (t.startupDone) t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+            }
+
+            if (t.startupDone) t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+
+            // Force rewind
+            DoGoto(t, 0, 0, UpdateMode.Goto);
+        }
+
+        // CALLED BY TweenerCore
+        internal static void DoChangeEndValue<T1, T2, TPlugOptions>(
+            TweenerCore<T1, T2, TPlugOptions> t, T2 newEndValue, float newDuration, bool snapStartValue
+        )
+            where TPlugOptions : struct
+        {
             t.endValue = newEndValue;
-            // Startup again to set everything up
-            DoStartup(t);
-            TweenManager.Restart(t, false);
+            t.isRelative = false;
+            if (newDuration > 0) {
+                t.duration = newDuration;
+                if (t.startupDone) t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+            }
+
+            if (t.startupDone) {
+                if (snapStartValue) {
+                    // Reassign startValue with current target's value
+                    if (DOTween.useSafeMode) {
+                        try {
+                            t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+                        } catch (UnassignedReferenceException) {
+                            // Target/field doesn't exist: kill tween
+                            TweenManager.Despawn(t);
+                            return;
+                        }
+                    } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+                    t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+                } else {
+                    // Just use old startValue with new endValue
+                    t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+                }
+            }
+
+            // Force rewind
+            DoGoto(t, 0, 0, UpdateMode.Goto);
+        }
+
+        internal static void DoChangeValues<T1, T2, TPlugOptions>(
+            TweenerCore<T1, T2, TPlugOptions> t, T2 newStartValue, T2 newEndValue, float newDuration
+        )
+            where TPlugOptions : struct
+        {
+            t.hasManuallySetStartValue = true;
+            t.isRelative = t.isFrom = false;
+            t.startValue = newStartValue;
+            t.endValue = newEndValue;
+            if (newDuration > 0) {
+                t.duration = newDuration;
+                if (t.startupDone) t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+            }
+
+            if (t.startupDone) t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+
+            // Force rewind
+            DoGoto(t, 0, 0, UpdateMode.Goto);
         }
     }
 }
