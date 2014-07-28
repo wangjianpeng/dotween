@@ -346,16 +346,16 @@ public class TweenEnginesComparison : BrainBase
 					DG.Tweening.Tween dotween;
 					if (positionTween) {
 						Vector3 toPos = rndPositions[i];
-						dotween = tCopy.MoveTo(toPos, twDuration).SetEase(dotweenEase).SetLoops(loops, dotweenLoopType);
+						dotween = tCopy.DOMove(toPos, twDuration).SetEase(dotweenEase).SetLoops(loops, dotweenLoopType);
 						if (testSetup == TestSetup.Emit) dotween.OnComplete(()=> EmitDOTweenPositionFor(t, toPos, twDuration, dotweenEase));
 					}
 					if (rotationTween) {
 						Vector3 toRot = rndRotations[i];
-						dotween = tCopy.RotateTo(toRot, twDuration).SetEase(dotweenEase).SetLoops(loops, dotweenLoopType);
+						dotween = tCopy.DORotate(toRot, twDuration).SetEase(dotweenEase).SetLoops(loops, dotweenLoopType);
 						if (testSetup == TestSetup.Emit) dotween.OnComplete(()=> EmitDOTweenRotationFor(t, toRot, twDuration, dotweenEase));
 					}
 					if (scaleTween) {
-						dotween = tCopy.ScaleTo(rndScale, twDuration).SetEase(dotweenEase).SetLoops(loops, dotweenLoopType);
+						dotween = tCopy.DOScale(rndScale, twDuration).SetEase(dotweenEase).SetLoops(loops, dotweenLoopType);
 						if (testSetup == TestSetup.Emit) dotween.OnComplete(()=> EmitDOTweenScaleFor(t, rndScale, twDuration, dotweenEase));
 					}
 					break;
@@ -368,17 +368,17 @@ public class TweenEnginesComparison : BrainBase
 	void EmitDOTweenPositionFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
 	{
 		t.position = Vector3.zero;
-		t.MoveTo(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenPositionFor(t, to, twDuration, ease));
+		t.DOMove(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenPositionFor(t, to, twDuration, ease));
 	}
 	void EmitDOTweenRotationFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
 	{
 		t.rotation = Quaternion.identity;
-		t.RotateTo(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenRotationFor(t, to, twDuration, ease));
+		t.DORotate(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenRotationFor(t, to, twDuration, ease));
 	}
 	void EmitDOTweenScaleFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
 	{
 		t.localScale = Vector3.one;
-		t.ScaleTo(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenScaleFor(t, to, twDuration, ease));
+		t.DOScale(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenScaleFor(t, to, twDuration, ease));
 	}
 
 	void EmitHOTweenPositionFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)

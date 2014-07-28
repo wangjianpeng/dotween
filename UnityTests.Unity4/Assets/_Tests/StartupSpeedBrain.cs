@@ -66,7 +66,7 @@ public class StartupSpeedBrain : BrainBase
 		yield return null;
 
 		float time = Time.realtimeSinceStartup;
-		for (int i = 0; i < tot; ++i) transforms[i].MoveTo(toPositions[i], 2);
+		for (int i = 0; i < tot; ++i) transforms[i].DOMove(toPositions[i], 2);
 		startupTime = Time.realtimeSinceStartup - time;
 	}
 

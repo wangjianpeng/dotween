@@ -80,21 +80,21 @@ public class SequencesBrain : BrainBase
 
 		seq.AppendInterval(0.5f);
 		seq.Append(
-			target.MoveTo(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
+			target.DOMove(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
 			.SetId("Move")
 			.OnStart(()=> DGUtils.Log("Move Start"))
 			.OnStepComplete(()=> { stepCompleteT1++; DGUtils.Log("Move Step Complete"); })
 			.OnComplete(()=> { completeT1++; })
 		);
 		seq.Append(
-			target.RotateTo(new Vector3(0, 225, 2), 1)
+			target.DORotate(new Vector3(0, 225, 2), 1)
 			.SetId("Rotate")
 			.OnStart(()=> DGUtils.Log("Rotate Start"))
 			.OnStepComplete(()=> { stepCompleteT2++; DGUtils.Log("Rotate Step Complete"); })
 			.OnComplete(()=> { completeT2++; })
 		);
 		seq.Insert(
-			0.5f, mat.ColorTo(Color.green, 1)
+			0.5f, mat.DOColor(Color.green, 1)
 			.SetId("Color")
 			.OnStart(()=> DGUtils.Log("Color Start"))
 			.OnStepComplete(()=> { stepCompleteT3++; DGUtils.Log("Color Step Complete"); })
@@ -121,7 +121,7 @@ public class SequencesBrain : BrainBase
 		mainSeq.PrependInterval(1);
 		target = ((GameObject)Instantiate(prefab)).transform;
 		target.position = new Vector3(-5, 0, 0);
-		mainSeq.Append(target.MoveTo(Vector3.zero, 1));
+		mainSeq.Append(target.DOMove(Vector3.zero, 1));
 
 		mainSeq.InsertCallback(1.75f, ()=> DGUtils.Log("1.75f MAINSEQUENCE callback"));
 		mainSeq.PrependCallback(()=> DGUtils.Log("1.75f MAINSEQUENCE prepended callback"));
@@ -133,7 +133,7 @@ public class SequencesBrain : BrainBase
 	{
 		Transform target = ((GameObject)Instantiate(prefab)).transform;
 
-		target.MoveTo(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
+		target.DOMove(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
 			.SetId("Move (Tween)")
 			.SetLoops(3)
 			.OnComplete(()=> Destroy(target.gameObject));

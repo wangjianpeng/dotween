@@ -163,8 +163,8 @@ public class PoolingBrain : BrainBase
 		col.a = 1;
 		m.color = col;
 		float duration = Random.Range(0.2f, 2f);
-        m.FadeTo(0, duration);
-        t.MoveTo(RandomVector3(), duration).OnComplete(()=> ResetParticleAndAssignTween(t, m));
+        m.DOFade(0, duration);
+        t.DOMove(RandomVector3(), duration).OnComplete(()=> ResetParticleAndAssignTween(t, m));
 	}
 
 	void Clear()

@@ -25,7 +25,7 @@ public class EaseBrain : BrainBase
 				gridCount.y++;
 				gridCount.x = 0;
 			}
-			Tween tween = t.MoveToY(2, 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
+			Tween tween = t.DOMoveY(2, 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
 			EaseType easeType = (EaseType)i;
 			if (easeType == EaseType.AnimationCurve) tween.SetEase(easeCurve);
 			else tween.SetEase(easeType);
