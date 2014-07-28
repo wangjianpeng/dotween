@@ -95,6 +95,7 @@
     <Compile Include="Plugins\DefaultPlugins\Vector4Plugin.cs" />
     <Compile Include="Plugins\DefaultPlugins\StringPlugin.cs" />
     <Compile Include="Sequence.cs" />
+    <Compile Include="ShortcutsExtensions.cs" />
     <Compile Include="TweenCreationExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />
     <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />

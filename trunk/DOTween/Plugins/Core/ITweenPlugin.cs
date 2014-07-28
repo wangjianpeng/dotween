@@ -22,8 +22,5 @@
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins.Core
 {
-    public interface ITweenPlugin
-    {
-         
-    }
+    public interface ITweenPlugin {}
 }

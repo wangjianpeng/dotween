@@ -47,7 +47,9 @@ namespace DG.Tweening
 
         // CALLED BY DOTween when spawning/creating a new Tweener.
         // Returns TRUE if the setup is successful
-        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration)
+        internal static bool Setup<T1, T2, TPlugOptions>(
+            TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration
+        )
             where TPlugOptions : struct
         {
             if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
@@ -65,26 +67,9 @@ namespace DG.Tweening
             t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
             return true;
         }
-        internal static bool Setup<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, TPlugOptions options, float duration)
-            where TPlugOptions : struct
-        {
-            if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
-            if (t.tweenPlugin == null) {
-                // No suitable plugin found. Kill
-                Debugger.LogError("No suitable plugin found for this type");
-                return false;
-            }
-
-            t.getter = getter;
-            t.setter = setter;
-            t.endValue = endValue;
-            t.plugOptions = options;
-            t.duration = duration;
-            t.loopType = DOTween.defaultLoopType;
-            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
-            return true;
-        }
-        internal static bool Setup<T1, T2, TPlugOptions, TPlugin>(TweenerCore<T1, T2, TPlugOptions> t, IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter, float duration)
+        internal static bool Setup<T1, T2, TPlugOptions, TPlugin>(
+            TweenerCore<T1, T2, TPlugOptions> t, IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter, float duration
+        )
             where TPlugOptions : struct where TPlugin : ITweenPlugin, new()
         {
             t.getter = plugSetter.Getter();
