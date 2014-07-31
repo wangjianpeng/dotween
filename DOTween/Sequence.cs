@@ -132,7 +132,7 @@ namespace DG.Tweening
         // Called by DOTween when spawning/creating a new Sequence.
         internal static void Setup(Sequence s)
         {
-            s.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlaySequences;
+            s.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlaySequences;
             s.loopType = DOTween.defaultLoopType;
         }
 

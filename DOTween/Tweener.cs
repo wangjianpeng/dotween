@@ -84,7 +84,7 @@ namespace DG.Tweening
             t.endValue = endValue;
             t.duration = duration;
             t.loopType = DOTween.defaultLoopType;
-            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
+            t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;
         }
         internal static bool Setup<T1, T2, TPlugOptions, TPlugin>(
@@ -99,7 +99,7 @@ namespace DG.Tweening
             t.duration = duration;
             t.loopType = DOTween.defaultLoopType;
             t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
-            t.isPlaying = DOTween.defaultAutoPlayBehaviour == AutoPlay.All || DOTween.defaultAutoPlayBehaviour == AutoPlay.AutoPlayTweeners;
+            t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;
         }
 

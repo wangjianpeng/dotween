@@ -30,7 +30,7 @@
         <member name="F:DG.Tweening.DOTween.defaultLoopType">
             <summary>Default loopType applied to all new tweens</summary>
         </member>
-        <member name="F:DG.Tweening.DOTween.defaultAutoPlayBehaviour">
+        <member name="F:DG.Tweening.DOTween.defaultAutoPlay">
             <summary>Default autoPlay behaviour for new tweens</summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoKill">
@@ -56,7 +56,8 @@
         </member>
         <member name="M:DG.Tweening.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
             <summary>
-            Directly sets the current max capacity of Tweeners and Sequences,
+            Directly sets the current max capacity of Tweeners and Sequences
+            (meaning how many Tweeners and Sequences can be running at the same time),
             so that DOTween doesn't need to automatically increase them in case the max is reached
             (which might lead to hiccups when that happens).
             Sequences capacity must be less or equal to Tweeners capacity
