@@ -63,7 +63,7 @@ namespace DG.Tweening
         /// <summary>Default loopType applied to all new tweens</summary>
         public static LoopType defaultLoopType = LoopType.Restart;
         /// <summary>Default autoPlay behaviour for new tweens</summary>
-        public static AutoPlay defaultAutoPlayBehaviour = AutoPlay.All;
+        public static AutoPlay defaultAutoPlay = AutoPlay.All;
         /// <summary>Default autoKillOnComplete behaviour for new tweens</summary>
         public static bool defaultAutoKill = true;
 
@@ -156,7 +156,8 @@ namespace DG.Tweening
         }
 
         /// <summary>
-        /// Directly sets the current max capacity of Tweeners and Sequences,
+        /// Directly sets the current max capacity of Tweeners and Sequences
+        /// (meaning how many Tweeners and Sequences can be running at the same time),
         /// so that DOTween doesn't need to automatically increase them in case the max is reached
         /// (which might lead to hiccups when that happens).
         /// Sequences capacity must be less or equal to Tweeners capacity
