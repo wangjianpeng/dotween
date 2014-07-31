@@ -173,7 +173,7 @@ namespace DG.Tweening
         // Yield Coroutines ///////////////////////////////
 
         /// <summary>
-        /// A coroutine that waits until the tween is complete or killed.
+        /// A coroutine that waits until the tween is killed or complete.
         /// It can be used inside a coroutine as a yield.
         /// <para>Example usage:</para><code>yield return myTween.WaitForCompletion();</code>
         /// </summary>
@@ -187,6 +187,69 @@ namespace DG.Tweening
             return DOTween.instance.StartCoroutine(DOTween.instance.WaitForCompletion(t));
         }
 
+        /// <summary>
+        /// A coroutine that waits until the tween is killed.
+        /// It can be used inside a coroutine as a yield.
+        /// <para>Example usage:</para><code>yield return myTween.WaitForKill();</code>
+        /// </summary>
+        public static Coroutine WaitForKill(this Tween t)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
+            return DOTween.instance.StartCoroutine(DOTween.instance.WaitForKill(t));
+        }
+
+        /// <summary>
+        /// A coroutine that waits until the tween is killed or has gone through the given amount of loops.
+        /// It can be used inside a coroutine as a yield.
+        /// <para>Example usage:</para><code>yield return myTween.WaitForElapsedLoops(2);</code>
+        /// </summary>
+        /// <param name="elapsedLoops">Elapsed loops to wait for</param>
+        public static Coroutine WaitForElapsedLoops(this Tween t, int elapsedLoops)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
+            return DOTween.instance.StartCoroutine(DOTween.instance.WaitForElapsedLoops(t, elapsedLoops));
+        }
+
+        /// <summary>
+        /// A coroutine that waits until the tween is killed or has reached the given position (loops included, delays excluded).
+        /// It can be used inside a coroutine as a yield.
+        /// <para>Example usage:</para><code>yield return myTween.WaitForPosition(2.5f);</code>
+        /// </summary>
+        /// <param name="position">Position (loops included, delays excluded) to wait for</param>
+        public static Coroutine WaitForPosition(this Tween t, float position)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
+            return DOTween.instance.StartCoroutine(DOTween.instance.WaitForPosition(t, position));
+        }
+
+        /// <summary>
+        /// A coroutine that waits until the tween is killed or started
+        /// (meaning when the tween is set in a playing state the first time, after any eventual delay).
+        /// It can be used inside a coroutine as a yield.
+        /// <para>Example usage:</para><code>yield return myTween.WaitForStart();</code>
+        /// </summary>
+        public static Coroutine WaitForStart(this Tween t)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
+            return DOTween.instance.StartCoroutine(DOTween.instance.WaitForStart(t));
+        }
+
         ///////////////////////////////////////////////////
         // Info getters ///////////////////////////////////
 
@@ -196,7 +259,7 @@ namespace DG.Tweening
             return t.completedLoops;
         }
 
-        /// <summary>Returns the current position of this tween</summary>
+        /// <summary>Returns the current position of this tween (inside a single loop cycle)</summary>
         public static float Position(this Tween t)
         {
             return t.position;
