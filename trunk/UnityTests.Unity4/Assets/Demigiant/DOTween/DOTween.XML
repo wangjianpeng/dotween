@@ -1087,16 +1087,47 @@
         </member>
         <member name="M:DG.Tweening.Extensions.WaitForCompletion(DG.Tweening.Tween)">
             <summary>
-            A coroutine that waits until the tween is complete or killed.
+            A coroutine that waits until the tween is killed or complete.
             It can be used inside a coroutine as a yield.
             <para>Example usage:</para><code>yield return myTween.WaitForCompletion();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.WaitForKill(DG.Tweening.Tween)">
+            <summary>
+            A coroutine that waits until the tween is killed.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForKill();</code>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Extensions.WaitForElapsedLoops(DG.Tweening.Tween,System.Int32)">
+            <summary>
+            A coroutine that waits until the tween is killed or has gone through the given amount of loops.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForElapsedLoops(2);</code>
+            </summary>
+            <param name="elapsedLoops">Elapsed loops to wait for</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.WaitForPosition(DG.Tweening.Tween,System.Single)">
+            <summary>
+            A coroutine that waits until the tween is killed or has reached the given position (loops included, delays excluded).
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForPosition(2.5f);</code>
+            </summary>
+            <param name="position">Position (loops included, delays excluded) to wait for</param>
+        </member>
+        <member name="M:DG.Tweening.Extensions.WaitForStart(DG.Tweening.Tween)">
+            <summary>
+            A coroutine that waits until the tween is killed or started
+            (meaning when the tween is set in a playing state the first time, after any eventual delay).
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForStart();</code>
             </summary>
         </member>
         <member name="M:DG.Tweening.Extensions.CompletedLoops(DG.Tweening.Tween)">
             <summary>Returns the total number of loops completed by this tween</summary>
         </member>
         <member name="M:DG.Tweening.Extensions.Position(DG.Tweening.Tween)">
-            <summary>Returns the current position of this tween</summary>
+            <summary>Returns the current position of this tween (inside a single loop cycle)</summary>
         </member>
         <member name="M:DG.Tweening.Extensions.Duration(DG.Tweening.Tween)">
             <summary>Returns the duration of this tween</summary>
