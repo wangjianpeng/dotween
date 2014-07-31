@@ -42,6 +42,11 @@ namespace DG.Tweening.Core
             Debug.LogError("DOTWEEN :: " + message);
         }
 
+        internal static void LogInvalidTween(Tween t)
+        {
+            LogWarning("This Tween has been killed and is now invalid");
+        }
+
         internal static void SetLogPriority(LogBehaviour logBehaviour)
         {
             switch (logBehaviour) {

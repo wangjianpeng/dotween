@@ -124,6 +124,31 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
+        /// (doesn't copy specific SetOptions settings: those will need to be applied manually each time)</summary>
+        /// <param name="asTweener">Tweener from which to copy the parameters</param>
+        public static Tween SetAs(this Tween target, Tween asTweener)
+        {
+//            target.isFrom = asTweener.isFrom;
+            target.autoKill = asTweener.autoKill;
+            target.timeScale = asTweener.timeScale;
+            target.objId = asTweener.objId;
+            target.stringId = asTweener.stringId;
+            target.id = asTweener.id;
+            target.onStart = asTweener.onStart;
+            target.onStepComplete = asTweener.onStepComplete;
+            target.onComplete = asTweener.onComplete;
+            target.loops = asTweener.loops;
+            target.loopType = asTweener.loopType;
+            target.delay = asTweener.delay;
+            if (target.delay > 0) target.delayComplete = false;
+            target.isRelative = asTweener.isRelative;
+            target.easeType = asTweener.easeType;
+            target.easeCurveEval = asTweener.easeCurveEval;
+
+            return target;
+        }
+
         // ===================================================================================
         // SEQUENCES -------------------------------------------------------------------------
 
