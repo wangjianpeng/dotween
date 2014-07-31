@@ -21,6 +21,7 @@
 // 
 
 using DG.Tweening.Core;
+using UnityEngine;
 
 #pragma warning disable 1573
 namespace DG.Tweening
@@ -166,6 +167,24 @@ namespace DG.Tweening
             }
 
             TweenManager.TogglePause(t);
+        }
+
+        ///////////////////////////////////////////////////
+        // Yield Coroutines ///////////////////////////////
+
+        /// <summary>
+        /// A coroutine that waits until the tween is complete or killed.
+        /// It can be used inside a coroutine as a yield.
+        /// <para>Example usage:</para><code>yield return myTween.WaitForCompletion();</code>
+        /// </summary>
+        public static Coroutine WaitForCompletion(this Tween t)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
+            return DOTween.instance.StartCoroutine(DOTween.instance.WaitForCompletion(t));
         }
 
         ///////////////////////////////////////////////////

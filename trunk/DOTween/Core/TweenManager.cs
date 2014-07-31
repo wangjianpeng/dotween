@@ -55,7 +55,7 @@ namespace DG.Tweening.Core
         static int _maxPooledTweenerId = -1; // Highest PooledTweeners id that is actually full
 
         // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
+        // INTERNAL METHODS ------------------------------------------------------------------
 
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
