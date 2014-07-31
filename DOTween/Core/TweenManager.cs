@@ -62,7 +62,6 @@ namespace DG.Tweening.Core
         internal static TweenerCore<T1,T2,TPlugOptions> GetTweener<T1,T2,TPlugOptions>()
             where TPlugOptions : struct
         {
-            Tween tween;
             TweenerCore<T1,T2,TPlugOptions> t;
             // Search inside pool
             if (totPooledTweeners > 0) {
@@ -70,7 +69,7 @@ namespace DG.Tweening.Core
                 Type typeofT2 = typeof(T2);
                 Type typeofTPlugOptions = typeof(TPlugOptions);
                 for (int i = _maxPooledTweenerId; i > _minPooledTweenerId - 1; --i) {
-                    tween = _pooledTweeners[i];
+                    Tween tween = _pooledTweeners[i];
                     if (tween != null && tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
                         // Pooled Tweener exists: spawn it
                         t = (TweenerCore<T1, T2, TPlugOptions>)tween;
