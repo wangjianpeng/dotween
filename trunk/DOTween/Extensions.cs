@@ -39,12 +39,22 @@ namespace DG.Tweening
         /// <summary>Completes the tween</summary>
         public static void Complete(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.Complete(t);
         }
 
         /// <summary>Flips the direction of this tween (backwards if it was going forward or viceversa)</summary>
         public static void Flip(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.Flip(t);
         }
 
@@ -54,6 +64,11 @@ namespace DG.Tweening
         /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
         public static void Goto(this Tween t, float to, bool andPlay = false)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             if (to < 0) to = 0;
             TweenManager.Goto(t, to, andPlay);
         }
@@ -61,7 +76,10 @@ namespace DG.Tweening
         /// <summary>Kills the tween</summary>
         public static void Kill(this Tween t)
         {
-            if (!t.active) return;
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
 
             if (TweenManager.isUpdateLoop) {
                 // Just mark it for killing, so the update loop will take care of it
@@ -72,6 +90,11 @@ namespace DG.Tweening
         /// <summary>Pauses the tween</summary>
         public static T Pause<T>(this T t) where T : Tween
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
             TweenManager.Pause(t);
             return t;
         }
@@ -79,6 +102,11 @@ namespace DG.Tweening
         /// <summary>Plays the tween</summary>
         public static T Play<T>(this T t) where T : Tween
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
             TweenManager.Play(t);
             return t;
         }
@@ -86,12 +114,22 @@ namespace DG.Tweening
         /// <summary>Sets the tween in a forward direction and plays it</summary>
         public static void PlayBackwards(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.PlayBackwards(t);
         }
 
         /// <summary>Sets the tween in a backwards direction and plays it</summary>
         public static void PlayForward(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.PlayForward(t);
         }
 
@@ -99,6 +137,11 @@ namespace DG.Tweening
         /// <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
         public static void Restart(this Tween t, bool includeDelay = true)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.Restart(t, includeDelay);
         }
 
@@ -106,12 +149,22 @@ namespace DG.Tweening
         /// <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
         public static void Rewind(this Tween t, bool includeDelay = true)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.Rewind(t, includeDelay);
         }
 
         /// <summary>Plays the tween if it was paused, pauses it if it was playing</summary>
         public static void TogglePause(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return;
+            }
+
             TweenManager.TogglePause(t);
         }
 
@@ -149,6 +202,12 @@ namespace DG.Tweening
             return (loopsToCount * t.duration) + t.position;
         }
 
+        /// <summary>Returns FALSE if this tween has been killed</summary>
+        public static bool IsActive(this Tween t)
+        {
+            return t.active;
+        }
+
         /// <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>
         public static bool IsBackwards(this Tween t)
         {
@@ -159,34 +218,6 @@ namespace DG.Tweening
         public static bool IsPlaying(this Tween t)
         {
             return t.isPlaying;
-        }
-
-        // ===================================================================================
-        // TWEENERS --------------------------------------------------------------------------
-
-        /// <summary>
-        /// Sets the parameters of the tween (ease, loops, delay, etc) as the parameters of the given one
-        /// </summary>
-        /// <param name="asTweener">Tweener from which to copy the parameters</param>
-        public static Tween SetAs(this Tween target, Tween asTweener)
-        {
-            target.isFrom = asTweener.isFrom;
-            target.autoKill = asTweener.autoKill;
-            target.timeScale = asTweener.timeScale;
-            target.objId = asTweener.objId;
-            target.stringId = asTweener.stringId;
-            target.id = asTweener.id;
-            target.onStart = asTweener.onStart;
-            target.onStepComplete = asTweener.onStepComplete;
-            target.onComplete = asTweener.onComplete;
-            target.loops = asTweener.loops;
-            target.loopType = asTweener.loopType;
-            target.delay = asTweener.delay;
-            if (target.delay > 0) target.delayComplete = false;
-            target.isRelative = asTweener.isRelative;
-            target.easeType = asTweener.easeType;
-            target.easeCurveEval = asTweener.easeCurveEval;
-            return target;
         }
     }
 }

@@ -1100,17 +1100,14 @@
         <member name="M:DG.Tweening.Extensions.Elapsed(DG.Tweening.Tween)">
             <summary>Returns the total elapsed time for this tween</summary>
         </member>
+        <member name="M:DG.Tweening.Extensions.IsActive(DG.Tweening.Tween)">
+            <summary>Returns FALSE if this tween has been killed</summary>
+        </member>
         <member name="M:DG.Tweening.Extensions.IsBackwards(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>
         </member>
         <member name="M:DG.Tweening.Extensions.IsPlaying(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween is playing</summary>
-        </member>
-        <member name="M:DG.Tweening.Extensions.SetAs(DG.Tweening.Tween,DG.Tweening.Tween)">
-            <summary>
-            Sets the parameters of the tween (ease, loops, delay, etc) as the parameters of the given one
-            </summary>
-            <param name="asTweener">Tweener from which to copy the parameters</param>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Quint">
             <summary>
@@ -1767,6 +1764,11 @@
         <member name="M:DG.Tweening.TweenCreationExtensions.OnComplete``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onComplete callback for the tween
             (called the moment the tween reaches completion, loops included)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenCreationExtensions.SetAs(DG.Tweening.Tween,DG.Tweening.Tween)">
+            <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
+            (doesn't copy specific SetOptions settings: those will need to be applied manually each time)</summary>
+            <param name="asTweener">Tweener from which to copy the parameters</param>
         </member>
         <member name="M:DG.Tweening.TweenCreationExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
             <summary>Adds the given tween to the end of the Sequence. 
