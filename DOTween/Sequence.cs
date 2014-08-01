@@ -28,7 +28,7 @@ using UnityEngine;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Controls a collection of tweens
+    /// Controls other tweens as a group
     /// </summary>
     public sealed class Sequence : Tween
     {

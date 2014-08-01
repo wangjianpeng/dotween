@@ -68,7 +68,7 @@
     <Compile Include="Core\TweenManager.cs" />
     <Compile Include="DOTween.cs" />
     <Compile Include="EaseType.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="TweenExtensions.cs" />
     <Compile Include="LoopType.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\ColorPlugin.cs" />
     <Compile Include="Plugins\Core\IPlugSetter.cs" />
@@ -88,8 +88,8 @@
     <Compile Include="Plugins\Core\DefaultPlugins\Vector4Plugin.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\StringPlugin.cs" />
     <Compile Include="Sequence.cs" />
-    <Compile Include="ShortcutsExtensions.cs" />
-    <Compile Include="TweenCreationExtensions.cs" />
+    <Compile Include="ShortcutExtensions.cs" />
+    <Compile Include="TweenSettingsExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />
     <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />
     <Compile Include="Plugins\Core\PluginsManager.cs" />

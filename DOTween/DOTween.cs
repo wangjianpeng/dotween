@@ -29,14 +29,14 @@ using UnityEngine;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Main DOTween class
+    /// Main DOTween class. Contains static methods to create and control tweens in a generic way
     /// </summary>
     public class DOTween : MonoBehaviour
     {
-        /// <summary>Used only inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
+        /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.120";
+        public static readonly string Version = "0.7.125";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -88,31 +88,31 @@ namespace DG.Tweening
         // ===================================================================================
         // YIELD COROUTINES ------------------------------------------------------------------
 
-        // CALLED BY Extensions, creates a coroutine that waits for the tween to be complete (or killed)
+        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be complete (or killed)
         internal IEnumerator WaitForCompletion(Tween t)
         {
             while (t.active && !t.isComplete) yield return 0;
         }
 
-        // CALLED BY Extensions, creates a coroutine that waits for the tween to be killed
+        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be killed
         internal IEnumerator WaitForKill(Tween t)
         {
             while (t.active) yield return 0;
         }
 
-        // CALLED BY Extensions, creates a coroutine that waits for the tween to reach a given amount of loops (or to be killed)
+        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to reach a given amount of loops (or to be killed)
         internal IEnumerator WaitForElapsedLoops(Tween t, int elapsedLoops)
         {
             while (t.active && t.completedLoops < elapsedLoops) yield return 0;
         }
 
-        // CALLED BY Extensions, creates a coroutine that waits for the tween to reach a given time position (or to be killed)
+        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to reach a given time position (or to be killed)
         internal IEnumerator WaitForPosition(Tween t, float position)
         {
             while (t.active && t.position * (t.completedLoops + 1) < position) yield return 0;
         }
 
-        // CALLED BY Extensions, creates a coroutine that waits for the tween to be started (or killed)
+        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be started (or killed)
         internal IEnumerator WaitForStart(Tween t)
         {
             while (t.active && !t.playedOnce) yield return 0;
@@ -123,7 +123,7 @@ namespace DG.Tweening
 
         /// <summary>
         /// Must be called once, before the first ever DOTween call/reference,
-        /// otherwise, it will be called automatically and will use default options.
+        /// otherwise it will be called automatically and will use default options.
         /// Calling it a second time won't have any effect.
         /// </summary>
         /// <param name="autoKill">All newly created tweens will have their autoKill property set accordingly

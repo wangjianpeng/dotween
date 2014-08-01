@@ -26,7 +26,7 @@ using DG.Tweening.Core.Enums;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Shared by Tweeners and Sequences
+    /// Indicates either a Tweener or a Sequence
     /// </summary>
     public abstract class Tween : ABSSequentiable
     {
