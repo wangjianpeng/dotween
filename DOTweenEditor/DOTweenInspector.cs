@@ -20,6 +20,7 @@
 // THE SOFTWARE.
 // 
 
+using System.Text;
 using DG.Tweening;
 using DG.Tweening.Core;
 using UnityEditor;
@@ -32,6 +33,7 @@ namespace DG.DOTweenEditor
     {
         DOTween _src;
         string _title;
+        readonly StringBuilder _strBuilder = new StringBuilder();
 
         // ===================================================================================
         // MONOBEHAVIOUR METHODS -------------------------------------------------------------
@@ -56,14 +58,22 @@ namespace DG.DOTweenEditor
             GUILayout.Label(_title);
 
             GUILayout.Space(8);
-            GUILayout.Label("Active tweens: " + totActiveTweens);
-            GUILayout.Label("Playing tweens: " + totPlayingTweens);
-            GUILayout.Label("Paused tweens: " + totPausedTweens);
-            GUILayout.Label("Pooled tweens: " + TweenManager.TotPooledTweens() + " (" + TweenManager.totPooledTweeners + "/" + TweenManager.totPooledSequences + ")");
+            _strBuilder.Remove(0, _strBuilder.Length);
+            _strBuilder.Append("Active tweens: ").Append(totActiveTweens)
+                    .Append("(").Append(TweenManager.totActiveTweeners)
+                    .Append("/").Append(TweenManager.totActiveSequences).Append(")")
+                .Append("\nPlaying tweens: ").Append(totPlayingTweens)
+                .Append("\nPaused tweens: ").Append(totPausedTweens)
+                .Append("\nPooled tweens: ").Append(TweenManager.TotPooledTweens())
+                    .Append(" (").Append(TweenManager.totPooledTweeners)
+                    .Append("/").Append(TweenManager.totPooledSequences).Append(")");
+            GUILayout.Label(_strBuilder.ToString());
 
             GUILayout.Space(8);
-            GUILayout.Label("Tweeners Capacity: " + TweenManager.maxTweeners);
-            GUILayout.Label("Sequences Capacity: " + TweenManager.maxSequences);
+            _strBuilder.Remove(0, _strBuilder.Length);
+            _strBuilder.Append("Tweens Capacity: ").Append(TweenManager.maxTweeners).Append("/").Append(TweenManager.maxSequences)
+                .Append("\nMax Simultaneous Active Tweens: ").Append(DOTween.maxActiveTweenersReached).Append("/").Append(DOTween.maxActiveSequencesReached);
+            GUILayout.Label(_strBuilder.ToString());
             GUILayout.Space(8);
         }
     }
