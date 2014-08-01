@@ -37,12 +37,8 @@ namespace DG.Tweening
         public float timeScale;
         /// <summary>If TRUE the tween wil go backwards</summary>
         public bool isBackwards;
-        /// <summary>Int id (usable for filtering with DOTween static methods)</summary>
-        public int id = -1;
-        /// <summary>String id (usable for filtering with DOTween static methods)</summary>
-        public string stringId;
-        /// <summary>Object id (usable for filtering with DOTween static methods)</summary>
-        public object objId;
+        /// <summary>Id (usable for filtering with DOTween static methods). Can be an int, a string, an object, or anything else</summary>
+        public object id;
         // Update type (changed via TweenManager.SetUpdateType)
         internal UpdateType updateType;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
@@ -94,9 +90,7 @@ namespace DG.Tweening
         {
             timeScale = 1;
             isBackwards = false;
-            id = -1;
-            stringId = null;
-            objId = null;
+            id = null;
             updateType = UpdateType.Default;
             onStart = onComplete = onStepComplete = null;
 

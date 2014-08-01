@@ -394,7 +394,7 @@ namespace DG.Tweening.Core
         }
 
         internal static int FilteredOperation(
-            OperationType operationType, FilterType filterType, int id, string stringId, object objId,
+            OperationType operationType, FilterType filterType, object id,
             bool optionalBool, float optionalFloat
         ){
             int totInvolved = 0;
@@ -409,13 +409,7 @@ namespace DG.Tweening.Core
                     isFilterCompliant = true;
                     break;
                 case FilterType.Id:
-                    isFilterCompliant = t.id == id;
-                    break;
-                case FilterType.StringId:
-                    isFilterCompliant = t.stringId == stringId;
-                    break;
-                case FilterType.ObjectId:
-                    isFilterCompliant = t.objId == objId;
+                    isFilterCompliant = id.Equals(t.id);
                     break;
                 }
                 if (isFilterCompliant) {

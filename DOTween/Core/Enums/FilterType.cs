@@ -24,8 +24,6 @@ namespace DG.Tweening.Core.Enums
     internal enum FilterType
     {
         All,
-        Id,
-        StringId,
-        ObjectId
+        Id
     }
 }

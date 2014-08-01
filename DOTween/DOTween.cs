@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.130";
+        public static readonly string Version = "0.7.150";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -475,77 +475,40 @@ namespace DG.Tweening
         /// (meaning tweens that don't have infinite loops and were not already complete)</summary>
         public static int Complete()
         {
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, null, false, 0);
         }
         /// <summary>Completes all tweens with the given ID and returns the number of actual tweens completed
         /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
-        public static int Complete(int id)
+        public static int Complete(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Completes all tweens with the given string ID and returns the number of actual tweens completed
-        /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
-        public static int Complete(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Completes all tweens with the given object ID and returns the number of actual tweens completed
-        /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
-        public static int Complete(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
         public static int Flip()
         {
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.All, null, false, 0);
         }
         /// <summary>Flips the tweens with the given ID (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
-        public static int Flip(int id)
+        public static int Flip(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Flips the tweens with the given string ID (changing their direction to forward if it was backwards and viceversa),
-        /// then returns the number of actual tweens flipped</summary>
-        public static int Flip(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Flips the tweens with the given object ID (changing their direction to forward if it was backwards and viceversa),
-        /// then returns the number of actual tweens flipped</summary>
-        public static int Flip(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         public static int Goto(float to, bool andPlay = false)
         {
-            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.All, -1, null, null, andPlay, to);
+            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.All, null, andPlay, to);
         }
         /// <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
-        public static int Goto(int id, float to, bool andPlay = false)
+        public static int Goto(object id, float to, bool andPlay = false)
         {
-            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.Id, id, null, null, andPlay, to);
-        }
-        /// <summary>Sends all tweens with the given string ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
-        public static int Goto(string stringId, float to, bool andPlay = false)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.StringId, -1, stringId, null, andPlay, to);
-        }
-        /// <summary>Sends all tweens with the given object ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
-        public static int Goto(object objId, float to, bool andPlay = false)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.ObjectId, -1, null, objId, andPlay, to);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.Id, id, andPlay, to);
         }
 
         /// <summary>Kills all tweens and returns the number of actual tweens killed</summary>
@@ -554,205 +517,105 @@ namespace DG.Tweening
             return TweenManager.DespawnAll();
         }
         /// <summary>Kills all tweens with the given ID and returns the number of actual tweens killed</summary>
-        public static int Kill(int id)
+        public static int Kill(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Kills all tweens with the given string ID and returns the number of actual tweens killed</summary>
-        public static int Kill(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Kills all tweens with the given object ID and returns the number of actual tweens killed</summary>
-        public static int Kill(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
         public static int Pause()
         {
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.All, null, false, 0);
         }
         /// <summary>Pauses all tweens with the given ID and returns the number of actual tweens paused
-        /// (meaning the tweens that were actually playing and have been paused)</summary>
-        public static int Pause(int id)
-        {
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Pauses all tweens with the given string ID and returns the number of actual tweens paused
         /// (meaning the tweens with the given id that were actually playing and have been paused)</summary>
-        public static int Pause(string stringId)
+        public static int Pause(object id)
         {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Pauses all tweens with the given object ID and returns the number of actual tweens paused
-        /// (meaning the tweens with the given id that were actually playing and have been paused)</summary>
-        public static int Pause(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Plays all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already playing or complete)</summary>
         public static int Play()
         {
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.All, null, false, 0);
         }
         /// <summary>Plays all tweens with the given ID and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing or complete)</summary>
-        public static int Play(int id)
+        public static int Play(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Plays all tweens with the given string ID and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing or complete)</summary>
-        public static int Play(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Plays all tweens with the given object ID and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing or complete)</summary>
-        public static int Play(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
         /// (meaning tweens that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards()
         {
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, null, false, 0);
         }
         /// <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
-        public static int PlayBackwards(int id)
+        public static int PlayBackwards(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Plays all tweens with the given string ID in backwards direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
-        public static int PlayBackwards(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Plays all tweens with the given object ID in backwards direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
-        public static int PlayBackwards(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Plays all tweens in forward direction and returns the number of actual tweens played
         /// (meaning tweens that were not already playing forward or complete)</summary>
         public static int PlayForward()
         {
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, null, false, 0);
         }
         /// <summary>Plays all tweens with the given ID in forward direction and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
-        public static int PlayForward(int id)
+        public static int PlayForward(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Plays all tweens with the given string ID in forward direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
-        public static int PlayForward(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Plays all tweens with the given object ID in forward direction and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
-        public static int PlayForward(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.Id, id, false, 0);
         }
 
         /// <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
         public static int Restart(bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.All, -1, null, null, includeDelay, 0);
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.All, null, includeDelay, 0);
         }
         /// <summary>Restarts all tweens with the given ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(int id, bool includeDelay = true)
+        public static int Restart(object id, bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.Id, id, null, null, includeDelay, 0);
-        }
-        /// <summary>Restarts all tweens with the given string ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(string stringId, bool includeDelay = true)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.StringId, -1, stringId, null, includeDelay, 0);
-        }
-        /// <summary>Restarts all tweens with the given object ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(object objId, bool includeDelay = true)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.ObjectId, -1, null, objId, includeDelay, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.Id, id, includeDelay, 0);
         }
 
         /// <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
         /// (meaning tweens that were not already rewinded)</summary>
         public static int Rewind(bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.All, -1, null, null, includeDelay, 0);
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.All, null, includeDelay, 0);
         }
         /// <summary>Rewinds and pauses all tweens with the given ID, then returns the number of actual tweens rewinded
         /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(int id, bool includeDelay = true)
+        public static int Rewind(object id, bool includeDelay = true)
         {
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.Id, id, null, null, includeDelay, 0);
-        }
-        /// <summary>Rewinds and pauses all tweens with the given string ID, then returns the number of actual tweens rewinded
-        /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(string stringId, bool includeDelay = true)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.StringId, -1, stringId, null, includeDelay, 0);
-        }
-        /// <summary>Rewinds and pauses all tweens with the given object ID, then returns the number of actual tweens rewinded
-        /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(object objId, bool includeDelay = true)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.ObjectId, -1, null, objId, includeDelay, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.Id, id, includeDelay, 0);
         }
 
         /// <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
         /// (meaning tweens that could be played or paused, depending on the toggle state)</summary>
         public static int TogglePause()
         {
-            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.All, -1, null, null, false, 0);
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.All, null, false, 0);
         }
         /// <summary>Toggles the play state of all tweens with the given ID and returns the number of actual tweens toggled
         /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
-        public static int TogglePause(int id)
+        public static int TogglePause(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.Id, id, null, null, false, 0);
-        }
-        /// <summary>Toggles the play state of all tweens with the given string ID and returns the number of actual tweens toggled
-        /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
-        public static int TogglePause(string stringId)
-        {
-            if (stringId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.StringId, -1, stringId, null, false, 0);
-        }
-        /// <summary>Toggles the play state of all tweens with the given object ID and returns the number of actual tweens toggled
-        /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
-        public static int TogglePause(object objId)
-        {
-            if (objId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.ObjectId, -1, null, objId, false, 0);
+            if (id == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.Id, id, false, 0);
         }
 
         // ===================================================================================
