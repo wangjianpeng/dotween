@@ -28,7 +28,7 @@ using UnityEngine;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Represents a tween of a single field or property
+    /// Animates a single value
     /// </summary>
     public abstract class Tweener : Tween
     {

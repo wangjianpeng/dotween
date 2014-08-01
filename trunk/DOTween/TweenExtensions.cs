@@ -27,9 +27,9 @@ using UnityEngine;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Miscellaneous extensions
+    /// Methods that extend Tween objects and allow to control or get data from them
     /// </summary>
-    public static class Extensions
+    public static class TweenExtensions
     {
         // ===================================================================================
         // TWEENERS + SEQUENCES --------------------------------------------------------------

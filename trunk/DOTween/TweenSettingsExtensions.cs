@@ -30,9 +30,9 @@ using UnityEngine;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Extensions for the creation of tweens
+    /// Methods that extend Tween objects and allow to set their parameters
     /// </summary>
-    public static class TweenCreationExtensions
+    public static class TweenSettingsExtensions
     {
         // ===================================================================================
         // TWEENER + SEQUENCES ---------------------------------------------------------------

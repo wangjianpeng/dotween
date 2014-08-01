@@ -7,9 +7,9 @@ using UnityEngine;
 namespace DG.Tweening
 {
     /// <summary>
-    /// Extensions for creating tweens via various shortcuts
+    /// Methods that extend known Unity objects and allow to directly create and control tweens from their instances
     /// </summary>
-    public static class ShortcutsExtensions
+    public static class ShortcutExtensions
     {
         // ===================================================================================
         // CREATION SHORTCUTS ----------------------------------------------------------------
