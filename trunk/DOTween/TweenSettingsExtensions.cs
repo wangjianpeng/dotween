@@ -49,30 +49,10 @@ namespace DG.Tweening
         }
 
         /// <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        /// <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
         public static T SetId<T>(this T t, object id) where T : Tween
         {
-            t.objId = id;
-            return t;
-        }
-        /// <summary>Sets an int ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
-        public static T SetId<T>(this T t, int id) where T : Tween
-        {
             t.id = id;
-            return t;
-        }
-        /// <summary>Sets a string ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
-        public static T SetId<T>(this T t, string id) where T : Tween
-        {
-            t.stringId = id;
-            return t;
-        }
-        /// <summary>Resets all ID types for this tween</summary>
-        public static T SetId<T>(this T t) where T : Tween
-        {
-            // Reset all ids
-            t.id = -1;
-            t.stringId = null;
-            t.objId = null;
             return t;
         }
 
@@ -132,8 +112,6 @@ namespace DG.Tweening
 //            target.isFrom = asTweener.isFrom;
             target.autoKill = asTweener.autoKill;
             target.timeScale = asTweener.timeScale;
-            target.objId = asTweener.objId;
-            target.stringId = asTweener.stringId;
             target.id = asTweener.id;
             target.onStart = asTweener.onStart;
             target.onStepComplete = asTweener.onStepComplete;
