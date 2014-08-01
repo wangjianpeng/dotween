@@ -1,4 +1,5 @@
-﻿using Holoville.DebugFramework.Components;
+﻿using DG.Tweening;
+using Holoville.DebugFramework.Components;
 using UnityEngine;
 
 public class BrainBase : MonoBehaviour 
@@ -15,5 +16,7 @@ public class BrainBase : MonoBehaviour
 		fpsGadget = fpsGadgetGo.AddComponent<HOFpsGadget>();
 		if (forceFrameRate) fpsGadget.limitFrameRate = forcedFrameRate;
 		fpsGadget.showMemory = true;
+
+		DOTween.showUnityEditorReport = true;
 	}
 }

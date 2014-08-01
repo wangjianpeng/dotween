@@ -36,16 +36,19 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.125";
+        public static readonly string Version = "0.7.130";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
 
-        /// <summary>
-        /// If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
-        /// (like targets becoming null while a tween is playing)
-        /// </summary>
-        public static bool useSafeMode;
+        /// <summary>If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
+        /// (like targets becoming null while a tween is playing)</summary>
+        public static bool useSafeMode = false;
+        /// <summary>If TRUE you will get a DOTween report when exiting play mode (only in the Editor).
+        /// Useful to know how many max tween you had active and optimize your final project accordingly.
+        /// Beware, this will slightly slow down your tweens while inside Unity Editor.
+        /// <para>Default: FALSE</para></summary>
+        public static bool showUnityEditorReport = false;
         /// <summary>Global DOTween timeScale</summary>
         public static float timeScale = 1;
         /// <summary>DOTween's log behaviour</summary>
@@ -69,6 +72,7 @@ namespace DG.Tweening
 
         internal static DOTween instance;
         internal static bool isUnityEditor;
+        internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
         static bool _initialized;
 
         // ===================================================================================
@@ -81,8 +85,24 @@ namespace DG.Tweening
 
         void Update()
         {
-            if (TweenManager.hasActiveTweens) TweenManager.Update(Time.deltaTime * timeScale, Time.unscaledDeltaTime * timeScale);
-            if (isUnityEditor) inspectorUpdater++;
+            if (TweenManager.hasActiveTweens) {
+                TweenManager.Update(Time.deltaTime * timeScale, Time.unscaledDeltaTime * timeScale);
+            }
+            if (isUnityEditor) {
+                inspectorUpdater++;
+                if (showUnityEditorReport && TweenManager.hasActiveTweens) {
+                    if (TweenManager.totActiveTweeners > maxActiveTweenersReached) maxActiveTweenersReached = TweenManager.totActiveTweeners;
+                    if (TweenManager.totActiveSequences > maxActiveSequencesReached) maxActiveSequencesReached = TweenManager.totActiveSequences;
+                }
+            }
+        }
+
+        void OnDestroy()
+        {
+            if (showUnityEditorReport) {
+                string s = "REPORT > Max overall simultaneous active Tweeners/Sequences: " + maxActiveTweenersReached + "/" + maxActiveSequencesReached;
+                Debugger.LogReport(s);
+            }
         }
 
         // ===================================================================================

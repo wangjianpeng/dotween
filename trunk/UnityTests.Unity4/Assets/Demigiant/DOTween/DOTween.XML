@@ -16,10 +16,14 @@
             <summary>DOTween's version</summary>
         </member>
         <member name="F:DG.Tweening.DOTween.useSafeMode">
-            <summary>
-            If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
-            (like targets becoming null while a tween is playing)
-            </summary>
+            <summary>If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
+            (like targets becoming null while a tween is playing)</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.showUnityEditorReport">
+            <summary>If TRUE you will get a DOTween report when exiting play mode (only in the Editor).
+            Useful to know how many max tween you had active and optimize your final project accordingly.
+            Beware, this will slightly slow down your tweens while inside Unity Editor.
+            <para>Default: FALSE</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.timeScale">
             <summary>Global DOTween timeScale</summary>

@@ -37,6 +37,7 @@ namespace DG.Tweening.Core
         internal static int maxSequences = _DefaultMaxSequences; // Always <= maxTweeners
         internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveIndependentTweens;
         internal static int totActiveTweens, totActiveDefaultTweens, totActiveIndependentTweens;
+        internal static int totActiveTweeners, totActiveSequences;
         internal static int totPooledTweeners, totPooledSequences;
         internal static int totTweeners, totSequences; // Both active and pooled
         internal static bool isUpdateLoop; // TRUE while an update cycle is running (used to treat direct tween Kills differently)
@@ -345,6 +346,7 @@ namespace DG.Tweening.Core
             ClearTweenArray(_activeTweens);
             hasActiveTweens = hasActiveDefaultTweens = hasActiveIndependentTweens = false;
             totActiveTweens = totActiveDefaultTweens = totActiveIndependentTweens = 0;
+            totActiveTweeners = totActiveSequences = 0;
             _maxActiveLookupId = _reorganizeFromId = -1;
             _requiresActiveReorganization = false;
 
@@ -487,6 +489,7 @@ namespace DG.Tweening.Core
             ClearTweenArray(_activeTweens);
             hasActiveTweens = hasActiveDefaultTweens = hasActiveIndependentTweens = false;
             totActiveTweens = totActiveDefaultTweens = totActiveIndependentTweens = 0;
+            totActiveTweeners = totActiveSequences = 0;
             _maxActiveLookupId = _reorganizeFromId = -1;
             _requiresActiveReorganization = false;
             PurgePools();
@@ -558,6 +561,8 @@ namespace DG.Tweening.Core
             hasActiveDefaultTweens = true;
             totActiveDefaultTweens++;
             totActiveTweens++;
+            if (t.tweenType == TweenType.Tweener) totActiveTweeners++;
+            else totActiveSequences++;
             hasActiveTweens = true;
         }
 
@@ -616,6 +621,8 @@ namespace DG.Tweening.Core
             }
             totActiveTweens--;
             hasActiveTweens = totActiveTweens > 0;
+            if (t.tweenType == TweenType.Tweener) totActiveTweeners--;
+            else totActiveSequences--;
         }
 
         static void ClearTweenArray(Tween[] tweens)
