@@ -45,7 +45,7 @@ namespace DG.Tweening
         /// (like targets becoming null while a tween is playing)</summary>
         public static bool useSafeMode = false;
         /// <summary>If TRUE you will get a DOTween report when exiting play mode (only in the Editor).
-        /// Useful to know how many max tween you had active and optimize your final project accordingly.
+        /// Useful to know how many max Tweeners and Sequences you reached and optimize your final project accordingly.
         /// Beware, this will slightly slow down your tweens while inside Unity Editor.
         /// <para>Default: FALSE</para></summary>
         public static bool showUnityEditorReport = false;
