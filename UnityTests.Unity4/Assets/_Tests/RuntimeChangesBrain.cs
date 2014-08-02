@@ -33,7 +33,7 @@ public class RuntimeChangesBrain : BrainBase
 		for (int i = 0; i < len; ++i) {
 			originalPos[i] = targets[i].position;
 			tweens[i] = targets[i].DOMove(Vector3.zero, durationToApply)
-				.SetLoops(-1, LoopType.Yoyo).SetEase(EaseType.OutQuint)
+				.SetLoops(-1, LoopType.Yoyo).SetEase(Ease.OutQuint)
 				.SetSpeedBased(speedBased)
 				.Pause();
 		}

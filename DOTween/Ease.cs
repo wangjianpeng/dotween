@@ -22,7 +22,7 @@
 #pragma warning disable 1591
 namespace DG.Tweening
 {
-    public enum EaseType
+    public enum Ease
     {
         Linear,
         InSine,
@@ -56,8 +56,8 @@ namespace DG.Tweening
         OutBounce,
         InOutBounce,
         /// <summary>
-        /// Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve
+        /// Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve or to a custom ease function
         /// </summary>
-        AnimationCurve
+        Custom
     }
 }

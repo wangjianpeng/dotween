@@ -293,11 +293,10 @@
             <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)">
+        <member name="M:DG.Tweening.DOTween.Sequence">
             <summary>
-            Returns a new <see cref="M:DG.Tweening.DOTween.Sequence(DG.Tweening.UpdateType)"/> to be used for tween groups
+            Returns a new <see cref="M:DG.Tweening.DOTween.Sequence"/> to be used for tween groups
             </summary>
-            <param name="updateType">The type of update to use</param>
         </member>
         <member name="M:DG.Tweening.DOTween.Clear">
             <summary>
@@ -546,25 +545,29 @@
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetDelay``1(``0,System.Single)">
             <summary>Sets a delayed startup for the tween.
-            Has no effect on Sequences or if the tween has already started</summary>
+            <para>Has no effect on Sequences or if the tween has already started</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRelative``1(``0,System.Boolean)">
             <summary>If isRelative is TRUE sets the tween as relative
             (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
-            Has no effect on Sequences or if the tween has already started</summary>
+            <para>Has no effect on Sequences or if the tween has already started</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetSpeedBased``1(``0,System.Boolean)">
             <summary>If isSpeedBased is TRUE sets the tween as speed based
             (the duration will represent the number of units the tween moves x second).
-            Has no effect on Sequences or if the tween has already started</summary>
+            <para>Has no effect on Sequences or if the tween has already started</para></summary>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.EaseType)">
-            <summary>Sets the ease the tween.
-            Has no effect on Sequences</summary>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease)">
+            <summary>Sets the ease of the tween.
+            <para>Has no effect on Sequences</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,UnityEngine.AnimationCurve)">
-            <summary>Sets the ease the tween using an AnimationCurve.
-            Has no effect on Sequences</summary>
+            <summary>Sets the ease of the tween using an AnimationCurve.
+            <para>Has no effect on Sequences</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Core.EaseFunction)">
+            <summary>Sets the ease of the tween using a custom ease function.
+            <para>Has no effect on Sequences</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single,System.Single,DG.Tweening.Plugins.Core.DefaultPlugins.Options.FloatOptions},System.Boolean)">
             <summary>Options for float tweens</summary>
@@ -1324,7 +1327,7 @@
         </member>
         <member name="T:DG.Tweening.Core.EaseFunction">
             <summary>
-            Used for animationCurve-based ease functions
+            Used for custom and animationCurve-based ease functions
             </summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Bounce">
@@ -1539,11 +1542,6 @@
             <returns>
             The eased value.
             </returns>
-        </member>
-        <member name="F:DG.Tweening.EaseType.AnimationCurve">
-            <summary>
-            Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve
-            </summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Linear">
             <summary>
@@ -1911,6 +1909,11 @@
         <member name="T:DG.Tweening.AxisConstraint">
             <summary>
             What axis to constrain in case of Vector tweens
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.Ease.Custom">
+            <summary>
+            Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve or to a custom ease function
             </summary>
         </member>
     </members>

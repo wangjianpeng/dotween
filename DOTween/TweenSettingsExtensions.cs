@@ -74,7 +74,7 @@ namespace DG.Tweening
 
         /// <summary>Sets the type of update (default or independent) for the tween</summary>
         /// <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
-        public static Tween SetUpdate<T>(this T t, UpdateType updateType) where T : Tween
+        public static T SetUpdate<T>(this T t, UpdateType updateType) where T : Tween
         {
             TweenManager.SetUpdateType(t, updateType);
             return t;
@@ -122,7 +122,7 @@ namespace DG.Tweening
             if (target.delay > 0) target.delayComplete = false;
             target.isRelative = asTweener.isRelative;
             target.easeType = asTweener.easeType;
-            target.easeCurveEval = asTweener.easeCurveEval;
+            target.customEase = asTweener.customEase;
 
             return target;
         }
@@ -227,7 +227,7 @@ namespace DG.Tweening
         // TWEENERS --------------------------------------------------------------------------
 
         /// <summary>Sets a delayed startup for the tween.
-        /// Has no effect on Sequences or if the tween has already started</summary>
+        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetDelay<T>(this T t, float delay) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -239,7 +239,7 @@ namespace DG.Tweening
 
         /// <summary>If isRelative is TRUE sets the tween as relative
         /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
-        /// Has no effect on Sequences or if the tween has already started</summary>
+        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetRelative<T>(this T t, bool isRelative = true) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -250,7 +250,7 @@ namespace DG.Tweening
 
         /// <summary>If isSpeedBased is TRUE sets the tween as speed based
         /// (the duration will represent the number of units the tween moves x second).
-        /// Has no effect on Sequences or if the tween has already started</summary>
+        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetSpeedBased<T>(this T t, bool isSpeedBased = true) where T : Tween
         {
             if (t.creationLocked) return t;
@@ -259,20 +259,28 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the ease the tween.
-        /// Has no effect on Sequences</summary>
-        public static T SetEase<T>(this T t, EaseType easeType) where T : Tween
+        /// <summary>Sets the ease of the tween.
+        /// <para>Has no effect on Sequences</para></summary>
+        public static T SetEase<T>(this T t, Ease ease) where T : Tween
         {
-            t.easeType = easeType;
-            t.easeCurveEval = null;
+            t.easeType = ease;
+            t.customEase = null;
             return t;
         }
-        /// <summary>Sets the ease the tween using an AnimationCurve.
-        /// Has no effect on Sequences</summary>
+        /// <summary>Sets the ease of the tween using an AnimationCurve.
+        /// <para>Has no effect on Sequences</para></summary>
         public static T SetEase<T>(this T t, AnimationCurve animCurve) where T : Tween
         {
-            t.easeType = EaseType.AnimationCurve;
-            t.easeCurveEval = new EaseCurve(animCurve).Evaluate;
+            t.easeType = Ease.Custom;
+            t.customEase = new EaseCurve(animCurve).Evaluate;
+            return t;
+        }
+        /// <summary>Sets the ease of the tween using a custom ease function.
+        /// <para>Has no effect on Sequences</para></summary>
+        public static T SetEase<T>(this T t, EaseFunction customEase) where T : Tween
+        {
+            t.easeType = Ease.Custom;
+            t.customEase = customEase;
             return t;
         }
 

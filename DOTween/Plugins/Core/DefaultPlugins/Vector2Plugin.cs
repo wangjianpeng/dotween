@@ -58,17 +58,17 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             switch (options.axisConstraint) {
             case AxisConstraint.X:
                 Vector2 resX = getter();
-                resX.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+                resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
                 if (options.snapping) resX.x = (float)Math.Round(resX.x);
                 return resX;
             case AxisConstraint.Y:
                 Vector2 resY = getter();
-                resY.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+                resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
                 if (options.snapping) resY.y = (float)Math.Round(resY.y);
                 return resY;
             default:
-                startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-                startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+                startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+                startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
                 if (options.snapping) {
                     startValue.x = (float)Math.Round(startValue.x);
                     startValue.y = (float)Math.Round(startValue.y);

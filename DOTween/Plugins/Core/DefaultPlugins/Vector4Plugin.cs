@@ -55,10 +55,10 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Vector4 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
         {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.z = Ease.Apply(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
-            startValue.w = Ease.Apply(t, elapsed, startValue.w, changeValue.w, duration, 0, 0);
+            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
+            startValue.w = EaseManager.Evaluate(t, elapsed, startValue.w, changeValue.w, duration, 0, 0);
             if (options.snapping) {
                 startValue.x = (float)Math.Round(startValue.x);
                 startValue.y = (float)Math.Round(startValue.y);

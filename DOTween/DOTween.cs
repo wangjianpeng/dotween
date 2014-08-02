@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.150";
+        public static readonly string Version = "0.7.155";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -62,7 +62,7 @@ namespace DG.Tweening
         // Default options for Tweens /////////////////
 
         /// <summary>Default ease applied to all new tweens</summary>
-        public static EaseType defaultEaseType = EaseType.InOutQuad;
+        public static Ease defaultEaseType = Ease.InOutQuad;
         /// <summary>Default loopType applied to all new tweens</summary>
         public static LoopType defaultLoopType = LoopType.Restart;
         /// <summary>Default autoPlay behaviour for new tweens</summary>
@@ -450,11 +450,10 @@ namespace DG.Tweening
         /// <summary>
         /// Returns a new <see cref="Sequence"/> to be used for tween groups
         /// </summary>
-        /// <param name="updateType">The type of update to use</param>
-        public static Sequence Sequence(UpdateType updateType = UpdateType.Default)
+        public static Sequence Sequence()
         {
             InitCheck();
-            Sequence sequence = TweenManager.GetSequence(updateType);
+            Sequence sequence = TweenManager.GetSequence();
             Tweening.Sequence.Setup(sequence);
             return sequence;
         }
