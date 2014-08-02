@@ -48,7 +48,7 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets a reference ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        /// <summary>Sets an ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
         /// <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
         public static T SetId<T>(this T t, object id) where T : Tween
         {

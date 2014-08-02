@@ -48,12 +48,14 @@ namespace DG.Tweening
 
         internal static Sequence DoPrepend(Sequence inSequence, Tween t)
         {
-            inSequence.duration += t.duration;
+            if (t.loops == -1) t.loops = 1;
+            float tFullTime = t.delay + (t.duration * t.loops);
+            inSequence.duration += tFullTime;
             int len = inSequence._sequencedObjs.Count;
             for (int i = 0; i < len; ++i) {
                 ABSSequentiable sequentiable = inSequence._sequencedObjs[i];
-                sequentiable.sequencedPosition += t.duration;
-                sequentiable.sequencedEndPosition += t.duration;
+                sequentiable.sequencedPosition += tFullTime;
+                sequentiable.sequencedEndPosition += tFullTime;
             }
 
             return DoInsert(inSequence, t, 0);
@@ -65,11 +67,12 @@ namespace DG.Tweening
 
             t.isSequenced = t.creationLocked = true;
             if (t.loops == -1) t.loops = 1;
+            float tFullTime = t.delay + (t.duration * t.loops);
             t.autoKill = false;
             t.delay = t.elapsedDelay = 0;
             t.delayComplete = true;
             t.sequencedPosition = atPosition;
-            t.sequencedEndPosition = t.sequencedPosition + (t.duration * t.loops);
+            t.sequencedEndPosition = t.sequencedPosition + tFullTime;
 
             if (t.sequencedEndPosition > inSequence.duration) inSequence.duration = t.sequencedEndPosition;
             inSequence._sequencedObjs.Add(t);
