@@ -37,7 +37,7 @@ namespace DG.Tweening.Core
     public delegate void TweenCallback();
 
     /// <summary>
-    /// Used for animationCurve-based ease functions
+    /// Used for custom and animationCurve-based ease functions
     /// </summary>
     public delegate float EaseFunction(float time, float startValue, float changeValue, float duration, float overshootOrAmplitude, float period);
 }

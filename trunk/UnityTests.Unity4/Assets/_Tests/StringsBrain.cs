@@ -15,20 +15,20 @@ public class StringsBrain : BrainBase
 	void Start()
 	{
 		// String
-		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
-		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
-		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
 		// String scramble
-		DOTween.To(()=> stringToTween3, x=> stringToTween3 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
-		DOTween.To(()=> stringToTween4, x=> stringToTween4 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
-		DOTween.To(()=> stringToTween5, x=> stringToTween5 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween3, x=> stringToTween3 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween4, x=> stringToTween4 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+		DOTween.To(()=> stringToTween5, x=> stringToTween5 = x, "Hello I'm a new string!", 1.5f).SetOptions(true).SetRelative().SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
 
 		// Additional string
 		strings = new string[500];
 		for (int i = 0; i < strings.Length; ++i) {
 			int index = i;
 			strings[i] = "Some String";
-			DOTween.To(()=> strings[index], x=> strings[index] = x, "Modified string", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
+			DOTween.To(()=> strings[index], x=> strings[index] = x, "Modified string", 1.5f).SetEase(Ease.InOutQuad).SetLoops(-1, LoopType.Yoyo).Pause();
 		}
 	}
 

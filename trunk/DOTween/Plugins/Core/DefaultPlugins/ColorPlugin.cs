@@ -53,16 +53,16 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
         public override Color Evaluate(ColorOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
         {
             if (!options.alphaOnly) {
-                startValue.r = Ease.Apply(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
-                startValue.g = Ease.Apply(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
-                startValue.b = Ease.Apply(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
-                startValue.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
+                startValue.r = EaseManager.Evaluate(t, elapsed, startValue.r, changeValue.r, duration, 0, 0);
+                startValue.g = EaseManager.Evaluate(t, elapsed, startValue.g, changeValue.g, duration, 0, 0);
+                startValue.b = EaseManager.Evaluate(t, elapsed, startValue.b, changeValue.b, duration, 0, 0);
+                startValue.a = EaseManager.Evaluate(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
                 return startValue;
             }
 
             // Alpha only
             Color res = getter();
-            res.a = Ease.Apply(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
+            res.a = EaseManager.Evaluate(t, elapsed, startValue.a, changeValue.a, duration, 0, 0);
             return res;
         }
     }

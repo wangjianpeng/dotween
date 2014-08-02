@@ -63,7 +63,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
-            int len = (int)Math.Round(Ease.Apply(t, elapsed, 0, changeValueLen, duration, 0, 0));
+            int len = (int)Math.Round(EaseManager.Evaluate(t, elapsed, 0, changeValueLen, duration, 0, 0));
 
             if (isRelative) {
                 _Buffer.Append(startValue);

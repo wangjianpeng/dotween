@@ -195,7 +195,7 @@ public class TweenEnginesComparison : BrainBase
 	void SetupTweens()
 	{
 		// Ease
-		DG.Tweening.EaseType dotweenEase = easing == Easing.Linear ? DG.Tweening.EaseType.Linear : DG.Tweening.EaseType.InOutQuad;
+		DG.Tweening.Ease dotweenEase = easing == Easing.Linear ? DG.Tweening.Ease.Linear : DG.Tweening.Ease.InOutQuad;
 		Holoville.HOTween.EaseType hotweenEase = easing == Easing.Linear ? Holoville.HOTween.EaseType.Linear : Holoville.HOTween.EaseType.EaseInOutQuad;
 		LeanTweenType leanEase = easing == Easing.Linear ? LeanTweenType.linear : LeanTweenType.easeInOutQuad;
 		GoEaseType goEase = easing == Easing.Linear ? GoEaseType.Linear : GoEaseType.QuadInOut;
@@ -365,17 +365,17 @@ public class TweenEnginesComparison : BrainBase
 		}
 	}
 
-	void EmitDOTweenPositionFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
+	void EmitDOTweenPositionFor(Transform t, Vector3 to, float twDuration, DG.Tweening.Ease ease)
 	{
 		t.position = Vector3.zero;
 		t.DOMove(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenPositionFor(t, to, twDuration, ease));
 	}
-	void EmitDOTweenRotationFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
+	void EmitDOTweenRotationFor(Transform t, Vector3 to, float twDuration, DG.Tweening.Ease ease)
 	{
 		t.rotation = Quaternion.identity;
 		t.DORotate(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenRotationFor(t, to, twDuration, ease));
 	}
-	void EmitDOTweenScaleFor(Transform t, Vector3 to, float twDuration, DG.Tweening.EaseType ease)
+	void EmitDOTweenScaleFor(Transform t, Vector3 to, float twDuration, DG.Tweening.Ease ease)
 	{
 		t.localScale = Vector3.one;
 		t.DOScale(to, twDuration).SetEase(ease).OnComplete(()=> EmitDOTweenScaleFor(t, to, twDuration, ease));

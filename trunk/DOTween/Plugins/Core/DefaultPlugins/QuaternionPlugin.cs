@@ -54,9 +54,9 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Quaternion Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<Quaternion> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
-            startValue.x = Ease.Apply(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = Ease.Apply(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.z = Ease.Apply(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
+            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+            startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
             return Quaternion.Euler(startValue);
         }
     }

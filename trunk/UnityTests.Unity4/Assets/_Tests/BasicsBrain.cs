@@ -38,14 +38,14 @@ public class BasicsBrain : BrainBase
 			switch (i) {
 			case 0:
 				default:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetUpdate(UpdateType.Independent);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetUpdate(UpdateType.Independent);
 				break;
 			case 1:
 				// Red cube (rotation)
-				tweens[i] = DOTween.To(()=> t.rotation, x=> t.rotation = x, toRotation, 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false);
+				tweens[i] = DOTween.To(()=> t.rotation, x=> t.rotation = x, toRotation, 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false);
 				break;
 			case 2:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetOptions(true).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetOptions(true).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo);
 				break;
 			}
 			Tween tween = tweens[i];
@@ -67,29 +67,29 @@ public class BasicsBrain : BrainBase
 		}
 		// Additional tweens //////////////////////////
 		// Float
-		DOTween.To(()=> floatToTween, x=> floatToTween = x, 100, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> floatToTween, x=> floatToTween = x, 100, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Int
-		DOTween.To(()=> intToTween, x=> intToTween = x, 100, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> intToTween, x=> intToTween = x, 100, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Uint
-		DOTween.To(()=> uintToTween, x=> uintToTween = x, 50, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> uintToTween, x=> uintToTween = x, 50, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Vector2
-		DOTween.To(()=> vector2toTween, x=> vector2toTween = x, new Vector2(50,100), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> vector2toTween, x=> vector2toTween = x, new Vector2(50,100), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Vector4
-		DOTween.To(()=> vector4toTween, x=> vector4toTween = x, new Vector4(50,100,150,200), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> vector4toTween, x=> vector4toTween = x, new Vector4(50,100,150,200), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Rect
-		DOTween.To(()=> rectToTween, x=> rectToTween = x, new Rect(10, 20, 50, 100), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> rectToTween, x=> rectToTween = x, new Rect(10, 20, 50, 100), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// RectOffset
-		DOTween.To(()=> rectOffsetToTween, x=> rectOffsetToTween = x, new RectOffset(10, 20, 50, 100), 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> rectOffsetToTween, x=> rectOffsetToTween = x, new RectOffset(10, 20, 50, 100), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Color
-		DOTween.To(()=> guiTexColor.color, x=> guiTexColor.color = x, Color.green, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> guiTexColor.color, x=> guiTexColor.color = x, Color.green, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// Alpha
-		DOTween.ToAlpha(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.ToAlpha(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String
-		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String
-		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 		// String (relative)
-		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetRelative().SetEase(EaseType.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
+		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, LoopType.Yoyo).SetAutoKill(false).Pause();
 	}
 
 	void LateUpdate()

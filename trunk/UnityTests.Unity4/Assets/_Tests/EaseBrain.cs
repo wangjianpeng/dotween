@@ -10,7 +10,7 @@ public class EaseBrain : BrainBase
 	void Start()
 	{
 		// Create a tween for each easeType
-		int totTypes = Enum.GetNames(typeof(EaseType)).Length;
+		int totTypes = Enum.GetNames(typeof(Ease)).Length;
 		const int distX = 2;
 		const int distY = 6;
 		const int totCols = 10;
@@ -26,8 +26,8 @@ public class EaseBrain : BrainBase
 				gridCount.x = 0;
 			}
 			Tween tween = t.DOMoveY(2, 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
-			EaseType easeType = (EaseType)i;
-			if (easeType == EaseType.AnimationCurve) tween.SetEase(easeCurve);
+			Ease easeType = (Ease)i;
+			if (easeType == Ease.Custom) tween.SetEase(easeCurve);
 			else tween.SetEase(easeType);
 		}
 	}

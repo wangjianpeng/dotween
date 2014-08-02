@@ -40,9 +40,9 @@ public class PlatformCompatibilityTest : MonoBehaviour
 		foreach (Transform trans in ts) {
 			Transform t = trans;
 			seq.Insert(0, t.DOScale(Vector3.one * 0.5f, 1f));
-			seq.Insert(0, t.DOLocalMove(t.position * 8, 1f).SetEase(EaseType.InQuint));
+			seq.Insert(0, t.DOLocalMove(t.position * 8, 1f).SetEase(Ease.InQuint));
 			seq.Insert(1, t.DOScale(Vector3.one * 0.5f, 1f));
-			seq.Insert(1, t.DOLocalMove(t.position, 1f).SetEase(EaseType.OutQuint));
+			seq.Insert(1, t.DOLocalMove(t.position, 1f).SetEase(Ease.OutQuint));
 		}
 
 		// Create success tween

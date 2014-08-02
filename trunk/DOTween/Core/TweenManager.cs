@@ -109,7 +109,7 @@ namespace DG.Tweening.Core
 
         // Returns a new Sequence, from the pool if there's one available,
         // otherwise by instantiating a new one
-        internal static Sequence GetSequence(UpdateType updateType)
+        internal static Sequence GetSequence()
         {
             Sequence s;
             if (totPooledSequences > 0) {

@@ -31,7 +31,7 @@ public class SequencesExperimentsBrain : BrainBase
 		// Create sequence
 		const float duration = 1f;
 		const float delay = 1;
-		const EaseType easeType = EaseType.InCubic;
+		const Ease easeType = Ease.InCubic;
 		Sequence seq = DOTween.Sequence().SetLoops(-1, LoopType.Yoyo).OnStepComplete(()=> Debug.Log("MultiCube :: Step Complete"));
 		seq.AppendInterval(delay);
 		seq.Insert(delay + (duration * 0.25f), multiCube.DORotate(new Vector3(0,450,45), (duration * 0.75f)).SetEase(easeType));
