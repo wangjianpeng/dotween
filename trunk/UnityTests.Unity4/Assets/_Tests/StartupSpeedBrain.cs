@@ -14,7 +14,7 @@ public class StartupSpeedBrain : BrainBase
 
 	void Start()
 	{
-		DOTween.Init(true, false, LogBehaviour.ErrorsOnly);
+		DOTween.Init(false, LogBehaviour.ErrorsOnly);
 		DOTween.SetTweensCapacity(maxIterations, 0);
 
 		Transform container = new GameObject("Container").transform;
