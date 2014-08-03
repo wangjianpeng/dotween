@@ -9,7 +9,7 @@ public class PoolingBrain : BrainBase
 
 	void Start()
 	{
-		DOTween.Init(true, false, LogBehaviour.Verbose);
+		DOTween.Init(false, LogBehaviour.Verbose);
 		spawnsParent = new GameObject("Spawn Container").transform;
 	}
 
