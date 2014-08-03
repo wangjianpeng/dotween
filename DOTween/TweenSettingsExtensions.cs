@@ -106,23 +106,23 @@ namespace DG.Tweening
 
         /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
         /// (doesn't copy specific SetOptions settings: those will need to be applied manually each time)</summary>
-        /// <param name="asTweener">Tweener from which to copy the parameters</param>
-        public static Tween SetAs(this Tween target, Tween asTweener)
+        /// <param name="asTween">Tween from which to copy the parameters</param>
+        public static T SetAs<T>(this T target, Tween asTween) where T : Tween
         {
-//            target.isFrom = asTweener.isFrom;
-            target.autoKill = asTweener.autoKill;
-            target.timeScale = asTweener.timeScale;
-            target.id = asTweener.id;
-            target.onStart = asTweener.onStart;
-            target.onStepComplete = asTweener.onStepComplete;
-            target.onComplete = asTweener.onComplete;
-            target.loops = asTweener.loops;
-            target.loopType = asTweener.loopType;
-            target.delay = asTweener.delay;
+//            target.isFrom = asTween.isFrom;
+            target.autoKill = asTween.autoKill;
+            target.timeScale = asTween.timeScale;
+            target.id = asTween.id;
+            target.onStart = asTween.onStart;
+            target.onStepComplete = asTween.onStepComplete;
+            target.onComplete = asTween.onComplete;
+            target.loops = asTween.loops;
+            target.loopType = asTween.loopType;
+            target.delay = asTween.delay;
             if (target.delay > 0) target.delayComplete = false;
-            target.isRelative = asTweener.isRelative;
-            target.easeType = asTweener.easeType;
-            target.customEase = asTweener.customEase;
+            target.isRelative = asTween.isRelative;
+            target.easeType = asTween.easeType;
+            target.customEase = asTween.customEase;
 
             return target;
         }

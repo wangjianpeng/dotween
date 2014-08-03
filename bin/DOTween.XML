@@ -494,10 +494,10 @@
             <summary>Sets the onComplete callback for the tween
             (called the moment the tween reaches completion, loops included)</summary>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs(DG.Tweening.Tween,DG.Tweening.Tween)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs``1(``0,DG.Tweening.Tween)">
             <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
             (doesn't copy specific SetOptions settings: those will need to be applied manually each time)</summary>
-            <param name="asTweener">Tweener from which to copy the parameters</param>
+            <param name="asTween">Tween from which to copy the parameters</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
             <summary>Adds the given tween to the end of the Sequence. 
@@ -1047,16 +1047,16 @@
             <summary>Returns the total number of loops completed by this tween</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Position(DG.Tweening.Tween)">
-            <summary>Returns the current position of this tween (inside a single loop cycle)</summary>
+            <summary>Returns the current position of this tween (inside a single loop cycle and excluding delays)</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Duration(DG.Tweening.Tween)">
-            <summary>Returns the duration of this tween</summary>
+            <summary>Returns the duration of this tween (loops and delays excluded)</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.FullDuration(DG.Tweening.Tween)">
             <summary>Returns the full duration (loops included) of this tween</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Elapsed(DG.Tweening.Tween)">
-            <summary>Returns the total elapsed time for this tween</summary>
+            <summary>Returns the total elapsed time for this tween (delays exluded)</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsActive(DG.Tweening.Tween)">
             <summary>Returns FALSE if this tween has been killed</summary>

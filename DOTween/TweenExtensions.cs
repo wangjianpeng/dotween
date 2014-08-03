@@ -259,13 +259,13 @@ namespace DG.Tweening
             return t.completedLoops;
         }
 
-        /// <summary>Returns the current position of this tween (inside a single loop cycle)</summary>
+        /// <summary>Returns the current position of this tween (inside a single loop cycle and excluding delays)</summary>
         public static float Position(this Tween t)
         {
             return t.position;
         }
 
-        /// <summary>Returns the duration of this tween</summary>
+        /// <summary>Returns the duration of this tween (loops and delays excluded)</summary>
         public static float Duration(this Tween t)
         {
             return t.duration;
@@ -277,7 +277,7 @@ namespace DG.Tweening
             return t.fullDuration;
         }
 
-        /// <summary>Returns the total elapsed time for this tween</summary>
+        /// <summary>Returns the total elapsed time for this tween (delays exluded)</summary>
         public static float Elapsed(this Tween t)
         {
             int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
