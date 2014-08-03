@@ -40,16 +40,12 @@
         <member name="F:DG.Tweening.DOTween.defaultAutoKill">
             <summary>Default autoKillOnComplete behaviour for new tweens</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Init(System.Boolean,System.Boolean,DG.Tweening.LogBehaviour)">
+        <member name="M:DG.Tweening.DOTween.Init(System.Boolean,DG.Tweening.LogBehaviour)">
             <summary>
             Must be called once, before the first ever DOTween call/reference,
             otherwise it will be called automatically and will use default options.
             Calling it a second time won't have any effect.
             </summary>
-            <param name="autoKill">All newly created tweens will have their autoKill property set accordingly
-            (TRUE: they are automatically killed when complete, FALSE: you will need to kill them manually).
-            You can change this setting at any time by changing the <see cref="F:DG.Tweening.DOTween.defaultAutoKill"/> property.
-            Default: TRUE</param>
             <param name="useSafeMode">If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
             (like targets becoming null while a tween is playing).
             You can change this setting at any time by changing the <see cref="F:DG.Tweening.DOTween.useSafeMode"/> property.
@@ -300,7 +296,7 @@
         </member>
         <member name="M:DG.Tweening.DOTween.Clear">
             <summary>
-            Kills all tweens and clears the pools containing eventually cached tweens
+            Kills all tweens, clears all pools and resets the max Tweeners/Sequences capacities to the default values.
             </summary>
         </member>
         <member name="M:DG.Tweening.DOTween.Complete">
@@ -1007,21 +1003,21 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.WaitForCompletion(DG.Tweening.Tween)">
             <summary>
-            A coroutine that waits until the tween is killed or complete.
+            Creates a yield instruction that waits until the tween is killed or complete.
             It can be used inside a coroutine as a yield.
             <para>Example usage:</para><code>yield return myTween.WaitForCompletion();</code>
             </summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.WaitForKill(DG.Tweening.Tween)">
             <summary>
-            A coroutine that waits until the tween is killed.
+            Creates a yield instruction that waits until the tween is killed.
             It can be used inside a coroutine as a yield.
             <para>Example usage:</para><code>yield return myTween.WaitForKill();</code>
             </summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.WaitForElapsedLoops(DG.Tweening.Tween,System.Int32)">
             <summary>
-            A coroutine that waits until the tween is killed or has gone through the given amount of loops.
+            Creates a yield instruction that waits until the tween is killed or has gone through the given amount of loops.
             It can be used inside a coroutine as a yield.
             <para>Example usage:</para><code>yield return myTween.WaitForElapsedLoops(2);</code>
             </summary>
@@ -1029,7 +1025,7 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.WaitForPosition(DG.Tweening.Tween,System.Single)">
             <summary>
-            A coroutine that waits until the tween is killed or has reached the given position (loops included, delays excluded).
+            Creates a yield instruction that waits until the tween is killed or has reached the given position (loops included, delays excluded).
             It can be used inside a coroutine as a yield.
             <para>Example usage:</para><code>yield return myTween.WaitForPosition(2.5f);</code>
             </summary>
@@ -1037,7 +1033,7 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.WaitForStart(DG.Tweening.Tween)">
             <summary>
-            A coroutine that waits until the tween is killed or started
+            Creates a yield instruction that waits until the tween is killed or started
             (meaning when the tween is set in a playing state the first time, after any eventual delay).
             It can be used inside a coroutine as a yield.
             <para>Example usage:</para><code>yield return myTween.WaitForStart();</code>

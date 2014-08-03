@@ -146,10 +146,6 @@ namespace DG.Tweening
         /// otherwise it will be called automatically and will use default options.
         /// Calling it a second time won't have any effect.
         /// </summary>
-        /// <param name="autoKill">All newly created tweens will have their autoKill property set accordingly
-        /// (TRUE: they are automatically killed when complete, FALSE: you will need to kill them manually).
-        /// You can change this setting at any time by changing the <see cref="DOTween.defaultAutoKill"/> property.
-        /// Default: TRUE</param>
         /// <param name="useSafeMode">If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
         /// (like targets becoming null while a tween is playing).
         /// You can change this setting at any time by changing the <see cref="DOTween.useSafeMode"/> property.
@@ -157,14 +153,13 @@ namespace DG.Tweening
         /// <param name="logBehaviour">Type of logging to use.
         /// You can change this setting at any time by changing the <see cref="DOTween.logBehaviour"/> property.
         /// Default: Default</param>
-        public static void Init(bool autoKill = true, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
+        public static void Init(bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
         {
             if (_initialized) return;
 
             _initialized = true;
             isUnityEditor = Application.isEditor;
             // Options
-            DOTween.defaultAutoKill = autoKill;
             DOTween.useSafeMode = useSafeMode;
             DOTween.logBehaviour = logBehaviour;
             // Gameobject
@@ -172,7 +167,7 @@ namespace DG.Tweening
             DontDestroyOnLoad(go);
             instance = go.AddComponent<DOTween>();
             // Log
-            if (Debugger.logPriority >= 2) Debugger.Log("DOTween initialization (defaultAutoKill: " + autoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
+            if (Debugger.logPriority >= 2) Debugger.Log("DOTween initialization (useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
         }
 
         /// <summary>
@@ -462,7 +457,7 @@ namespace DG.Tweening
         // OTHER STUFF //////////////////////////////////////////////////////
 
         /// <summary>
-        /// Kills all tweens and clears the pools containing eventually cached tweens
+        /// Kills all tweens, clears all pools and resets the max Tweeners/Sequences capacities to the default values.
         /// </summary>
         public static void Clear()
         {
@@ -625,7 +620,7 @@ namespace DG.Tweening
             if (_initialized) return;
 
             Init();
-            Debugger.LogWarning("DOTween auto-initialized with default settings (defaultAutoKill: " + defaultAutoKill + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
+            Debugger.LogWarning("DOTween auto-initialized with default settings (useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
         }
 
         // Tweens a property using default plugins with options
