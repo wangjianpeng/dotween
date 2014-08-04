@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class TweenEnginesComparison : BrainBase
+public class TweenEnginesComparisonInternal : BrainBase
 {
 	enum State {
 		Menu,

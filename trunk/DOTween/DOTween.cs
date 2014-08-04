@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.160";
+        public static readonly string Version = "0.7.165";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -459,10 +459,26 @@ namespace DG.Tweening
         /// <summary>
         /// Kills all tweens, clears all pools and resets the max Tweeners/Sequences capacities to the default values.
         /// </summary>
-        public static void Clear()
+        /// <param name="destroy">If TRUE also destroys DOTween's gameObject and resets its initializiation, default settings and everything else
+        /// (so that next time you use it it will need to be re-initialized)</param>
+        public static void Clear(bool destroy = false)
         {
             TweenManager.PurgeAll();
             PluginsManager.PurgeAll();
+            if (!destroy) return;
+
+            _initialized = false;
+            useSafeMode = false;
+            showUnityEditorReport = false;
+            timeScale = 1;
+            logBehaviour = LogBehaviour.Default;
+            defaultEaseType = Ease.OutQuad;
+            defaultAutoPlay = AutoPlay.All;
+            defaultLoopType = LoopType.Restart;
+            defaultAutoKill = true;
+            maxActiveTweenersReached = maxActiveSequencesReached = 0;
+
+            Destroy(instance.gameObject);
         }
 
         /// <summary>Completes all tweens and returns the number of actual tweens completed

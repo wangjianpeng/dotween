@@ -294,10 +294,12 @@
             Returns a new <see cref="M:DG.Tweening.DOTween.Sequence"/> to be used for tween groups
             </summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Clear">
+        <member name="M:DG.Tweening.DOTween.Clear(System.Boolean)">
             <summary>
             Kills all tweens, clears all pools and resets the max Tweeners/Sequences capacities to the default values.
             </summary>
+            <param name="destroy">If TRUE also destroys DOTween's gameObject and resets its initializiation, default settings and everything else
+            (so that next time you use it it will need to be re-initialized)</param>
         </member>
         <member name="M:DG.Tweening.DOTween.Complete">
             <summary>Completes all tweens and returns the number of actual tweens completed

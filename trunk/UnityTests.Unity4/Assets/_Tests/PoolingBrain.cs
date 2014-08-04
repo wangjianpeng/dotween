@@ -79,6 +79,7 @@ public class PoolingBrain : BrainBase
 	    if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
 	    if (GUILayout.Button("Kill")) DOTween.Kill();
 	    if (GUILayout.Button("Clear")) Clear();
+	    if (GUILayout.Button("Clear FULL")) Clear(true);
 	    GUILayout.EndHorizontal();
 
 	    GUILayout.EndVertical();
@@ -167,9 +168,9 @@ public class PoolingBrain : BrainBase
         t.DOMove(RandomVector3(), duration).OnComplete(()=> ResetParticleAndAssignTween(t, m));
 	}
 
-	void Clear()
+	void Clear(bool fullDOTweenClear = false)
 	{
-		DOTween.Clear();
+		DOTween.Clear(fullDOTweenClear);
 		Transform[] ts = spawnsParent.GetComponentsInChildren<Transform>();
 		foreach (Transform t in ts) {
 			if (t != spawnsParent) Destroy(t.gameObject);
