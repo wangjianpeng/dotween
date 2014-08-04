@@ -22,12 +22,13 @@ public class EnginesComparison : MonoBehaviour
 		DOTween, HOTween, LeanTween, GoKit, iTween
 	}
 	string[] tweensList = new[] {
-		"1", "10", "100", "500", "1000", "2000", "4000", "8000", "16000", "32000", "64000", "128000"
+		"1", "10", "100", "500", "1,000", "2,000", "4,000", "8,000", "16,000", "32,000", "64,000", "128,000"
 	};
 
 	TestType testType;
 	EngineType engineType;
 	public static int totTweens;
+	bool disableRenderers;
 
 	State state = State.Menu;
 	HOFpsGadget fpsGadget;
@@ -36,6 +37,7 @@ public class EnginesComparison : MonoBehaviour
 	Action concludeTest;
 	public static Transform[] ts;
 	public static GameObject[] gos;
+	[System.NonSerialized] public float floatVal; // Used by iTween to at least do something during its update
 
 	string testTitle;
 	string[] testTypeList, engineTypeList;
@@ -66,7 +68,15 @@ public class EnginesComparison : MonoBehaviour
 			testType = (TestType)GUILayout.Toolbar((int)testType, testTypeList);
 			engineType = (EngineType)GUILayout.Toolbar((int)engineType, engineTypeList);
 			tweensListId = GUILayout.Toolbar(tweensListId, tweensList);
+			GUILayout.BeginHorizontal();
 			if (GUILayout.Button("START")) StartCoroutine(StartTest());
+			if (testType == TestType.Transforms) {
+				if (GUILayout.Button("START (renderers disabled)")) {
+					disableRenderers = true;
+					StartCoroutine(StartTest());
+				}
+			}
+			GUILayout.EndHorizontal();
 			GUILayout.FlexibleSpace();
 			break;
 		case State.Starting:
@@ -88,9 +98,11 @@ public class EnginesComparison : MonoBehaviour
 	IEnumerator StartTest()
 	{
 		state = State.Starting;
-		totTweens = Convert.ToInt32(tweensList[tweensListId]);
+		totTweens = int.Parse(tweensList[tweensListId], System.Globalization.NumberStyles.AllowThousands);
 		testTitle = engineType.ToString();
+		SampleClass[] cs = null;
 		Vector3[] toPositions = null;
+		float[] toFloats = null;
 		// Prepare test
 		switch (testType) {
 		case TestType.Transforms:
@@ -100,12 +112,22 @@ public class EnginesComparison : MonoBehaviour
 			container = new GameObject("Container").transform;
 			for (int i = 0; i < totTweens; ++i) {
 				GameObject go = (GameObject)Instantiate(prefab);
+				if (disableRenderers) go.renderer.enabled = false;
 				Transform t = go.transform;
 				t.parent = container;
 				t.position = new Vector3(UnityEngine.Random.Range(-40f, 40f), UnityEngine.Random.Range(-40f, 40f), UnityEngine.Random.Range(-40f, 40f));
 				gos[i] = go;
 				ts[i] = t;
 				toPositions[i] = new Vector3(UnityEngine.Random.Range(-40f, 40f), UnityEngine.Random.Range(-40f, 40f), UnityEngine.Random.Range(-40f, 40f));
+			}
+			break;
+		case TestType.GenericFloats:
+			cs = new SampleClass[totTweens];
+			toFloats = new float[totTweens];
+			for (int i = 0; i < totTweens; ++i) {
+				SampleClass c = new SampleClass(UnityEngine.Random.Range(-100f, 100f));
+				cs[i] = c;
+				toFloats[i] = UnityEngine.Random.Range(-100f, 100f);
 			}
 			break;
 		}
@@ -115,22 +137,26 @@ public class EnginesComparison : MonoBehaviour
 		float time;
 		switch (engineType) {
 		case EngineType.DOTween:
+			testTitle += " v" + DOTween.Version;
 			concludeTest = DOTweenTester.Conclude;
 			DOTween.Init(false);
 			DOTween.SetTweensCapacity(totTweens, 0);
 			yield return null;
 			// Start
 			time = Time.realtimeSinceStartup;
-			DOTweenTester.Start(ts, toPositions);
+			if (testType == TestType.Transforms) DOTweenTester.Start(ts, toPositions);
+			else DOTweenTester.Start(cs, toFloats);
 			startupTime = Time.realtimeSinceStartup - time;
 			break;
 		case EngineType.HOTween:
+			testTitle += " v" + HOTween.VERSION;
 			concludeTest = HOTweenTester.Conclude;
 			HOTween.Init(true, false, false);
 			yield return null;
 			// Start
 			time = Time.realtimeSinceStartup;
-			HOTweenTester.Start(ts, toPositions);
+			if (testType == TestType.Transforms) HOTweenTester.Start(ts, toPositions);
+			else HOTweenTester.Start(cs, toFloats);
 			startupTime = Time.realtimeSinceStartup - time;
 			break;
 		case EngineType.LeanTween:
@@ -139,7 +165,8 @@ public class EnginesComparison : MonoBehaviour
 			yield return null;
 			// Start
 			time = Time.realtimeSinceStartup;
-			LeanTweenTester.Start(gos, toPositions);
+			if (testType == TestType.Transforms) LeanTweenTester.Start(gos, toPositions);
+			else LeanTweenTester.Start(this.gameObject, cs, toFloats);
 			startupTime = Time.realtimeSinceStartup - time;
 			break;
 		case EngineType.GoKit:
@@ -147,7 +174,8 @@ public class EnginesComparison : MonoBehaviour
 			yield return null;
 			// Start
 			time = Time.realtimeSinceStartup;
-			GoKitTester.Start(ts, toPositions);
+			if (testType == TestType.Transforms) GoKitTester.Start(ts, toPositions);
+			else GoKitTester.Start(cs, toFloats);
 			startupTime = Time.realtimeSinceStartup - time;
 			break;
 		case EngineType.iTween:
@@ -155,7 +183,8 @@ public class EnginesComparison : MonoBehaviour
 			yield return null;
 			// Start
 			time = Time.realtimeSinceStartup;
-			iTweenTester.Start(gos, toPositions);
+			if (testType == TestType.Transforms) iTweenTester.Start(gos, toPositions);
+			else iTweenTester.Start(this.gameObject, cs, toFloats);
 			startupTime = Time.realtimeSinceStartup - time;
 			break;
 		}
@@ -177,19 +206,34 @@ public class EnginesComparison : MonoBehaviour
 		}
 		ts = null;
 		gos = null;
+		disableRenderers = false;
 		GC.Collect();
+		fpsGadget.ResetFps();
+	}
+
+	public void UpdateiTweenFloat(float newVal)
+	{
+		// Practically does nothing: iTween can't logically tween many floats
+		// Still a valid test though, and even grants iTween some slack since it will do a LOT less than other engines
+		floatVal = newVal;
 	}
 }
 
 public static class DOTweenTester
 {
-	public static void Start(Transform[] ts, Vector3[] toPositions)
+	public static void Start(Transform[] ts, Vector3[] to)
 	{
 		for (int i = 0; i < ts.Length; ++i) {
-			ts[i].DOMove(toPositions[i], 1).SetEase(Ease.InOutQuad).SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+			ts[i].DOMove(to[i], 1).SetEase(Ease.InOutQuad).SetLoops(-1, DG.Tweening.LoopType.Yoyo);
 		}
 	}
-
+	public static void Start(SampleClass[] cs, float[] to)
+	{
+		for (int i = 0; i < cs.Length; ++i) {
+			SampleClass c = cs[i];
+			DOTween.To(()=> c.floatVal, x=> c.floatVal = x, to[i], 1).SetEase(Ease.InOutQuad).SetLoops(-1, DG.Tweening.LoopType.Yoyo);
+		}
+	}
 	public static void Conclude()
 	{
 		DOTween.Clear(true);
@@ -198,11 +242,18 @@ public static class DOTweenTester
 
 public static class HOTweenTester
 {
-	public static void Start(Transform[] ts, Vector3[] toPositions)
+	public static void Start(Transform[] ts, Vector3[] to)
 	{
 		TweenParms tp = new TweenParms().Ease(EaseType.EaseInOutQuad).Loops(-1, Holoville.HOTween.LoopType.Yoyo);
 		for (int i = 0; i < ts.Length; ++i) {
-			HOTween.To(ts[i], 1, tp.NewProp("position", toPositions[i]));
+			HOTween.To(ts[i], 1, tp.NewProp("position", to[i]));
+		}
+	}
+	public static void Start(SampleClass[] cs, float[] to)
+	{
+		TweenParms tp = new TweenParms().Ease(EaseType.EaseInOutQuad).Loops(-1, Holoville.HOTween.LoopType.Yoyo);
+		for (int i = 0; i < cs.Length; ++i) {
+			HOTween.To(cs[i], 1, tp.NewProp("floatVal", to[i]));
 		}
 	}
 	public static void Conclude()
@@ -214,10 +265,17 @@ public static class HOTweenTester
 
 public static class LeanTweenTester
 {
-	public static void Start(GameObject[] gos, Vector3[] toPositions)
+	public static void Start(GameObject[] gos, Vector3[] to)
 	{
 		for (int i = 0; i < gos.Length; ++i) {
-			LeanTween.move(gos[i], toPositions[i], 1).setEase(LeanTweenType.easeInOutQuad).setRepeat(-1).setLoopType(LeanTweenType.pingPong);
+			LeanTween.move(gos[i], to[i], 1).setEase(LeanTweenType.easeInOutQuad).setRepeat(-1).setLoopType(LeanTweenType.pingPong);
+		}
+	}
+	public static void Start(GameObject target, SampleClass[] cs, float[] to)
+	{
+		for (int i = 0; i < cs.Length; ++i) {
+			SampleClass c = cs[i];
+			LeanTween.value(target, x=> c.floatVal = x, c.floatVal, to[i], 1).setEase(LeanTweenType.easeInOutQuad).setRepeat(-1).setLoopType(LeanTweenType.pingPong);
 		}
 	}
 	public static void Conclude()
@@ -229,13 +287,22 @@ public static class LeanTweenTester
 
 public static class GoKitTester
 {
-	public static void Start(Transform[] ts, Vector3[] toPositions)
+	public static void Start(Transform[] ts, Vector3[] to)
 	{
 		GoTweenConfig goConfig = new GoTweenConfig().setEaseType(GoEaseType.QuadInOut).setIterations(-1, GoLoopType.PingPong);
 		for (int i = 0; i < ts.Length; ++i) {
 			goConfig.clearProperties();
-			goConfig.addTweenProperty(new PositionTweenProperty(toPositions[i]));
+			goConfig.addTweenProperty(new PositionTweenProperty(to[i]));
 			Go.to(ts[i], 1, goConfig);
+		}
+	}
+	public static void Start(SampleClass[] cs, float[] to)
+	{
+		GoTweenConfig goConfig = new GoTweenConfig().setEaseType(GoEaseType.QuadInOut).setIterations(-1, GoLoopType.PingPong);
+		for (int i = 0; i < cs.Length; ++i) {
+			goConfig.clearProperties();
+			goConfig.floatProp("floatVal", to[i]);
+			Go.to(cs[i], 1, goConfig);
 		}
 	}
 	public static void Conclude()
@@ -247,16 +314,29 @@ public static class GoKitTester
 
 public static class iTweenTester
 {
-	public static void Start(GameObject[] gos, Vector3[] toPositions)
+	public static void Start(GameObject[] gos, Vector3[] to)
 	{
-		Hashtable hs;
 		for (int i = 0; i < gos.Length; ++i) {
-			hs = new Hashtable();
-			hs.Add("position", toPositions[i]);
+			Hashtable hs = new Hashtable();
+			hs.Add("position", to[i]);
 			hs.Add("time", 1);
 			hs.Add("looptype", iTween.LoopType.pingPong);
 			hs.Add("easetype", iTween.EaseType.easeInOutQuad);
 			iTween.MoveTo(gos[i], hs);
+		}
+	}
+	public static void Start(GameObject target, SampleClass[] cs, float[] to)
+	{
+		for (int i = 0; i < cs.Length; ++i) {
+			SampleClass c = cs[i];
+			Hashtable hs = new Hashtable();
+			hs.Add("from", c.floatVal);
+			hs.Add("to", to[i]);
+			hs.Add("time", 1);
+			hs.Add("onupdate", "UpdateiTweenFloat");
+			hs.Add("looptype", iTween.LoopType.pingPong);
+			hs.Add("easetype", iTween.EaseType.easeInOutQuad);
+			iTween.ValueTo(target, hs);
 		}
 	}
 	public static void Conclude()
