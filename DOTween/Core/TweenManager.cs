@@ -95,7 +95,7 @@ namespace DG.Tweening.Core
             } else {
                 // Increase capacity in case max number of Tweeners has already been reached, then continue
                 if (totTweeners >= maxTweeners) {
-                    if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
+                    if (Debugger.logPriority >= 1) Debugger.LogWarning(_MaxTweensReached);
                     IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
                 }
             }
@@ -121,7 +121,7 @@ namespace DG.Tweening.Core
             }
             // Increase capacity in case max number of Sequences has already been reached, then continue
             if (totSequences >= maxSequences) {
-                if (Debugger.logPriority >= 2) Debugger.LogWarning(_MaxTweensReached);
+                if (Debugger.logPriority >= 1) Debugger.LogWarning(_MaxTweensReached);
                 IncreaseCapacities(CapacityIncreaseMode.SequencesOnly);
             }
             // Not found: create new Sequence
@@ -499,6 +499,7 @@ namespace DG.Tweening.Core
             ClearTweenArray(_pooledTweeners);
             _PooledSequences.Clear();
             totPooledTweeners = totPooledSequences = 0;
+            _minPooledTweenerId = _maxPooledTweenerId = - 1;
         }
 
         internal static void ResetCapacities()
