@@ -256,19 +256,25 @@ namespace DG.Tweening
         /// <summary>Returns the total number of loops completed by this tween</summary>
         public static int CompletedLoops(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return 0;
+            }
+
             return t.completedLoops;
         }
 
-        /// <summary>Returns the duration of this tween (loops and delays excluded)</summary>
-        public static float Duration(this Tween t)
+        /// <summary>Returns the duration of this tween (delays excluded)</summary>
+        /// <param name="includeLoops">If TRUE returns the full duration loops included,
+        ///  otherwise the duration of a single loop cycle</param>
+        public static float Duration(this Tween t, bool includeLoops = true)
         {
-            return t.duration;
-        }
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return 0;
+            }
 
-        /// <summary>Returns the full duration (loops included) of this tween</summary>
-        public static float FullDuration(this Tween t)
-        {
-            return t.fullDuration;
+            return includeLoops ? t.fullDuration : t.duration;
         }
 
         /// <summary>Returns the elapsed time for this tween (delays exluded)</summary>
@@ -276,11 +282,32 @@ namespace DG.Tweening
         ///  otherwise the elapsed time within the current loop cycle</param>
         public static float Elapsed(this Tween t, bool includeLoops = true)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return 0;
+            }
+
             if (includeLoops) {
                 int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
                 return (loopsToCount * t.duration) + t.position;
             }
             return t.position;
+        }
+        /// <summary>Returns the elapsed percentage (0 to 1) of this tween (delays exluded)</summary>
+        /// <param name="includeLoops">If TRUE returns the elapsed percentage since startup loops included,
+        ///  otherwise the elapsed percentage within the current loop cycle</param>
+        public static float ElapsedPercentage(this Tween t, bool includeLoops = true)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return 0;
+            }
+
+            if (includeLoops) {
+                int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
+                return ((loopsToCount * t.duration) + t.position) / t.fullDuration;
+            }
+            return t.position / t.duration;
         }
 
         /// <summary>Returns FALSE if this tween has been killed</summary>
@@ -292,12 +319,22 @@ namespace DG.Tweening
         /// <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>
         public static bool IsBackwards(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return false;
+            }
+
             return t.isBackwards;
         }
 
         /// <summary>Returns TRUE if this tween is playing</summary>
         public static bool IsPlaying(this Tween t)
         {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return false;
+            }
+
             return t.isPlaying;
         }
     }
