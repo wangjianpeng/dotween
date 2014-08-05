@@ -88,6 +88,14 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets the onUpdate callback for the tween
+        /// (called each time the tween updates)</summary>
+        public static T OnUpdate<T>(this T t, TweenCallback action) where T : Tween
+        {
+            t.onUpdate = action;
+            return t;
+        }
+
         /// <summary>Sets the onStepComplete callback for the tween
         /// (called the moment the tween completes one loop cycle)</summary>
         public static T OnStepComplete<T>(this T t, TweenCallback action) where T : Tween
