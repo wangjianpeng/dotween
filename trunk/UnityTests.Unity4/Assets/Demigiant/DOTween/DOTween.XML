@@ -413,6 +413,10 @@
             <summary>Sets the onStart callback for the tween
             (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.OnUpdate``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onUpdate callback for the tween
+            (called each time the tween updates)</summary>
+        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnStepComplete``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onStepComplete callback for the tween
             (called the moment the tween completes one loop cycle)</summary>
@@ -560,6 +564,9 @@
         </member>
         <member name="F:DG.Tweening.Tween.id">
             <summary>Id (usable for filtering with DOTween static methods). Can be an int, a string, an object, or anything else</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onUpdate">
+            <summary>Called each time the tween updates</summary>
         </member>
         <member name="F:DG.Tweening.Tween.onStepComplete">
             <summary>Called the moment the tween completes one loop cycle</summary>

@@ -42,6 +42,8 @@ namespace DG.Tweening
         // Update type (changed via TweenManager.SetUpdateType)
         internal UpdateType updateType;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
+        /// <summary>Called each time the tween updates</summary>
+        public TweenCallback onUpdate;
         /// <summary>Called the moment the tween completes one loop cycle</summary>
         public TweenCallback onStepComplete;
         /// <summary>Called the moment the tween reaches completion (loops included)</summary>
@@ -186,6 +188,7 @@ namespace DG.Tweening
             if (t.ApplyTween(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode)) return true;
 
             // Additional callbacks
+            if (t.onUpdate != null) t.onUpdate();
             if (newCompletedSteps > 0) {
                 // Already verified that onStepComplete is present
                 for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
