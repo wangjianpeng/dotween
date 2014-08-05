@@ -688,16 +688,20 @@
         <member name="M:DG.Tweening.TweenExtensions.CompletedLoops(DG.Tweening.Tween)">
             <summary>Returns the total number of loops completed by this tween</summary>
         </member>
-        <member name="M:DG.Tweening.TweenExtensions.Duration(DG.Tweening.Tween)">
-            <summary>Returns the duration of this tween (loops and delays excluded)</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenExtensions.FullDuration(DG.Tweening.Tween)">
-            <summary>Returns the full duration (loops included) of this tween</summary>
+        <member name="M:DG.Tweening.TweenExtensions.Duration(DG.Tweening.Tween,System.Boolean)">
+            <summary>Returns the duration of this tween (delays excluded)</summary>
+            <param name="includeLoops">If TRUE returns the full duration loops included,
+             otherwise the duration of a single loop cycle</param>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Elapsed(DG.Tweening.Tween,System.Boolean)">
             <summary>Returns the elapsed time for this tween (delays exluded)</summary>
             <param name="includeLoops">If TRUE returns the elapsed time since startup loops included,
              otherwise the elapsed time within the current loop cycle</param>
+        </member>
+        <member name="M:DG.Tweening.TweenExtensions.ElapsedPercentage(DG.Tweening.Tween,System.Boolean)">
+            <summary>Returns the elapsed percentage (0 to 1) of this tween (delays exluded)</summary>
+            <param name="includeLoops">If TRUE returns the elapsed percentage since startup loops included,
+             otherwise the elapsed percentage within the current loop cycle</param>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsActive(DG.Tweening.Tween)">
             <summary>Returns FALSE if this tween has been killed</summary>
