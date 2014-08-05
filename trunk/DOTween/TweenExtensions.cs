@@ -259,12 +259,6 @@ namespace DG.Tweening
             return t.completedLoops;
         }
 
-        /// <summary>Returns the current position of this tween (inside a single loop cycle and excluding delays)</summary>
-        public static float Position(this Tween t)
-        {
-            return t.position;
-        }
-
         /// <summary>Returns the duration of this tween (loops and delays excluded)</summary>
         public static float Duration(this Tween t)
         {
@@ -277,11 +271,16 @@ namespace DG.Tweening
             return t.fullDuration;
         }
 
-        /// <summary>Returns the total elapsed time for this tween (delays exluded)</summary>
-        public static float Elapsed(this Tween t)
+        /// <summary>Returns the elapsed time for this tween (delays exluded)</summary>
+        /// <param name="includeLoops">If TRUE returns the elapsed time since startup loops included,
+        ///  otherwise the elapsed time within the current loop cycle</param>
+        public static float Elapsed(this Tween t, bool includeLoops = true)
         {
-            int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
-            return (loopsToCount * t.duration) + t.position;
+            if (includeLoops) {
+                int loopsToCount = t.position >= t.duration ? t.completedLoops - 1 : t.completedLoops;
+                return (loopsToCount * t.duration) + t.position;
+            }
+            return t.position;
         }
 
         /// <summary>Returns FALSE if this tween has been killed</summary>

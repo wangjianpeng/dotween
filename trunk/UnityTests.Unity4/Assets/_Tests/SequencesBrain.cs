@@ -49,8 +49,8 @@ public class SequencesBrain : BrainBase
 		sb.Remove(0, sb.Length);
 		sb.Append("IsPlaying: ").Append(mainSequence.IsPlaying());
 		sb.Append("\nIsBackwards: ").Append(mainSequence.IsBackwards());
-		sb.Append("\nPosition: ").Append(mainSequence.Position());
-		sb.Append("\nElapsed: ").Append(mainSequence.Elapsed());
+		sb.Append("\nElapsed: ").Append(mainSequence.Elapsed(false));
+		sb.Append("\nFullElapsed: ").Append(mainSequence.Elapsed());
 		sb.Append("\nCompletedLoops: ").Append(mainSequence.CompletedLoops());
 		GUILayout.Label(sb.ToString());
 

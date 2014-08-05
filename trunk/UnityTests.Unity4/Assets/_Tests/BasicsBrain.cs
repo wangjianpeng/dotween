@@ -182,7 +182,7 @@ public class BasicsBrain : BrainBase
 
 		GUILayout.BeginHorizontal();
 		foreach (Tween t in tweens) {
-			GUILayout.Label("Position: " + t.Position() + "\nElapsed: " + t.Elapsed() + "\nCompleted Loops: " + t.CompletedLoops());
+			GUILayout.Label("Elapsed: " + t.Elapsed(false) + "\nFullElapsed: " + t.Elapsed() + "\nCompleted Loops: " + t.CompletedLoops());
 		}
 		GUILayout.EndHorizontal();
 
