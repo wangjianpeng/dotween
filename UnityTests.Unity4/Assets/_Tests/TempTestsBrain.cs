@@ -57,8 +57,8 @@ public class TempTestsBrain : BrainBase
 		if (GUILayout.Button("Flip")) DOTween.Flip();
 
 		GUILayout.Space(10);
-		GUILayout.Label("Position: " + tween.Position());
-		GUILayout.Label("Elapsed: " + tween.Elapsed());
+		GUILayout.Label("Elapsed: " + tween.Elapsed(false));
+		GUILayout.Label("FullElapsed: " + tween.Elapsed());
 		GUILayout.Label("CompletedLoops: " + tween.CompletedLoops());
 	}
 }
