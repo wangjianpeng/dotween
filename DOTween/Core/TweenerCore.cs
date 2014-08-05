@@ -58,7 +58,7 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        public override void ChangeStartValue<T>(T newStartValue, float newDuration)
+        public override void ChangeStartValue<T>(T newStartValue, float newDuration = -1)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
@@ -75,7 +75,7 @@ namespace DG.Tweening.Core
         public override void ChangeEndValue<T>(T newEndValue, bool snapStartValue)
         { ChangeEndValue(newEndValue, -1, snapStartValue); }
 
-        public override void ChangeEndValue<T>(T newEndValue, float newDuration, bool snapStartValue = false)
+        public override void ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
@@ -89,7 +89,7 @@ namespace DG.Tweening.Core
             DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration, snapStartValue);
         }
 
-        public override void ChangeValues<T>(T newStartValue, T newEndValue, float newDuration)
+        public override void ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
