@@ -271,6 +271,8 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences</para></summary>
         public static T SetEase<T>(this T t, Ease ease) where T : Tween
         {
+            if (t.duration <= 0) return t;
+
             t.easeType = ease;
             t.customEase = null;
             return t;
@@ -279,7 +281,9 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences</para></summary>
         public static T SetEase<T>(this T t, AnimationCurve animCurve) where T : Tween
         {
-            t.easeType = Ease.Custom;
+            if (t.duration <= 0) return t;
+
+            t.easeType = Ease.InternalCustom;
             t.customEase = new EaseCurve(animCurve).Evaluate;
             return t;
         }
@@ -287,7 +291,9 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences</para></summary>
         public static T SetEase<T>(this T t, EaseFunction customEase) where T : Tween
         {
-            t.easeType = Ease.Custom;
+            if (t.duration <= 0) return t;
+
+            t.easeType = Ease.InternalCustom;
             t.customEase = customEase;
             return t;
         }

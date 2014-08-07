@@ -161,8 +161,11 @@ namespace DG.Tweening.Core.Easing
                 return Bounce.EaseOut(time, startValue, changeValue, duration, overshootOrAmplitude, period);
             case Ease.InOutBounce:
                 return Bounce.EaseInOut(time, startValue, changeValue, duration, overshootOrAmplitude, period);
-            case Ease.Custom:
+            case Ease.InternalCustom:
                 return t.customEase(time, startValue, changeValue, duration, overshootOrAmplitude, period);
+            case Ease.InternalZero:
+                // 0 duration tween
+                return startValue + changeValue;
             default:
                 // OutQuad
                 return -changeValue * (time /= duration) * (time - 2) + startValue;

@@ -88,6 +88,7 @@ namespace DG.Tweening
         // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
 
         // Doesn't reset active state and activeId, since those are only touched by TweenManager
+        // Doesn't reset default values since those are set when Tweener.Setup is called
         internal virtual void Reset()
         {
             timeScale = 1;
@@ -97,10 +98,8 @@ namespace DG.Tweening
             onStart = onComplete = onStepComplete = null;
 
             isFrom = isSpeedBased = false;
-            autoKill = DOTween.defaultAutoKill;
             duration = 0;
             loops = 1;
-            loopType = LoopType.Restart;
             delay = 0;
             isRelative = false;
             customEase = null;
@@ -110,6 +109,10 @@ namespace DG.Tweening
             isPlaying = isComplete = false;
             elapsedDelay = 0;
             delayComplete = true;
+
+//            autoKill = DOTween.defaultAutoKill;
+//            loopType = DOTween.defaultLoopType;
+//            easeType = DOTween.defaultEaseType;
         }
 
         // Called by TweenManager in case a tween has a delay that needs to be updated.

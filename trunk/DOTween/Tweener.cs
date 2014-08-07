@@ -83,6 +83,9 @@ namespace DG.Tweening
             t.setter = setter;
             t.endValue = endValue;
             t.duration = duration;
+            // Defaults
+            t.autoKill = DOTween.defaultAutoKill;
+            t.easeType = t.duration <= 0 ? Ease.InternalZero : DOTween.defaultEaseType;
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;
@@ -97,8 +100,11 @@ namespace DG.Tweening
             t.endValue = plugSetter.EndValue();
             t.plugOptions = plugSetter.GetOptions();
             t.duration = duration;
-            t.loopType = DOTween.defaultLoopType;
             t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
+            // Defaults
+            t.autoKill = DOTween.defaultAutoKill;
+            t.easeType = t.duration <= 0 ? Ease.InternalZero : DOTween.defaultEaseType;
+            t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;
         }
