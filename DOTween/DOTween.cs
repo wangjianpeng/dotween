@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.185";
+        public static readonly string Version = "0.7.190";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -74,6 +74,7 @@ namespace DG.Tweening
         internal static bool isUnityEditor;
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
         static bool _initialized;
+        float _unscaledTime;
 
         // ===================================================================================
         // UNITY METHODS ---------------------------------------------------------------------
@@ -81,13 +82,16 @@ namespace DG.Tweening
         void Awake()
         {
             inspectorUpdater = 0;
+            _unscaledTime = Time.realtimeSinceStartup;
         }
 
         void Update()
         {
-            if (TweenManager.hasActiveTweens) {
-                TweenManager.Update(Time.deltaTime * timeScale, Time.unscaledDeltaTime * timeScale);
-            }
+//            if (TweenManager.hasActiveTweens) TweenManager.Update(Time.deltaTime * timeScale, Time.unscaledDeltaTime * timeScale);
+            float unscaledDeltaTime = Time.realtimeSinceStartup - _unscaledTime;
+            _unscaledTime = Time.realtimeSinceStartup;
+            if (TweenManager.hasActiveTweens) TweenManager.Update(Time.deltaTime * timeScale, unscaledDeltaTime * timeScale);
+
             if (isUnityEditor) {
                 inspectorUpdater++;
                 if (showUnityEditorReport && TweenManager.hasActiveTweens) {
