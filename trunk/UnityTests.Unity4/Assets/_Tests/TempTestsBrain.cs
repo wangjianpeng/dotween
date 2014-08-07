@@ -35,9 +35,10 @@ public class TempTestsBrain : BrainBase
 			.Pause();
 
 		// scale
-		targets[1].DOScale(Vector3.zero, 0);
-		targets[1].DOScale(Vector3.one * 2, 1);
+		// targets[1].DOScale(Vector3.zero, 0);
+		// targets[1].DOScale(Vector3.one * 2, 1);
 		// DOTween.Sequence().Append(targets[1].DOScale(Vector3.zero, 0)).Append(targets[1].DOScale(Vector3.one * 2, 1));
+		targets[1].DOScaleFrom(Vector3.zero, 1);
 	}
 
 	void OnGUI()
