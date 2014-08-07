@@ -887,81 +887,162 @@
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's position from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOMoveX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X position to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveXFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X position from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOMoveY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y position to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveYFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y position from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z position to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z position from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localPosition to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localPosition from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X localPosition to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveXFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X localPosition from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y localPosition to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveYFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y localPosition from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z localPosition to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveZFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z localPosition from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's rotation to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DORotateFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's rotation from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localRotation to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalRotateFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localRotation from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOScale(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localScale to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOScaleFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+            <summary>Tweens a Transform's localScale from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOScaleX(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's X localScale to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOScaleXFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's X localScale from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOScaleY(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Y localScale to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOScaleYFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Y localScale from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOScaleZ(UnityEngine.Transform,System.Single,System.Single)">
             <summary>Tweens a Transform's Z localScale to the given value.
             Also adds the transform as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOScaleZFrom(UnityEngine.Transform,System.Single,System.Single)">
+            <summary>Tweens a Transform's Z localScale from the given value to its current one.
+            Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.Material,UnityEngine.Color,System.Single)">
             <summary>Tweens a Material's color to the given value.
             Also adds the material as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOColorFrom(UnityEngine.Material,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Material's color from the given value to its current one.
+            Also adds the material as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOFade(UnityEngine.Material,System.Single,System.Single)">
             <summary>Tweens a Material's alpha color to the given value
             (will have no effect unless your material supports transparency).
             Also adds the material as the tween Id so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOFadeFrom(UnityEngine.Material,System.Single,System.Single)">
+            <summary>Tweens a Material's alpha color from the given value to its current one
+            (will have no effect unless your material supports transparency).
+            Also adds the material as the tween Id so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOKill(UnityEngine.Transform)">
             <summary>

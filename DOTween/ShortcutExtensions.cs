@@ -24,6 +24,13 @@ namespace DG.Tweening
         {
             return DOTween.To(() => transform.position, x => transform.position = x, endValue, duration).SetId(transform);
         }
+        /// <summary>Tweens a Transform's position from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOMoveFrom(this Transform transform, Vector3 fromValue, float duration)
+        {
+            return DOTween.From(() => transform.position, x => transform.position = x, fromValue, duration).SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's X position to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -31,6 +38,15 @@ namespace DG.Tweening
         public static Tweener DOMoveX(this Transform transform, float endValue, float duration)
         {
             return DOTween.To(() => transform.position, x => transform.position = x, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X)
+                .SetId(transform);
+        }
+        /// <summary>Tweens a Transform's X position from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOMoveXFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.position, x => transform.position = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
                 .SetId(transform);
         }
@@ -44,6 +60,15 @@ namespace DG.Tweening
                 .SetOptions(AxisConstraint.Y)
                 .SetId(transform);
         }
+        /// <summary>Tweens a Transform's Y position from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOMoveYFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.position, x => transform.position = x, new Vector3(0, fromValue, 0), duration)
+                .SetOptions(AxisConstraint.Y)
+                .SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's Z position to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -51,6 +76,15 @@ namespace DG.Tweening
         public static Tweener DOMoveZ(this Transform transform, float endValue, float duration)
         {
             return DOTween.To(() => transform.position, x => transform.position = x, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z)
+                .SetId(transform);
+        }
+        /// <summary>Tweens a Transform's Z position from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOMoveZFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.position, x => transform.position = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
                 .SetId(transform);
         }
@@ -62,6 +96,13 @@ namespace DG.Tweening
         {
             return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, endValue, duration).SetId(transform);
         }
+        /// <summary>Tweens a Transform's localPosition from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalMoveFrom(this Transform transform, Vector3 fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localPosition, x => transform.localPosition = x, fromValue, duration).SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's X localPosition to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -69,6 +110,15 @@ namespace DG.Tweening
         public static Tweener DOLocalMoveX(this Transform transform, float endValue, float duration)
         {
             return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X)
+                .SetId(transform);
+        }
+        /// <summary>Tweens a Transform's X localPosition from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalMoveXFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localPosition, x => transform.localPosition = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
                 .SetId(transform);
         }
@@ -82,6 +132,15 @@ namespace DG.Tweening
                 .SetOptions(AxisConstraint.Y)
                 .SetId(transform);
         }
+        /// <summary>Tweens a Transform's Y localPosition from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalMoveYFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localPosition, x => transform.localPosition = x, new Vector3(0, fromValue, 0), duration)
+                .SetOptions(AxisConstraint.Y)
+                .SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's Z localPosition to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -89,6 +148,15 @@ namespace DG.Tweening
         public static Tweener DOLocalMoveZ(this Transform transform, float endValue, float duration)
         {
             return DOTween.To(() => transform.localPosition, x => transform.localPosition = x, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z)
+                .SetId(transform);
+        }
+        /// <summary>Tweens a Transform's Z localPosition from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalMoveZFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localPosition, x => transform.localPosition = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
                 .SetId(transform);
         }
@@ -100,6 +168,13 @@ namespace DG.Tweening
         {
             return DOTween.To(() => transform.rotation, x => transform.rotation = x, endValue, duration).SetId(transform);
         }
+        /// <summary>Tweens a Transform's rotation from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DORotateFrom(this Transform transform, Vector3 fromValue, float duration)
+        {
+            return DOTween.From(() => transform.rotation, x => transform.rotation = x, fromValue, duration).SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's localRotation to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -107,6 +182,13 @@ namespace DG.Tweening
         public static Tweener DOLocalRotate(this Transform transform, Vector3 endValue, float duration)
         {
             return DOTween.To(() => transform.localRotation, x => transform.localRotation = x, endValue, duration).SetId(transform);
+        }
+        /// <summary>Tweens a Transform's localRotation from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalRotateFrom(this Transform transform, Vector3 fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localRotation, x => transform.localRotation = x, fromValue, duration).SetId(transform);
         }
 
         /// <summary>Tweens a Transform's localScale to the given value.
@@ -116,6 +198,13 @@ namespace DG.Tweening
         {
             return DOTween.To(() => transform.localScale, x => transform.localScale = x, endValue, duration).SetId(transform);
         }
+        /// <summary>Tweens a Transform's localScale from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOScaleFrom(this Transform transform, Vector3 fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localScale, x => transform.localScale = x, fromValue, duration).SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's X localScale to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -123,6 +212,15 @@ namespace DG.Tweening
         public static Tweener DOScaleX(this Transform transform, float endValue, float duration)
         {
             return DOTween.To(() => transform.localScale, x => transform.localScale = x, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X)
+                .SetId(transform);
+        }
+        /// <summary>Tweens a Transform's X localScale from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOScaleXFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localScale, x => transform.localScale = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
                 .SetId(transform);
         }
@@ -136,6 +234,15 @@ namespace DG.Tweening
                 .SetOptions(AxisConstraint.Y)
                 .SetId(transform);
         }
+        /// <summary>Tweens a Transform's Y localScale from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOScaleYFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localScale, x => transform.localScale = x, new Vector3(0, fromValue, 0), duration)
+                .SetOptions(AxisConstraint.Y)
+                .SetId(transform);
+        }
 
         /// <summary>Tweens a Transform's Z localScale to the given value.
         /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
@@ -143,6 +250,15 @@ namespace DG.Tweening
         public static Tweener DOScaleZ(this Transform transform, float endValue, float duration)
         {
             return DOTween.To(() => transform.localScale, x => transform.localScale = x, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z)
+                .SetId(transform);
+        }
+        /// <summary>Tweens a Transform's Z localScale from the given value to its current one.
+        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOScaleZFrom(this Transform transform, float fromValue, float duration)
+        {
+            return DOTween.From(() => transform.localScale, x => transform.localScale = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
                 .SetId(transform);
         }
@@ -157,6 +273,13 @@ namespace DG.Tweening
         {
             return DOTween.To(() => material.color, x => material.color = x, endValue, duration).SetId(material);
         }
+        /// <summary>Tweens a Material's color from the given value to its current one.
+        /// Also adds the material as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColorFrom(this Material material, Color fromValue, float duration)
+        {
+            return DOTween.From(() => material.color, x => material.color = x, fromValue, duration).SetId(material);
+        }
 
         /// <summary>Tweens a Material's alpha color to the given value
         /// (will have no effect unless your material supports transparency).
@@ -165,6 +288,15 @@ namespace DG.Tweening
         public static Tweener DOFade(this Material material, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => material.color, x => material.color = x, endValue, duration)
+                .SetId(material);
+        }
+        /// <summary>Tweens a Material's alpha color from the given value to its current one
+        /// (will have no effect unless your material supports transparency).
+        /// Also adds the material as the tween Id so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFadeFrom(this Material material, float fromValue, float duration)
+        {
+            return DOTween.FromAlpha(() => material.color, x => material.color = x, fromValue, duration)
                 .SetId(material);
         }
 
