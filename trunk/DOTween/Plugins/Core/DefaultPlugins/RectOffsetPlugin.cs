@@ -72,10 +72,10 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
         public override RectOffset Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration)
         {
             return new RectOffset(
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.left, changeValue.left, duration, 0, 0)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.right, changeValue.right, duration, 0, 0)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.top, changeValue.top, duration, 0, 0)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.bottom, changeValue.bottom, duration, 0, 0))
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.top, changeValue.top, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.bottom, changeValue.bottom, duration, t.easeOvershootOrAmplitude, t.easePeriod))
             );
         }
     }

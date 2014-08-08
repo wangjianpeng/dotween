@@ -65,10 +65,10 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Rect Evaluate(RectOptions options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
         {
-            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-            startValue.width = EaseManager.Evaluate(t, elapsed, startValue.width, changeValue.width, duration, 0, 0);
-            startValue.height = EaseManager.Evaluate(t, elapsed, startValue.height, changeValue.height, duration, 0, 0);
+            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            startValue.width = EaseManager.Evaluate(t, elapsed, startValue.width, changeValue.width, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            startValue.height = EaseManager.Evaluate(t, elapsed, startValue.height, changeValue.height, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             if (options.snapping) {
                 startValue.x = (float)Math.Round(startValue.x);
                 startValue.y = (float)Math.Round(startValue.y);

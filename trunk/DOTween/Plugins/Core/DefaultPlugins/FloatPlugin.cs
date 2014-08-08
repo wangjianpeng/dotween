@@ -54,8 +54,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
         public override float Evaluate(FloatOptions options, Tween t, bool isRelative, DOGetter<float> getter, float elapsed, float startValue, float changeValue, float duration)
         {
             return !options.snapping
-                ? EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, 0, 0)
-                : (float)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, 0, 0));
+                ? EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod)
+                : (float)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod));
         }
     }
 }
