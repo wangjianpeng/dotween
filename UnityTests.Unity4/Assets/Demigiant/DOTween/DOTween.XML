@@ -309,6 +309,16 @@
             <param name="destroy">If TRUE also destroys DOTween's gameObject and resets its initializiation, default settings and everything else
             (so that next time you use it it will need to be re-initialized)</param>
         </member>
+        <member name="M:DG.Tweening.DOTween.IsTweening(System.Object)">
+            <summary>
+            Returns the total number of tweens active (both playing and paused) with the given id.
+            <para>You can also use this to know if a shortcut tween is active for its target,
+            since in that case the target is automatically added as an ID.</para>
+            <para>Example:</para>
+            <para><code>transform.DOMoveX(45, 1);</code></para>
+            <para><code>DOTween.IsTweening(transform); // Returns 1</code></para>
+            </summary>
+        </member>
         <member name="M:DG.Tweening.DOTween.Complete">
             <summary>Completes all tweens and returns the number of actual tweens completed
             (meaning tweens that don't have infinite loops and were not already complete)</summary>

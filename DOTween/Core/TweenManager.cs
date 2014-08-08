@@ -393,10 +393,8 @@ namespace DG.Tweening.Core
             t.Reset();
         }
 
-        internal static int FilteredOperation(
-            OperationType operationType, FilterType filterType, object id,
-            bool optionalBool, float optionalFloat
-        ){
+        internal static int FilteredOperation(OperationType operationType, FilterType filterType, object id, bool optionalBool, float optionalFloat)
+        {
             int totInvolved = 0;
             bool hasDespawned = false;
             for (int i = _maxActiveLookupId; i > -1; --i) {
@@ -462,6 +460,9 @@ namespace DG.Tweening.Core
                         break;
                     case OperationType.TogglePause:
                         if (TogglePause(t)) totInvolved++;
+                        break;
+                    case OperationType.IsTweening:
+                        totInvolved++;
                         break;
                     }
                 }
