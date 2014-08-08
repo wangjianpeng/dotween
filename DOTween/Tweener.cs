@@ -86,6 +86,8 @@ namespace DG.Tweening
             // Defaults
             t.autoKill = DOTween.defaultAutoKill;
             t.easeType = t.duration <= 0 ? Ease.InternalZero : DOTween.defaultEaseType;
+            t.easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
+            t.easePeriod = DOTween.defaultEasePeriod;
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;

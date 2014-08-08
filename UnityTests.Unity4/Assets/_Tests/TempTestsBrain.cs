@@ -1,6 +1,10 @@
 ﻿using DG.Tweening;
 using DG.Tweening.Plugins;
+using Holoville.HOTween;
 using UnityEngine;
+using System.Collections;
+
+using LoopType = DG.Tweening.LoopType;
 
 public class TempTestsBrain : BrainBase
 {
@@ -12,7 +16,7 @@ public class TempTestsBrain : BrainBase
 
 	Tween tween;
 
-	void Start()
+	IEnumerator Start()
 	{
 		DOTween.Init();
 		DOTween.useSafeMode = useSafeMode;
@@ -34,11 +38,10 @@ public class TempTestsBrain : BrainBase
 			.SetRelative().SetLoops(loops, loopType).SetAutoKill(false)
 			.Pause();
 
-		// scale
-		// targets[1].DOScale(Vector3.zero, 0);
-		// targets[1].DOScale(Vector3.one * 2, 1);
-		// DOTween.Sequence().Append(targets[1].DOScale(Vector3.zero, 0)).Append(targets[1].DOScale(Vector3.one * 2, 1));
-		targets[1].DOScaleFrom(Vector3.zero, 1);
+		yield return new WaitForSeconds(1);
+
+		targets[1].DOScaleFrom(Vector3.zero, 1).SetEase(Ease.OutBack);
+		HOTween.From(targets[2], 1, new TweenParms().Prop("localScale", Vector3.zero).Ease(EaseType.EaseOutBack));
 	}
 
 	void OnGUI()

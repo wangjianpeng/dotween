@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.200";
+        public static readonly string Version = "0.7.210";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -69,6 +69,12 @@ namespace DG.Tweening
         public static AutoPlay defaultAutoPlay = AutoPlay.All;
         /// <summary>Default autoKillOnComplete behaviour for new tweens</summary>
         public static bool defaultAutoKill = true;
+        /// <summary>Default overshoot/amplitude used for eases
+        /// <para>Default: 1.70158f</para></summary>
+        public static float defaultEaseOvershootOrAmplitude = 1.70158f;
+        /// <summary>Default period used for eases
+        /// <para>Default: 0</para></summary>
+        public static float defaultEasePeriod = 0;
 
         internal static DOTween instance;
         internal static bool isUnityEditor;

@@ -57,23 +57,23 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             switch (options.axisConstraint) {
             case AxisConstraint.X:
                 Vector3 resX = getter();
-                resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+                resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resX.x = (float)Math.Round(resX.x);
                 return resX;
             case AxisConstraint.Y:
                 Vector3 resY = getter();
-                resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
+                resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resY.y = (float)Math.Round(resY.y);
                 return resY;
             case AxisConstraint.Z:
                 Vector3 resZ = getter();
-                resZ.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
+                resZ.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resZ.z = (float)Math.Round(resZ.z);
                 return resZ;
             default:
-                startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
-                startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, 0, 0);
-                startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, 0, 0);
+                startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) {
                     startValue.x = (float)Math.Round(startValue.x);
                     startValue.y = (float)Math.Round(startValue.y);

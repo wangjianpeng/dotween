@@ -40,6 +40,14 @@
         <member name="F:DG.Tweening.DOTween.defaultAutoKill">
             <summary>Default autoKillOnComplete behaviour for new tweens</summary>
         </member>
+        <member name="F:DG.Tweening.DOTween.defaultEaseOvershootOrAmplitude">
+            <summary>Default overshoot/amplitude used for eases
+            <para>Default: 1.70158f</para></summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultEasePeriod">
+            <summary>Default period used for eases
+            <para>Default: 0</para></summary>
+        </member>
         <member name="M:DG.Tweening.DOTween.Init(System.Boolean,DG.Tweening.LogBehaviour)">
             <summary>
             Must be called once, before the first ever DOTween call/reference,

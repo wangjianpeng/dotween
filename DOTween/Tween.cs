@@ -22,6 +22,7 @@
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
+using UnityEngine;
 
 namespace DG.Tweening
 {
@@ -61,6 +62,8 @@ namespace DG.Tweening
         internal bool isRelative;
         internal Ease easeType;
         internal EaseFunction customEase; // Used both for AnimationCurve and custom eases
+        internal float easeOvershootOrAmplitude;
+        internal float easePeriod;
 
         // SETUP DATA ////////////////////////////////////////////////
 
