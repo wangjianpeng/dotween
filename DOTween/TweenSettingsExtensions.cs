@@ -277,6 +277,32 @@ namespace DG.Tweening
             t.customEase = null;
             return t;
         }
+        /// <summary>Sets the ease of the tween.
+        /// <para>Has no effect on Sequences</para></summary>
+        /// <param name="overshoot">Eventual overshoot to use with Back ease (default is 1.70158)</param>
+        public static T SetEase<T>(this T t, Ease ease, float overshoot) where T : Tween
+        {
+            if (t.duration <= 0) return t;
+
+            t.easeType = ease;
+            t.easeOvershootOrAmplitude = overshoot;
+            t.customEase = null;
+            return t;
+        }
+        /// <summary>Sets the ease of the tween.
+        /// <para>Has no effect on Sequences</para></summary>
+        /// <param name="amplitude">Eventual amplitude to use with Elastic easeType (default is 1.70158)</param>
+        /// <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
+        public static T SetEase<T>(this T t, Ease ease, float amplitude, float period) where T : Tween
+        {
+            if (t.duration <= 0) return t;
+
+            t.easeType = ease;
+            t.easeOvershootOrAmplitude = amplitude;
+            t.easePeriod = period;
+            t.customEase = null;
+            return t;
+        }
         /// <summary>Sets the ease of the tween using an AnimationCurve.
         /// <para>Has no effect on Sequences</para></summary>
         public static T SetEase<T>(this T t, AnimationCurve animCurve) where T : Tween
