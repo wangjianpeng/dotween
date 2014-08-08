@@ -496,7 +496,7 @@ namespace DG.Tweening
         /// <para>You can also use this to know if a shortcut tween is active for its target,
         /// since in that case the target is automatically added as an ID.</para>
         /// <para>Example:</para>
-        /// <para><code>transform.DOMoveX(45, 1);</code></para>
+        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween id</code></para>
         /// <para><code>DOTween.IsTweening(transform); // Returns 1</code></para>
         /// </summary>
         public static int IsTweening(object id)
