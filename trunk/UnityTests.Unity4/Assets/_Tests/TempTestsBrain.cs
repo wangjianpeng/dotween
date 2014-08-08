@@ -69,5 +69,8 @@ public class TempTestsBrain : BrainBase
 		GUILayout.Label("Elapsed: " + tween.Elapsed(false));
 		GUILayout.Label("FullElapsed: " + tween.Elapsed());
 		GUILayout.Label("CompletedLoops: " + tween.CompletedLoops());
+
+		GUILayout.Space(10);
+		GUILayout.Label("IsTweening: " + DOTween.IsTweening(targets[1]));
 	}
 }

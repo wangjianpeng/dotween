@@ -24,6 +24,7 @@ namespace DG.Tweening.Core.Enums
     internal enum FilterType
     {
         All,
-        Id
+        Id,
+        DOGetter
     }
 }
