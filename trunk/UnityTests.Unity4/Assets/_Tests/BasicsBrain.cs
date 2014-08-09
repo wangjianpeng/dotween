@@ -27,6 +27,8 @@ public class BasicsBrain : BrainBase
 
 	void Start()
 	{
+		DOTween.Init(false, LogBehaviour.ErrorsOnly);
+
 		// Set RectOffset since it can't be set before
 		rectOffsetToTween = new RectOffset(0, 0, 0, 0);
 

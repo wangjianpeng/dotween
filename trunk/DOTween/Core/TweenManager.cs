@@ -578,6 +578,7 @@ namespace DG.Tweening.Core
 
             int shift = 1;
             int len = _maxActiveLookupId + 1;
+            _maxActiveLookupId = _reorganizeFromId - 1;
             for (int i = _reorganizeFromId + 1; i < len; ++i) {
                 Tween t = _activeTweens[i];
                 if (t == null) {

@@ -41,7 +41,7 @@ public class TempTestsBrain : BrainBase
 		yield return new WaitForSeconds(1);
 
 		targets[1].DOScaleFrom(Vector3.zero, 1).SetEase(Ease.OutBack);
-		HOTween.From(targets[2], 1, new TweenParms().Prop("localScale", Vector3.zero).Ease(EaseType.EaseOutBack));
+		targets[2].DOMove(Vector3.one, 1);
 	}
 
 	void OnGUI()
