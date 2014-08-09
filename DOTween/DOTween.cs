@@ -467,7 +467,7 @@ namespace DG.Tweening
         // OTHER STUFF //////////////////////////////////////////////////////
 
         /// <summary>
-        /// Kills all tweens, clears all pools and resets the max Tweeners/Sequences capacities to the default values.
+        /// Kills all tweens, clears all cached tween pools and plugins and resets the max Tweeners/Sequences capacities to the default values.
         /// </summary>
         /// <param name="destroy">If TRUE also destroys DOTween's gameObject and resets its initializiation, default settings and everything else
         /// (so that next time you use it it will need to be re-initialized)</param>
@@ -489,6 +489,14 @@ namespace DG.Tweening
             maxActiveTweenersReached = maxActiveSequencesReached = 0;
 
             Destroy(instance.gameObject);
+        }
+
+        /// <summary>
+        /// Clears all cached tween pools.
+        /// </summary>
+        public static void ClearCachedTweens()
+        {
+            TweenManager.PurgePools();
         }
 
         /// <summary>
