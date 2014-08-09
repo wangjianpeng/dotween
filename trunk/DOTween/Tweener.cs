@@ -85,7 +85,7 @@ namespace DG.Tweening
             t.duration = duration;
             // Defaults
             t.autoKill = DOTween.defaultAutoKill;
-            t.easeType = t.duration <= 0 ? Ease.InternalZero : DOTween.defaultEaseType;
+            t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
             t.easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
             t.easePeriod = DOTween.defaultEasePeriod;
             t.loopType = DOTween.defaultLoopType;
@@ -105,7 +105,7 @@ namespace DG.Tweening
             t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
             // Defaults
             t.autoKill = DOTween.defaultAutoKill;
-            t.easeType = t.duration <= 0 ? Ease.InternalZero : DOTween.defaultEaseType;
+            t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;
@@ -167,6 +167,9 @@ namespace DG.Tweening
 
             if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.duration, t.changeValue);
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+
+            // Applied here so that the eventual duration derived from a speedBased tween has been set
+            if (t.duration <= 0) t.easeType = Ease.InternalZero;
             
             return true;
         }
