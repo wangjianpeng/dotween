@@ -41,7 +41,7 @@ public class TempTestsBrain : BrainBase
 		yield return new WaitForSeconds(1);
 
 		targets[1].DOScaleFrom(Vector3.zero, 1).SetEase(Ease.OutBack);
-		targets[2].DOMove(Vector3.one, 1);
+		targets[2].DOMove(Vector3.zero, 1).SetSpeedBased();
 	}
 
 	void OnGUI()
