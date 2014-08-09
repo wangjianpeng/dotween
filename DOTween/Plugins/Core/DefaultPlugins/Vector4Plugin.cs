@@ -55,6 +55,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Vector4 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
         {
+            if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+
             startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);

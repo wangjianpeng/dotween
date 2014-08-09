@@ -52,6 +52,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Color Evaluate(ColorOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
         {
+            if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+
             if (!options.alphaOnly) {
                 startValue.r = EaseManager.Evaluate(t, elapsed, startValue.r, changeValue.r, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 startValue.g = EaseManager.Evaluate(t, elapsed, startValue.g, changeValue.g, duration, t.easeOvershootOrAmplitude, t.easePeriod);

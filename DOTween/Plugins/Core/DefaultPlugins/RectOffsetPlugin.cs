@@ -71,6 +71,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override RectOffset Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration)
         {
+            // Doesn't support LoopType.Incremental
+
             return new RectOffset(
                 (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
                 (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),

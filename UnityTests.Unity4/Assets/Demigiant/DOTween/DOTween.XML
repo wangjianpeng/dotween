@@ -311,12 +311,12 @@
         </member>
         <member name="M:DG.Tweening.DOTween.IsTweening(System.Object)">
             <summary>
-            Returns the total number of tweens active (both playing and paused) with the given id.
+            Returns TRUE if a  tweens with the given ID is active (either playing or paused).
             <para>You can also use this to know if a shortcut tween is active for its target,
             since in that case the target is automatically added as an ID.</para>
             <para>Example:</para>
-            <para><code>transform.DOMoveX(45, 1);</code></para>
-            <para><code>DOTween.IsTweening(transform); // Returns 1</code></para>
+            <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween id</code></para>
+            <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
             </summary>
         </member>
         <member name="M:DG.Tweening.DOTween.Complete">
@@ -639,6 +639,11 @@
         </member>
         <member name="F:DG.Tweening.LoopType.Yoyo">
             <summary>The tween moves forward and backwards at alternate cycles</summary>
+        </member>
+        <member name="F:DG.Tweening.LoopType.Incremental">
+            <summary>Continuously increments the tween at the end of each loop cycle (A to B, B to B+(A-B), and so on),
+            thus always moving "onward".
+            <para>Doesn't work with Rect, String and RectOffset values, where it will revert to Restart</para></summary>
         </member>
         <member name="T:DG.Tweening.TweenExtensions">
             <summary>

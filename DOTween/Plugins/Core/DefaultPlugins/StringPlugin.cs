@@ -60,6 +60,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
         // ChangeValue is the same as endValue in this plugin
         public override string Evaluate(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
         {
+            // Doesn't support LoopType.Incremental
+
             _Buffer.Remove(0, _Buffer.Length);
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;

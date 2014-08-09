@@ -54,6 +54,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Vector3 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
+            if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+
             switch (options.axisConstraint) {
             case AxisConstraint.X:
                 Vector3 resX = getter();

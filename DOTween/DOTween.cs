@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.215";
+        public static readonly string Version = "0.7.220";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -492,16 +492,16 @@ namespace DG.Tweening
         }
 
         /// <summary>
-        /// Returns the total number of tweens active (both playing and paused) with the given id.
+        /// Returns TRUE if a  tweens with the given ID is active (either playing or paused).
         /// <para>You can also use this to know if a shortcut tween is active for its target,
         /// since in that case the target is automatically added as an ID.</para>
         /// <para>Example:</para>
         /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween id</code></para>
-        /// <para><code>DOTween.IsTweening(transform); // Returns 1</code></para>
+        /// <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
         /// </summary>
-        public static int IsTweening(object id)
+        public static bool IsTweening(object id)
         {
-            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.Id, id, false, 0);
+            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.Id, id, false, 0) > 0;
         }
 
         /// <summary>Completes all tweens and returns the number of actual tweens completed

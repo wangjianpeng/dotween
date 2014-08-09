@@ -54,6 +54,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override uint Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<uint> getter, float elapsed, uint startValue, uint changeValue, float duration)
         {
+            if (t.loopType == LoopType.Incremental) startValue += (uint)(changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops));
+
             return (uint)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod));
         }
     }
