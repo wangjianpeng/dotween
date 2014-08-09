@@ -500,7 +500,7 @@ namespace DG.Tweening
         }
 
         /// <summary>
-        /// Returns TRUE if a  tweens with the given ID is active (either playing or paused).
+        /// Returns TRUE if a tween with the given ID is active (either playing or paused).
         /// <para>You can also use this to know if a shortcut tween is active for its target,
         /// since in that case the target is automatically added as an ID.</para>
         /// <para>Example:</para>
