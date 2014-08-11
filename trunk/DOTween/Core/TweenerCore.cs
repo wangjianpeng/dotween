@@ -58,49 +58,52 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        public override void ChangeStartValue<T>(T newStartValue, float newDuration = -1)
+        public override Tweener ChangeStartValue<T>(T newStartValue, float newDuration = -1)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
-                return;
+                return this;
             }
             if (typeof(T) != typeofT2) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newStartValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
-                return;
+                return this;
             }
 
-            DoChangeStartValue(this, (T2)Convert.ChangeType(newStartValue, typeofT2), newDuration);
+//            DoChangeStartValue(this, (T2)Convert.ChangeType(newStartValue, typeofT2), newDuration);
+            return DoChangeStartValue(this, (T2)(object)newStartValue, newDuration);
         }
 
-        public override void ChangeEndValue<T>(T newEndValue, bool snapStartValue)
-        { ChangeEndValue(newEndValue, -1, snapStartValue); }
+        public override Tweener ChangeEndValue<T>(T newEndValue, bool snapStartValue)
+        { return ChangeEndValue(newEndValue, -1, snapStartValue); }
 
-        public override void ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false)
+        public override Tweener ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
-                return;
+                return this;
             }
             if (typeof(T) != typeofT2) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
-                return;
+                return this;
             }
 
-            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration, snapStartValue);
+//            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration, snapStartValue);
+            return DoChangeEndValue(this, (T2)(object)newEndValue, newDuration, snapStartValue);
         }
 
-        public override void ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1)
+        public override Tweener ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
-                return;
+                return this;
             }
             if (typeof(T) != typeofT2) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeValues: incorrect value type (is " + typeof(T) + ", should be " + typeofT2 + ")");
-                return;
+                return this;
             }
 
-            DoChangeValues(this, (T2)Convert.ChangeType(newStartValue, typeofT2), (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration);
+//            DoChangeValues(this, (T2)Convert.ChangeType(newStartValue, typeofT2), (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration);
+            return DoChangeValues(this, (T2)(object)newStartValue, (T2)(object)newEndValue, newDuration);
         }
 
         // ===================================================================================

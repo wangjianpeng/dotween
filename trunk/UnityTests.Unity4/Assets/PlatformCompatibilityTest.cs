@@ -36,7 +36,7 @@ public class PlatformCompatibilityTest : MonoBehaviour
 
 		// Create sequence
 		Sequence seq = DOTween.Sequence().SetLoops(-1, LoopType.Restart).OnStepComplete(Success);
-		seq.Append(multiCube.DORotate(new Vector3(0, 720, 360), 2.25f));
+		seq.Append(multiCube.DORotate(new Vector3(0, 720, 360), 2.25f).SetEase(Ease.Linear));
 		foreach (Transform trans in ts) {
 			Transform t = trans;
 			seq.Insert(0, t.DOScale(Vector3.one * 0.5f, 1f));
