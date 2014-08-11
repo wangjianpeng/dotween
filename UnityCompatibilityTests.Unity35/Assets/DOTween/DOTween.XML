@@ -368,19 +368,19 @@
             (meaning the tweens with the given id that were not already playing or complete)</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.PlayBackwards">
-            <summary>Plays backwards all tweens and returns the number of actual tweens played
+            <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
             (meaning tweens that were not already started, playing backwards or rewinded)</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.PlayBackwards(System.Object)">
-            <summary>Plays backwards all tweens with the given ID and returns the number of actual tweens played
+            <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
             (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.PlayForward">
-            <summary>Plays forward all tweens and returns the number of actual tweens played
+            <summary>Plays all tweens in forward direction and returns the number of actual tweens played
             (meaning tweens that were not already playing forward or complete)</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.PlayForward(System.Object)">
-            <summary>Plays forward all tweens with the given ID and returns the number of actual tweens played
+            <summary>Plays all tweens with the given ID in forward direction and returns the number of actual tweens played
             (meaning the tweens with the given id that were not already playing forward or complete)</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.Restart(System.Boolean)">
@@ -628,26 +628,26 @@
             <summary>Called the moment the tween reaches completion (loops included)</summary>
         </member>
         <member name="M:DG.Tweening.Tweener.ChangeStartValue``1(``0,System.Single)">
-            <summary>Changes the start value of a tween and rewinds it (without pausing it).
+            <summary>Changes the start value of a tween and rewinds it.
             Has no effect with tweens that are inside Sequences</summary>
             <param name="newStartValue">The new start value</param>
             <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
         </member>
         <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0,System.Single,System.Boolean)">
-            <summary>Changes the end value of a tween and rewinds it (without pausing it).
+            <summary>Changes the end value of a tween and rewinds it.
             Has no effect with tweens that are inside Sequences</summary>
             <param name="newEndValue">The new end value</param>
             <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
             <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
         </member>
         <member name="M:DG.Tweening.Tweener.ChangeEndValue``1(``0,System.Boolean)">
-            <summary>Changes the end value of a tween and rewinds it (without pausing it).
+            <summary>Changes the end value of a tween and rewinds it.
             Has no effect with tweens that are inside Sequences</summary>
             <param name="newEndValue">The new end value</param>
             <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
         </member>
         <member name="M:DG.Tweening.Tweener.ChangeValues``1(``0,``0,System.Single)">
-            <summary>Changes the start and end value of a tween and rewinds it (without pausing it).
+            <summary>Changes the start and end value of a tween and rewinds it.
             Has no effect with tweens that are inside Sequences</summary>
             <param name="newStartValue">The new start value</param>
             <param name="newEndValue">The new end value</param>
@@ -696,10 +696,10 @@
             <summary>Plays the tween</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.PlayBackwards(DG.Tweening.Tween)">
-            <summary>Sets the tween in a backwards direction and plays it</summary>
+            <summary>Sets the tween in a forward direction and plays it</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.PlayForward(DG.Tweening.Tween)">
-            <summary>Sets the tween in a forward direction and plays it</summary>
+            <summary>Sets the tween in a backwards direction and plays it</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Restart(DG.Tweening.Tween,System.Boolean)">
             <summary>Restarts the tween from the beginning</summary>

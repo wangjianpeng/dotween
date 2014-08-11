@@ -13,6 +13,7 @@ public class TempTestsBrain : BrainBase
 	public LoopType loopType = LoopType.Yoyo;
 	public float delay = 1.5f;
 	public Transform[] targets;
+	public float testFloat;
 
 	Tween tween;
 
@@ -42,6 +43,14 @@ public class TempTestsBrain : BrainBase
 
 		targets[1].DOScaleFrom(Vector3.zero, 1).SetEase(Ease.OutBack);
 		targets[2].DOMove(Vector3.zero, 1).SetSpeedBased();
+
+		// Test
+		Debug.Log(Time.realtimeSinceStartup + " START");
+		float ms = 0;
+		testFloat = ms;
+		DOTween.To(() => testFloat, s => testFloat = s, 0f, ms / 1000).
+            SetEase(Ease.Linear).
+            OnComplete(()=> Debug.Log(Time.realtimeSinceStartup + " COMPLETE"));
 	}
 
 	void OnGUI()

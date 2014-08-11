@@ -37,30 +37,30 @@ namespace DG.Tweening
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        /// <summary>Changes the start value of a tween and rewinds it.
+        /// <summary>Changes the start value of a tween and rewinds it (without pausing it).
         /// Has no effect with tweens that are inside Sequences</summary>
         /// <param name="newStartValue">The new start value</param>
         /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
-        public abstract void ChangeStartValue<T>(T newStartValue, float newDuration = -1);
+        public abstract Tweener ChangeStartValue<T>(T newStartValue, float newDuration = -1);
 
-        /// <summary>Changes the end value of a tween and rewinds it.
+        /// <summary>Changes the end value of a tween and rewinds it (without pausing it).
         /// Has no effect with tweens that are inside Sequences</summary>
         /// <param name="newEndValue">The new end value</param>
         /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
         /// <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
-        public abstract void ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false);
-        /// <summary>Changes the end value of a tween and rewinds it.
+        public abstract Tweener ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false);
+        /// <summary>Changes the end value of a tween and rewinds it (without pausing it).
         /// Has no effect with tweens that are inside Sequences</summary>
         /// <param name="newEndValue">The new end value</param>
         /// <param name="snapStartValue">If TRUE the start value will become the current target's value, otherwise it will stay the same</param>
-        public abstract void ChangeEndValue<T>(T newEndValue, bool snapStartValue);
+        public abstract Tweener ChangeEndValue<T>(T newEndValue, bool snapStartValue);
 
-        /// <summary>Changes the start and end value of a tween and rewinds it.
+        /// <summary>Changes the start and end value of a tween and rewinds it (without pausing it).
         /// Has no effect with tweens that are inside Sequences</summary>
         /// <param name="newStartValue">The new start value</param>
         /// <param name="newEndValue">The new end value</param>
         /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
-        public abstract void ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1);
+        public abstract Tweener ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
@@ -175,7 +175,7 @@ namespace DG.Tweening
         }
 
         // CALLED BY TweenerCore
-        internal static void DoChangeStartValue<T1, T2, TPlugOptions>(
+        internal static Tweener DoChangeStartValue<T1, T2, TPlugOptions>(
             TweenerCore<T1, T2, TPlugOptions> t, T2 newStartValue, float newDuration
         )
             where TPlugOptions : struct
@@ -195,10 +195,12 @@ namespace DG.Tweening
 
             // Force rewind
             DoGoto(t, 0, 0, UpdateMode.Goto);
+
+            return t;
         }
 
         // CALLED BY TweenerCore
-        internal static void DoChangeEndValue<T1, T2, TPlugOptions>(
+        internal static Tweener DoChangeEndValue<T1, T2, TPlugOptions>(
             TweenerCore<T1, T2, TPlugOptions> t, T2 newEndValue, float newDuration, bool snapStartValue
         )
             where TPlugOptions : struct
@@ -215,7 +217,7 @@ namespace DG.Tweening
                         } catch (UnassignedReferenceException) {
                             // Target/field doesn't exist: kill tween
                             TweenManager.Despawn(t);
-                            return;
+                            return null;
                         }
                     } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
                     t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
@@ -235,9 +237,11 @@ namespace DG.Tweening
 
             // Force rewind
             DoGoto(t, 0, 0, UpdateMode.Goto);
+
+            return t;
         }
 
-        internal static void DoChangeValues<T1, T2, TPlugOptions>(
+        internal static Tweener DoChangeValues<T1, T2, TPlugOptions>(
             TweenerCore<T1, T2, TPlugOptions> t, T2 newStartValue, T2 newEndValue, float newDuration
         )
             where TPlugOptions : struct
@@ -259,6 +263,8 @@ namespace DG.Tweening
 
             // Force rewind
             DoGoto(t, 0, 0, UpdateMode.Goto);
+
+            return t;
         }
     }
 }

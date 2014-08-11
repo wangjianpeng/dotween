@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.225";
+        public static readonly string Version = "0.7.255";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -590,13 +590,13 @@ namespace DG.Tweening
             return TweenManager.FilteredOperation(OperationType.Play, FilterType.Id, id, false, 0);
         }
 
-        /// <summary>Plays all tweens in backwards direction and returns the number of actual tweens played
+        /// <summary>Plays backwards all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards()
         {
             return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, null, false, 0);
         }
-        /// <summary>Plays all tweens with the given ID in backwards direction and returns the number of actual tweens played
+        /// <summary>Plays backwards all tweens with the given ID and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
         public static int PlayBackwards(object id)
         {
@@ -604,13 +604,13 @@ namespace DG.Tweening
             return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.Id, id, false, 0);
         }
 
-        /// <summary>Plays all tweens in forward direction and returns the number of actual tweens played
+        /// <summary>Plays forward all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already playing forward or complete)</summary>
         public static int PlayForward()
         {
             return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, null, false, 0);
         }
-        /// <summary>Plays all tweens with the given ID in forward direction and returns the number of actual tweens played
+        /// <summary>Plays forward all tweens with the given ID and returns the number of actual tweens played
         /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
         public static int PlayForward(object id)
         {

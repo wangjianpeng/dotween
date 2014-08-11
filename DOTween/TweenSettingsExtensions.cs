@@ -39,8 +39,17 @@ namespace DG.Tweening
 
         /// <summary>Sets the autoKill behaviour of the tween. 
         /// Has no effect if the tween has already started</summary>
+        public static T SetAutoKill<T>(this T t) where T : Tween
+        {
+            if (t.creationLocked) return t;
+
+            t.autoKill = true;
+            return t;
+        }
+        /// <summary>Sets the autoKill behaviour of the tween. 
+        /// Has no effect if the tween has already started</summary>
         /// <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
-        public static T SetAutoKill<T>(this T t, bool autoKillOnCompletion = true) where T : Tween
+        public static T SetAutoKill<T>(this T t, bool autoKillOnCompletion) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -59,8 +68,22 @@ namespace DG.Tweening
         /// <summary>Sets the looping options for the tween. 
         /// Has no effect if the tween has already started</summary>
         /// <param name="loops">Number of cycles to play (-1 for infinite)</param>
-        /// <param name="loopType">Loop behaviour type</param>
-        public static T SetLoops<T>(this T t, int loops, LoopType loopType = LoopType.Restart) where T : Tween
+        public static T SetLoops<T>(this T t, int loops) where T : Tween
+        {
+            if (t.creationLocked) return t;
+
+            if (loops < -1) loops = -1;
+            else if (loops == 0) loops = 1;
+            t.loops = loops;
+            t.loopType = LoopType.Restart;
+            if (t.tweenType == TweenType.Tweener) t.fullDuration = loops > -1 ? t.duration * loops : Mathf.Infinity;
+            return t;
+        }
+        /// <summary>Sets the looping options for the tween. 
+        /// Has no effect if the tween has already started</summary>
+        /// <param name="loops">Number of cycles to play (-1 for infinite)</param>
+        /// <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
+        public static T SetLoops<T>(this T t, int loops, LoopType loopType) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -248,7 +271,17 @@ namespace DG.Tweening
         /// <summary>If isRelative is TRUE sets the tween as relative
         /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
-        public static T SetRelative<T>(this T t, bool isRelative = true) where T : Tween
+        public static T SetRelative<T>(this T t) where T : Tween
+        {
+            if (t.creationLocked) return t;
+
+            t.isRelative = true;
+            return t;
+        }
+        /// <summary>If isRelative is TRUE sets the tween as relative
+        /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
+        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
+        public static T SetRelative<T>(this T t, bool isRelative) where T : Tween
         {
             if (t.creationLocked) return t;
 
@@ -259,7 +292,17 @@ namespace DG.Tweening
         /// <summary>If isSpeedBased is TRUE sets the tween as speed based
         /// (the duration will represent the number of units the tween moves x second).
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
-        public static T SetSpeedBased<T>(this T t, bool isSpeedBased = true) where T : Tween
+        public static T SetSpeedBased<T>(this T t) where T : Tween
+        {
+            if (t.creationLocked) return t;
+
+            t.isSpeedBased = true;
+            return t;
+        }
+        /// <summary>If isSpeedBased is TRUE sets the tween as speed based
+        /// (the duration will represent the number of units the tween moves x second).
+        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
+        public static T SetSpeedBased<T>(this T t, bool isSpeedBased) where T : Tween
         {
             if (t.creationLocked) return t;
 

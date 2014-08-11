@@ -112,7 +112,7 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the tween in a forward direction and plays it</summary>
+        /// <summary>Sets the tween in a backwards direction and plays it</summary>
         public static void PlayBackwards(this Tween t)
         {
             if (!t.active) {
@@ -123,7 +123,7 @@ namespace DG.Tweening
             TweenManager.PlayBackwards(t);
         }
 
-        /// <summary>Sets the tween in a backwards direction and plays it</summary>
+        /// <summary>Sets the tween in a forward direction and plays it</summary>
         public static void PlayForward(this Tween t)
         {
             if (!t.active) {
