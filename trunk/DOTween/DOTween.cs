@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.260";
+        public static readonly string Version = "0.7.265";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -84,6 +84,7 @@ namespace DG.Tweening
 
         // ===================================================================================
         // UNITY METHODS ---------------------------------------------------------------------
+        #region Unity Methods
 
         void Awake()
         {
@@ -113,9 +114,11 @@ namespace DG.Tweening
                 Debugger.LogReport(s);
             }
         }
+        #endregion
 
         // ===================================================================================
         // YIELD COROUTINES ------------------------------------------------------------------
+        #region Yield Coroutines
 
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be complete (or killed)
         internal IEnumerator WaitForCompletion(Tween t)
@@ -146,9 +149,11 @@ namespace DG.Tweening
         {
             while (t.active && !t.playedOnce) yield return 0;
         }
+        #endregion
 
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
+        #region Public Methods
 
         /// <summary>
         /// Must be called once, before the first ever DOTween call/reference,
@@ -197,8 +202,55 @@ namespace DG.Tweening
             TweenManager.SetCapacities(tweenersCapacity, sequencesCapacity);
         }
 
+        /// <summary>
+        /// Kills all tweens, clears all cached tween pools and plugins and resets the max Tweeners/Sequences capacities to the default values.
+        /// </summary>
+        /// <param name="destroy">If TRUE also destroys DOTween's gameObject and resets its initializiation, default settings and everything else
+        /// (so that next time you use it it will need to be re-initialized)</param>
+        public static void Clear(bool destroy = false)
+        {
+            TweenManager.PurgeAll();
+            PluginsManager.PurgeAll();
+            if (!destroy) return;
+
+            _initialized = false;
+            useSafeMode = false;
+            showUnityEditorReport = false;
+            timeScale = 1;
+            logBehaviour = LogBehaviour.Default;
+            defaultEaseType = Ease.OutQuad;
+            defaultAutoPlay = AutoPlay.All;
+            defaultLoopType = LoopType.Restart;
+            defaultAutoKill = true;
+            maxActiveTweenersReached = maxActiveSequencesReached = 0;
+
+            Destroy(instance.gameObject);
+        }
+
+        /// <summary>
+        /// Clears all cached tween pools.
+        /// </summary>
+        public static void ClearCachedTweens()
+        {
+            TweenManager.PurgePools();
+        }
+
+        /// <summary>
+        /// Returns TRUE if a tween with the given ID is active (either playing or paused).
+        /// <para>You can also use this to know if a shortcut tween is active for its target,
+        /// since in that case the target is automatically added as an ID.</para>
+        /// <para>Example:</para>
+        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween id</code></para>
+        /// <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
+        /// </summary>
+        public static bool IsTweening(object id)
+        {
+            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.Id, id, false, 0) > 0;
+        }
+        #endregion
+
         // ===================================================================================
-        // PUBLIC TWEEN METHODS --------------------------------------------------------------
+        // PUBLIC TWEEN CREATION METHODS -----------------------------------------------------
 
         // Sadly can't make generic versions of default tweens with additional options
         // where the TO method doesn't contain the options param, otherwise the correct Option type won't be inferred.
@@ -206,8 +258,7 @@ namespace DG.Tweening
         // Also, Unity has a bug which doesn't allow method overloading with its own implicitly casteable types (like Vector4 and Color)
         // and additional parameters, so in those cases I have to create overloads instead than using optionals. ARARGH!
 
-        /////////////////////////////////////////////////////////////////////
-        // TWEENER TO ///////////////////////////////////////////////////////
+        #region Tween TO
 
         /// <summary>Tweens a property or field to the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
@@ -326,9 +377,9 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         public static Tweener ToAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue, float duration)
         { return ApplyTo<Color, Color, ColorOptions>(getter, setter, new Color(0, 0, 0, endValue), duration, false).SetOptions(true); }
+        #endregion
 
-        /////////////////////////////////////////////////////////////////////
-        // TWEENER FROM /////////////////////////////////////////////////////
+        #region Tween FROM
 
         /// <summary>Tweens a property or field from the given value using default plugins</summary>
         /// <param name="getter">A getter for the field or property to tween.
@@ -447,9 +498,9 @@ namespace DG.Tweening
         /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         public static Tweener FromAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float fromValue, float duration)
         { return ApplyTo<Color, Color, ColorOptions>(getter, setter, new Color(0, 0, 0, fromValue), duration, true).SetOptions(true); }
+        #endregion
 
-        /////////////////////////////////////////////////////////////////////
-        // NEW SEQUENCES ////////////////////////////////////////////////////
+        #region Tween SEQUENCE
 
         /// <summary>
         /// Returns a new <see cref="Sequence"/> to be used for tween groups
@@ -461,55 +512,11 @@ namespace DG.Tweening
             Tweening.Sequence.Setup(sequence);
             return sequence;
         }
+        #endregion
 
         /////////////////////////////////////////////////////////////////////
         // OTHER STUFF //////////////////////////////////////////////////////
-
-        /// <summary>
-        /// Kills all tweens, clears all cached tween pools and plugins and resets the max Tweeners/Sequences capacities to the default values.
-        /// </summary>
-        /// <param name="destroy">If TRUE also destroys DOTween's gameObject and resets its initializiation, default settings and everything else
-        /// (so that next time you use it it will need to be re-initialized)</param>
-        public static void Clear(bool destroy = false)
-        {
-            TweenManager.PurgeAll();
-            PluginsManager.PurgeAll();
-            if (!destroy) return;
-
-            _initialized = false;
-            useSafeMode = false;
-            showUnityEditorReport = false;
-            timeScale = 1;
-            logBehaviour = LogBehaviour.Default;
-            defaultEaseType = Ease.OutQuad;
-            defaultAutoPlay = AutoPlay.All;
-            defaultLoopType = LoopType.Restart;
-            defaultAutoKill = true;
-            maxActiveTweenersReached = maxActiveSequencesReached = 0;
-
-            Destroy(instance.gameObject);
-        }
-
-        /// <summary>
-        /// Clears all cached tween pools.
-        /// </summary>
-        public static void ClearCachedTweens()
-        {
-            TweenManager.PurgePools();
-        }
-
-        /// <summary>
-        /// Returns TRUE if a tween with the given ID is active (either playing or paused).
-        /// <para>You can also use this to know if a shortcut tween is active for its target,
-        /// since in that case the target is automatically added as an ID.</para>
-        /// <para>Example:</para>
-        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween id</code></para>
-        /// <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
-        /// </summary>
-        public static bool IsTweening(object id)
-        {
-            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.Id, id, false, 0) > 0;
-        }
+        #region Play Operations
 
         /// <summary>Completes all tweens and returns the number of actual tweens completed
         /// (meaning tweens that don't have infinite loops and were not already complete)</summary>
@@ -657,6 +664,7 @@ namespace DG.Tweening
             if (id == null) return 0;
             return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.Id, id, false, 0);
         }
+        #endregion
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------

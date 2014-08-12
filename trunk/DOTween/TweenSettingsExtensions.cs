@@ -34,8 +34,7 @@ namespace DG.Tweening
     /// </summary>
     public static class TweenSettingsExtensions
     {
-        // ===================================================================================
-        // TWEENER + SEQUENCES ---------------------------------------------------------------
+        #region Tweeners + Sequences
 
         /// <summary>Sets the autoKill behaviour of the tween. 
         /// Has no effect if the tween has already started</summary>
@@ -157,9 +156,9 @@ namespace DG.Tweening
 
             return target;
         }
+        #endregion
 
-        // ===================================================================================
-        // SEQUENCES -------------------------------------------------------------------------
+        #region Sequences-only
 
         /// <summary>Adds the given tween to the end of the Sequence. 
         /// Has no effect if the Sequence has already started</summary>
@@ -253,9 +252,9 @@ namespace DG.Tweening
             Sequence.DoInsertCallback(s, callback, atPosition);
             return s;
         }
+        #endregion
 
-        // ===================================================================================
-        // TWEENERS --------------------------------------------------------------------------
+        #region Tweeners-only
 
         /// <summary>Sets a delayed startup for the tween.
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
@@ -436,5 +435,6 @@ namespace DG.Tweening
             t.plugOptions = new StringOptions(scramble);
             return t;
         }
+        #endregion
     }
 }

@@ -34,8 +34,7 @@ namespace DG.Tweening
         // ===================================================================================
         // TWEENERS + SEQUENCES --------------------------------------------------------------
 
-        ///////////////////////////////////////////////////
-        // Play operations ////////////////////////////////
+        #region Runtime Operations
 
         /// <summary>Completes the tween</summary>
         public static void Complete(this Tween t)
@@ -168,9 +167,9 @@ namespace DG.Tweening
 
             TweenManager.TogglePause(t);
         }
+        #endregion
 
-        ///////////////////////////////////////////////////
-        // Yield Coroutines ///////////////////////////////
+        #region Yield Coroutines
 
         /// <summary>
         /// Creates a yield instruction that waits until the tween is killed or complete.
@@ -249,9 +248,9 @@ namespace DG.Tweening
 
             return DOTween.instance.StartCoroutine(DOTween.instance.WaitForStart(t));
         }
+        #endregion
 
-        ///////////////////////////////////////////////////
-        // Info getters ///////////////////////////////////
+        #region Info Getters
 
         /// <summary>Returns the total number of loops completed by this tween</summary>
         public static int CompletedLoops(this Tween t)
@@ -337,5 +336,6 @@ namespace DG.Tweening
 
             return t.isPlaying;
         }
+        #endregion
     }
 }
