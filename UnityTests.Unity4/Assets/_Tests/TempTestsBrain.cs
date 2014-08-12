@@ -44,13 +44,9 @@ public class TempTestsBrain : BrainBase
 		targets[1].DOScaleFrom(Vector3.zero, 1).SetEase(Ease.OutBack);
 		targets[2].DOMove(Vector3.zero, 1).SetSpeedBased();
 
-		// Test
-		Debug.Log(Time.realtimeSinceStartup + " START");
-		float ms = 0;
-		testFloat = ms;
-		DOTween.To(() => testFloat, s => testFloat = s, 0f, ms / 1000).
-            SetEase(Ease.Linear).
-            OnComplete(()=> Debug.Log(Time.realtimeSinceStartup + " COMPLETE"));
+		// targets[3].DORotate(new Vector3(0, 180, 0), 1).SetLoops(-1, LoopType.Yoyo);
+		// targets[4].DOLocalRotate(new Vector3(180, 0, 0), 1).SetLoops(-1, LoopType.Yoyo);
+		targets[4].DOLocalRotate(new Vector3(0, 180, 0), 1).SetLoops(-1, LoopType.Yoyo);
 	}
 
 	void OnGUI()
