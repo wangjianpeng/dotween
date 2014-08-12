@@ -83,7 +83,7 @@ namespace DG.Tweening
         internal float fullDuration; // Total duration loops included
         internal int completedLoops;
         internal bool isPlaying; // Set by TweenManager when getting a new tween
-        internal bool isComplete;
+        public bool isComplete;
         internal float elapsedDelay; // Amount of eventual delay elapsed (shared by Sequences only for compatibility reasons, otherwise not used)
         internal bool delayComplete = true; // TRUE when the delay has elapsed or isn't set, also set by Delay extension method (shared by Sequences only for compatibility reasons, otherwise not used)
 
@@ -98,7 +98,7 @@ namespace DG.Tweening
             isBackwards = false;
             id = null;
             updateType = UpdateType.Default;
-            onStart = onComplete = onStepComplete = null;
+            onStart = onUpdate = onComplete = onStepComplete = null;
 
             isFrom = isSpeedBased = false;
             duration = 0;
