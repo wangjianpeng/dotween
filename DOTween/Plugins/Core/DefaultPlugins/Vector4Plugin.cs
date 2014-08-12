@@ -43,7 +43,18 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Vector4 GetChangeValue(VectorOptions options, Vector4 startValue, Vector4 endValue)
         {
-            return endValue - startValue;
+            switch (options.axisConstraint) {
+            case AxisConstraint.X:
+                return new Vector4(endValue.x - startValue.x, 0, 0, 0);
+            case AxisConstraint.Y:
+                return new Vector4(0, endValue.y - startValue.y, 0, 0);
+            case AxisConstraint.Z:
+                return new Vector4(0, 0, endValue.z - startValue.z, 0);
+            case AxisConstraint.W:
+                return new Vector4(0, 0, 0, endValue.w - startValue.w);
+            default:
+                return endValue - startValue;
+            }
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, Vector4 changeValue)
