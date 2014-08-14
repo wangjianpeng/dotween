@@ -1,6 +1,7 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2014/07/28 10:40
 
+using DG.Tweening.Core.Enums;
 using UnityEngine;
 
 #pragma warning disable 1573
@@ -17,376 +18,397 @@ namespace DG.Tweening
         #region Transform Shortcuts
 
         /// <summary>Tweens a Transform's position to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMove(this Transform target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.position, x => target.position = x, endValue, duration).SetId(target);
+            return DOTween.To(() => target.position, x => target.position = x, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Transform's position from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveFrom(this Transform target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.position, x => target.position = x, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.position, x => target.position = x, fromValue, duration).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's X position to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveX(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(endValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's X position from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveXFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.position, x => target.position = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Y position to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveY(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's Y position from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveYFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.position, x => target.position = x, new Vector3(0, fromValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Z position to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveZ(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(0, 0, endValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's Z position from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveZFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.position, x => target.position = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's localPosition to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMove(this Transform target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.localPosition, x => target.localPosition = x, endValue, duration).SetId(target);
+            return DOTween.To(() => target.localPosition, x => target.localPosition = x, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Transform's localPosition from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveFrom(this Transform target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.localPosition, x => target.localPosition = x, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.localPosition, x => target.localPosition = x, fromValue, duration).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's X localPosition to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveX(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(endValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's X localPosition from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveXFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Y localPosition to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveY(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's Y localPosition from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveYFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(0, fromValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Z localPosition to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveZ(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(0, 0, endValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's Z localPosition from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalMoveZFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's rotation to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DORotate(this Transform target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration).SetId(target);
+            return DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Transform's rotation from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DORotateFrom(this Transform target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.rotation, x => target.rotation = x, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.rotation, x => target.rotation = x, fromValue, duration).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's localRotation to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalRotate(this Transform target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.localRotation, x => target.localRotation = x, endValue, duration).SetId(target);
+            return DOTween.To(() => target.localRotation, x => target.localRotation = x, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Transform's localRotation from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalRotateFrom(this Transform target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.localRotation, x => target.localRotation = x, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.localRotation, x => target.localRotation = x, fromValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Transform's rotation to the given value, using its local axis system
+        /// (like when rotating an object with the "local" switch enabled in Unity's editor).
+        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalAxisRotate(this Transform target, Vector3 endValue, float duration)
+        {
+            return DOTween.To(() => Quaternion.identity, x => target.localRotation = x, endValue, duration)
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+        }
+        /// <summary>Tweens a Transform's rotation from the given value to its current one, using its local axis system
+        /// (like when rotating an object with the "local" switch enabled in Unity's editor).
+        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalAxisRotateFrom(this Transform target, Vector3 endValue, float duration)
+        {
+            return DOTween.From(() => Quaternion.identity, x => target.localRotation = x, endValue, duration)
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's localScale to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScale(this Transform target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.localScale, x => target.localScale = x, endValue, duration).SetId(target);
+            return DOTween.To(() => target.localScale, x => target.localScale = x, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Transform's localScale from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleFrom(this Transform target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.localScale, x => target.localScale = x, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.localScale, x => target.localScale = x, fromValue, duration).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's X localScale to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleX(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localScale, x => target.localScale = x, new Vector3(endValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's X localScale from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleXFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.localScale, x => target.localScale = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Y localScale to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleY(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localScale, x => target.localScale = x, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's Y localScale from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleYFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.localScale, x => target.localScale = x, new Vector3(0, fromValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Z localScale to the given value.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleZ(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localScale, x => target.localScale = x, new Vector3(0, 0, endValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Transform's Z localScale from the given value to its current one.
-        /// Also adds the transform as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOScaleZFrom(this Transform target, float fromValue, float duration)
         {
             return DOTween.From(() => target.localScale, x => target.localScale = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
         #endregion
 
         #region Rigidbody Shortcuts
 
         /// <summary>Tweens a Rigidbody's position to the given value.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMove(this Rigidbody target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.position, target.MovePosition, endValue, duration).SetId(target);
+            return DOTween.To(() => target.position, target.MovePosition, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's position from the given value to its current one.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveFrom(this Rigidbody target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.position, target.MovePosition, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.position, target.MovePosition, fromValue, duration).SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's X position to the given value.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveX(this Rigidbody target, float endValue, float duration)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(endValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's X position from the given value to its current one.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveXFrom(this Rigidbody target, float fromValue, float duration)
         {
             return DOTween.From(() => target.position, target.MovePosition, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's Y position to the given value.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveY(this Rigidbody target, float endValue, float duration)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's Y position from the given value to its current one.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveYFrom(this Rigidbody target, float fromValue, float duration)
         {
             return DOTween.From(() => target.position, target.MovePosition, new Vector3(0, fromValue, 0), duration)
                 .SetOptions(AxisConstraint.Y)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's Z position to the given value.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveZ(this Rigidbody target, float endValue, float duration)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, 0, endValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's Z position from the given value to its current one.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOMoveZFrom(this Rigidbody target, float fromValue, float duration)
         {
             return DOTween.From(() => target.position, target.MovePosition, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
-                .SetId(target);
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's rotation to the given value.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration)
         {
-            return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration).SetId(target);
+            return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's rotation from the given value to its current one.
-        /// Also adds the rigidbody as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DORotateFrom(this Rigidbody target, Vector3 fromValue, float duration)
         {
-            return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration).SetTarget(target);
         }
         #endregion
 
         #region Material Shortcuts
 
         /// <summary>Tweens a Material's color to the given value.
-        /// Also adds the material as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOColor(this Material target, Color endValue, float duration)
         {
-            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetId(target);
+            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
         }
         /// <summary>Tweens a Material's color from the given value to its current one.
-        /// Also adds the material as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOColorFrom(this Material target, Color fromValue, float duration)
         {
-            return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetId(target);
+            return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetTarget(target);
         }
 
         /// <summary>Tweens a Material's alpha color to the given value
         /// (will have no effect unless your material supports transparency).
-        /// Also adds the material as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOFade(this Material target, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
-                .SetId(target);
+                .SetTarget(target);
         }
         /// <summary>Tweens a Material's alpha color from the given value to its current one
         /// (will have no effect unless your material supports transparency).
-        /// Also adds the material as the tween Id so it can be used for filtered operations</summary>
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         public static Tweener DOFadeFrom(this Material target, float fromValue, float duration)
         {
             return DOTween.FromAlpha(() => target.color, x => target.color = x, fromValue, duration)
-                .SetId(target);
+                .SetTarget(target);
         }
         #endregion
 

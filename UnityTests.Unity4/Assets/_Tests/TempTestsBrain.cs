@@ -13,7 +13,7 @@ public class TempTestsBrain : BrainBase
 	public LoopType loopType = LoopType.Yoyo;
 	public float delay = 1.5f;
 	public Transform[] targets;
-	public float testFloat;
+	float testFloat;
 
 	Tween tween;
 
@@ -46,13 +46,35 @@ public class TempTestsBrain : BrainBase
 
 		// targets[3].DORotate(new Vector3(0, 180, 0), 1).SetLoops(-1, LoopType.Yoyo);
 		// targets[4].DOLocalRotate(new Vector3(180, 0, 0), 1).SetLoops(-1, LoopType.Yoyo);
-		targets[4].DOLocalRotate(new Vector3(0, 180, 0), 1).SetLoops(-1, LoopType.Yoyo);
+		targets[4].DOLocalRotate(new Vector3(0, 180, 0), 1)
+			.OnComplete(()=> Change(ref testFloat));
+		// targets[5].DOLocalRotate(new Vector3(0, 0, 90), 1).SetRelative()
+		// 	.OnComplete(()=> targets[5].DOLocalAxisRotate(new Vector3(0, 90, 0), 1));
+		
+		// DOTween.Sequence()
+			// .Append(targets[5].DOLocalAxisRotate(new Vector3(0, 0, 90), 1))
+			// .Append(targets[5].DOLocalAxisRotate(new Vector3(90, 0, 0), 1))
+			// .Append(targets[5].DOLocalAxisRotate(new Vector3(0, 90, 0), 1));
+		targets[5].DOLocalAxisRotate(new Vector3(0, 90, 90), 1);
+	}
+
+	void Update()
+	{
+		// Debug.Log(targets[5].eulerAngles + ", " + targets[5].localEulerAngles);
+	}
+
+	void Change(ref float f)
+	{
+		Debug.Log("testFloat: " + testFloat);
+		f = 69;
+		Debug.Log("  testFloat: " + testFloat);
 	}
 
 	void OnGUI()
 	{
 		if (GUILayout.Button("Play")) DOTween.Play();
 		if (GUILayout.Button("Pause")) DOTween.Pause();
+		if (GUILayout.Button("Restart")) DOTween.Restart();
 		if (GUILayout.Button("Complete")) DOTween.Complete();
 		if (GUILayout.Button("Goto 1000")) DOTween.Goto(1000);
 		if (GUILayout.Button("Goto 1.5")) DOTween.Goto(1.5f);

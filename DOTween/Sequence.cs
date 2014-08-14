@@ -135,6 +135,7 @@ namespace DG.Tweening
         // Called by DOTween when spawning/creating a new Sequence.
         internal static void Setup(Sequence s)
         {
+            s.autoKill = DOTween.defaultAutoKill;
             s.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlaySequences;
             s.loopType = DOTween.defaultLoopType;
         }
@@ -181,6 +182,7 @@ namespace DG.Tweening
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
+        // Returns TRUE if the tween needs to be killed
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode)
         {
             bool isGoingBackwards = toPos < fromPos;
@@ -195,6 +197,7 @@ namespace DG.Tweening
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         if (gotoPos < 0) gotoPos = 0;
                         Tween t = (Tween)sequentiable;
+                        if (!t.startupDone) continue; // since we're going backwards and this tween never started just ignore it
                         t.isBackwards = true;
 //                        Debug.Log("             < " + t.stringId + " " + fromPos + "/" + toPos + " : " + gotoPos);
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;

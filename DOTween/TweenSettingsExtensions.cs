@@ -21,6 +21,7 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins;
 using DG.Tweening.Plugins.Core;
 using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
@@ -441,6 +442,23 @@ namespace DG.Tweening
         public static Tweener SetOptions(this TweenerCore<string, string, StringOptions> t, bool scramble)
         {
             t.plugOptions = new StringOptions(scramble);
+            return t;
+        }
+        #endregion
+
+        #region Internals
+
+        // Used internally by DO shortcuts to set a tween's target
+        internal static T SetTarget<T>(this T t, object target) where T : Tween
+        {
+            t.target = target;
+            return t;
+        }
+
+        // Used internally by DO shortcuts to set special startup mode
+        internal static T SetSpecialStartupMode<T>(this T t, SpecialStartupMode mode) where T : Tween
+        {
+            t.specialStartupMode = mode;
             return t;
         }
         #endregion

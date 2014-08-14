@@ -23,6 +23,8 @@
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Core.DefaultPlugins;
+using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using UnityEngine;
 
 namespace DG.Tweening
@@ -153,6 +155,16 @@ namespace DG.Tweening
 
             if (t.isRelative) {
                 t.endValue = t.tweenPlugin.GetRelativeEndValue(t.plugOptions, t.startValue, t.endValue);
+            }
+
+            // Special startup operations
+            if (t.specialStartupMode == SpecialStartupMode.SetLocalAxisRotationSetter) {
+                try {
+                    QuaternionPlugin qp = t.tweenPlugin as QuaternionPlugin;
+                    qp.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, NoOptions>);
+                } catch {
+                    return false;
+                }
             }
 
             if (t.isFrom) {
