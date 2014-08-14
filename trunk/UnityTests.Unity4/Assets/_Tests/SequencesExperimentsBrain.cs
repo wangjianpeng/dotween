@@ -51,4 +51,12 @@ public class SequencesExperimentsBrain : BrainBase
 	{
 		return new Color(UnityEngine.Random.value, UnityEngine.Random.value, UnityEngine.Random.value, 1);
 	}
+
+	void OnGUI()
+	{
+		DGUtils.BeginGUI();
+		if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
+		if (GUILayout.Button("Restart")) DOTween.Restart();
+		DGUtils.EndGUI();
+	}
 }

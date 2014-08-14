@@ -406,8 +406,8 @@ namespace DG.Tweening.Core
                 case FilterType.All:
                     isFilterCompliant = true;
                     break;
-                case FilterType.Id:
-                    isFilterCompliant = id.Equals(t.id);
+                case FilterType.TargetOrId:
+                    isFilterCompliant = id.Equals(t.id) || id.Equals(t.target);
                     break;
                 }
                 if (isFilterCompliant) {

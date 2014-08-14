@@ -51,6 +51,7 @@ namespace DG.Tweening
         public TweenCallback onComplete;
         
         // Fixed after creation
+        internal object target; // Automatically set by DO shortcuts using SetTarget extension. Also used during Tweener.DoStartup in some special cases
         internal bool isFrom;
         internal bool isSpeedBased;
         internal bool autoKill;
@@ -73,6 +74,7 @@ namespace DG.Tweening
         internal bool active; // FALSE when tween is despawned - set only by TweenManager
         internal bool isSequenced; // Set by Sequence when adding a Tween to it
         internal int activeId = -1; // Index inside its active list (touched only by TweenManager)
+        internal SpecialStartupMode specialStartupMode;
 
         // PLAY DATA /////////////////////////////////////////////////
 
@@ -100,6 +102,7 @@ namespace DG.Tweening
             updateType = UpdateType.Default;
             onStart = onUpdate = onComplete = onStepComplete = null;
 
+            target = null;
             isFrom = isSpeedBased = false;
             duration = 0;
             loops = 1;
@@ -107,12 +110,14 @@ namespace DG.Tweening
             isRelative = false;
             customEase = null;
             isSequenced = false;
+            specialStartupMode = SpecialStartupMode.None;
             creationLocked = startupDone = playedOnce = false;
             position = fullDuration = completedLoops = 0;
             isPlaying = isComplete = false;
             elapsedDelay = 0;
             delayComplete = true;
 
+            // The following are set during a tween's Setup
 //            autoKill = DOTween.defaultAutoKill;
 //            loopType = DOTween.defaultLoopType;
 //            easeType = DOTween.defaultEaseType;

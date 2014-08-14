@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.270";
+        public static readonly string Version = "0.7.300";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -236,16 +236,15 @@ namespace DG.Tweening
         }
 
         /// <summary>
-        /// Returns TRUE if a tween with the given ID is active (either playing or paused).
-        /// <para>You can also use this to know if a shortcut tween is active for its target,
-        /// since in that case the target is automatically added as an ID.</para>
+        /// Returns TRUE if a tween with the given ID or target is active (either playing or paused).
+        /// <para>You can also use this to know if a shortcut tween is active for a given target.</para>
         /// <para>Example:</para>
-        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween id</code></para>
+        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween target</code></para>
         /// <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
         /// </summary>
-        public static bool IsTweening(object id)
+        public static bool IsTweening(object targetOrId)
         {
-            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.Id, id, false, 0) > 0;
+            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.TargetOrId, targetOrId, false, 0) > 0;
         }
         #endregion
 
@@ -516,6 +515,7 @@ namespace DG.Tweening
 
         /////////////////////////////////////////////////////////////////////
         // OTHER STUFF //////////////////////////////////////////////////////
+
         #region Play Operations
 
         /// <summary>Completes all tweens and returns the number of actual tweens completed
@@ -524,12 +524,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, null, false, 0);
         }
-        /// <summary>Completes all tweens with the given ID and returns the number of actual tweens completed
-        /// (meaning the tweens with the given id that don't have infinite loops and were not already complete)</summary>
-        public static int Complete(object id)
+        /// <summary>Completes all tweens with the given ID or target and returns the number of actual tweens completed
+        /// (meaning the tweens that don't have infinite loops and were not already complete)</summary>
+        public static int Complete(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
@@ -538,12 +538,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Flip, FilterType.All, null, false, 0);
         }
-        /// <summary>Flips the tweens with the given ID (changing their direction to forward if it was backwards and viceversa),
+        /// <summary>Flips the tweens with the given ID or target (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
-        public static int Flip(object id)
+        public static int Flip(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Flip, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
@@ -551,11 +551,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Goto, FilterType.All, null, andPlay, to);
         }
-        /// <summary>Sends all tweens with the given ID to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
-        public static int Goto(object id, float to, bool andPlay = false)
+        /// <summary>Sends all tweens with the given ID or target to the given position (calculating also eventual loop cycles)
+        /// and returns the actual tweens involved</summary>
+        public static int Goto(object targetOrId, float to, bool andPlay = false)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.Id, id, andPlay, to);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Goto, FilterType.TargetOrId, targetOrId, andPlay, to);
         }
 
         /// <summary>Kills all tweens and returns the number of actual tweens killed</summary>
@@ -563,11 +564,11 @@ namespace DG.Tweening
         {
             return TweenManager.DespawnAll();
         }
-        /// <summary>Kills all tweens with the given ID and returns the number of actual tweens killed</summary>
-        public static int Kill(object id)
+        /// <summary>Kills all tweens with the given ID or target and returns the number of actual tweens killed</summary>
+        public static int Kill(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
@@ -575,12 +576,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Pause, FilterType.All, null, false, 0);
         }
-        /// <summary>Pauses all tweens with the given ID and returns the number of actual tweens paused
-        /// (meaning the tweens with the given id that were actually playing and have been paused)</summary>
-        public static int Pause(object id)
+        /// <summary>Pauses all tweens with the given ID or target and returns the number of actual tweens paused
+        /// (meaning the tweens that were actually playing and have been paused)</summary>
+        public static int Pause(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Pause, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Plays all tweens and returns the number of actual tweens played
@@ -589,12 +590,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Play, FilterType.All, null, false, 0);
         }
-        /// <summary>Plays all tweens with the given ID and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing or complete)</summary>
-        public static int Play(object id)
+        /// <summary>Plays all tweens with the given ID or target and returns the number of actual tweens played
+        /// (meaning the tweens that were not already playing or complete)</summary>
+        public static int Play(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Play, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Play, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Plays backwards all tweens and returns the number of actual tweens played
@@ -603,12 +604,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, null, false, 0);
         }
-        /// <summary>Plays backwards all tweens with the given ID and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already started, playing backwards or rewinded)</summary>
-        public static int PlayBackwards(object id)
+        /// <summary>Plays backwards all tweens with the given ID or target and returns the number of actual tweens played
+        /// (meaning the tweens that were not already started, playing backwards or rewinded)</summary>
+        public static int PlayBackwards(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Plays forward all tweens and returns the number of actual tweens played
@@ -617,12 +618,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, null, false, 0);
         }
-        /// <summary>Plays forward all tweens with the given ID and returns the number of actual tweens played
-        /// (meaning the tweens with the given id that were not already playing forward or complete)</summary>
-        public static int PlayForward(object id)
+        /// <summary>Plays forward all tweens with the given ID or target and returns the number of actual tweens played
+        /// (meaning the tweens that were not already playing forward or complete)</summary>
+        public static int PlayForward(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
@@ -630,11 +631,11 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Restart, FilterType.All, null, includeDelay, 0);
         }
-        /// <summary>Restarts all tweens with the given ID, then returns the number of actual tweens restarted</summary>
-        public static int Restart(object id, bool includeDelay = true)
+        /// <summary>Restarts all tweens with the given ID or target, then returns the number of actual tweens restarted</summary>
+        public static int Restart(object targetOrId, bool includeDelay = true)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.Id, id, includeDelay, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Restart, FilterType.TargetOrId, targetOrId, includeDelay, 0);
         }
 
         /// <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
@@ -643,12 +644,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.All, null, includeDelay, 0);
         }
-        /// <summary>Rewinds and pauses all tweens with the given ID, then returns the number of actual tweens rewinded
-        /// (meaning the tweens with the given id that were not already rewinded)</summary>
-        public static int Rewind(object id, bool includeDelay = true)
+        /// <summary>Rewinds and pauses all tweens with the given ID or target, then returns the number of actual tweens rewinded
+        /// (meaning the tweens that were not already rewinded)</summary>
+        public static int Rewind(object targetOrId, bool includeDelay = true)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.Id, id, includeDelay, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.TargetOrId, targetOrId, includeDelay, 0);
         }
 
         /// <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
@@ -657,12 +658,12 @@ namespace DG.Tweening
         {
             return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.All, null, false, 0);
         }
-        /// <summary>Toggles the play state of all tweens with the given ID and returns the number of actual tweens toggled
-        /// (meaning the tweens with the given id that could be played or paused, depending on the toggle state)</summary>
-        public static int TogglePause(object id)
+        /// <summary>Toggles the play state of all tweens with the given ID or target and returns the number of actual tweens toggled
+        /// (meaning the tweens that could be played or paused, depending on the toggle state)</summary>
+        public static int TogglePause(object targetOrId)
         {
-            if (id == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.Id, id, false, 0);
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.TargetOrId, targetOrId, false, 0);
         }
         #endregion
 

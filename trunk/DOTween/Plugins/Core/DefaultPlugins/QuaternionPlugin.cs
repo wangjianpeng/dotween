@@ -61,5 +61,15 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             return Quaternion.Euler(startValue);
         }
+
+        // ===================================================================================
+        // SPECIFIC EXTAS --------------------------------------------------------------------
+
+        internal void SetLocalAxisSetter(TweenerCore<Quaternion, Vector3, NoOptions> t)
+        {
+            Transform trans = (Transform)t.target;
+            Quaternion localRot = trans.localRotation;
+            t.setter = x => trans.localRotation = localRot * x;
+        }
     }
 }
