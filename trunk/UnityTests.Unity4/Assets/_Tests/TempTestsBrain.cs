@@ -51,11 +51,11 @@ public class TempTestsBrain : BrainBase
 		// targets[5].DOLocalRotate(new Vector3(0, 0, 90), 1).SetRelative()
 		// 	.OnComplete(()=> targets[5].DOLocalAxisRotate(new Vector3(0, 90, 0), 1));
 		
-		// DOTween.Sequence()
-			// .Append(targets[5].DOLocalAxisRotate(new Vector3(0, 0, 90), 1))
-			// .Append(targets[5].DOLocalAxisRotate(new Vector3(90, 0, 0), 1))
-			// .Append(targets[5].DOLocalAxisRotate(new Vector3(0, 90, 0), 1));
-		targets[5].DOLocalAxisRotate(new Vector3(0, 90, 90), 1);
+		DOTween.Sequence()
+			.Append(targets[5].DOLocalAxisRotate(new Vector3(0, 0, 90), 1))
+			.Append(targets[5].DOLocalAxisRotate(new Vector3(90, 0, 0), 1))
+			.Append(targets[5].DOLocalAxisRotate(new Vector3(0, 810, 0), 1));
+		// targets[5].DOLocalAxisRotate(new Vector3(0, 90, 90), 1);
 	}
 
 	void Update()
