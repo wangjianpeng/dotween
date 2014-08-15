@@ -28,17 +28,20 @@
         <member name="F:DG.Tweening.DOTween.timeScale">
             <summary>Global DOTween timeScale</summary>
         </member>
-        <member name="F:DG.Tweening.DOTween.defaultEaseType">
-            <summary>Default ease applied to all new tweens</summary>
-        </member>
-        <member name="F:DG.Tweening.DOTween.defaultLoopType">
-            <summary>Default loopType applied to all new tweens</summary>
-        </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoPlay">
             <summary>Default autoPlay behaviour for new tweens</summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoKill">
             <summary>Default autoKillOnComplete behaviour for new tweens</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultLoopType">
+            <summary>Default loopType applied to all new tweens</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultRecyclable">
+            <summary>If TRUE all newly created tweens are set as recyclable, otherwise not</summary>
+        </member>
+        <member name="F:DG.Tweening.DOTween.defaultEaseType">
+            <summary>Default ease applied to all new tweens</summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultEaseOvershootOrAmplitude">
             <summary>Default overshoot/amplitude used for eases
@@ -48,19 +51,30 @@
             <summary>Default period used for eases
             <para>Default: 0</para></summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Init(System.Boolean,DG.Tweening.LogBehaviour)">
+        <member name="M:DG.Tweening.DOTween.Init(System.Boolean,System.Boolean,DG.Tweening.LogBehaviour)">
             <summary>
             Must be called once, before the first ever DOTween call/reference,
             otherwise it will be called automatically and will use default options.
             Calling it a second time won't have any effect.
             </summary>
+            <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
+            instead of being destroyed, they will be put in a pool and used instead of creating new tweens. This option allows you to avoid
+            GC allocations by reusing tweens, but you will have to take care of tween references, since they might result active
+            even if they were killed (since they might have been respawned and are now being used for other tweens).
+            <para>If you want to automatically set your tween references to NULL when a tween is killed 
+            you can use the OnKill callback like this:</para>
+            <code>.OnKill(()=&gt; myTweenReference = null)</code>
+            <para>You can change this setting at any time by changing the static <see cref="F:DG.Tweening.DOTween.defaultRecyclable"/> property,
+            or you can set the recycling behaviour for each tween separately, using:</para>
+            <para><code>SetRecyclable(bool recyclable)</code></para>
+            <para>Default: FALSE</para></param>
             <param name="useSafeMode">If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
             (like targets becoming null while a tween is playing).
-            You can change this setting at any time by changing the <see cref="F:DG.Tweening.DOTween.useSafeMode"/> property.
-            Default: FALSE</param>
+            You can change this setting at any time by changing the static <see cref="F:DG.Tweening.DOTween.useSafeMode"/> property.
+            <para>Default: FALSE</para></param>
             <param name="logBehaviour">Type of logging to use.
-            You can change this setting at any time by changing the <see cref="P:DG.Tweening.DOTween.logBehaviour"/> property.
-            Default: Default</param>
+            You can change this setting at any time by changing the static <see cref="P:DG.Tweening.DOTween.logBehaviour"/> property.
+            <para>Default: Default</para></param>
         </member>
         <member name="M:DG.Tweening.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
             <summary>
@@ -437,6 +451,13 @@
             <param name="loops">Number of cycles to play (-1 for infinite)</param>
             <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0)">
+            <summary>Allows the tween to be recycled after being killed.</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0,System.Boolean)">
+            <summary>Sets the recyclable behaviour for the tween.</summary>
+            <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
+        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetUpdate``1(``0,DG.Tweening.UpdateType)">
             <summary>Sets the type of update (default or independent) for the tween</summary>
             <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
@@ -456,6 +477,10 @@
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnComplete``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onComplete callback for the tween
             (called the moment the tween reaches completion, loops included)</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.OnKill``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onKill callback for the tween
+            (called the moment the tween is killed)</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs``1(``0,DG.Tweening.Tween)">
             <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
@@ -627,6 +652,9 @@
         <member name="F:DG.Tweening.Tween.onComplete">
             <summary>Called the moment the tween reaches completion (loops included)</summary>
         </member>
+        <member name="F:DG.Tweening.Tween.onKill">
+            <summary>Called the moment the tween is killed</summary>
+        </member>
         <member name="M:DG.Tweening.Tweener.ChangeStartValue``1(``0,System.Single)">
             <summary>Changes the start value of a tween and rewinds it (without pausing it).
             Has no effect with tweens that are inside Sequences</summary>
@@ -769,7 +797,11 @@
              otherwise the elapsed percentage within the current loop cycle</param>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsActive(DG.Tweening.Tween)">
-            <summary>Returns FALSE if this tween has been killed</summary>
+            <summary>Returns FALSE if this tween has been killed.
+            <para>BEWARE: if this tween is recyclable it might have been spawned again for another use and thus return TRUE anyway.</para>
+            When working with recyclable tweens you should take care to know when a tween has been killed and manually set your references to NULL.
+            If you want to be sure your references are set to NULL when a tween is killed you can use the <code>OnKill</code> callback like this:
+            <para><code>.OnKill(()=> myTweenReference = null)</code></para></summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsBackwards(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>

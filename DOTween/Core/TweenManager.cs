@@ -355,39 +355,55 @@ namespace DG.Tweening.Core
 
         internal static void Despawn(Tween t, bool modifyActiveLists = true)
         {
+            // Callbacks
+            if (t.onKill != null) t.onKill();
+
             if (modifyActiveLists) {
                 // Remove tween from active list
                 RemoveActiveTween(t);
             }
-            switch (t.tweenType) {
-            case TweenType.Sequence:
-                _PooledSequences.Push(t);
-                totPooledSequences++;
-                // Despawn sequenced tweens
-                Sequence s = (Sequence)t;
-                int len = s.sequencedTweens.Count;
-                for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
-                break;
-            case TweenType.Tweener:
-                if (_maxPooledTweenerId == -1) {
-                    _maxPooledTweenerId = maxTweeners - 1;
-                    _minPooledTweenerId = maxTweeners - 1;
-                }
-                if (_maxPooledTweenerId < maxTweeners - 1) {
-                    _pooledTweeners[_maxPooledTweenerId + 1] = t;
-                    _maxPooledTweenerId++;
-                    if (_minPooledTweenerId > _maxPooledTweenerId) _minPooledTweenerId = _maxPooledTweenerId;
-                } else {
-                    for (int i = _maxPooledTweenerId; i > -1; --i) {
-                        if (_pooledTweeners[i] != null) continue;
-                        _pooledTweeners[i] = t;
-                        if (i < _minPooledTweenerId) _minPooledTweenerId = i;
-                        if (_maxPooledTweenerId < _minPooledTweenerId) _maxPooledTweenerId = _minPooledTweenerId;
-                        break;
+            if (t.isRecyclable) {
+                // Put the tween inside a pool
+                switch (t.tweenType) {
+                case TweenType.Sequence:
+                    _PooledSequences.Push(t);
+                    totPooledSequences++;
+                    // Despawn sequenced tweens
+                    Sequence s = (Sequence)t;
+                    int len = s.sequencedTweens.Count;
+                    for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
+                    break;
+                case TweenType.Tweener:
+                    if (_maxPooledTweenerId == -1) {
+                        _maxPooledTweenerId = maxTweeners - 1;
+                        _minPooledTweenerId = maxTweeners - 1;
                     }
+                    if (_maxPooledTweenerId < maxTweeners - 1) {
+                        _pooledTweeners[_maxPooledTweenerId + 1] = t;
+                        _maxPooledTweenerId++;
+                        if (_minPooledTweenerId > _maxPooledTweenerId) _minPooledTweenerId = _maxPooledTweenerId;
+                    } else {
+                        for (int i = _maxPooledTweenerId; i > -1; --i) {
+                            if (_pooledTweeners[i] != null) continue;
+                            _pooledTweeners[i] = t;
+                            if (i < _minPooledTweenerId) _minPooledTweenerId = i;
+                            if (_maxPooledTweenerId < _minPooledTweenerId) _maxPooledTweenerId = _minPooledTweenerId;
+                            break;
+                        }
+                    }
+                    totPooledTweeners++;
+                    break;
                 }
-                totPooledTweeners++;
-                break;
+            } else {
+                // Remove
+                switch (t.tweenType) {
+                case TweenType.Sequence:
+                    totSequences--;
+                    break;
+                case TweenType.Tweener:
+                    totTweeners--;
+                    break;
+                }
             }
             t.active = false;
             t.Reset();
@@ -481,6 +497,12 @@ namespace DG.Tweening.Core
         // then purges all pools and resets capacities
         internal static void PurgeAll()
         {
+            // Fire eventual onKill callbacks
+            for (int i = 0; i < totActiveTweens; ++i) {
+                Tween t = _activeTweens[i];
+                if (t != null && t.onKill != null) t.onKill();
+            }
+
             ClearTweenArray(_activeTweens);
             hasActiveTweens = hasActiveDefaultTweens = hasActiveIndependentTweens = false;
             totActiveTweens = totActiveDefaultTweens = totActiveIndependentTweens = 0;

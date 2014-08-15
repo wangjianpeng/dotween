@@ -5,11 +5,12 @@ public class PoolingBrain : BrainBase
 {
 	public GameObject prefab;
 
+	bool recycle;
 	Transform spawnsParent;
 
 	void Start()
 	{
-		DOTween.Init(false, LogBehaviour.Verbose);
+		DOTween.Init(true, false, LogBehaviour.Verbose);
 		spawnsParent = new GameObject("Spawn Container").transform;
 	}
 
@@ -81,6 +82,7 @@ public class PoolingBrain : BrainBase
 	    if (GUILayout.Button("Clear")) Clear();
 	    if (GUILayout.Button("Clear FULL")) Clear(true);
 	    GUILayout.EndHorizontal();
+	    recycle = GUILayout.Toggle(recycle, "Recycle");
 
 	    GUILayout.EndVertical();
 		GUILayout.FlexibleSpace();
@@ -96,7 +98,9 @@ public class PoolingBrain : BrainBase
             Transform t = go.transform;
             t.parent = spawnsParent;
             t.position = RandomVector3();
-            DOTween.To(() => t.position, x => t.position = x, RandomVector3(), 1f).OnComplete(() => Destroy(go));
+            DOTween.To(() => t.position, x => t.position = x, RandomVector3(), 1f)
+            	.SetRecyclable(recycle)
+            	.OnComplete(() => Destroy(go));
         }
         fpsGadget.ResetFps();
 	}
@@ -108,11 +112,10 @@ public class PoolingBrain : BrainBase
             Transform t = go.transform;
             t.parent = spawnsParent;
             t.position = RandomVector3();
-            if (snapping) {
-            	DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).SetOptions(true).OnComplete(() => Destroy(go));
-        	} else {
-        		DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).OnComplete(() => Destroy(go));
-        	}
+            DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f)
+            	.SetOptions(snapping)
+            	.SetRecyclable(recycle)
+            	.OnComplete(() => Destroy(go));
         }
         fpsGadget.ResetFps();
 	}
@@ -125,9 +128,15 @@ public class PoolingBrain : BrainBase
             t.parent = spawnsParent;
             t.position = RandomVector3();
             if (snapping) {
-            	DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).SetOptions(AxisConstraint.Y, true).OnComplete(() => Destroy(go));
+            	DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f)
+            		.SetOptions(AxisConstraint.Y, true)
+            		.SetRecyclable(recycle)
+            		.OnComplete(() => Destroy(go));
         	} else {
-        		DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f).SetOptions(AxisConstraint.Y).OnComplete(() => Destroy(go));
+        		DOTween.ToAxis(() => t.position, x => t.position = x, RandomFloat(), 1f)
+        			.SetOptions(AxisConstraint.Y)
+        			.SetRecyclable(recycle)
+        			.OnComplete(() => Destroy(go));
         	}
         }
         fpsGadget.ResetFps();
@@ -140,7 +149,9 @@ public class PoolingBrain : BrainBase
             Transform t = go.transform;
             t.parent = spawnsParent;
             t.position = RandomVector3();
-            DOTween.To(() => t.rotation, x => t.rotation = x, RandomVector3(720), 1f).OnComplete(() => Destroy(go));
+            DOTween.To(() => t.rotation, x => t.rotation = x, RandomVector3(720), 1f)
+            	.SetRecyclable(recycle)
+            	.OnComplete(() => Destroy(go));
         }
         fpsGadget.ResetFps();
 	}
@@ -164,8 +175,10 @@ public class PoolingBrain : BrainBase
 		col.a = 1;
 		m.color = col;
 		float duration = Random.Range(0.2f, 2f);
-        m.DOFade(0, duration);
-        t.DOMove(RandomVector3(), duration).OnComplete(()=> ResetParticleAndAssignTween(t, m));
+        m.DOFade(0, duration).SetRecyclable(recycle);
+        t.DOMove(RandomVector3(), duration)
+        	.SetRecyclable(recycle)
+        	.OnComplete(()=> ResetParticleAndAssignTween(t, m));
 	}
 
 	void Clear(bool fullDOTweenClear = false)
