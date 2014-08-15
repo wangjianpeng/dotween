@@ -67,9 +67,17 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         internal void SetLocalAxisSetter(TweenerCore<Quaternion, Vector3, NoOptions> t)
         {
-            Transform trans = (Transform)t.target;
-            Quaternion localRot = trans.localRotation;
-            t.setter = x => trans.localRotation = localRot * x;
+            Transform trans = t.target as Transform;
+            if (trans != null) {
+                // Transform target
+                Quaternion localRot = trans.localRotation;
+                t.setter = x => trans.localRotation = localRot * x;
+            } else {
+                // Rigidbody target
+                Rigidbody rbody = t.target as Rigidbody;
+                Quaternion localRot = rbody.transform.localRotation;
+                t.setter = x => rbody.MoveRotation(localRot * x);
+            }
         }
     }
 }

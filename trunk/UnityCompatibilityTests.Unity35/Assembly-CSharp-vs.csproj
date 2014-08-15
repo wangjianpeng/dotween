@@ -46,7 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\CompatibilityTest.cs" />
  <Reference Include="DOTween">
- <HintPath>Assets\DOTween\DOTween.dll</HintPath>
+ <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
