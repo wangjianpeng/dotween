@@ -309,7 +309,11 @@ namespace DG.Tweening
             return t.position / t.duration;
         }
 
-        /// <summary>Returns FALSE if this tween has been killed</summary>
+        /// <summary>Returns FALSE if this tween has been killed.
+        /// <para>BEWARE: if this tween is recyclable it might have been spawned again for another use and thus return TRUE anyway.</para>
+        /// When working with recyclable tweens you should take care to know when a tween has been killed and manually set your references to NULL.
+        /// If you want to be sure your references are set to NULL when a tween is killed you can use the <code>OnKill</code> callback like this:
+        /// <para><code>.OnKill(()=> myTweenReference = null)</code></para></summary>
         public static bool IsActive(this Tween t)
         {
             return t.active;

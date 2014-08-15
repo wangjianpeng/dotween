@@ -136,6 +136,7 @@ namespace DG.Tweening
         internal static void Setup(Sequence s)
         {
             s.autoKill = DOTween.defaultAutoKill;
+            s.isRecyclable = DOTween.defaultRecyclable;
             s.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlaySequences;
             s.loopType = DOTween.defaultLoopType;
         }

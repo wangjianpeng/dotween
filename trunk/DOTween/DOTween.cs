@@ -61,14 +61,16 @@ namespace DG.Tweening
         ///////////////////////////////////////////////
         // Default options for Tweens /////////////////
 
-        /// <summary>Default ease applied to all new tweens</summary>
-        public static Ease defaultEaseType = Ease.InOutQuad;
-        /// <summary>Default loopType applied to all new tweens</summary>
-        public static LoopType defaultLoopType = LoopType.Restart;
         /// <summary>Default autoPlay behaviour for new tweens</summary>
         public static AutoPlay defaultAutoPlay = AutoPlay.All;
         /// <summary>Default autoKillOnComplete behaviour for new tweens</summary>
         public static bool defaultAutoKill = true;
+        /// <summary>Default loopType applied to all new tweens</summary>
+        public static LoopType defaultLoopType = LoopType.Restart;
+        /// <summary>If TRUE all newly created tweens are set as recyclable, otherwise not</summary>
+        public static bool defaultRecyclable;
+        /// <summary>Default ease applied to all new tweens</summary>
+        public static Ease defaultEaseType = Ease.InOutQuad;
         /// <summary>Default overshoot/amplitude used for eases
         /// <para>Default: 1.70158f</para></summary>
         public static float defaultEaseOvershootOrAmplitude = 1.70158f;
@@ -160,20 +162,32 @@ namespace DG.Tweening
         /// otherwise it will be called automatically and will use default options.
         /// Calling it a second time won't have any effect.
         /// </summary>
+        /// <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
+        /// instead of being destroyed, they will be put in a pool and used instead of creating new tweens. This option allows you to avoid
+        /// GC allocations by reusing tweens, but you will have to take care of tween references, since they might result active
+        /// even if they were killed (since they might have been respawned and are now being used for other tweens).
+        /// <para>If you want to automatically set your tween references to NULL when a tween is killed 
+        /// you can use the OnKill callback like this:</para>
+        /// <code>.OnKill(()=> myTweenReference = null)</code>
+        /// <para>You can change this setting at any time by changing the static <see cref="DOTween.defaultRecyclable"/> property,
+        /// or you can set the recycling behaviour for each tween separately, using:</para>
+        /// <para><code>SetRecyclable(bool recyclable)</code></para>
+        /// <para>Default: FALSE</para></param>
         /// <param name="useSafeMode">If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
         /// (like targets becoming null while a tween is playing).
-        /// You can change this setting at any time by changing the <see cref="DOTween.useSafeMode"/> property.
-        /// Default: FALSE</param>
+        /// You can change this setting at any time by changing the static <see cref="DOTween.useSafeMode"/> property.
+        /// <para>Default: FALSE</para></param>
         /// <param name="logBehaviour">Type of logging to use.
-        /// You can change this setting at any time by changing the <see cref="DOTween.logBehaviour"/> property.
-        /// Default: Default</param>
-        public static void Init(bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
+        /// You can change this setting at any time by changing the static <see cref="DOTween.logBehaviour"/> property.
+        /// <para>Default: Default</para></param>
+        public static void Init(bool recycleAllByDefault = false, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
         {
             if (_initialized) return;
 
             _initialized = true;
             isUnityEditor = Application.isEditor;
             // Options
+            DOTween.defaultRecyclable = recycleAllByDefault;
             DOTween.useSafeMode = useSafeMode;
             DOTween.logBehaviour = logBehaviour;
             // Gameobject
@@ -674,8 +688,8 @@ namespace DG.Tweening
         {
             if (_initialized) return;
 
-            Init();
-            Debugger.LogWarning("DOTween auto-initialized with default settings (useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
+            Init(defaultRecyclable, useSafeMode, logBehaviour);
+            Debugger.LogWarning("DOTween auto-initialized with default settings (recycleAllByDefault: " + defaultRecyclable + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
         }
 
         // Tweens a property using default plugins with options

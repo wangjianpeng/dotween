@@ -87,6 +87,7 @@ namespace DG.Tweening
             t.duration = duration;
             // Defaults
             t.autoKill = DOTween.defaultAutoKill;
+            t.isRecyclable = DOTween.defaultRecyclable;
             t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
             t.easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
             t.easePeriod = DOTween.defaultEasePeriod;
@@ -107,6 +108,7 @@ namespace DG.Tweening
             t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
             // Defaults
             t.autoKill = DOTween.defaultAutoKill;
+            t.isRecyclable = DOTween.defaultRecyclable;
             t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;

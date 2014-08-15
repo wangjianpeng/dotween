@@ -49,10 +49,13 @@ namespace DG.Tweening
         public TweenCallback onStepComplete;
         /// <summary>Called the moment the tween reaches completion (loops included)</summary>
         public TweenCallback onComplete;
+        /// <summary>Called the moment the tween is killed</summary>
+        public TweenCallback onKill;
         
         // Fixed after creation
         internal object target; // Automatically set by DO shortcuts using SetTarget extension. Also used during Tweener.DoStartup in some special cases
         internal bool isFrom;
+        internal bool isRecyclable;
         internal bool isSpeedBased;
         internal bool autoKill;
         internal float duration;
@@ -100,7 +103,7 @@ namespace DG.Tweening
             isBackwards = false;
             id = null;
             updateType = UpdateType.Default;
-            onStart = onUpdate = onComplete = onStepComplete = null;
+            onStart = onUpdate = onComplete = onStepComplete = onKill = null;
 
             target = null;
             isFrom = isSpeedBased = false;
@@ -118,6 +121,7 @@ namespace DG.Tweening
             delayComplete = true;
 
             // The following are set during a tween's Setup
+//            isRecyclable = DOTween.defaultRecyclable;
 //            autoKill = DOTween.defaultAutoKill;
 //            loopType = DOTween.defaultLoopType;
 //            easeType = DOTween.defaultEaseType;
