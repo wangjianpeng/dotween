@@ -373,6 +373,27 @@ namespace DG.Tweening
         {
             return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration).SetTarget(target);
         }
+
+        /// <summary>Tweens a Rigidbody's rotation to the given value, using its local axis system
+        /// (like when rotating an object with the "local" switch enabled in Unity's editor).
+        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalAxisRotate(this Rigidbody target, Vector3 endValue, float duration)
+        {
+            return DOTween.To(() => Quaternion.identity, target.MoveRotation, endValue, duration)
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+        }
+        /// <summary>Tweens a Rigidbody's rotation from the given value to its current one, using its local axis system
+        /// (like when rotating an object with the "local" switch enabled in Unity's editor).
+        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOLocalAxisRotateFrom(this Rigidbody target, Vector3 endValue, float duration)
+        {
+            return DOTween.From(() => Quaternion.identity, target.MoveRotation, endValue, duration)
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+        }
         #endregion
 
         #region Material Shortcuts
