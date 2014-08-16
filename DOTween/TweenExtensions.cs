@@ -273,7 +273,10 @@ namespace DG.Tweening
                 return 0;
             }
 
-            return includeLoops ? t.fullDuration : t.duration;
+            // Calculate duration here instead than getting fullDuration because fullDuration might
+            // not be set yet, since it's set inside DoStartup
+            if (includeLoops) return t.loops == -1 ? Mathf.Infinity : t.duration * t.loops;
+            return t.duration;
         }
 
         /// <summary>Returns the elapsed time for this tween (delays exluded)</summary>

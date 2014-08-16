@@ -68,8 +68,6 @@ namespace DG.Tweening.Core
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newStartValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
                 return this;
             }
-
-//            DoChangeStartValue(this, (T2)Convert.ChangeType(newStartValue, typeofT2), newDuration);
             return DoChangeStartValue(this, (T2)(object)newStartValue, newDuration);
         }
 
@@ -86,8 +84,6 @@ namespace DG.Tweening.Core
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
                 return this;
             }
-
-//            DoChangeEndValue(this, (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration, snapStartValue);
             return DoChangeEndValue(this, (T2)(object)newEndValue, newDuration, snapStartValue);
         }
 
@@ -101,8 +97,6 @@ namespace DG.Tweening.Core
                 if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeValues: incorrect value type (is " + typeof(T) + ", should be " + typeofT2 + ")");
                 return this;
             }
-
-//            DoChangeValues(this, (T2)Convert.ChangeType(newStartValue, typeofT2), (T2)Convert.ChangeType(newEndValue, typeofT2), newDuration);
             return DoChangeValues(this, (T2)(object)newStartValue, (T2)(object)newEndValue, newDuration);
         }
 

@@ -58,7 +58,7 @@
             Calling it a second time won't have any effect.
             </summary>
             <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
-            instead of being destroyed, they will be put in a pool and used instead of creating new tweens. This option allows you to avoid
+            instead of being destroyed, they will be put in a pool and reused instead of creating new tweens. This option allows you to avoid
             GC allocations by reusing tweens, but you will have to take care of tween references, since they might result active
             even if they were killed (since they might have been respawned and are now being used for other tweens).
             <para>If you want to automatically set your tween references to NULL when a tween is killed 
@@ -455,7 +455,7 @@
             <summary>Allows the tween to be recycled after being killed.</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0,System.Boolean)">
-            <summary>Sets the recyclable behaviour for the tween.</summary>
+            <summary>Sets the recycling behaviour for the tween.</summary>
             <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetUpdate``1(``0,DG.Tweening.UpdateType)">

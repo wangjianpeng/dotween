@@ -36,7 +36,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.310";
+        public static readonly string Version = "0.7.325";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -163,7 +163,7 @@ namespace DG.Tweening
         /// Calling it a second time won't have any effect.
         /// </summary>
         /// <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
-        /// instead of being destroyed, they will be put in a pool and used instead of creating new tweens. This option allows you to avoid
+        /// instead of being destroyed, they will be put in a pool and reused instead of creating new tweens. This option allows you to avoid
         /// GC allocations by reusing tweens, but you will have to take care of tween references, since they might result active
         /// even if they were killed (since they might have been respawned and are now being used for other tweens).
         /// <para>If you want to automatically set your tween references to NULL when a tween is killed 
