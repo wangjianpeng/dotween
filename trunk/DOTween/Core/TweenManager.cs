@@ -399,6 +399,10 @@ namespace DG.Tweening.Core
                 switch (t.tweenType) {
                 case TweenType.Sequence:
                     totSequences--;
+                    // Despawn sequenced tweens
+                    Sequence s = (Sequence)t;
+                    int len = s.sequencedTweens.Count;
+                    for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
                     break;
                 case TweenType.Tweener:
                     totTweeners--;

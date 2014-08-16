@@ -113,7 +113,7 @@ namespace DG.Tweening
             t.isRecyclable = true;
             return t;
         }
-        /// <summary>Sets the recyclable behaviour for the tween.</summary>
+        /// <summary>Sets the recycling behaviour for the tween.</summary>
         /// <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
         public static T SetRecyclable<T>(this T t, bool recyclable) where T : Tween
         {
