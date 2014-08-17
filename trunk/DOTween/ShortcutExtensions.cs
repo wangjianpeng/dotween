@@ -1,6 +1,8 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2014/07/28 10:40
 
+using System.Collections.Generic;
+using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
 using UnityEngine;
 
@@ -283,6 +285,57 @@ namespace DG.Tweening
                 .SetOptions(AxisConstraint.Z)
                 .SetTarget(target);
         }
+
+        /// <summary>Shakes a Transform's position with the given values.
+        /// <para>BEWARE: Shake is a special tween that will store the start value as soon as it's created,
+        /// so if the transform moves between the tween creation and when it starts playing the result won't be correct.</para></summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single axis.</param>
+        /// <returns></returns>
+        public static Sequence DOShakePosition(this Transform target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
+        {
+            int totIterations = (int)(vibrato * duration);
+            float decayXTween = strength / totIterations;
+            // Calculate and store the duration of each tween
+            float[] tDurations = new float[totIterations];
+            float sum = 0;
+            for (int i = 0; i < totIterations; ++i) {
+                float iterationPerc = (i + 1) / (float)totIterations;
+                float tDuration = duration * iterationPerc;
+                sum += tDuration;
+                tDurations[i] = tDuration;
+            }
+            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
+            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
+            // Create the shake
+            float ang = 0;
+            Vector3 startPos = target.position;
+            Sequence s = DOTween.Sequence();
+            for (int i = 0; i < totIterations; ++i) {
+                if (i < totIterations - 1) {
+                    if (i == 0) ang = Random.Range(0f, 360f);
+                    else ang = ang - 180 + Random.Range(-randomness, randomness);
+                    s.Append(
+                        DOTween.To(() => target.position, x => target.position = x, startPos + Utils.Vector3FromAngle(ang, strength), tDurations[i])
+                            .SetEase(Ease.Linear)
+                    );
+//                    s.Append(target.DOMove(startPos + Utils.Vector3FromAngle(ang, strength), tDurations[i]).SetEase(Ease.InOutQuad));
+                    strength -= decayXTween;
+                } else {
+                    // Final tween: return to base
+                    s.Append(
+                        DOTween.To(() => target.position, x => target.position = x, startPos, tDurations[i])
+                            .SetEase(Ease.OutQuad)
+                    );
+//                    s.Append(target.DOMove(startPos, tDurations[i]));
+                }
+            }
+            return s.SetTarget(target);
+        }
+
         #endregion
 
         #region Rigidbody Shortcuts
