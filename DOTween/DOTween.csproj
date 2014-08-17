@@ -56,6 +56,7 @@
     <Compile Include="Core\Enums\UpdateMode.cs" />
     <Compile Include="Core\SequenceCallback.cs" />
     <Compile Include="Core\TweenManager.cs" />
+    <Compile Include="Core\Utils.cs" />
     <Compile Include="DOTween.cs" />
     <Compile Include="Ease.cs" />
     <Compile Include="TweenExtensions.cs" />
