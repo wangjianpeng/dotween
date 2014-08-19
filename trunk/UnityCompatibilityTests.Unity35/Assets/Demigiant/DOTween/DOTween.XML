@@ -58,7 +58,7 @@
             Calling it a second time won't have any effect.
             </summary>
             <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
-            instead of being destroyed, they will be put in a pool and used instead of creating new tweens. This option allows you to avoid
+            instead of being destroyed, they will be put in a pool and reused instead of creating new tweens. This option allows you to avoid
             GC allocations by reusing tweens, but you will have to take care of tween references, since they might result active
             even if they were killed (since they might have been respawned and are now being used for other tweens).
             <para>If you want to automatically set your tween references to NULL when a tween is killed 
@@ -455,7 +455,7 @@
             <summary>Allows the tween to be recycled after being killed.</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0,System.Boolean)">
-            <summary>Sets the recyclable behaviour for the tween.</summary>
+            <summary>Sets the recycling behaviour for the tween.</summary>
             <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetUpdate``1(``0,DG.Tweening.UpdateType)">
@@ -1125,6 +1125,17 @@
             <summary>Tweens a Transform's Z localScale from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOShakePosition(UnityEngine.Transform,System.Single,System.Single,System.Single,System.Single)">
+            <summary>Shakes a Transform's position with the given values.
+            <para>BEWARE: Shake is a special tween that will store the start value as soon as it's created,
+            so if the transform moves between the tween creation and when it starts playing the result won't be correct.</para></summary>
+            <param name="duration">The duration of the tween</param>
+            <param name="strength">The shake strength</param>
+            <param name="vibrato">Indicates how much will the shake vibrate</param>
+            <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+            Setting it to 0 will shake along a single axis.</param>
+            <returns></returns>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Rigidbody's position to the given value.
