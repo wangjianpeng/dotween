@@ -77,7 +77,7 @@ public class TweenEnginesComparisonInternal : BrainBase
 	override protected void Awake()
 	{
 		base.Awake();
-		DOTween.Init();
+		DOTween.Init(true, false);
 		DOTween.useSafeMode = doTweenSafeMode;
 		HOTween.Init(true, false, false);
 		LeanTween.init(Convert.ToInt32(numTweensList[numTweensList.Length - 1]) + 1);

@@ -139,7 +139,7 @@ public class EnginesComparison : MonoBehaviour
 		case EngineType.DOTween:
 			testTitle += " v" + DOTween.Version;
 			concludeTest = DOTweenTester.Conclude;
-			DOTween.Init(false);
+			DOTween.Init(true, false);
 			DOTween.SetTweensCapacity(totTweens, 0);
 			yield return null;
 			// Start
