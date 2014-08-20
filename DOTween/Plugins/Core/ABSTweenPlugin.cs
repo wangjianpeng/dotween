@@ -25,11 +25,11 @@ using DG.Tweening.Core;
 namespace DG.Tweening.Plugins.Core
 {
     // Public so it can be extended by custom plugins
-    public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin
+    public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin where TPlugOptions : struct
     {
         // getter and isRelative are there because some rare plugins need them
         public abstract T2 ConvertT1toT2(TPlugOptions options, T1 value);
-        public abstract T2 GetRelativeEndValue(TPlugOptions options, T2 startValue, T2 changeValue);
+        public abstract void SetRelativeEndValue(TweenerCore<T1, T2, TPlugOptions> t);
         public abstract T2 GetChangeValue(TPlugOptions options, T2 startValue, T2 endValue);
         public abstract float GetSpeedBasedDuration(float unitsXSecond, T2 changeValue);
         public abstract T1 Evaluate(TPlugOptions options, Tween t, bool isRelative, DOGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration);

@@ -35,9 +35,9 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return value;
         }
 
-        public override Vector3 GetRelativeEndValue(VectorOptions options, Vector3 startValue, Vector3 changeValue)
+        public override void SetRelativeEndValue(TweenerCore<Vector3, Vector3, VectorOptions> t)
         {
-            return startValue + changeValue;
+            t.endValue = t.startValue + t.changeValue;
         }
 
         public override Vector3 GetChangeValue(VectorOptions options, Vector3 startValue, Vector3 endValue)

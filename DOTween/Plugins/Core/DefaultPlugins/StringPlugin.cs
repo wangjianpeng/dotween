@@ -40,9 +40,9 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return value;
         }
 
-        public override string GetRelativeEndValue(StringOptions options, string startValue, string changeValue)
+        public override void SetRelativeEndValue(TweenerCore<string, string, StringOptions> t)
         {
-            return changeValue;
+            t.endValue = t.changeValue;
         }
 
         public override string GetChangeValue(StringOptions options, string startValue, string endValue)

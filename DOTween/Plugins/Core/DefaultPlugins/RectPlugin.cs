@@ -36,13 +36,12 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return value;
         }
 
-        public override Rect GetRelativeEndValue(RectOptions options, Rect startValue, Rect changeValue)
+        public override void SetRelativeEndValue(TweenerCore<Rect, Rect, RectOptions> t)
         {
-            startValue.x += changeValue.x;
-            startValue.y += changeValue.y;
-            startValue.width += changeValue.width;
-            startValue.height += changeValue.height;
-            return startValue;
+            t.endValue.x = t.startValue.x + t.changeValue.x;
+            t.endValue.y = t.startValue.y + t.changeValue.y;
+            t.endValue.width = t.startValue.width + t.changeValue.width;
+            t.endValue.height = t.startValue.height + t.changeValue.height;
         }
 
         public override Rect GetChangeValue(RectOptions options, Rect startValue, Rect endValue)

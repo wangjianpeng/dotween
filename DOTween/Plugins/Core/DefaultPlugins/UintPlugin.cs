@@ -35,9 +35,9 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return value;
         }
 
-        public override uint GetRelativeEndValue(NoOptions options, uint startValue, uint changeValue)
+        public override void SetRelativeEndValue(TweenerCore<uint, uint, NoOptions> t)
         {
-            return startValue + changeValue;
+            t.endValue = t.startValue + t.changeValue;
         }
 
         public override uint GetChangeValue(NoOptions options, uint startValue, uint endValue)

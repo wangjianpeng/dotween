@@ -35,9 +35,9 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return value.eulerAngles;
         }
 
-        public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
+        public override void SetRelativeEndValue(TweenerCore<Quaternion, Vector3, NoOptions> t)
         {
-            return startValue + changeValue;
+            t.endValue = t.startValue + t.changeValue;
         }
 
         public override Vector3 GetChangeValue(NoOptions options, Vector3 startValue, Vector3 endValue)

@@ -38,14 +38,12 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return new RectOffset(value.left, value.right, value.top, value.bottom);
         }
 
-        public override RectOffset GetRelativeEndValue(NoOptions options, RectOffset startValue, RectOffset changeValue)
+        public override void SetRelativeEndValue(TweenerCore<RectOffset, RectOffset, NoOptions> t)
         {
-            return new RectOffset(
-                startValue.left + changeValue.left,
-                startValue.right + changeValue.right,
-                startValue.top + changeValue.top,
-                startValue.bottom + changeValue.bottom
-            );
+            t.endValue.left = t.startValue.left + t.changeValue.left;
+            t.endValue.right = t.startValue.right + t.changeValue.right;
+            t.endValue.top = t.startValue.top + t.changeValue.top;
+            t.endValue.bottom = t.startValue.bottom + t.changeValue.bottom;
         }
 
         public override RectOffset GetChangeValue(NoOptions options, RectOffset startValue, RectOffset endValue)
