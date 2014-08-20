@@ -31,26 +31,27 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class RectPlugin : ABSTweenPlugin<Rect, Rect, RectOptions>
     {
-        public override Rect ConvertT1toT2(RectOptions options, Rect value)
+        public override Rect ConvertT1toT2(TweenerCore<Rect, Rect, RectOptions> t, Rect value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<Rect, Rect, RectOptions> t)
         {
-            t.endValue.x = t.startValue.x + t.changeValue.x;
-            t.endValue.y = t.startValue.y + t.changeValue.y;
-            t.endValue.width = t.startValue.width + t.changeValue.width;
-            t.endValue.height = t.startValue.height + t.changeValue.height;
+            t.endValue.x += t.startValue.x;
+            t.endValue.y += t.startValue.y;
+            t.endValue.width += t.startValue.width;
+            t.endValue.height += t.startValue.height;
         }
 
-        public override Rect GetChangeValue(RectOptions options, Rect startValue, Rect endValue)
+        public override void SetChangeValue(TweenerCore<Rect, Rect, RectOptions> t)
         {
-            endValue.x -= startValue.x;
-            endValue.y -= startValue.y;
-            endValue.width -= startValue.width;
-            endValue.height -= startValue.height;
-            return endValue;
+            t.changeValue = new Rect(
+                t.endValue.x - t.startValue.x,
+                t.endValue.y - t.startValue.y,
+                t.endValue.width - t.startValue.width,
+                t.endValue.height - t.startValue.height
+            );
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, Rect changeValue)

@@ -29,19 +29,19 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class FloatPlugin : ABSTweenPlugin<float,float,FloatOptions>
     {
-        public override float ConvertT1toT2(FloatOptions options, float value)
+        public override float ConvertT1toT2(TweenerCore<float,float,FloatOptions> t, float value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<float, float, FloatOptions> t)
         {
-            t.endValue = t.startValue + t.changeValue;
+            t.endValue += t.startValue;
         }
 
-        public override float GetChangeValue(FloatOptions options, float startValue, float endValue)
+        public override void SetChangeValue(TweenerCore<float, float, FloatOptions> t)
         {
-            return endValue - startValue;
+            t.changeValue = t.endValue - t.startValue;
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, float changeValue)

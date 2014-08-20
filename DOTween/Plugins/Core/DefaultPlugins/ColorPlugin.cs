@@ -30,19 +30,19 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class ColorPlugin : ABSTweenPlugin<Color, Color, ColorOptions>
     {
-        public override Color ConvertT1toT2(ColorOptions options, Color value)
+        public override Color ConvertT1toT2(TweenerCore<Color, Color, ColorOptions> t, Color value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<Color, Color, ColorOptions> t)
         {
-            t.endValue = t.startValue + t.changeValue;
+            t.endValue += t.startValue;
         }
 
-        public override Color GetChangeValue(ColorOptions options, Color startValue, Color endValue)
+        public override void SetChangeValue(TweenerCore<Color, Color, ColorOptions> t)
         {
-            return endValue - startValue;
+            t.changeValue = t.endValue - t.startValue;
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, Color changeValue)

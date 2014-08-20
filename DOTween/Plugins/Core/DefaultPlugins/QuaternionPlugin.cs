@@ -30,19 +30,19 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3,NoOptions>
     {
-        public override Vector3 ConvertT1toT2(NoOptions options, Quaternion value)
+        public override Vector3 ConvertT1toT2(TweenerCore<Quaternion,Vector3,NoOptions> t, Quaternion value)
         {
             return value.eulerAngles;
         }
 
         public override void SetRelativeEndValue(TweenerCore<Quaternion, Vector3, NoOptions> t)
         {
-            t.endValue = t.startValue + t.changeValue;
+            t.endValue += t.startValue;
         }
 
-        public override Vector3 GetChangeValue(NoOptions options, Vector3 startValue, Vector3 endValue)
+        public override void SetChangeValue(TweenerCore<Quaternion, Vector3, NoOptions> t)
         {
-            return endValue - startValue;
+            t.changeValue = t.endValue - t.startValue;
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, Vector3 changeValue)

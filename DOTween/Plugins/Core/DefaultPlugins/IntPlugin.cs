@@ -30,19 +30,19 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class IntPlugin : ABSTweenPlugin<int, int, NoOptions>
     {
-        public override int ConvertT1toT2(NoOptions options, int value)
+        public override int ConvertT1toT2(TweenerCore<int, int, NoOptions> t, int value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<int, int, NoOptions> t)
         {
-            t.endValue = t.startValue + t.changeValue;
+            t.endValue += t.startValue;
         }
 
-        public override int GetChangeValue(NoOptions options, int startValue, int endValue)
+        public override void SetChangeValue(TweenerCore<int, int, NoOptions> t)
         {
-            return endValue - startValue;
+            t.changeValue = t.endValue - t.startValue;
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, int changeValue)
