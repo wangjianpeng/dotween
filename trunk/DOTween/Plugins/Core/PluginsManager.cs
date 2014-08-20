@@ -49,7 +49,7 @@ namespace DG.Tweening.Plugins.Core
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetDefaultPlugin<T1,T2,TPlugOptions>()
+        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetDefaultPlugin<T1,T2,TPlugOptions>() where TPlugOptions : struct
         {
             Type t1 = typeof(T1);
             Type t2 = typeof(T2);
@@ -99,7 +99,7 @@ namespace DG.Tweening.Plugins.Core
         }
 
         internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)
-            where TPlugin : ITweenPlugin, new()
+            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
         {
             Type t = typeof(TPlugin);
             ITweenPlugin plugin;

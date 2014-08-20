@@ -35,9 +35,9 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return value;
         }
 
-        public override Color GetRelativeEndValue(ColorOptions options, Color startValue, Color changeValue)
+        public override void SetRelativeEndValue(TweenerCore<Color, Color, ColorOptions> t)
         {
-            return startValue + changeValue;
+            t.endValue = t.startValue + t.changeValue;
         }
 
         public override Color GetChangeValue(ColorOptions options, Color startValue, Color endValue)

@@ -155,9 +155,7 @@ namespace DG.Tweening
                 } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
             }
 
-            if (t.isRelative) {
-                t.endValue = t.tweenPlugin.GetRelativeEndValue(t.plugOptions, t.startValue, t.endValue);
-            }
+            if (t.isRelative) t.tweenPlugin.SetRelativeEndValue(t);
 
             // Special startup operations
             if (t.specialStartupMode == SpecialStartupMode.SetLocalAxisRotationSetter) {
