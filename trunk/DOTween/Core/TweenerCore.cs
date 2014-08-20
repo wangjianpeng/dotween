@@ -28,6 +28,7 @@ using UnityEngine;
 namespace DG.Tweening.Core
 {
     // Public so it can be used with SetOptions to show the correct overload
+    // and also to allow custom plugins to change start/end/changeValue.
     // T1: type of value to tween
     // T2: format in which value is stored while tweening
     // TPlugOptions: options type
@@ -35,9 +36,9 @@ namespace DG.Tweening.Core
     {
         // SETUP DATA ////////////////////////////////////////////////
 
+        public T2 startValue, endValue, changeValue;
         internal DOGetter<T1> getter;
         internal DOSetter<T1> setter;
-        internal T2 startValue, endValue, changeValue;
         internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
         internal TPlugOptions plugOptions;
         internal bool hasManuallySetStartValue; // TRUE when start value has been changed via ChangeStart/Values (allows DoStartup to take it into account)

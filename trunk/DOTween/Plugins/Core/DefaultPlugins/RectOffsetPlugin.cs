@@ -33,26 +33,26 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
     public class RectOffsetPlugin : ABSTweenPlugin<RectOffset, RectOffset, NoOptions>
     {
-        public override RectOffset ConvertT1toT2(NoOptions options, RectOffset value)
+        public override RectOffset ConvertT1toT2(TweenerCore<RectOffset, RectOffset, NoOptions> t, RectOffset value)
         {
             return new RectOffset(value.left, value.right, value.top, value.bottom);
         }
 
         public override void SetRelativeEndValue(TweenerCore<RectOffset, RectOffset, NoOptions> t)
         {
-            t.endValue.left = t.startValue.left + t.changeValue.left;
-            t.endValue.right = t.startValue.right + t.changeValue.right;
-            t.endValue.top = t.startValue.top + t.changeValue.top;
-            t.endValue.bottom = t.startValue.bottom + t.changeValue.bottom;
+            t.endValue.left += t.startValue.left;
+            t.endValue.right += t.startValue.right;
+            t.endValue.top += t.startValue.top;
+            t.endValue.bottom += t.startValue.bottom;
         }
 
-        public override RectOffset GetChangeValue(NoOptions options, RectOffset startValue, RectOffset endValue)
+        public override void SetChangeValue(TweenerCore<RectOffset, RectOffset, NoOptions> t)
         {
-            return new RectOffset(
-                endValue.left - startValue.left,
-                endValue.right - startValue.right,
-                endValue.top - startValue.top,
-                endValue.bottom - startValue.bottom
+            t.changeValue = new RectOffset(
+                t.endValue.left - t.startValue.left,
+                t.endValue.right - t.startValue.right,
+                t.endValue.top - t.startValue.top,
+                t.endValue.bottom - t.startValue.bottom
             );
         }
 

@@ -30,27 +30,31 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3,VectorOptions>
     {
-        public override Vector3 ConvertT1toT2(VectorOptions options, Vector3 value)
+        public override Vector3 ConvertT1toT2(TweenerCore<Vector3, Vector3, VectorOptions> t, Vector3 value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<Vector3, Vector3, VectorOptions> t)
         {
-            t.endValue = t.startValue + t.changeValue;
+            t.endValue += t.startValue;
         }
 
-        public override Vector3 GetChangeValue(VectorOptions options, Vector3 startValue, Vector3 endValue)
+        public override void SetChangeValue(TweenerCore<Vector3, Vector3, VectorOptions> t)
         {
-            switch (options.axisConstraint) {
+            switch (t.plugOptions.axisConstraint) {
             case AxisConstraint.X:
-                return new Vector3(endValue.x - startValue.x, 0, 0);
+                t.changeValue = new Vector3(t.endValue.x - t.startValue.x, 0, 0);
+                break;
             case AxisConstraint.Y:
-                return new Vector3(0, endValue.y - startValue.y, 0);
+                t.changeValue = new Vector3(0, t.endValue.y - t.startValue.y, 0);
+                break;
             case AxisConstraint.Z:
-                return new Vector3(0, 0, endValue.z - startValue.z);
+                t.changeValue = new Vector3(0, 0, t.endValue.z - t.startValue.z);
+                break;
             default:
-                return endValue - startValue;
+                t.changeValue = t.endValue - t.startValue;
+                break;
             }
         }
 

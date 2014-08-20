@@ -31,20 +31,19 @@ public struct PlugCustomPlugin : IPlugSetter<Vector3, Vector3, CustomPlugin, NoO
 
 public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
 {
-    public override Vector3 ConvertT1toT2(NoOptions options, Vector3 value)
+    public override Vector3 ConvertT1toT2(TweenerCore<Vector3, Vector3, NoOptions> t, Vector3 value)
     {
         return value;
     }
 
-    public override Vector3 GetRelativeEndValue(NoOptions options, Vector3 startValue, Vector3 changeValue)
+    public override void SetRelativeEndValue(TweenerCore<Vector3, Vector3, NoOptions> t)
     {
-        return startValue + changeValue;
+        t.endValue = t.startValue + t.changeValue;
     }
 
-    public override Vector3 GetChangeValue(NoOptions options, Vector3 startValue, Vector3 endValue)
+    public override void SetChangeValue(TweenerCore<Vector3, Vector3, NoOptions> t)
     {
-        endValue.x -= startValue.x;
-        return endValue;
+        t.changeValue = t.endValue - t.startValue;
     }
 
     public override float GetSpeedBasedDuration(float unitsXSecond, Vector3 changeValue)

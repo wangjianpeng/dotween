@@ -31,25 +31,28 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class Vector2Plugin : ABSTweenPlugin<Vector2, Vector2, VectorOptions>
     {
-        public override Vector2 ConvertT1toT2(VectorOptions options, Vector2 value)
+        public override Vector2 ConvertT1toT2(TweenerCore<Vector2, Vector2, VectorOptions> t, Vector2 value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<Vector2, Vector2, VectorOptions> t)
         {
-            t.endValue = t.startValue + t.changeValue;
+            t.endValue += t.startValue;
         }
 
-        public override Vector2 GetChangeValue(VectorOptions options, Vector2 startValue, Vector2 endValue)
+        public override void SetChangeValue(TweenerCore<Vector2, Vector2, VectorOptions> t)
         {
-            switch (options.axisConstraint) {
+            switch (t.plugOptions.axisConstraint) {
             case AxisConstraint.X:
-                return new Vector2(endValue.x - startValue.x, 0);
+                t.changeValue = new Vector2(t.endValue.x - t.startValue.x, 0);
+                break;
             case AxisConstraint.Y:
-                return new Vector2(0, endValue.y - startValue.y);
+                t.changeValue = new Vector2(0, t.endValue.y - t.startValue.y);
+                break;
             default:
-                return endValue - startValue;
+                t.changeValue = t.endValue - t.startValue;
+                break;
             }
         }
 

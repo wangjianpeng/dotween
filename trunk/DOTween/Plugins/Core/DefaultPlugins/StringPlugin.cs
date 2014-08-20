@@ -25,6 +25,7 @@ using System.Text;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 #pragma warning disable 1591
@@ -35,19 +36,19 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
-        public override string ConvertT1toT2(StringOptions options, string value)
+        public override string ConvertT1toT2(TweenerCore<string, string, StringOptions> t, string value)
         {
             return value;
         }
 
         public override void SetRelativeEndValue(TweenerCore<string, string, StringOptions> t)
         {
-            t.endValue = t.changeValue;
+            // Do nothing (endValue stays the same)
         }
 
-        public override string GetChangeValue(StringOptions options, string startValue, string endValue)
+        public override void SetChangeValue(TweenerCore<string, string, StringOptions> t)
         {
-            return endValue;
+            t.changeValue = t.endValue;
         }
 
         public override float GetSpeedBasedDuration(float unitsXSecond, string changeValue)

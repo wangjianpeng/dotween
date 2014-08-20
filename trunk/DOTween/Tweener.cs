@@ -147,12 +147,12 @@ namespace DG.Tweening
                 // Take start value from current target value
                 if (DOTween.useSafeMode) {
                     try {
-                        t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+                        t.startValue = t.tweenPlugin.ConvertT1toT2(t, t.getter());
                     } catch (UnassignedReferenceException) {
                         // Target/field doesn't exist: kill tween
                         return false;
                     }
-                } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+                } else t.startValue = t.tweenPlugin.ConvertT1toT2(t, t.getter());
             }
 
             if (t.isRelative) t.tweenPlugin.SetRelativeEndValue(t);
@@ -172,10 +172,10 @@ namespace DG.Tweening
                 T2 prevStartValue = t.startValue;
                 t.startValue = t.endValue;
                 t.endValue = prevStartValue;
-                t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+                t.tweenPlugin.SetChangeValue(t);
                 // Jump (no need for safeMode checks since they already happened when assigning start value
                 t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, 1));
-            } else t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+            } else t.tweenPlugin.SetChangeValue(t);
 
             if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.duration, t.changeValue);
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
@@ -195,7 +195,7 @@ namespace DG.Tweening
             t.hasManuallySetStartValue = true;
             t.startValue = newStartValue;
 
-            if (t.startupDone) t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+            if (t.startupDone) t.tweenPlugin.SetChangeValue(t);
 
             if (newDuration > 0) {
                 t.duration = newDuration;
@@ -225,18 +225,15 @@ namespace DG.Tweening
                     // Reassign startValue with current target's value
                     if (DOTween.useSafeMode) {
                         try {
-                            t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
+                            t.startValue = t.tweenPlugin.ConvertT1toT2(t, t.getter());
                         } catch (UnassignedReferenceException) {
                             // Target/field doesn't exist: kill tween
                             TweenManager.Despawn(t);
                             return null;
                         }
-                    } else t.startValue = t.tweenPlugin.ConvertT1toT2(t.plugOptions, t.getter());
-                    t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
-                } else {
-                    // Just use old startValue with new endValue
-                    t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+                    } else t.startValue = t.tweenPlugin.ConvertT1toT2(t, t.getter());
                 }
+                t.tweenPlugin.SetChangeValue(t);
             }
 
             if (newDuration > 0) {
@@ -263,7 +260,7 @@ namespace DG.Tweening
             t.startValue = newStartValue;
             t.endValue = newEndValue;
 
-            if (t.startupDone) t.changeValue = t.tweenPlugin.GetChangeValue(t.plugOptions, t.startValue, t.endValue);
+            if (t.startupDone) t.tweenPlugin.SetChangeValue(t);
 
             if (newDuration > 0) {
                 t.duration = newDuration;
