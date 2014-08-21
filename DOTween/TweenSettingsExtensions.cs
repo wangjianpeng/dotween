@@ -423,7 +423,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new FloatOptions(snapping);
+            t.plugOptions.snapping = snapping;
             return t;
         }
 
@@ -433,7 +433,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new VectorOptions(t.plugOptions.axisConstraint, snapping);
+            t.plugOptions.snapping = snapping;
             return t;
         }
         /// <summary>Options for Vector2 tweens</summary>
@@ -443,7 +443,8 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new VectorOptions(axisConstraint, snapping);
+            t.plugOptions.axisConstraint = axisConstraint;
+            t.plugOptions.snapping = snapping;
             return t;
         }
 
@@ -453,7 +454,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new VectorOptions(t.plugOptions.axisConstraint, snapping);
+            t.plugOptions.snapping = snapping;
             return t;
         }
         /// <summary>Options for Vector3 tweens</summary>
@@ -463,7 +464,8 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new VectorOptions(axisConstraint, snapping);
+            t.plugOptions.axisConstraint = axisConstraint;
+            t.plugOptions.snapping = snapping;
             return t;
         }
 
@@ -473,7 +475,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new VectorOptions(t.plugOptions.axisConstraint, snapping);
+            t.plugOptions.snapping = snapping;
             return t;
         }
         /// <summary>Options for Vector4 tweens</summary>
@@ -483,7 +485,8 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new VectorOptions(axisConstraint, snapping);
+            t.plugOptions.axisConstraint = axisConstraint;
+            t.plugOptions.snapping = snapping;
             return t;
         }
 
@@ -493,7 +496,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new ColorOptions(alphaOnly);
+            t.plugOptions.alphaOnly = alphaOnly;
             return t;
         }
 
@@ -503,7 +506,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new RectOptions(snapping);
+            t.plugOptions.snapping = snapping;
             return t;
         }
 
@@ -513,7 +516,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions = new StringOptions(scramble);
+            t.plugOptions.scramble = scramble;
             return t;
         }
         #endregion

@@ -825,6 +825,11 @@
         <member name="M:DG.Tweening.TweenExtensions.IsPlaying(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween is playing</summary>
         </member>
+        <member name="T:DG.Tweening.Plugins.Core.DefaultPlugins.Vector3ArrayPlugin">
+            <summary>
+            This plugin generates some GC allocations at startup
+            </summary>
+        </member>
         <member name="T:DG.Tweening.TweenType">
             <summary>
             Used internally
@@ -1461,11 +1466,6 @@
         <member name="T:DG.Tweening.AxisConstraint">
             <summary>
             What axis to constrain in case of Vector tweens
-            </summary>
-        </member>
-        <member name="T:DG.Tweening.Plugins.Core.DefaultPlugins.Vector3ArrayPlugin">
-            <summary>
-            This plugin generates some GC allocations at startup
             </summary>
         </member>
     </members>
