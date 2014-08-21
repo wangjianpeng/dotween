@@ -25,10 +25,5 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
     public struct FloatOptions
     {
         public bool snapping;
-
-        public FloatOptions(bool snapping)
-        {
-            this.snapping = snapping;
-        }
     }
 }

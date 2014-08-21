@@ -25,10 +25,5 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
     public struct RectOptions
     {
         public bool snapping;
-
-        public RectOptions(bool snapping)
-        {
-            this.snapping = snapping;
-        }
     }
 }

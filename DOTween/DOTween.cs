@@ -378,17 +378,17 @@ namespace DG.Tweening
             where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
         { return ApplyTo(plugSetter, duration, false); }
 
-        /// <summary>Tweens only one axis of a Vector3 to the given value using default plugins.
-        /// Use SetOptions to choose which axis to tween (default: X)</summary>
+        /// <summary>Tweens only one axis of a Vector3 to the given value using default plugins.</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
         /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static TweenerCore<Vector3, Vector3, VectorOptions> ToAxis(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, float duration)
+        /// <param name="axisConstraint">The axis to tween</param>
+        public static TweenerCore<Vector3, Vector3, VectorOptions> ToAxis(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float endValue, float duration, AxisConstraint axisConstraint = AxisConstraint.X)
         {
             TweenerCore<Vector3, Vector3, VectorOptions> t = ApplyTo<Vector3, Vector3, VectorOptions>(getter, setter, new Vector3(endValue, endValue, endValue), duration, false);
-            t.plugOptions = new VectorOptions(AxisConstraint.X, false);
+            t.plugOptions.axisConstraint = axisConstraint;
             return t;
         }
         /// <summary>Tweens only the alpha of a Color to the given value using default plugins</summary>
@@ -509,17 +509,17 @@ namespace DG.Tweening
             where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
         { return ApplyTo(plugSetter, duration, true); }
 
-        /// <summary>Tweens only one axis of a Vector3 from the given value using default plugins.
-        /// Use SetOptions to choose which axis to tween (default: X)</summary>
+        /// <summary>Tweens only one axis of a Vector3 from the given value using default plugins.</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
         /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
         /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static TweenerCore<Vector3, Vector3, VectorOptions> FromAxis(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float fromValue, float duration)
+        /// <param name="axisConstraint">The axis to tween</param>
+        public static TweenerCore<Vector3, Vector3, VectorOptions> FromAxis(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float fromValue, float duration, AxisConstraint axisConstraint = AxisConstraint.X)
         {
             TweenerCore<Vector3, Vector3, VectorOptions> t = ApplyTo<Vector3, Vector3, VectorOptions>(getter, setter, new Vector3(fromValue, fromValue, fromValue), duration, true);
-            t.plugOptions = new VectorOptions(AxisConstraint.X, false);
+            t.plugOptions.axisConstraint = axisConstraint;
             return t;
         }
         /// <summary>Tweens only the alpha of a Color from the given value using default plugins</summary>
