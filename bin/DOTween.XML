@@ -473,24 +473,24 @@
             <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnStart``1(``0,DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onStart callback for the tween
-            (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
+            <summary>Sets the onStart callback for the tween.
+            Called when the tween is set in a playing state the first time, after any eventual delay</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnUpdate``1(``0,DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onUpdate callback for the tween
-            (called each time the tween updates)</summary>
+            <summary>Sets the onUpdate callback for the tween.
+            Called each time the tween updates</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnStepComplete``1(``0,DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onStepComplete callback for the tween
-            (called the moment the tween completes one loop cycle)</summary>
+            <summary>Sets the onStepComplete callback for the tween.
+            Called the moment the tween completes one loop cycle, even when going backwards</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnComplete``1(``0,DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onComplete callback for the tween
-            (called the moment the tween reaches completion, loops included)</summary>
+            <summary>Sets the onComplete callback for the tween.
+            Called the moment the tween reaches its final forward position, loops included</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnKill``1(``0,DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onKill callback for the tween
-            (called the moment the tween is killed)</summary>
+            <summary>Sets the onKill callback for the tween.
+            Called the moment the tween is killed</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs``1(``0,DG.Tweening.Tween)">
             <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
@@ -987,85 +987,101 @@
             Methods that extend known Unity objects and allow to directly create and control tweens from their instances
             </summary>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Transform's position to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Transform's position from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveX(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveX(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's X position to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveXFrom(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveXFrom(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's X position from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveY(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveY(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Y position to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveYFrom(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveYFrom(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Y position from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZ(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZ(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Z position to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZFrom(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZFrom(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Z position from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMove(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Transform's localPosition to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Transform's localPosition from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveX(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveX(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's X localPosition to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveXFrom(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveXFrom(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's X localPosition from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveY(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveY(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Y localPosition to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveYFrom(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveYFrom(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Y localPosition from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveZ(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveZ(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Z localPosition to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveZFrom(UnityEngine.Transform,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalMoveZFrom(UnityEngine.Transform,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Transform's Z localPosition from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's rotation to the given value.
@@ -1141,56 +1157,53 @@
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOShakePositionBkp(UnityEngine.Transform,System.Single,System.Single,System.Single,System.Single)">
-            <summary>Shakes a Transform's position with the given values.
-            <para>BEWARE: Shake is a special tween that will store the start value as soon as it's created,
-            so if the transform moves between the tween creation and when it starts playing the result won't be correct.</para></summary>
-            <param name="duration">The duration of the tween</param>
-            <param name="strength">The shake strength</param>
-            <param name="vibrato">Indicates how much will the shake vibrate</param>
-            <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
-            Setting it to 0 will shake along a single axis.</param>
-            <returns></returns>
-        </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's position to the given value.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveFrom(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveFrom(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's position from the given value to its current one.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveX(UnityEngine.Rigidbody,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveX(UnityEngine.Rigidbody,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's X position to the given value.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveXFrom(UnityEngine.Rigidbody,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveXFrom(UnityEngine.Rigidbody,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's X position from the given value to its current one.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveY(UnityEngine.Rigidbody,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveY(UnityEngine.Rigidbody,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's Y position to the given value.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveYFrom(UnityEngine.Rigidbody,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveYFrom(UnityEngine.Rigidbody,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's Y position from the given value to its current one.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZ(UnityEngine.Rigidbody,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZ(UnityEngine.Rigidbody,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's Z position to the given value.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZFrom(UnityEngine.Rigidbody,System.Single,System.Single)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMoveZFrom(UnityEngine.Rigidbody,System.Single,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's Z position from the given value to its current one.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Rigidbody's rotation to the given value.

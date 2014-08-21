@@ -60,7 +60,7 @@ namespace DG.DOTweenEditor
             GUILayout.Space(8);
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("Active tweens: ").Append(totActiveTweens)
-                    .Append("(").Append(TweenManager.totActiveTweeners)
+                    .Append(" (").Append(TweenManager.totActiveTweeners)
                     .Append("/").Append(TweenManager.totActiveSequences).Append(")")
                 .Append("\nPlaying tweens: ").Append(totPlayingTweens)
                 .Append("\nPaused tweens: ").Append(totPausedTweens)

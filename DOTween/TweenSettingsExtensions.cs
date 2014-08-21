@@ -133,8 +133,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the onStart callback for the tween
-        /// (called when the tween is set in a playing state the first time, after any eventual delay)</summary>
+        /// <summary>Sets the onStart callback for the tween.
+        /// Called when the tween is set in a playing state the first time, after any eventual delay</summary>
         public static T OnStart<T>(this T t, TweenCallback action) where T : Tween
         {
             if (!t.active) return t;
@@ -143,8 +143,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the onUpdate callback for the tween
-        /// (called each time the tween updates)</summary>
+        /// <summary>Sets the onUpdate callback for the tween.
+        /// Called each time the tween updates</summary>
         public static T OnUpdate<T>(this T t, TweenCallback action) where T : Tween
         {
             if (!t.active) return t;
@@ -153,8 +153,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the onStepComplete callback for the tween
-        /// (called the moment the tween completes one loop cycle)</summary>
+        /// <summary>Sets the onStepComplete callback for the tween.
+        /// Called the moment the tween completes one loop cycle, even when going backwards</summary>
         public static T OnStepComplete<T>(this T t, TweenCallback action) where T : Tween
         {
             if (!t.active) return t;
@@ -163,8 +163,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the onComplete callback for the tween
-        /// (called the moment the tween reaches completion, loops included)</summary>
+        /// <summary>Sets the onComplete callback for the tween.
+        /// Called the moment the tween reaches its final forward position, loops included</summary>
         public static T OnComplete<T>(this T t, TweenCallback action) where T : Tween
         {
             if (!t.active) return t;
@@ -173,8 +173,8 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the onKill callback for the tween
-        /// (called the moment the tween is killed)</summary>
+        /// <summary>Sets the onKill callback for the tween.
+        /// Called the moment the tween is killed</summary>
         public static T OnKill<T>(this T t, TweenCallback action) where T : Tween
         {
             if (!t.active) return t;

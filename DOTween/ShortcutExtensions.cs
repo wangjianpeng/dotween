@@ -22,145 +22,153 @@ namespace DG.Tweening
         /// <summary>Tweens a Transform's position to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMove(this Transform target, Vector3 endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMove(this Transform target, Vector3 endValue, float duration, bool snapping = false)
         {
-            return DOTween.To(() => target.position, x => target.position = x, endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.position, x => target.position = x, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's position from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveFrom(this Transform target, Vector3 fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveFrom(this Transform target, Vector3 fromValue, float duration, bool snapping = false)
         {
-            return DOTween.From(() => target.position, x => target.position = x, fromValue, duration).SetTarget(target);
+            return DOTween.From(() => target.position, x => target.position = x, fromValue, duration)
+                .SetOptions(snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's X position to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveX(this Transform target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveX(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's X position from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveXFrom(this Transform target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveXFrom(this Transform target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.position, x => target.position = x, new Vector3(fromValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Y position to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveY(this Transform target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveY(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(0, endValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's Y position from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveYFrom(this Transform target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveYFrom(this Transform target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.position, x => target.position = x, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Z position to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveZ(this Transform target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveZ(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's Z position from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveZFrom(this Transform target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveZFrom(this Transform target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.position, x => target.position = x, new Vector3(0, 0, fromValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's localPosition to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMove(this Transform target, Vector3 endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMove(this Transform target, Vector3 endValue, float duration, bool snapping = false)
         {
-            return DOTween.To(() => target.localPosition, x => target.localPosition = x, endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.localPosition, x => target.localPosition = x, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's localPosition from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveFrom(this Transform target, Vector3 fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveFrom(this Transform target, Vector3 fromValue, float duration, bool snapping = false)
         {
-            return DOTween.From(() => target.localPosition, x => target.localPosition = x, fromValue, duration).SetTarget(target);
+            return DOTween.From(() => target.localPosition, x => target.localPosition = x, fromValue, duration)
+                .SetOptions(snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's X localPosition to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveX(this Transform target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveX(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's X localPosition from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveXFrom(this Transform target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveXFrom(this Transform target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(fromValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Y localPosition to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveY(this Transform target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveY(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(0, endValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's Y localPosition from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveYFrom(this Transform target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveYFrom(this Transform target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's Z localPosition to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveZ(this Transform target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveZ(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Transform's Z localPosition from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalMoveZFrom(this Transform target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOLocalMoveZFrom(this Transform target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(0, 0, fromValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's rotation to the given value.
@@ -286,54 +294,6 @@ namespace DG.Tweening
                 .SetTarget(target);
         }
 
-        /// <summary>Shakes a Transform's position with the given values.
-        /// <para>BEWARE: Shake is a special tween that will store the start value as soon as it's created,
-        /// so if the transform moves between the tween creation and when it starts playing the result won't be correct.</para></summary>
-        /// <param name="duration">The duration of the tween</param>
-        /// <param name="strength">The shake strength</param>
-        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
-        /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
-        /// Setting it to 0 will shake along a single axis.</param>
-        /// <returns></returns>
-        public static Sequence DOShakePositionBkp(this Transform target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
-        {
-            int totIterations = (int)(vibrato * duration);
-            float decayXTween = strength / totIterations;
-            // Calculate and store the duration of each tween
-            float[] tDurations = new float[totIterations];
-            float sum = 0;
-            for (int i = 0; i < totIterations; ++i) {
-                float iterationPerc = (i + 1) / (float)totIterations;
-                float tDuration = duration * iterationPerc;
-                sum += tDuration;
-                tDurations[i] = tDuration;
-            }
-            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
-            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
-            // Create the shake
-            float ang = 0;
-            Vector3 startPos = target.position;
-            Sequence s = DOTween.Sequence();
-            for (int i = 0; i < totIterations; ++i) {
-                if (i < totIterations - 1) {
-                    if (i == 0) ang = Random.Range(0f, 360f);
-                    else ang = ang - 180 + Random.Range(-randomness, randomness);
-                    s.Append(
-                        DOTween.To(() => target.position, x => target.position = x, startPos + Utils.Vector3FromAngle(ang, strength), tDurations[i])
-                            .SetEase(Ease.Linear)
-                    );
-                    strength -= decayXTween;
-                } else {
-                    // Final tween: return to base
-                    s.Append(
-                        DOTween.To(() => target.position, x => target.position = x, startPos, tDurations[i])
-                            .SetEase(Ease.OutQuad)
-                    );
-                }
-            }
-            return s.SetTarget(target);
-        }
-
         #endregion
 
         #region Rigidbody Shortcuts
@@ -341,73 +301,77 @@ namespace DG.Tweening
         /// <summary>Tweens a Rigidbody's position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMove(this Rigidbody target, Vector3 endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMove(this Rigidbody target, Vector3 endValue, float duration, bool snapping = false)
         {
-            return DOTween.To(() => target.position, target.MovePosition, endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.position, target.MovePosition, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's position from the given value to its current one.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveFrom(this Rigidbody target, Vector3 fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveFrom(this Rigidbody target, Vector3 fromValue, float duration, bool snapping = false)
         {
-            return DOTween.From(() => target.position, target.MovePosition, fromValue, duration).SetTarget(target);
+            return DOTween.From(() => target.position, target.MovePosition, fromValue, duration)
+                .SetOptions(snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's X position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveX(this Rigidbody target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveX(this Rigidbody target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's X position from the given value to its current one.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveXFrom(this Rigidbody target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveXFrom(this Rigidbody target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.position, target.MovePosition, new Vector3(fromValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's Y position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveY(this Rigidbody target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveY(this Rigidbody target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, endValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's Y position from the given value to its current one.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveYFrom(this Rigidbody target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveYFrom(this Rigidbody target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.position, target.MovePosition, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's Z position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveZ(this Rigidbody target, float endValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveZ(this Rigidbody target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's Z position from the given value to its current one.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOMoveZFrom(this Rigidbody target, float fromValue, float duration)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveZFrom(this Rigidbody target, float fromValue, float duration, bool snapping = false)
         {
             return DOTween.From(() => target.position, target.MovePosition, new Vector3(0, 0, fromValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's rotation to the given value.
