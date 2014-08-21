@@ -57,6 +57,14 @@ public class TempTestsBrain : BrainBase
 			.Append(targets[5].DOLocalAxisRotate(new Vector3(0, -90, 0), 1));
 
 		StartCoroutine(VirtualTweenTest());
+
+		// Array tween test
+		// Vector3[] points = new[] { new Vector3(0,1,0), new Vector3(1,1,0), new Vector3(1,2,0), new Vector3(2,2,0) };
+		Vector3[] points = new[] { new Vector3(0,0,0), new Vector3(1,0,0), new Vector3(2,0,0), new Vector3(3,0,0) };
+		DOTween.To(()=> targets[6].position, x=> targets[6].localPosition = x, points, 2)
+			// .SetEase(Ease.Linear)
+			.SetEase(Ease.OutQuint)
+			.SetAutoKill(false);
 	}
 
 	IEnumerator VirtualTweenTest()
@@ -64,11 +72,11 @@ public class TempTestsBrain : BrainBase
 		float v = 0;
 		yield return DOTween.To(()=> v, x => { v = x; SetWidth(v); }, 12f, 0.25f).WaitForCompletion();
 
-		Debug.Log("0.25f later");
+		Debug.Log("Virtual Tween > 0.25f later");
 	}
 	void SetWidth(float someWidth)
 	{
-		Debug.Log(someWidth);
+		// Debug.Log(someWidth);
 	}
 
 	void Update()
