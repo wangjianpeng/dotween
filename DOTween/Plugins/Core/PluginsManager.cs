@@ -30,17 +30,18 @@ namespace DG.Tweening.Plugins.Core
     internal static class PluginsManager
     {
         // Default plugins
-        static FloatPlugin _floatPlugin;
-        static IntPlugin _intPlugin;
-        static UintPlugin _uintPlugin;
-        static Vector2Plugin _vector2Plugin;
-        static Vector3Plugin _vector3Plugin;
-        static Vector4Plugin _vector4Plugin;
-        static QuaternionPlugin _quaternionPlugin;
-        static ColorPlugin _colorPlugin;
-        static RectPlugin _rectPlugin;
-        static RectOffsetPlugin _rectOffsetPlugin;
-        static StringPlugin _stringPlugin;
+        static ITweenPlugin _floatPlugin;
+        static ITweenPlugin _intPlugin;
+        static ITweenPlugin _uintPlugin;
+        static ITweenPlugin _vector2Plugin;
+        static ITweenPlugin _vector3Plugin;
+        static ITweenPlugin _vector4Plugin;
+        static ITweenPlugin _quaternionPlugin;
+        static ITweenPlugin _colorPlugin;
+        static ITweenPlugin _rectPlugin;
+        static ITweenPlugin _rectOffsetPlugin;
+        static ITweenPlugin _stringPlugin;
+        static ITweenPlugin _vector3ArrayPlugin;
 
         // Advanced and custom plugins
         const int _MaxCustomPlugins = 20;
@@ -56,8 +57,13 @@ namespace DG.Tweening.Plugins.Core
             ITweenPlugin plugin = null;
 
             if (t1 == typeof(Vector3)) {
-                if (_vector3Plugin == null) _vector3Plugin = new Vector3Plugin();
-                plugin = _vector3Plugin;
+                if (t1 == t2) {
+                    if (_vector3Plugin == null) _vector3Plugin = new Vector3Plugin();
+                    plugin = _vector3Plugin;
+                } else if (t2 == typeof(Vector3[])) {
+                    if (_vector3ArrayPlugin == null) _vector3ArrayPlugin = new Vector3ArrayPlugin();
+                    plugin = _vector3ArrayPlugin;
+                }
             } else if (t1 == typeof(Quaternion)) {
                 if (t2 == typeof(Quaternion)) Debugger.LogError("Quaternion tweens require a Vector3 endValue");
                 else {

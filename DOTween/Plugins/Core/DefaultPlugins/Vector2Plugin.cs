@@ -58,9 +58,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override float GetSpeedBasedDuration(float unitsXSecond, Vector2 changeValue)
         {
-            float res = changeValue.magnitude / unitsXSecond;
-            if (res < 0) res = -res;
-            return res;
+            return changeValue.magnitude / unitsXSecond;
         }
 
         public override Vector2 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector2> getter, float elapsed, Vector2 startValue, Vector2 changeValue, float duration)
