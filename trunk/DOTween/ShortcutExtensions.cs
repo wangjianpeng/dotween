@@ -295,7 +295,7 @@ namespace DG.Tweening
         /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
         /// Setting it to 0 will shake along a single axis.</param>
         /// <returns></returns>
-        public static Sequence DOShakePosition(this Transform target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
+        public static Sequence DOShakePositionBkp(this Transform target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
         {
             int totIterations = (int)(vibrato * duration);
             float decayXTween = strength / totIterations;
@@ -322,7 +322,6 @@ namespace DG.Tweening
                         DOTween.To(() => target.position, x => target.position = x, startPos + Utils.Vector3FromAngle(ang, strength), tDurations[i])
                             .SetEase(Ease.Linear)
                     );
-//                    s.Append(target.DOMove(startPos + Utils.Vector3FromAngle(ang, strength), tDurations[i]).SetEase(Ease.InOutQuad));
                     strength -= decayXTween;
                 } else {
                     // Final tween: return to base
@@ -330,7 +329,6 @@ namespace DG.Tweening
                         DOTween.To(() => target.position, x => target.position = x, startPos, tDurations[i])
                             .SetEase(Ease.OutQuad)
                     );
-//                    s.Append(target.DOMove(startPos, tDurations[i]));
                 }
             }
             return s.SetTarget(target);
@@ -447,6 +445,49 @@ namespace DG.Tweening
             return DOTween.From(() => Quaternion.identity, target.MoveRotation, endValue, duration)
                 .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
         }
+
+        #endregion
+
+        #region Camera Shortcuts
+
+        /// <summary>Shakes a Camera's localPosition along the X Y axes with the given values.</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single axis.</param>
+        /// <returns></returns>
+        public static Tweener DOShakePosition(this Camera target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
+        {
+            int totIterations = (int)(vibrato * duration);
+            float decayXTween = strength / totIterations;
+            // Calculate and store the duration of each tween
+            float[] tDurations = new float[totIterations];
+            float sum = 0;
+            for (int i = 0; i < totIterations; ++i) {
+                float iterationPerc = (i + 1) / (float)totIterations;
+                float tDuration = duration * iterationPerc;
+                sum += tDuration;
+                tDurations[i] = tDuration;
+            }
+            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
+            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
+            // Create the shake
+            float ang = 0;
+            Vector3[] tos = new Vector3[totIterations];
+            for (int i = 0; i < totIterations; ++i) {
+                if (i < totIterations - 1) {
+                    if (i == 0) ang = Random.Range(0f, 360f);
+                    else ang = ang - 180 + Random.Range(-randomness, randomness);
+                    tos[i] = Utils.Vector3FromAngle(ang, strength);
+                    strength -= decayXTween;
+                } else tos[i] = Vector3.zero;
+            }
+            Transform trans = target.transform;
+            return DOTween.ToArray(() => trans.localPosition, x => trans.localPosition = x, tos, tDurations)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake).SetEase(Ease.Linear);
+        }
+
         #endregion
 
         #region Material Shortcuts

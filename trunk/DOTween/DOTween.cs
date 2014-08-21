@@ -398,7 +398,7 @@ namespace DG.Tweening
         /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
         /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
-        /// <param name="endValues">The end values to reach for each segment</param>
+        /// <param name="endValues">The end values to reach for each segment. This array must have the same length as <code>durations</code></param>
         /// <param name="durations">The duration of each segment. This array must have the same length as <code>endValues</code></param>
         public static Tweener ToArray(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3[] endValues, float[] durations)
         {
@@ -408,11 +408,18 @@ namespace DG.Tweening
                 return null;
             }
 
+            // Clone the arrays
+            Vector3[] endValuesClone = new Vector3[len];
+            float[] durationsClone = new float[len];
+            for (int i = 0; i < len; i++) {
+                endValuesClone[i] = endValues[i];
+                durationsClone[i] = durations[i];
+            }
+
             float totDuration = 0;
-            for (int i = 0; i < len; ++i) totDuration += durations[i];
-            TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t = ApplyTo<Vector3, Vector3[], Vector3ArrayOptions>(getter, setter, endValues, totDuration, false);
-            t.plugOptions.durations = new float[len];
-            for (int i = 0; i < len; ++i) t.plugOptions.durations[i] = durations[i];
+            for (int i = 0; i < len; ++i) totDuration += durationsClone[i];
+            TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t = ApplyTo<Vector3, Vector3[], Vector3ArrayOptions>(getter, setter, endValuesClone, totDuration, false);
+            t.plugOptions.durations = durationsClone;
             return t;
         }
 
