@@ -26,11 +26,5 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
     {
         public AxisConstraint axisConstraint;
         public bool snapping;
-
-        public VectorOptions(AxisConstraint axisConstraint, bool snapping)
-        {
-            this.axisConstraint = axisConstraint;
-            this.snapping = snapping;
-        }
     }
 }

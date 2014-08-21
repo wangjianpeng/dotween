@@ -25,10 +25,5 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
     public struct ColorOptions
     {
         public bool alphaOnly;
-
-        public ColorOptions(bool alphaOnly)
-        {
-            this.alphaOnly = alphaOnly;
-        }
     }
 }

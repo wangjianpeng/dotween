@@ -25,10 +25,5 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
     public struct StringOptions
     {
         public bool scramble;
-
-        public StringOptions(bool scramble)
-        {
-            this.scramble = scramble;
-        }
     }
 }
