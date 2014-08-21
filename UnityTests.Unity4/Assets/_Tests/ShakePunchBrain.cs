@@ -24,54 +24,54 @@ public class ShakePunchBrain : BrainBase
 	{
 		DOTween.Kill();
 
-		// Manual shake test
-		Transform cam = Camera.main.transform;
+		// // Manual shake test
+		// Transform cam = Camera.main.transform;
 
-		float strength = shakeStrength;
-		float iterationsXSecond = shakeVibrato;
-		int totIterations = (int)(iterationsXSecond * duration);
-		float decay = strength / totIterations;
-		float iterationPerc = 0;
-		Vector3 startPos = cam.position;
+		// float strength = shakeStrength;
+		// float iterationsXSecond = shakeVibrato;
+		// int totIterations = (int)(iterationsXSecond * duration);
+		// float decay = strength / totIterations;
+		// float iterationPerc = 0;
+		// Vector3 startPos = cam.position;
 
-		// Calculate duration of each tween
-		List<float> tDurations = new List<float>();
-		float sum = 0;
-		for (int i = 0; i < totIterations; ++i) {
-			iterationPerc = (i + 1) / (float)totIterations;
-			float tDuration = duration * iterationPerc;
-			sum += tDuration;
-			tDurations.Add(tDuration);
-		}
-		// Find multiplier for each tDuration so that whole is equal to duration
-		float tDurationMultiplier = duration / sum;
-		Debug.Log("sum/tDurationMultiplier: " + sum + "/" + tDurationMultiplier);
-		// Apply it
-		for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
+		// // Calculate duration of each tween
+		// List<float> tDurations = new List<float>();
+		// float sum = 0;
+		// for (int i = 0; i < totIterations; ++i) {
+		// 	iterationPerc = (i + 1) / (float)totIterations;
+		// 	float tDuration = duration * iterationPerc;
+		// 	sum += tDuration;
+		// 	tDurations.Add(tDuration);
+		// }
+		// // Find multiplier for each tDuration so that whole is equal to duration
+		// float tDurationMultiplier = duration / sum;
+		// Debug.Log("sum/tDurationMultiplier: " + sum + "/" + tDurationMultiplier);
+		// // Apply it
+		// for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
 
-		float ang = 0;
-		Vector3 rnd;
-		Sequence s = DOTween.Sequence();
-		for (int i = 0; i < totIterations; ++i) {
-			if (i < totIterations - 1) {
-				if (i == 0) {
-					ang = Random.Range(0f, 360f);
-				} else {
-					ang = ang - 180;
-					ang = ang + Random.Range(-90f, 90f);
-				}
-				rnd = Vector3FromAngle(ang, strength);
-				s.Append(cam.DOMove(startPos + rnd, tDurations[i]).SetEase(Ease.InOutQuad));
-				strength -= decay;
-			} else {
-				// Final
-				s.Append(cam.DOMove(startPos, tDurations[i]));
-			}
-		}
+		// float ang = 0;
+		// Vector3 rnd;
+		// Sequence s = DOTween.Sequence();
+		// for (int i = 0; i < totIterations; ++i) {
+		// 	if (i < totIterations - 1) {
+		// 		if (i == 0) {
+		// 			ang = Random.Range(0f, 360f);
+		// 		} else {
+		// 			ang = ang - 180;
+		// 			ang = ang + Random.Range(-90f, 90f);
+		// 		}
+		// 		rnd = Vector3FromAngle(ang, strength);
+		// 		s.Append(cam.DOMove(startPos + rnd, tDurations[i]).SetEase(Ease.InOutQuad));
+		// 		strength -= decay;
+		// 	} else {
+		// 		// Final
+		// 		s.Append(cam.DOMove(startPos, tDurations[i]));
+		// 	}
+		// }
 
-		// Clear previous and use DOTween shake instead
-		s.Kill();
-		cam.DOShakePosition(duration, shakeStrength, shakeVibrato, shakeRandomness);
+		// // Clear previous and use DOTween shake instead
+		// s.Kill();
+		Camera.main.DOShakePosition(duration, shakeStrength, shakeVibrato, shakeRandomness);
 	}
 
 	Vector3 RandomOnUnitCircleV3(float radius)

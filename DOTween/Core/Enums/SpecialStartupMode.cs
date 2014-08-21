@@ -23,6 +23,7 @@ namespace DG.Tweening.Core.Enums
     internal enum SpecialStartupMode
     {
         None,
-        SetLocalAxisRotationSetter
+        SetLocalAxisRotationSetter,
+        SetShake
     }
 }

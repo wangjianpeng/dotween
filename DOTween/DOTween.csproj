@@ -61,6 +61,7 @@
     <Compile Include="Ease.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\Options\Vector3ArrayOptions.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\Vector3ArrayPlugin.cs" />
+    <Compile Include="Plugins\Core\SpecialPluginsUtils.cs" />
     <Compile Include="TweenExtensions.cs" />
     <Compile Include="LoopType.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\ColorPlugin.cs" />

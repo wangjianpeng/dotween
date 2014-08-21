@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using DG.Tweening.Plugins;
 using Holoville.HOTween;
 using UnityEngine;
 using System.Collections;
@@ -57,17 +56,6 @@ public class TempTestsBrain : BrainBase
 			.Append(targets[5].DOLocalAxisRotate(new Vector3(0, -90, 0), 1));
 
 		StartCoroutine(VirtualTweenTest());
-
-		// Array tween test
-		// Vector3[] points = new[] { new Vector3(0,1,0), new Vector3(1,1,0), new Vector3(1,2,0), new Vector3(2,2,0) };
-		Vector3[] points = new[] { new Vector3(1,0,0), new Vector3(1,0,0), new Vector3(1,0,0), new Vector3(1,0,0) };
-		float[] durations = new[] { 0.5f, 0.5f, 0.5f, 0.5f };
-		DOTween.ToArray(()=> targets[6].position, x=> targets[6].localPosition = x, points, durations)
-			// .SetEase(Ease.Linear)
-			.SetRelative()
-			.SetSpeedBased()
-			.SetEase(Ease.OutQuart)
-			.SetAutoKill(false);
 	}
 
 	IEnumerator VirtualTweenTest()
