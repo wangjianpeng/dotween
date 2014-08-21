@@ -44,7 +44,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             t.changeValue = t.endValue - t.startValue;
         }
 
-        public override float GetSpeedBasedDuration(float unitsXSecond, float changeValue)
+        public override float GetSpeedBasedDuration(FloatOptions options, float unitsXSecond, float changeValue)
         {
             float res = changeValue / unitsXSecond;
             if (res < 0) res = -res;

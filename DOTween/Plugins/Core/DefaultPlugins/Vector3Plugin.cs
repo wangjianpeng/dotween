@@ -58,7 +58,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             }
         }
 
-        public override float GetSpeedBasedDuration(float unitsXSecond, Vector3 changeValue)
+        public override float GetSpeedBasedDuration(VectorOptions options, float unitsXSecond, Vector3 changeValue)
         {
             return changeValue.magnitude / unitsXSecond;
         }

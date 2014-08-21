@@ -59,6 +59,7 @@
     <Compile Include="Core\Utils.cs" />
     <Compile Include="DOTween.cs" />
     <Compile Include="Ease.cs" />
+    <Compile Include="Plugins\Core\DefaultPlugins\Options\Vector3ArrayOptions.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\Vector3ArrayPlugin.cs" />
     <Compile Include="TweenExtensions.cs" />
     <Compile Include="LoopType.cs" />

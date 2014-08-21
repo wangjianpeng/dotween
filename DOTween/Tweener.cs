@@ -177,7 +177,7 @@ namespace DG.Tweening
                 t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, 1));
             } else t.tweenPlugin.SetChangeValue(t);
 
-            if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.duration, t.changeValue);
+            if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.plugOptions, t.duration, t.changeValue);
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
 
             // Applied here so that the eventual duration derived from a speedBased tween has been set
@@ -200,7 +200,7 @@ namespace DG.Tweening
             if (newDuration > 0) {
                 t.duration = newDuration;
                 if (t.startupDone) {
-                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(newDuration, t.changeValue);
+                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.plugOptions, newDuration, t.changeValue);
                     t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
                 }
             }
@@ -239,7 +239,7 @@ namespace DG.Tweening
             if (newDuration > 0) {
                 t.duration = newDuration;
                 if (t.startupDone) {
-                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(newDuration, t.changeValue);
+                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.plugOptions, newDuration, t.changeValue);
                     t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
                 }
             }
@@ -265,7 +265,7 @@ namespace DG.Tweening
             if (newDuration > 0) {
                 t.duration = newDuration;
                 if (t.startupDone) {
-                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(newDuration, t.changeValue);
+                    if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.plugOptions, newDuration, t.changeValue);
                     t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
                 }
             }
