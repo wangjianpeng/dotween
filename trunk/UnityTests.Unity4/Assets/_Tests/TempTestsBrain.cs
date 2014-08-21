@@ -60,10 +60,13 @@ public class TempTestsBrain : BrainBase
 
 		// Array tween test
 		// Vector3[] points = new[] { new Vector3(0,1,0), new Vector3(1,1,0), new Vector3(1,2,0), new Vector3(2,2,0) };
-		Vector3[] points = new[] { new Vector3(0,0,0), new Vector3(1,0,0), new Vector3(2,0,0), new Vector3(3,0,0) };
-		DOTween.To(()=> targets[6].position, x=> targets[6].localPosition = x, points, 2)
+		Vector3[] points = new[] { new Vector3(1,0,0), new Vector3(1,0,0), new Vector3(1,0,0), new Vector3(1,0,0) };
+		float[] durations = new[] { 0.5f, 0.5f, 0.5f, 0.5f };
+		DOTween.ToArray(()=> targets[6].position, x=> targets[6].localPosition = x, points, durations)
 			// .SetEase(Ease.Linear)
-			.SetEase(Ease.OutQuint)
+			.SetRelative()
+			.SetSpeedBased()
+			.SetEase(Ease.OutQuart)
 			.SetAutoKill(false);
 	}
 

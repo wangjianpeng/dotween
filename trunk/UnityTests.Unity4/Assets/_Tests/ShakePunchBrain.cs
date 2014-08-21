@@ -31,7 +31,6 @@ public class ShakePunchBrain : BrainBase
 		float iterationsXSecond = shakeVibrato;
 		int totIterations = (int)(iterationsXSecond * duration);
 		float decay = strength / totIterations;
-		float iterationDuration = duration / totIterations;
 		float iterationPerc = 0;
 		Vector3 startPos = cam.position;
 
@@ -55,7 +54,6 @@ public class ShakePunchBrain : BrainBase
 		Sequence s = DOTween.Sequence();
 		for (int i = 0; i < totIterations; ++i) {
 			if (i < totIterations - 1) {
-				int direction = i % 2 == 0 ? 1 : -1;
 				if (i == 0) {
 					ang = Random.Range(0f, 360f);
 				} else {

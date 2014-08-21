@@ -56,7 +56,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             );
         }
 
-        public override float GetSpeedBasedDuration(float unitsXSecond, RectOffset changeValue)
+        public override float GetSpeedBasedDuration(NoOptions options, float unitsXSecond, RectOffset changeValue)
         {
             // Uses length of diagonal to calculate units.
             float diffW = changeValue.right;

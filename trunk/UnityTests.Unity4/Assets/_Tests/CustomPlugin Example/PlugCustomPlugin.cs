@@ -46,7 +46,7 @@ public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
         t.changeValue = t.endValue - t.startValue;
     }
 
-    public override float GetSpeedBasedDuration(float unitsXSecond, Vector3 changeValue)
+    public override float GetSpeedBasedDuration(NoOptions options, float unitsXSecond, Vector3 changeValue)
     {
         float res = changeValue.magnitude / unitsXSecond;
         if (res < 0) res = -res;

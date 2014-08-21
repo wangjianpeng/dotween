@@ -19,6 +19,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+using System;
 using System.Collections;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
@@ -36,7 +37,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.330";
+        public static readonly string Version = "0.7.350";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -362,15 +363,6 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
         { return ApplyTo<RectOffset, RectOffset, NoOptions>(getter, setter, endValue, duration, false); }
 
-        /// <summary>Tweens a property or field to the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
-        public static Tweener To(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3[] endValue, float duration)
-        { return ApplyTo<Vector3, Vector3[], VectorOptions>(getter, setter, endValue, duration, false); }
-
         /// <summary>Tweens a property or field to the given value using a custom plugin with eventual options</summary>
         /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
         /// <param name="duration">The tween's duration</param>
@@ -399,6 +391,30 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
         public static Tweener ToAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue, float duration)
         { return ApplyTo<Color, Color, ColorOptions>(getter, setter, new Color(0, 0, 0, endValue), duration, false).SetOptions(true); }
+
+        /// <summary>Tweens a property or field to the given values using default plugins.
+        /// Ease is applied between each segment and not as a whole.</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+        /// <param name="endValues">The end values to reach for each segment</param>
+        /// <param name="durations">The duration of each segment. This array must have the same length as <code>endValues</code></param>
+        public static Tweener ToArray(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3[] endValues, float[] durations)
+        {
+            int len = durations.Length;
+            if (len != endValues.Length) {
+                Debugger.LogError("To Vector3 array tween: endValues and durations arrays must have the same length");
+                return null;
+            }
+
+            float totDuration = 0;
+            for (int i = 0; i < len; ++i) totDuration += durations[i];
+            TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t = ApplyTo<Vector3, Vector3[], Vector3ArrayOptions>(getter, setter, endValues, totDuration, false);
+            t.plugOptions.durations = new float[len];
+            for (int i = 0; i < len; ++i) t.plugOptions.durations[i] = durations[i];
+            return t;
+        }
 
         #endregion
 
@@ -492,15 +508,6 @@ namespace DG.Tweening
         /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         public static Tweener From(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset fromValue, float duration)
         { return ApplyTo<RectOffset, RectOffset, NoOptions>(getter, setter, fromValue, duration, true); }
-
-        /// <summary>Tweens a property or field from the given value using default plugins</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
-        /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
-        public static Tweener From(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3[] fromValue, float duration)
-        { return ApplyTo<Vector3, Vector3[], VectorOptions>(getter, setter, fromValue, duration, true); }
 
         /// <summary>Tweens a property or field from the given value using a custom plugin with eventual options</summary>
         /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
