@@ -6,6 +6,7 @@ public class BrainBase : MonoBehaviour
 {
 	public bool forceFrameRate;
 	public int forcedFrameRate = 10;
+	public bool recycleTweens = true;
 
 	[System.NonSerialized] public HOFpsGadget fpsGadget;
 
@@ -18,5 +19,6 @@ public class BrainBase : MonoBehaviour
 		fpsGadget.showMemory = true;
 
 		DOTween.showUnityEditorReport = true;
+		DOTween.defaultRecyclable = recycleTweens;
 	}
 }

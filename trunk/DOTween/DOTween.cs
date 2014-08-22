@@ -37,7 +37,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.415";
+        public static readonly string Version = "0.7.420";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -449,6 +449,21 @@ namespace DG.Tweening
             TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t = ApplyTo<Vector3, Vector3[], Vector3ArrayOptions>(getter, setter, endValuesClone, totDuration, false);
             t.plugOptions.durations = durationsClone;
             return t;
+        }
+
+        /// <summary>Tweens a virtual property from the given start to the given end value 
+        /// and implements a setter that allows to use that value with an external method</summary>
+        /// <param name="setter">The action to perform with the tweened value</param>
+        /// <param name="startValue">The value to start from</param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="duration">The duration of the virtual tween
+        /// <para>Example:</para>
+        /// <code>To(x=> someProperty = x, 0, 12, 0.5f);</code>
+        /// </param>
+        public static Tweener To(DOSetter<float> setter, float startValue, float endValue, float duration)
+        {
+            float v = startValue;
+            return To(() => v, x => { v = x; setter(v); }, endValue, duration);
         }
 
         #endregion
