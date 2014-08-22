@@ -80,7 +80,7 @@ public class SequencesBrain : BrainBase
 
 		seq.AppendInterval(0.5f);
 		seq.Append(
-			target.DOMove(new Vector3(2, 2, 2), 1f).SetLoops(1, LoopType.Yoyo)
+			target.DOMove(new Vector3(2, 2, 2), 1f).SetLoops(3, LoopType.Yoyo).SetSpeedBased()
 			.SetId("Move")
 			.OnStart(()=> DGUtils.Log("Move Start"))
 			.OnStepComplete(()=> { stepCompleteT1++; DGUtils.Log("Move Step Complete"); })

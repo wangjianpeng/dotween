@@ -792,7 +792,8 @@
             <summary>Returns the total number of loops completed by this tween</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Duration(DG.Tweening.Tween,System.Boolean)">
-            <summary>Returns the duration of this tween (delays excluded)</summary>
+            <summary>Returns the duration of this tween (delays excluded).
+            <para>NOTE: when using settings like SpeedBased, the duration will be recalculated when the tween starts</para></summary>
             <param name="includeLoops">If TRUE returns the full duration loops included,
              otherwise the duration of a single loop cycle</param>
         </member>

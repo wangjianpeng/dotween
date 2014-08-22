@@ -145,14 +145,7 @@ namespace DG.Tweening
 
             // Special startup operations
             if (t.specialStartupMode != SpecialStartupMode.None) {
-                switch (t.specialStartupMode) {
-                case SpecialStartupMode.SetLocalAxisRotationSetter:
-                    if (!SpecialPluginsUtils.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, NoOptions>)) return false;
-                    break;
-                case SpecialStartupMode.SetShake:
-                    if (!SpecialPluginsUtils.SetShake(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
-                    break;
-                }
+                if (!DOStartupSpecials(t)) return false;
             }
 
             if (!t.hasManuallySetStartValue) {
@@ -179,8 +172,8 @@ namespace DG.Tweening
                 t.setter(t.tweenPlugin.Evaluate(t.plugOptions, t, t.isRelative, t.getter, 0, t.startValue, t.endValue, 1));
             } else t.tweenPlugin.SetChangeValue(t);
 
-            if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.plugOptions, t.duration, t.changeValue);
-            t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
+            // Duration based startup operations
+            DOStartupDurationBased(t);
 
             // Applied here so that the eventual duration derived from a speedBased tween has been set
             if (t.duration <= 0) t.easeType = Ease.InternalZero;
@@ -197,15 +190,15 @@ namespace DG.Tweening
             t.startValue = newStartValue;
 
             if (t.startupDone) {
-                if (!ReiterateStartupSpecials(t)) return null;
+                if (t.specialStartupMode != SpecialStartupMode.None) {
+                    if (!DOStartupSpecials(t)) return null;
+                }
                 t.tweenPlugin.SetChangeValue(t);
             }
 
             if (newDuration > 0) {
                 t.duration = newDuration;
-                if (t.startupDone) {
-                    if (!ReiterateStartupDurationBased(t)) return null;
-                }
+                if (t.startupDone) DOStartupDurationBased(t);
             }
 
             // Force rewind
@@ -223,7 +216,9 @@ namespace DG.Tweening
             t.isRelative = false;
 
             if (t.startupDone) {
-                if (!ReiterateStartupSpecials(t)) return null;
+                if (t.specialStartupMode != SpecialStartupMode.None) {
+                    if (!DOStartupSpecials(t)) return null;
+                }
                 if (snapStartValue) {
                     // Reassign startValue with current target's value
                     if (DOTween.useSafeMode) {
@@ -241,9 +236,7 @@ namespace DG.Tweening
 
             if (newDuration > 0) {
                 t.duration = newDuration;
-                if (t.startupDone) {
-                    if (!ReiterateStartupDurationBased(t)) return null;
-                }
+                if (t.startupDone) DOStartupDurationBased(t);
             }
 
             // Force rewind
@@ -262,15 +255,15 @@ namespace DG.Tweening
             t.endValue = newEndValue;
 
             if (t.startupDone) {
-                if (!ReiterateStartupSpecials(t)) return null;
+                if (t.specialStartupMode != SpecialStartupMode.None) {
+                    if (!DOStartupSpecials(t)) return null;
+                }
                 t.tweenPlugin.SetChangeValue(t);
             }
 
             if (newDuration > 0) {
                 t.duration = newDuration;
-                if (t.startupDone) {
-                    if (!ReiterateStartupDurationBased(t)) return null;
-                }
+                if (t.startupDone) DOStartupDurationBased(t);
             }
 
             // Force rewind
@@ -279,28 +272,25 @@ namespace DG.Tweening
             return t;
         }
 
-        // Commands shared by ChangeStart/End/Values if the tween has already started up
+        // Commands shared by DOStartup/ChangeStart/End/Values if the tween has already started up
         // and thus some settings needs to be reapplied.
         // Returns TRUE in case of SUCCESS, FALSE if there were managed errors
-        static bool ReiterateStartupSpecials<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
+        static bool DOStartupSpecials<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
         {
-            if (t.specialStartupMode != SpecialStartupMode.None) {
-                switch (t.specialStartupMode) {
-                case SpecialStartupMode.SetLocalAxisRotationSetter:
-                    if (!SpecialPluginsUtils.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, NoOptions>)) return false;
-                    break;
-                case SpecialStartupMode.SetShake:
-                    if (!SpecialPluginsUtils.SetShake(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
-                    break;
-                }
+            switch (t.specialStartupMode) {
+            case SpecialStartupMode.SetLocalAxisRotationSetter:
+                if (!SpecialPluginsUtils.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, NoOptions>)) return false;
+                break;
+            case SpecialStartupMode.SetShake:
+                if (!SpecialPluginsUtils.SetShake(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+                break;
             }
             return true;
         }
-        static bool ReiterateStartupDurationBased<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
+        static void DOStartupDurationBased<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
         {
             if (t.isSpeedBased) t.duration = t.tweenPlugin.GetSpeedBasedDuration(t.plugOptions, t.duration, t.changeValue);
             t.fullDuration = t.loops > -1 ? t.duration * t.loops : Mathf.Infinity;
-            return true;
         }
     }
 }
