@@ -227,7 +227,7 @@ namespace DG.Tweening.Core
             t.elapsedDelay = t.delay;
             int toCompletedLoops = (int)(to / t.duration);
             float toPosition = to % t.duration;
-            if (toCompletedLoops >= t.loops) {
+            if (t.loops != -1 && toCompletedLoops >= t.loops) {
                 toCompletedLoops = t.loops;
                 toPosition = t.duration;
             } else if (toPosition >= t.duration) toPosition = 0;
