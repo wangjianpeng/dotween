@@ -69,7 +69,7 @@ namespace DG.Tweening
 
         /// <summary>Sets the looping options for the tween. 
         /// Has no effect if the tween has already started</summary>
-        /// <param name="loops">Number of cycles to play (-1 for infinite)</param>
+        /// <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
         public static T SetLoops<T>(this T t, int loops) where T : Tween
         {
             if (!t.active || t.creationLocked) return t;
@@ -87,7 +87,7 @@ namespace DG.Tweening
         }
         /// <summary>Sets the looping options for the tween. 
         /// Has no effect if the tween has already started</summary>
-        /// <param name="loops">Number of cycles to play (-1 for infinite)</param>
+        /// <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
         /// <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
         public static T SetLoops<T>(this T t, int loops, LoopType loopType) where T : Tween
         {
@@ -341,7 +341,7 @@ namespace DG.Tweening
 
         /// <summary>If isSpeedBased is TRUE sets the tween as speed based
         /// (the duration will represent the number of units the tween moves x second).
-        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
+        /// <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         public static T SetSpeedBased<T>(this T t) where T : Tween
         {
             if (!t.active || t.creationLocked) return t;
@@ -351,7 +351,7 @@ namespace DG.Tweening
         }
         /// <summary>If isSpeedBased is TRUE sets the tween as speed based
         /// (the duration will represent the number of units the tween moves x second).
-        /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
+        /// <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         public static T SetSpeedBased<T>(this T t, bool isSpeedBased) where T : Tween
         {
             if (!t.active || t.creationLocked) return t;

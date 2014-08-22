@@ -453,12 +453,12 @@
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetLoops``1(``0,System.Int32)">
             <summary>Sets the looping options for the tween. 
             Has no effect if the tween has already started</summary>
-            <param name="loops">Number of cycles to play (-1 for infinite)</param>
+            <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetLoops``1(``0,System.Int32,DG.Tweening.LoopType)">
             <summary>Sets the looping options for the tween. 
             Has no effect if the tween has already started</summary>
-            <param name="loops">Number of cycles to play (-1 for infinite)</param>
+            <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
             <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0)">
@@ -558,12 +558,12 @@
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetSpeedBased``1(``0)">
             <summary>If isSpeedBased is TRUE sets the tween as speed based
             (the duration will represent the number of units the tween moves x second).
-            <para>Has no effect on Sequences or if the tween has already started</para></summary>
+            <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetSpeedBased``1(``0,System.Boolean)">
             <summary>If isSpeedBased is TRUE sets the tween as speed based
             (the duration will represent the number of units the tween moves x second).
-            <para>Has no effect on Sequences or if the tween has already started</para></summary>
+            <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease)">
             <summary>Sets the ease of the tween.

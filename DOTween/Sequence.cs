@@ -65,12 +65,16 @@ namespace DG.Tweening
         {
             TweenManager.AddActiveTweenToSequence(t);
 
+            // If t has a delay add it as an interval
+            atPosition += t.delay;
+
             t.isSequenced = t.creationLocked = true;
             if (t.loops == -1) t.loops = 1;
             float tFullTime = t.delay + (t.duration * t.loops);
             t.autoKill = false;
             t.delay = t.elapsedDelay = 0;
             t.delayComplete = true;
+            t.isSpeedBased = false;
             t.sequencedPosition = atPosition;
             t.sequencedEndPosition = t.sequencedPosition + tFullTime;
 
