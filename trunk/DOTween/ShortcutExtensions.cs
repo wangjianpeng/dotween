@@ -414,12 +414,12 @@ namespace DG.Tweening
 
         #region Camera Shortcuts
 
-        /// <summary>Shakes a Camera's localPosition along the X Y axes with the given values.</summary>
+        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.</summary>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="strength">The shake strength</param>
         /// <param name="vibrato">Indicates how much will the shake vibrate</param>
         /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
-        /// Setting it to 0 will shake along a single axis.</param>
+        /// Setting it to 0 will shake along a single direction.</param>
         /// <returns></returns>
         public static Tweener DOShakePosition(this Camera target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
         {
