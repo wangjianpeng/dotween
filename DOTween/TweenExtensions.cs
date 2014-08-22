@@ -167,6 +167,7 @@ namespace DG.Tweening
 
             TweenManager.TogglePause(t);
         }
+
         #endregion
 
         #region Yield Coroutines
@@ -263,7 +264,8 @@ namespace DG.Tweening
             return t.completedLoops;
         }
 
-        /// <summary>Returns the duration of this tween (delays excluded)</summary>
+        /// <summary>Returns the duration of this tween (delays excluded).
+        /// <para>NOTE: when using settings like SpeedBased, the duration will be recalculated when the tween starts</para></summary>
         /// <param name="includeLoops">If TRUE returns the full duration loops included,
         ///  otherwise the duration of a single loop cycle</param>
         public static float Duration(this Tween t, bool includeLoops = true)
