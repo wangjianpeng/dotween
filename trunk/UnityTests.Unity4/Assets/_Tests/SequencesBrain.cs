@@ -80,7 +80,8 @@ public class SequencesBrain : BrainBase
 
 		seq.AppendInterval(0.5f);
 		seq.Append(
-			target.DOMove(new Vector3(2, 2, 2), 1f).SetLoops(3, LoopType.Yoyo).SetSpeedBased()
+			target.DOMove(new Vector3(2, 2, 2), 1f).SetLoops(3, LoopType.Yoyo)
+			.SetSpeedBased() // will not work since it's not allowed
 			.SetId("Move")
 			.OnStart(()=> DGUtils.Log("Move Start"))
 			.OnStepComplete(()=> { stepCompleteT1++; DGUtils.Log("Move Step Complete"); })
@@ -89,6 +90,7 @@ public class SequencesBrain : BrainBase
 		seq.Append(
 			target.DORotate(new Vector3(0, 225, 2), 1)
 			.SetId("Rotate")
+			.SetDelay(1)
 			.OnStart(()=> DGUtils.Log("Rotate Start"))
 			.OnStepComplete(()=> { stepCompleteT2++; DGUtils.Log("Rotate Step Complete"); })
 			.OnComplete(()=> { completeT2++; })
