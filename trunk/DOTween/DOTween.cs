@@ -32,12 +32,12 @@ namespace DG.Tweening
     /// <summary>
     /// Main DOTween class. Contains static methods to create and control tweens in a generic way
     /// </summary>
-    public class DOTween : MonoBehaviour
+    public class DOTween : MonoBehaviour, IDOTweenInit
     {
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.405";
+        public static readonly string Version = "0.7.415";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -116,6 +116,8 @@ namespace DG.Tweening
                 string s = "REPORT > Max overall simultaneous active Tweeners/Sequences: " + maxActiveTweenersReached + "/" + maxActiveSequencesReached;
                 Debugger.LogReport(s);
             }
+            _initialized = false;
+            instance = null;
         }
         #endregion
 
@@ -162,6 +164,8 @@ namespace DG.Tweening
         /// Must be called once, before the first ever DOTween call/reference,
         /// otherwise it will be called automatically and will use default options.
         /// Calling it a second time won't have any effect.
+        /// <para>You can chain <see cref="SetCapacity"/> to this method, to directly set the max starting size of Tweeners and Sequences:</para>
+        /// <code>DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);</code>
         /// </summary>
         /// <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
         /// instead of being destroyed, they will be put in a pool and reused instead of creating new tweens. This option allows you to avoid
@@ -181,9 +185,9 @@ namespace DG.Tweening
         /// <param name="logBehaviour">Type of logging to use.
         /// You can change this setting at any time by changing the static <see cref="DOTween.logBehaviour"/> property.
         /// <para>Default: Default</para></param>
-        public static void Init(bool recycleAllByDefault = false, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
+        public static IDOTweenInit Init(bool recycleAllByDefault = false, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
         {
-            if (_initialized) return;
+            if (_initialized) return instance;
 
             _initialized = true;
             isUnityEditor = Application.isEditor;
@@ -197,6 +201,27 @@ namespace DG.Tweening
             instance = go.AddComponent<DOTween>();
             // Log
             if (Debugger.logPriority >= 2) Debugger.Log("DOTween initialization (useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
+
+            return instance;
+        }
+
+        /// <summary>
+        /// Directly sets the current max capacity of Tweeners and Sequences
+        /// (meaning how many Tweeners and Sequences can be running at the same time),
+        /// so that DOTween doesn't need to automatically increase them in case the max is reached
+        /// (which might lead to hiccups when that happens).
+        /// Sequences capacity must be less or equal to Tweeners capacity
+        /// (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
+        /// Beware: use this method only when there are no tweens running.
+        /// </summary>
+        /// <param name="tweenersCapacity">Max Tweeners capacity.
+        /// Default: 200</param>
+        /// <param name="sequencesCapacity">Max Sequences capacity.
+        /// Default: 50</param>
+        public IDOTweenInit SetCapacity(int tweenersCapacity, int sequencesCapacity)
+        {
+            TweenManager.SetCapacities(tweenersCapacity, sequencesCapacity);
+            return instance;
         }
 
         /// <summary>
@@ -234,9 +259,12 @@ namespace DG.Tweening
             timeScale = 1;
             logBehaviour = LogBehaviour.Default;
             defaultEaseType = Ease.OutQuad;
+            defaultEaseOvershootOrAmplitude = 1.70158f;
+            defaultEasePeriod = 0;
             defaultAutoPlay = AutoPlay.All;
             defaultLoopType = LoopType.Restart;
             defaultAutoKill = true;
+            defaultRecyclable = false;
             maxActiveTweenersReached = maxActiveSequencesReached = 0;
 
             Destroy(instance.gameObject);

@@ -43,6 +43,8 @@ namespace DG.Tweening.Core
         internal TPlugOptions plugOptions;
         internal bool hasManuallySetStartValue; // TRUE when start value has been changed via ChangeStart/Values (allows DoStartup to take it into account)
 
+        const string _TxtCantChangeSequencedValues = "You cannot change the values of a tween contained inside a Sequence";
+
         // ***********************************************************************************
         // CONSTRUCTOR
         // ***********************************************************************************
@@ -62,7 +64,7 @@ namespace DG.Tweening.Core
         public override Tweener ChangeStartValue<T>(T newStartValue, float newDuration = -1)
         {
             if (isSequenced) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
+                if (Debugger.logPriority >= 1) Debugger.LogWarning(_TxtCantChangeSequencedValues);
                 return this;
             }
             if (typeof(T) != typeofT2) {
@@ -78,7 +80,7 @@ namespace DG.Tweening.Core
         public override Tweener ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false)
         {
             if (isSequenced) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
+                if (Debugger.logPriority >= 1) Debugger.LogWarning(_TxtCantChangeSequencedValues);
                 return this;
             }
             if (typeof(T) != typeofT2) {
@@ -91,7 +93,7 @@ namespace DG.Tweening.Core
         public override Tweener ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1)
         {
             if (isSequenced) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("You cannot change the values of a tween contained inside a Sequence");
+                if (Debugger.logPriority >= 1) Debugger.LogWarning(_TxtCantChangeSequencedValues);
                 return this;
             }
             if (typeof(T) != typeofT2) {
