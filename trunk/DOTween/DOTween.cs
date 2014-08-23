@@ -420,52 +420,6 @@ namespace DG.Tweening
         public static Tweener ToAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float endValue, float duration)
         { return ApplyTo<Color, Color, ColorOptions>(getter, setter, new Color(0, 0, 0, endValue), duration, false).SetOptions(true); }
 
-        /// <summary>Tweens a property or field to the given values using default plugins.
-        /// Ease is applied between each segment and not as a whole.</summary>
-        /// <param name="getter">A getter for the field or property to tween.
-        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
-        /// <param name="setter">A setter for the field or property to tween
-        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
-        /// <param name="endValues">The end values to reach for each segment. This array must have the same length as <code>durations</code></param>
-        /// <param name="durations">The duration of each segment. This array must have the same length as <code>endValues</code></param>
-        public static Tweener ToArray(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3[] endValues, float[] durations)
-        {
-            int len = durations.Length;
-            if (len != endValues.Length) {
-                Debugger.LogError("To Vector3 array tween: endValues and durations arrays must have the same length");
-                return null;
-            }
-
-            // Clone the arrays
-            Vector3[] endValuesClone = new Vector3[len];
-            float[] durationsClone = new float[len];
-            for (int i = 0; i < len; i++) {
-                endValuesClone[i] = endValues[i];
-                durationsClone[i] = durations[i];
-            }
-
-            float totDuration = 0;
-            for (int i = 0; i < len; ++i) totDuration += durationsClone[i];
-            TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t = ApplyTo<Vector3, Vector3[], Vector3ArrayOptions>(getter, setter, endValuesClone, totDuration, false);
-            t.plugOptions.durations = durationsClone;
-            return t;
-        }
-
-        /// <summary>Tweens a virtual property from the given start to the given end value 
-        /// and implements a setter that allows to use that value with an external method</summary>
-        /// <param name="setter">The action to perform with the tweened value</param>
-        /// <param name="startValue">The value to start from</param>
-        /// <param name="endValue">The end value to reach</param>
-        /// <param name="duration">The duration of the virtual tween
-        /// <para>Example:</para>
-        /// <code>To(x=> someProperty = x, 0, 12, 0.5f);</code>
-        /// </param>
-        public static Tweener To(DOSetter<float> setter, float startValue, float endValue, float duration)
-        {
-            float v = startValue;
-            return To(() => v, x => { v = x; setter(v); }, endValue, duration);
-        }
-
         #endregion
 
         #region Tween FROM
@@ -587,6 +541,92 @@ namespace DG.Tweening
         /// <param name="fromValue">The value to start from</param><param name="duration">The tween's duration</param>
         public static Tweener FromAlpha(DOGetter<Color> getter, DOSetter<Color> setter, float fromValue, float duration)
         { return ApplyTo<Color, Color, ColorOptions>(getter, setter, new Color(0, 0, 0, fromValue), duration, true).SetOptions(true); }
+
+        #endregion
+
+        #region Special TOs (No FROMs)
+
+        /// <summary>Tweens a virtual property from the given start to the given end value 
+        /// and implements a setter that allows to use that value with an external method</summary>
+        /// <param name="setter">The action to perform with the tweened value</param>
+        /// <param name="startValue">The value to start from</param>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="duration">The duration of the virtual tween
+        /// <para>Example:</para>
+        /// <code>To(x=> someProperty = x, 0, 12, 0.5f);</code>
+        /// </param>
+        public static Tweener To(DOSetter<float> setter, float startValue, float endValue, float duration)
+        {
+            float v = startValue;
+            return To(() => v, x => { v = x; setter(v); }, endValue, duration);
+        }
+
+        /// <summary>Punches a Vector3 towards the given direction and then back to the starting one
+        /// as if it was connected to the starting position via an elastic.
+        /// <para>This tween type generates some GC allocations at startup</para></summary>
+        /// <param name="direction">The direction and strength of the punch</param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="vibrato">Indicates how much will the punch vibrate</param>
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Punch(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 direction, float duration, float vibrato = 10)
+        {
+            float strength = direction.magnitude;
+            int totIterations = (int)(vibrato * duration);
+            float decayXTween = strength / totIterations;
+            // Calculate and store the duration of each tween
+            float[] tDurations = new float[totIterations];
+            float sum = 0;
+            for (int i = 0; i < totIterations; ++i) {
+                float iterationPerc = (i + 1) / (float)totIterations;
+                float tDuration = duration * iterationPerc;
+                sum += tDuration;
+                tDurations[i] = tDuration;
+            }
+            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
+            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
+            // Create the tween
+            Vector3[] tos = new Vector3[totIterations];
+            for (int i = 0; i < totIterations; ++i) {
+                if (i < totIterations - 1) {
+                    if (i == 0) tos[i] = direction;
+                    else if (i % 2 != 0) tos[i] = -Vector3.ClampMagnitude(direction, strength);
+                    else tos[i] = Vector3.ClampMagnitude(direction, strength);
+                    strength -= decayXTween;
+                } else tos[i] = Vector3.zero;
+            }
+            return ToArray(getter, setter, tos, tDurations).SetSpecialStartupMode(SpecialStartupMode.SetPunch);
+        }
+
+        /// <summary>Tweens a property or field to the given values using default plugins.
+        /// Ease is applied between each segment and not as a whole.
+        /// <para>This tween type generates some GC allocations at startup</para></summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+        /// <param name="endValues">The end values to reach for each segment. This array must have the same length as <code>durations</code></param>
+        /// <param name="durations">The duration of each segment. This array must have the same length as <code>endValues</code></param>
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> ToArray(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3[] endValues, float[] durations)
+        {
+            int len = durations.Length;
+            if (len != endValues.Length) {
+                Debugger.LogError("To Vector3 array tween: endValues and durations arrays must have the same length");
+                return null;
+            }
+
+            // Clone the arrays
+            Vector3[] endValuesClone = new Vector3[len];
+            float[] durationsClone = new float[len];
+            for (int i = 0; i < len; i++) {
+                endValuesClone[i] = endValues[i];
+                durationsClone[i] = durations[i];
+            }
+
+            float totDuration = 0;
+            for (int i = 0; i < len; ++i) totDuration += durationsClone[i];
+            TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t = ApplyTo<Vector3, Vector3[], Vector3ArrayOptions>(getter, setter, endValuesClone, totDuration, false);
+            t.plugOptions.durations = durationsClone;
+            return t;
+        }
 
         #endregion
 

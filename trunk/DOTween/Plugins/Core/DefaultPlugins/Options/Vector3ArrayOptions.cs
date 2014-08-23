@@ -24,6 +24,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins.Options
 {
     public struct Vector3ArrayOptions
     {
+        public AxisConstraint axisConstraint;
         public bool snapping;
 
         internal float[] durations; // Duration of each segment
