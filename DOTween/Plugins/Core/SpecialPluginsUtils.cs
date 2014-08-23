@@ -72,11 +72,8 @@ namespace DG.Tweening.Plugins.Core
         }
 
         // Returns TRUE if it's successful, FALSE otherwise
-        internal static bool SetPunchPosition(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
+        internal static bool SetPunch(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
         {
-            Transform target = t.target as Transform;
-            if (target == null) return false;
-            
             Vector3 startupPos;
             try {
                 startupPos = t.getter();
@@ -88,11 +85,7 @@ namespace DG.Tweening.Plugins.Core
             t.customEase = null;
 
             int len = t.endValue.Length;
-            for (int i = 0; i < len; i++) {
-                Vector3 endValue = t.endValue[i];
-                endValue = target.transform.localRotation * endValue;
-                t.endValue[i] = endValue + startupPos;
-            }
+            for (int i = 0; i < len; i++) t.endValue[i] = t.endValue[i] + startupPos;
             return true;
         }
     }

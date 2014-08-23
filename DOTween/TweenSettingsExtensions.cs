@@ -519,6 +519,27 @@ namespace DG.Tweening
             t.plugOptions.scramble = scramble;
             return t;
         }
+
+        /// <summary>Options for Vector3Array tweens</summary>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener SetOptions(this TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t, bool snapping)
+        {
+            if (!t.active) return t;
+
+            t.plugOptions.snapping = snapping;
+            return t;
+        }
+        /// <summary>Options for Vector3Array tweens</summary>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener SetOptions(this TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t, AxisConstraint axisConstraint, bool snapping = false)
+        {
+            if (!t.active) return t;
+
+            t.plugOptions.axisConstraint = axisConstraint;
+            t.plugOptions.snapping = snapping;
+            return t;
+        }
+
         #endregion
 
         #region Internals

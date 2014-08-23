@@ -294,40 +294,16 @@ namespace DG.Tweening
                 .SetTarget(target);
         }
 
-        /// <summary>Punches a transform towards the given direction and then back to the starting one
+        /// <summary>Punches a Transform's localPosition towards the given direction and then back to the starting one
         /// as if it was connected to the starting position via an elastic.</summary>
-        /// <param name="direction">The direction and strangth of the punch, relative to the transform's local axis</param>
+        /// <param name="direction">The direction and strength of the punch</param>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="vibrato">Indicates how much will the punch vibrate</param>
-        public static Tweener DOPunchPosition(this Transform target, Vector3 direction, float duration, float vibrato = 10)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOPunchPosition(this Transform target, Vector3 direction, float duration, float vibrato = 10, bool snapping = false)
         {
-            float strength = direction.magnitude;
-            int totIterations = (int)(vibrato * duration);
-            float decayXTween = strength / totIterations;
-            // Calculate and store the duration of each tween
-            float[] tDurations = new float[totIterations];
-            float sum = 0;
-            for (int i = 0; i < totIterations; ++i) {
-                float iterationPerc = (i + 1) / (float)totIterations;
-                float tDuration = duration * iterationPerc;
-                sum += tDuration;
-                tDurations[i] = tDuration;
-            }
-            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
-            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
-            // Create the tween
-            Vector3[] tos = new Vector3[totIterations];
-            for (int i = 0; i < totIterations; ++i) {
-                if (i < totIterations - 1) {
-                    if (i == 0) tos[i] = direction;
-                    else if (i % 2 != 0) tos[i] = -Vector3.ClampMagnitude(direction, strength);
-                    else tos[i] = Vector3.ClampMagnitude(direction, strength);
-                    strength -= decayXTween;
-                } else tos[i] = Vector3.zero;
-            }
-            Transform trans = target.transform;
-            return DOTween.ToArray(() => trans.localPosition, x => trans.localPosition = x, tos, tDurations)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetPunchPosition).SetEase(Ease.Linear);
+            return DOTween.Punch(() => target.localPosition, x => target.localPosition = x, direction, duration, vibrato)
+                .SetTarget(target).SetOptions(snapping);
         }
 
         #endregion

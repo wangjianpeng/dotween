@@ -8,6 +8,7 @@ public class ShakePunchBrain : BrainBase
 	public float shakeStrength = 2; // Shake power
 	public float shakeVibrato = 10; // Shake iterations x seconds
 	public float shakeRandomness = 90;
+	public Vector3 punchDirection = Vector3.up;
 	public float punchVibrato = 10;
 	public float duration = 1; // Shake duration
 	public Transform[] targets;
@@ -35,6 +36,6 @@ public class ShakePunchBrain : BrainBase
 	{
 		if (punchTween != null && punchTween.IsActive()) punchTween.Complete();
 
-		punchTween = targets[0].DOPunchPosition(new Vector3(0,1,0), duration, punchVibrato);
+		punchTween = targets[0].DOPunchPosition(punchDirection, duration, punchVibrato);
 	}
 }

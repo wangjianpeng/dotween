@@ -284,8 +284,8 @@ namespace DG.Tweening
             case SpecialStartupMode.SetCameraShakePosition:
                 if (!SpecialPluginsUtils.SetCameraShakePosition(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
                 break;
-            case SpecialStartupMode.SetPunchPosition:
-                if (!SpecialPluginsUtils.SetPunchPosition(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+            case SpecialStartupMode.SetPunch:
+                if (!SpecialPluginsUtils.SetPunch(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
                 break;
             }
             return true;
