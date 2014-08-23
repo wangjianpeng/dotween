@@ -294,6 +294,42 @@ namespace DG.Tweening
                 .SetTarget(target);
         }
 
+        /// <summary>Punches a transform towards the given direction and then back to the starting one
+        /// as if it was connected to the starting position via an elastic.</summary>
+        /// <param name="direction">The direction and strangth of the punch, relative to the transform's local axis</param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="vibrato">Indicates how much will the punch vibrate</param>
+        public static Tweener DOPunchPosition(this Transform target, Vector3 direction, float duration, float vibrato = 10)
+        {
+            float strength = direction.magnitude;
+            int totIterations = (int)(vibrato * duration);
+            float decayXTween = strength / totIterations;
+            // Calculate and store the duration of each tween
+            float[] tDurations = new float[totIterations];
+            float sum = 0;
+            for (int i = 0; i < totIterations; ++i) {
+                float iterationPerc = (i + 1) / (float)totIterations;
+                float tDuration = duration * iterationPerc;
+                sum += tDuration;
+                tDurations[i] = tDuration;
+            }
+            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
+            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
+            // Create the tween
+            Vector3[] tos = new Vector3[totIterations];
+            for (int i = 0; i < totIterations; ++i) {
+                if (i < totIterations - 1) {
+                    if (i == 0) tos[i] = direction;
+                    else if (i % 2 != 0) tos[i] = -Vector3.ClampMagnitude(direction, strength);
+                    else tos[i] = Vector3.ClampMagnitude(direction, strength);
+                    strength -= decayXTween;
+                } else tos[i] = Vector3.zero;
+            }
+            Transform trans = target.transform;
+            return DOTween.ToArray(() => trans.localPosition, x => trans.localPosition = x, tos, tDurations)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetPunchPosition).SetEase(Ease.Linear);
+        }
+
         #endregion
 
         #region Rigidbody Shortcuts
@@ -420,7 +456,6 @@ namespace DG.Tweening
         /// <param name="vibrato">Indicates how much will the shake vibrate</param>
         /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
         /// Setting it to 0 will shake along a single direction.</param>
-        /// <returns></returns>
         public static Tweener DOShakePosition(this Camera target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
         {
             int totIterations = (int)(vibrato * duration);
@@ -436,7 +471,7 @@ namespace DG.Tweening
             }
             float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
             for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
-            // Create the shake
+            // Create the tween
             float ang = 0;
             Vector3[] tos = new Vector3[totIterations];
             for (int i = 0; i < totIterations; ++i) {
@@ -449,7 +484,7 @@ namespace DG.Tweening
             }
             Transform trans = target.transform;
             return DOTween.ToArray(() => trans.localPosition, x => trans.localPosition = x, tos, tDurations)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake).SetEase(Ease.Linear);
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition).SetEase(Ease.Linear);
         }
 
         #endregion
