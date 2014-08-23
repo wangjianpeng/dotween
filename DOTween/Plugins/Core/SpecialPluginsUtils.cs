@@ -47,10 +47,11 @@ namespace DG.Tweening.Plugins.Core
         }
 
         // Returns TRUE if it's successful, FALSE otherwise
-        internal static bool SetShake(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
+        internal static bool SetCameraShakePosition(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
         {
             Camera target = t.target as Camera;
             if (target == null) return false;
+            
             Vector3 startupPos;
             try {
                 startupPos = t.getter();
@@ -59,6 +60,31 @@ namespace DG.Tweening.Plugins.Core
             // Force specific settings
             t.isRelative = t.isSpeedBased = false;
             t.easeType = Ease.Linear;
+            t.customEase = null;
+
+            int len = t.endValue.Length;
+            for (int i = 0; i < len; i++) {
+                Vector3 endValue = t.endValue[i];
+                endValue = target.transform.localRotation * endValue;
+                t.endValue[i] = endValue + startupPos;
+            }
+            return true;
+        }
+
+        // Returns TRUE if it's successful, FALSE otherwise
+        internal static bool SetPunchPosition(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
+        {
+            Transform target = t.target as Transform;
+            if (target == null) return false;
+            
+            Vector3 startupPos;
+            try {
+                startupPos = t.getter();
+            } catch { return false; }
+
+            // Force specific settings
+            t.isRelative = t.isSpeedBased = false;
+            t.easeType = Ease.OutQuad;
             t.customEase = null;
 
             int len = t.endValue.Length;
