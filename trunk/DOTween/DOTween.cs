@@ -564,11 +564,20 @@ namespace DG.Tweening
         /// <summary>Punches a Vector3 towards the given direction and then back to the starting one
         /// as if it was connected to the starting position via an elastic.
         /// <para>This tween type generates some GC allocations at startup</para></summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
         /// <param name="direction">The direction and strength of the punch</param>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="vibrato">Indicates how much will the punch vibrate</param>
-        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Punch(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 direction, float duration, float vibrato = 10)
+        /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
+        /// 1 creates a full oscillation between the direction and the opposite decaying direction,
+        /// while 0 oscillates only between the starting position and the decaying direction</param>
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Punch(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 direction, float duration, float vibrato = 10, float elasticity = 1)
         {
+            if (elasticity > 1) elasticity = 1;
+            else if (elasticity < 0) elasticity = 0;
             float strength = direction.magnitude;
             int totIterations = (int)(vibrato * duration);
             float decayXTween = strength / totIterations;
@@ -588,7 +597,7 @@ namespace DG.Tweening
             for (int i = 0; i < totIterations; ++i) {
                 if (i < totIterations - 1) {
                     if (i == 0) tos[i] = direction;
-                    else if (i % 2 != 0) tos[i] = -Vector3.ClampMagnitude(direction, strength);
+                    else if (i % 2 != 0) tos[i] = -Vector3.ClampMagnitude(direction, strength * elasticity);
                     else tos[i] = Vector3.ClampMagnitude(direction, strength);
                     strength -= decayXTween;
                 } else tos[i] = Vector3.zero;

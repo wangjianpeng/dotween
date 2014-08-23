@@ -380,13 +380,20 @@
             <code>To(x=> someProperty = x, 0, 12, 0.5f);</code>
             </param>
         </member>
-        <member name="M:DG.Tweening.DOTween.Punch(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,System.Single)">
+        <member name="M:DG.Tweening.DOTween.Punch(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3,System.Single,System.Single,System.Single)">
             <summary>Punches a Vector3 towards the given direction and then back to the starting one
             as if it was connected to the starting position via an elastic.
             <para>This tween type generates some GC allocations at startup</para></summary>
+            <param name="getter">A getter for the field or property to tween.
+            <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
             <param name="direction">The direction and strength of the punch</param>
             <param name="duration">The duration of the tween</param>
             <param name="vibrato">Indicates how much will the punch vibrate</param>
+            <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
+            1 creates a full oscillation between the direction and the opposite decaying direction,
+            while 0 oscillates only between the starting position and the decaying direction</param>
         </member>
         <member name="M:DG.Tweening.DOTween.ToArray(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3[],System.Single[])">
             <summary>Tweens a property or field to the given values using default plugins.
@@ -1223,13 +1230,26 @@
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOPunchPosition(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Single,System.Boolean)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOPunchPosition(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Single,System.Single,System.Boolean)">
             <summary>Punches a Transform's localPosition towards the given direction and then back to the starting one
             as if it was connected to the starting position via an elastic.</summary>
             <param name="direction">The direction and strength of the punch</param>
             <param name="duration">The duration of the tween</param>
             <param name="vibrato">Indicates how much will the punch vibrate</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+            <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
+            1 creates a full oscillation between the direction and the opposite decaying direction,
+            while 0 oscillates only between the starting position and the decaying direction</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOPunchScale(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Single,System.Single)">
+            <summary>Punches a Transform's localScale towards the given size and then back to the starting one
+            as if it was connected to the starting scale via an elastic.</summary>
+            <param name="size">The size and strength of the punch</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="vibrato">Indicates how much will the punch vibrate</param>
+            <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting size when bouncing backwards.
+            1 creates a full oscillation between the size and the opposite decaying size,
+            while 0 oscillates only between the starting size and the decaying size.</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's position to the given value.
