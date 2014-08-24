@@ -296,13 +296,13 @@ namespace DG.Tweening
 
         /// <summary>Punches a Transform's localPosition towards the given direction and then back to the starting one
         /// as if it was connected to the starting position via an elastic.</summary>
-        /// <param name="punch">The direction and strength of the punch</param>
+        /// <param name="punch">The direction and strength of the punch (added to the Transform's current position)</param>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="vibrato">Indicates how much will the punch vibrate</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
         /// 1 creates a full oscillation between the punch direction and the opposite direction,
         /// while 0 oscillates only between the punch and the start position</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         public static Tweener DOPunchPosition(this Transform target, Vector3 punch, float duration, float vibrato = 10, float elasticity = 1, bool snapping = false)
         {
             return DOTween.Punch(() => target.localPosition, x => target.localPosition = x, punch, duration, vibrato, elasticity)
@@ -323,7 +323,7 @@ namespace DG.Tweening
         }
         /// <summary>Punches a Transform's localRotation towards the given size and then back to the starting one
         /// as if it was connected to the starting rotation via an elastic.</summary>
-        /// <param name="punch">The punch strength (added to the Transform's current scale)</param>
+        /// <param name="punch">The punch strength (added to the Transform's current rotation)</param>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="vibrato">Indicates how much will the punch vibrate</param>
         /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting rotation when bouncing backwards.
@@ -550,6 +550,15 @@ namespace DG.Tweening
         {
             return DOTween.Kill(target);
         }
+        /// <summary>
+        /// Kills all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens killed.
+        /// </summary>
+        public static int DOKill(this Camera target)
+        {
+            return DOTween.Kill(target);
+        }
 
         /// <summary>
         /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
@@ -575,6 +584,15 @@ namespace DG.Tweening
         /// and returns the total number of tweens played.
         /// </summary>
         public static int DOFlip(this Material target)
+        {
+            return DOTween.Flip(target);
+        }
+        /// <summary>
+        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens played.
+        /// </summary>
+        public static int DOFlip(this Camera target)
         {
             return DOTween.Flip(target);
         }
@@ -615,6 +633,18 @@ namespace DG.Tweening
         {
             return DOTween.Goto(target, to, andPlay);
         }
+        /// <summary>
+        /// Sends to the given position all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens involved.
+        /// </summary>
+        /// <param name="to">Time position to reach
+        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
+        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+        public static int DOGoto(this Camera target, float to, bool andPlay = false)
+        {
+            return DOTween.Goto(target, to, andPlay);
+        }
 
         /// <summary>
         /// Pauses all tweens that have this target as a reference
@@ -640,6 +670,15 @@ namespace DG.Tweening
         /// and returns the total number of tweens paused.
         /// </summary>
         public static int DOPause(this Material target)
+        {
+            return DOTween.Pause(target);
+        }
+        /// <summary>
+        /// Pauses all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens paused.
+        /// </summary>
+        public static int DOPause(this Camera target)
         {
             return DOTween.Pause(target);
         }
@@ -671,6 +710,15 @@ namespace DG.Tweening
         {
             return DOTween.Play(target);
         }
+        /// <summary>
+        /// Plays all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens played.
+        /// </summary>
+        public static int DOPlay(this Camera target)
+        {
+            return DOTween.Play(target);
+        }
 
         /// <summary>
         /// Plays backwards all tweens that have this target as a reference
@@ -696,6 +744,15 @@ namespace DG.Tweening
         /// and returns the total number of tweens played.
         /// </summary>
         public static int DOPlayBackwards(this Material target)
+        {
+            return DOTween.PlayBackwards(target);
+        }
+        /// <summary>
+        /// Plays backwards all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens played.
+        /// </summary>
+        public static int DOPlayBackwards(this Camera target)
         {
             return DOTween.PlayBackwards(target);
         }
@@ -727,6 +784,15 @@ namespace DG.Tweening
         {
             return DOTween.PlayForward(target);
         }
+        /// <summary>
+        /// Plays forward all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens played.
+        /// </summary>
+        public static int DOPlayForward(this Camera target)
+        {
+            return DOTween.PlayForward(target);
+        }
 
         /// <summary>
         /// Restarts all tweens that have this target as a reference
@@ -752,6 +818,15 @@ namespace DG.Tweening
         /// and returns the total number of tweens restarted.
         /// </summary>
         public static int DORestart(this Material target)
+        {
+            return DOTween.Restart(target);
+        }
+        /// <summary>
+        /// Restarts all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens restarted.
+        /// </summary>
+        public static int DORestart(this Camera target)
         {
             return DOTween.Restart(target);
         }
@@ -783,6 +858,15 @@ namespace DG.Tweening
         {
             return DOTween.Rewind(target);
         }
+        /// <summary>
+        /// Rewinds all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens rewinded.
+        /// </summary>
+        public static int DORewind(this Camera target)
+        {
+            return DOTween.Rewind(target);
+        }
 
         /// <summary>
         /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
@@ -808,6 +892,15 @@ namespace DG.Tweening
         /// and returns the total number of tweens involved.
         /// </summary>
         public static int DOTogglePause(this Material target)
+        {
+            return DOTween.TogglePause(target);
+        }
+        /// <summary>
+        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens involved.
+        /// </summary>
+        public static int DOTogglePause(this Camera target)
         {
             return DOTween.TogglePause(target);
         }
