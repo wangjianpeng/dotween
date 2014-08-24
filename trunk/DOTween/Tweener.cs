@@ -281,11 +281,14 @@ namespace DG.Tweening
             case SpecialStartupMode.SetLocalAxisRotationSetter:
                 if (!SpecialPluginsUtils.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, NoOptions>)) return false;
                 break;
-            case SpecialStartupMode.SetCameraShakePosition:
-                if (!SpecialPluginsUtils.SetCameraShakePosition(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
-                break;
             case SpecialStartupMode.SetPunch:
                 if (!SpecialPluginsUtils.SetPunch(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+                break;
+            case SpecialStartupMode.SetShake:
+                if (!SpecialPluginsUtils.SetShake(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+                break;
+            case SpecialStartupMode.SetCameraShakePosition:
+                if (!SpecialPluginsUtils.SetCameraShakePosition(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
                 break;
             }
             return true;

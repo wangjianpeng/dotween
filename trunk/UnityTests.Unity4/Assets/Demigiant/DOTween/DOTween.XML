@@ -395,6 +395,18 @@
             1 creates a full oscillation between the direction and the opposite decaying direction,
             while 0 oscillates only between the starting position and the decaying direction</param>
         </member>
+        <member name="M:DG.Tweening.DOTween.Shake(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},System.Single,System.Single,System.Single,System.Single)">
+            <summary>Shakes a Vector3 along its X Y axes with the given values.</summary>
+            <param name="getter">A getter for the field or property to tween.
+            <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+            <param name="setter">A setter for the field or property to tween
+            <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+            <param name="duration">The duration of the tween</param>
+            <param name="strength">The shake strength</param>
+            <param name="vibrato">Indicates how much will the shake vibrate</param>
+            <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+            Setting it to 0 will shake along a single direction and behave like a random punch.</param>
+        </member>
         <member name="M:DG.Tweening.DOTween.ToArray(DG.Tweening.Core.DOGetter{UnityEngine.Vector3},DG.Tweening.Core.DOSetter{UnityEngine.Vector3},UnityEngine.Vector3[],System.Single[])">
             <summary>Tweens a property or field to the given values using default plugins.
             Ease is applied between each segment and not as a whole.
@@ -1335,6 +1347,14 @@
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOShakePosition(UnityEngine.Camera,System.Single,System.Single,System.Single,System.Single)">
             <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.</summary>
+            <param name="duration">The duration of the tween</param>
+            <param name="strength">The shake strength</param>
+            <param name="vibrato">Indicates how much will the shake vibrate</param>
+            <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+            Setting it to 0 will shake along a single direction.</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOShakeRotation(UnityEngine.Camera,System.Single,System.Single,System.Single,System.Single)">
+            <summary>Shakes a Camera's localRotation.</summary>
             <param name="duration">The duration of the tween</param>
             <param name="strength">The shake strength</param>
             <param name="vibrato">Indicates how much will the shake vibrate</param>
