@@ -39,9 +39,10 @@ namespace DG.Tweening
         /// <summary>Completes the tween</summary>
         public static void Complete(this Tween t)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.Complete(t);
@@ -50,9 +51,10 @@ namespace DG.Tweening
         /// <summary>Flips the direction of this tween (backwards if it was going forward or viceversa)</summary>
         public static void Flip(this Tween t)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.Flip(t);
@@ -64,9 +66,10 @@ namespace DG.Tweening
         /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
         public static void Goto(this Tween t, float to, bool andPlay = false)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             if (to < 0) to = 0;
@@ -76,9 +79,10 @@ namespace DG.Tweening
         /// <summary>Kills the tween</summary>
         public static void Kill(this Tween t)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             if (TweenManager.isUpdateLoop) {
@@ -90,9 +94,10 @@ namespace DG.Tweening
         /// <summary>Pauses the tween</summary>
         public static T Pause<T>(this T t) where T : Tween
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return null;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return t;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return t;
             }
 
             TweenManager.Pause(t);
@@ -102,9 +107,10 @@ namespace DG.Tweening
         /// <summary>Plays the tween</summary>
         public static T Play<T>(this T t) where T : Tween
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return null;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return t;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return t;
             }
 
             TweenManager.Play(t);
@@ -114,9 +120,10 @@ namespace DG.Tweening
         /// <summary>Sets the tween in a backwards direction and plays it</summary>
         public static void PlayBackwards(this Tween t)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.PlayBackwards(t);
@@ -125,9 +132,10 @@ namespace DG.Tweening
         /// <summary>Sets the tween in a forward direction and plays it</summary>
         public static void PlayForward(this Tween t)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.PlayForward(t);
@@ -137,9 +145,10 @@ namespace DG.Tweening
         /// <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
         public static void Restart(this Tween t, bool includeDelay = true)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.Restart(t, includeDelay);
@@ -149,9 +158,10 @@ namespace DG.Tweening
         /// <param name="includeDelay">If TRUE includes the eventual tween delay, otherwise skips it</param>
         public static void Rewind(this Tween t, bool includeDelay = true)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.Rewind(t, includeDelay);
@@ -160,9 +170,10 @@ namespace DG.Tweening
         /// <summary>Plays the tween if it was paused, pauses it if it was playing</summary>
         public static void TogglePause(this Tween t)
         {
-            if (!t.active) {
-                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
-                return;
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             }
 
             TweenManager.TogglePause(t);
