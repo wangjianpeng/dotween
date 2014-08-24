@@ -605,6 +605,35 @@ namespace DG.Tweening
             return ToArray(getter, setter, tos, tDurations).SetSpecialStartupMode(SpecialStartupMode.SetPunch);
         }
 
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
+        {
+            int totIterations = (int)(vibrato * duration);
+            float decayXTween = strength / totIterations;
+            // Calculate and store the duration of each tween
+            float[] tDurations = new float[totIterations];
+            float sum = 0;
+            for (int i = 0; i < totIterations; ++i) {
+                float iterationPerc = (i + 1) / (float)totIterations;
+                float tDuration = duration * iterationPerc;
+                sum += tDuration;
+                tDurations[i] = tDuration;
+            }
+            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
+            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
+            // Create the tween
+            float ang = 0;
+            Vector3[] tos = new Vector3[totIterations];
+            for (int i = 0; i < totIterations; ++i) {
+                if (i < totIterations - 1) {
+                    if (i == 0) ang = UnityEngine.Random.Range(0f, 360f);
+                    else ang = ang - 180 + UnityEngine.Random.Range(-randomness, randomness);
+                    tos[i] = Utils.Vector3FromAngle(ang, strength);
+                    strength -= decayXTween;
+                } else tos[i] = Vector3.zero;
+            }
+            return ToArray(getter, setter, tos, tDurations).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+
         /// <summary>Tweens a property or field to the given values using default plugins.
         /// Ease is applied between each segment and not as a whole.
         /// <para>This tween type generates some GC allocations at startup</para></summary>
