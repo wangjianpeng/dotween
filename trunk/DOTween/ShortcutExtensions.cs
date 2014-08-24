@@ -463,33 +463,8 @@ namespace DG.Tweening
         /// Setting it to 0 will shake along a single direction.</param>
         public static Tweener DOShakePosition(this Camera target, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
         {
-            int totIterations = (int)(vibrato * duration);
-            float decayXTween = strength / totIterations;
-            // Calculate and store the duration of each tween
-            float[] tDurations = new float[totIterations];
-            float sum = 0;
-            for (int i = 0; i < totIterations; ++i) {
-                float iterationPerc = (i + 1) / (float)totIterations;
-                float tDuration = duration * iterationPerc;
-                sum += tDuration;
-                tDurations[i] = tDuration;
-            }
-            float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
-            for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
-            // Create the tween
-            float ang = 0;
-            Vector3[] tos = new Vector3[totIterations];
-            for (int i = 0; i < totIterations; ++i) {
-                if (i < totIterations - 1) {
-                    if (i == 0) ang = Random.Range(0f, 360f);
-                    else ang = ang - 180 + Random.Range(-randomness, randomness);
-                    tos[i] = Utils.Vector3FromAngle(ang, strength);
-                    strength -= decayXTween;
-                } else tos[i] = Vector3.zero;
-            }
-            Transform trans = target.transform;
-            return DOTween.ToArray(() => trans.localPosition, x => trans.localPosition = x, tos, tDurations)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition).SetEase(Ease.Linear);
+            return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
         }
 
         #endregion
