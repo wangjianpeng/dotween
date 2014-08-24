@@ -52,6 +52,11 @@ namespace DG.Tweening.Core
             LogWarning("This Tween has been killed and is now invalid");
         }
 
+        internal static void LogNullTween(Tween t)
+        {
+            LogWarning("Null Tween");
+        }
+
         internal static void SetLogPriority(LogBehaviour logBehaviour)
         {
             switch (logBehaviour) {

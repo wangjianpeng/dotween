@@ -74,9 +74,9 @@ namespace DG.Tweening.Plugins.Core
         // Returns TRUE if it's successful, FALSE otherwise
         internal static bool SetPunch(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
         {
-            Vector3 startupPos;
+            Vector3 startupVal;
             try {
-                startupPos = t.getter();
+                startupVal = t.getter();
             } catch { return false; }
 
             // Force specific settings
@@ -85,7 +85,7 @@ namespace DG.Tweening.Plugins.Core
             t.customEase = null;
 
             int len = t.endValue.Length;
-            for (int i = 0; i < len; i++) t.endValue[i] = t.endValue[i] + startupPos;
+            for (int i = 0; i < len; i++) t.endValue[i] = t.endValue[i] + startupVal;
             return true;
         }
     }

@@ -301,8 +301,8 @@ namespace DG.Tweening
         /// <param name="vibrato">Indicates how much will the punch vibrate</param>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
-        /// 1 creates a full oscillation between the direction and the opposite decaying direction,
-        /// while 0 oscillates only between the starting position and the decaying direction</param>
+        /// 1 creates a full oscillation between the punch direction and the opposite direction,
+        /// while 0 oscillates only between the punch and the start position</param>
         public static Tweener DOPunchPosition(this Transform target, Vector3 punch, float duration, float vibrato = 10, float elasticity = 1, bool snapping = false)
         {
             return DOTween.Punch(() => target.localPosition, x => target.localPosition = x, punch, duration, vibrato, elasticity)
@@ -314,11 +314,24 @@ namespace DG.Tweening
         /// <param name="duration">The duration of the tween</param>
         /// <param name="vibrato">Indicates how much will the punch vibrate</param>
         /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting size when bouncing backwards.
-        /// 1 creates a full oscillation between the size and the opposite decaying size,
-        /// while 0 oscillates only between the starting size and the decaying size.</param>
-        public static Tweener DOPunchScale(this Transform target, Vector3 punch, float duration, float vibrato = 10, float elasticity = 0.25f)
+        /// 1 creates a full oscillation between the punch scale and the opposite scale,
+        /// while 0 oscillates only between the punch scale and the start scale</param>
+        public static Tweener DOPunchScale(this Transform target, Vector3 punch, float duration, float vibrato = 10, float elasticity = 1)
         {
             return DOTween.Punch(() => target.localScale, x => target.localScale = x, punch, duration, vibrato, elasticity)
+                .SetTarget(target);
+        }
+        /// <summary>Punches a Transform's localRotation towards the given size and then back to the starting one
+        /// as if it was connected to the starting rotation via an elastic.</summary>
+        /// <param name="punch">The punch strength (added to the Transform's current scale)</param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="vibrato">Indicates how much will the punch vibrate</param>
+        /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting rotation when bouncing backwards.
+        /// 1 creates a full oscillation between the punch rotation and the opposite rotation,
+        /// while 0 oscillates only between the punch and the start rotation</param>
+        public static Tweener DOPunchRotation(this Transform target, Vector3 punch, float duration, float vibrato = 10, float elasticity = 1)
+        {
+            return DOTween.Punch(() => target.localRotation.eulerAngles, x => target.localRotation = Quaternion.Euler(x), punch, duration, vibrato, elasticity)
                 .SetTarget(target);
         }
 
