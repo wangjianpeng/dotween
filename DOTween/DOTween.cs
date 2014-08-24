@@ -605,6 +605,16 @@ namespace DG.Tweening
             return ToArray(getter, setter, tos, tDurations).SetSpecialStartupMode(SpecialStartupMode.SetPunch);
         }
 
+        /// <summary>Shakes a Vector3 along its X Y axes with the given values.</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction and behave like a random punch.</param>
         public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
         {
             int totIterations = (int)(vibrato * duration);
