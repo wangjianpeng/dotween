@@ -547,13 +547,14 @@ namespace DG.Tweening
         #region Special TOs (No FROMs)
 
         /// <summary>Tweens a virtual property from the given start to the given end value 
-        /// and implements a setter that allows to use that value with an external method</summary>
+        /// and implements a setter that allows to use that value with an external method or a lambda
+        /// <para>Example:</para>
+        /// <code>To(MyMethod, 0, 12, 0.5f);</code>
+        /// <para>Where MyMethod is a function that accepts a float parameter (which will be the result of the virtual tween)</para></summary>
         /// <param name="setter">The action to perform with the tweened value</param>
         /// <param name="startValue">The value to start from</param>
         /// <param name="endValue">The end value to reach</param>
         /// <param name="duration">The duration of the virtual tween
-        /// <para>Example:</para>
-        /// <code>To(x=> someProperty = x, 0, 12, 0.5f);</code>
         /// </param>
         public static Tweener To(DOSetter<float> setter, float startValue, float endValue, float duration)
         {
