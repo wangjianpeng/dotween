@@ -23,11 +23,22 @@ public class ShakePunchBrain : BrainBase
 	{
 		DOTween.defaultRecyclable = false;
 		// DOTween.logBehaviour = LogBehaviour.Verbose;
+		Camera.main.transform.LookAt(targets[0]);
 	}
 
 	void OnGUI()
 	{
 		DGUtils.BeginGUI();
+
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Shake Camera Position")) ShakePosition(true);
+		if (GUILayout.Button("Shake Camera Position + LookAt")) ShakePosition(true, targets[0].position);
+		if (GUILayout.Button("Shake Camera Rotation")) ShakeRotation(true);
+		if (GUILayout.Button("Shake Camera All")) {
+			ShakePosition(true);
+			ShakeRotation(true);
+		}
+		GUILayout.EndHorizontal();
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Shake Position")) ShakePosition();
@@ -57,18 +68,25 @@ public class ShakePunchBrain : BrainBase
 		DGUtils.EndGUI();
 	}
 
-	void ShakePosition()
+	void ShakePosition(bool isCamera = false, Vector3? lookAt = null)
 	{
 		shakePositionTween.Complete();
 
-		shakePositionTween = Camera.main.DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness);
+		shakePositionTween = isCamera
+			? Camera.main.DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness)
+			: targets[0].DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness);
+		if (isCamera && lookAt != null) {
+			shakePositionTween.OnUpdate(()=> Camera.main.transform.LookAt((Vector3)lookAt));
+		}
 	}
 
-	void ShakeRotation()
+	void ShakeRotation(bool isCamera = false)
 	{
 		shakeRotationTween.Complete();
 
-		shakeRotationTween = Camera.main.DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness);
+		shakeRotationTween = isCamera
+			? Camera.main.DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness)
+			: targets[0].DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness);
 	}
 
 	void PunchPosition(bool random = false)

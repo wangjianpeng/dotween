@@ -22,7 +22,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.450";
+        public static readonly string Version = "0.7.455";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -591,7 +591,7 @@ namespace DG.Tweening
             return ToArray(getter, setter, tos, tDurations).SetSpecialStartupMode(SpecialStartupMode.SetPunch);
         }
 
-        /// <summary>Shakes a Vector3 along its X Y axes with the given values.</summary>
+        /// <summary>Shakes a Vector3 with the given values.</summary>
         /// <param name="getter">A getter for the field or property to tween.
         /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
         /// <param name="setter">A setter for the field or property to tween
@@ -599,9 +599,10 @@ namespace DG.Tweening
         /// <param name="duration">The duration of the tween</param>
         /// <param name="strength">The shake strength</param>
         /// <param name="vibrato">Indicates how much will the shake vibrate</param>
-        /// <param name="randomness">Indicates how much the shake will be random (0 to 360 - values higher than 90 kind of suck, so beware). 
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
         /// Setting it to 0 will shake along a single direction and behave like a random punch.</param>
-        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, float vibrato = 10, float randomness = 90)
+        /// <param name="ignoreZAxis">If TRUE only shakes on the X Y axis (looks better with things like cameras).</param>
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, float vibrato = 10, float randomness = 90, bool ignoreZAxis = true)
         {
             int totIterations = (int)(vibrato * duration);
             float decayXTween = strength / totIterations;
@@ -617,13 +618,17 @@ namespace DG.Tweening
             float tDurationMultiplier = duration / sum; // Multiplier that allows the sum of tDurations to equal the set duration
             for (int i = 0; i < totIterations; ++i) tDurations[i] = tDurations[i] * tDurationMultiplier;
             // Create the tween
-            float ang = 0;
+            float ang = UnityEngine.Random.Range(0f, 360f);
             Vector3[] tos = new Vector3[totIterations];
             for (int i = 0; i < totIterations; ++i) {
                 if (i < totIterations - 1) {
-                    if (i == 0) ang = UnityEngine.Random.Range(0f, 360f);
-                    else ang = ang - 180 + UnityEngine.Random.Range(-randomness, randomness);
-                    tos[i] = Utils.Vector3FromAngle(ang, strength);
+                    if (i > 0) ang = ang - 180 + UnityEngine.Random.Range(-randomness, randomness);
+                    if (ignoreZAxis) {
+                        tos[i] = Utils.Vector3FromAngle(ang, strength);
+                    } else {
+                        Quaternion rndQuaternion = Quaternion.AngleAxis(UnityEngine.Random.Range(-randomness, randomness), Vector3.up);
+                        tos[i] = rndQuaternion * Utils.Vector3FromAngle(ang, strength);
+                    }
                     strength -= decayXTween;
                 } else tos[i] = Vector3.zero;
             }
