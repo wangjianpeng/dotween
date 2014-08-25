@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Demigiant")]
 [assembly: AssemblyProduct("DOTweenEditor")]
-[assembly: AssemblyCopyright("Copyright © Daniele Giardini, Demigiant 2014")]
+[assembly: AssemblyCopyright("Copyright © Daniele Giardini, 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
