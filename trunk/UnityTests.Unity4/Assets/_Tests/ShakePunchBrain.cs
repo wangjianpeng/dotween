@@ -8,6 +8,7 @@ public class ShakePunchBrain : BrainBase
 	public float duration = 1; // Shake duration
 	public float shakePosStrength = 2; // Shake position power
 	public float shakeRotStrength = 90; // Shake rotation power
+	public float shakeScaleStrength = 2; // Shake scale power
 	public float shakeVibrato = 10; // Shake iterations x seconds
 	public float shakeRandomness = 90;
 	public float punchVibrato = 10;
@@ -17,7 +18,7 @@ public class ShakePunchBrain : BrainBase
 	public Vector3 punchRotation = new Vector3(0, 180, 0);
 	public Transform[] targets;
 
-	Tween shakePositionTween, shakeRotationTween, punchPositionTween, punchScaleTween, punchRotationTween;
+	Tween shakePositionTween, shakeRotationTween, shakeScaleTween, punchPositionTween, punchScaleTween, punchRotationTween;
 
 	void Start()
 	{
@@ -43,9 +44,11 @@ public class ShakePunchBrain : BrainBase
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Shake Position")) ShakePosition();
 		if (GUILayout.Button("Shake Rotation")) ShakeRotation();
+		if (GUILayout.Button("Shake Scale")) ShakeScale();
 		if (GUILayout.Button("Shake All")) {
 			ShakePosition();
 			ShakeRotation();
+			ShakeScale();
 		}
 		GUILayout.EndHorizontal();
 
@@ -87,6 +90,13 @@ public class ShakePunchBrain : BrainBase
 		shakeRotationTween = isCamera
 			? Camera.main.DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness)
 			: targets[0].DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness);
+	}
+
+	void ShakeScale()
+	{
+		shakeScaleTween.Complete();
+
+		shakeScaleTween = targets[0].DOShakeScale(duration, shakeScaleStrength, shakeVibrato, shakeRandomness);
 	}
 
 	void PunchPosition(bool random = false)
