@@ -1,5 +1,8 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2014/07/28 10:40
+//
+// License Copyright (c) Daniele Giardini.
+// This work is subject to the terms at http://dotween.demigiant.com/license.php
 
 using System.Collections.Generic;
 using DG.Tweening.Core;
