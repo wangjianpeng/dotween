@@ -344,10 +344,11 @@ namespace DG.Tweening
         /// <param name="vibrato">Indicates how much will the shake vibrate</param>
         /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
         /// Setting it to 0 will shake along a single direction.</param>
-        public static Tweener DOShakePosition(this Transform target, float duration, float strength = 1, float vibrato = 10, float randomness = 90)
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOShakePosition(this Transform target, float duration, float strength = 1, float vibrato = 10, float randomness = 90, bool snapping = false)
         {
             return DOTween.Shake(() => target.localPosition, x => target.localPosition = x, duration, strength, vibrato, randomness, false)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake).SetOptions(snapping);
         }
         /// <summary>Shakes a Transform's localRotation.</summary>
         /// <param name="duration">The duration of the tween</param>
