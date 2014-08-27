@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SequencesExperimentsBrain : BrainBase
+public class SequencesExperiments : BrainBase
 {
 	public Camera cam;
 	public Transform multiCube;

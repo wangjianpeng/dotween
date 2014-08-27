@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class PoolingBrain : BrainBase
+public class Pooling : BrainBase
 {
 	public GameObject prefab;
 

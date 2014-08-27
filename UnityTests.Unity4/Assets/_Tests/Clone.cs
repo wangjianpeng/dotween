@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class CloneBrain : BrainBase
+public class Clone : BrainBase
 {
 	public GameObject prefab;
 	public AnimationCurve animCurve;

@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class StringsBrain : BrainBase
+public class Strings : BrainBase
 {
 	public GUIText[] txts;
 	string stringToTween0 = "Short text",

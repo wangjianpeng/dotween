@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShakePunchBrain : BrainBase
+public class ShakePunch : BrainBase
 {
 	public float duration = 1; // Shake duration
 	public float shakePosStrength = 2; // Shake position power

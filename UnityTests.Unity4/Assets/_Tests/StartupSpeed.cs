@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class StartupSpeedBrain : BrainBase
+public class StartupSpeed : BrainBase
 {
 	const int maxIterations = 32000;
 	Vector3[] toPositions = new Vector3[maxIterations];

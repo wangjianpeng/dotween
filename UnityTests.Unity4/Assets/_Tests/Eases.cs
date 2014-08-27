@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class EaseBrain : BrainBase
+public class Eases : BrainBase
 {
 	public GameObject prefab;
 	public AnimationCurve easeCurve;

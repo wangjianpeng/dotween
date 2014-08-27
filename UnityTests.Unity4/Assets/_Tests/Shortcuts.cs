@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class ShortcutsBrain : MonoBehaviour
+public class Shortcuts : MonoBehaviour
 {
 	public GameObject prefab;
 
