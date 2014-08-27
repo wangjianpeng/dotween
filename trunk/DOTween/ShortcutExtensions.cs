@@ -554,6 +554,7 @@ namespace DG.Tweening
             return DOTween.FromAlpha(() => target.color, x => target.color = x, fromValue, duration)
                 .SetTarget(target);
         }
+
         #endregion
 
         // ===================================================================================
@@ -942,6 +943,7 @@ namespace DG.Tweening
         {
             return DOTween.TogglePause(target);
         }
+
         #endregion
     }
 }
