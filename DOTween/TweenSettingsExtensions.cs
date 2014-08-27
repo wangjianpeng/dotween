@@ -6,9 +6,6 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Core.Enums;
-using DG.Tweening.Plugins;
-using DG.Tweening.Plugins.Core;
 using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using UnityEngine;
 
@@ -125,6 +122,18 @@ namespace DG.Tweening
             if (!t.active) return t;
 
             t.onStart = action;
+            return t;
+        }
+
+        /// <summary>Sets the onRewind callback for the tween.
+        /// Called when the tween is rewinded,
+        /// either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
+        /// Rewinding a tween that is already rewinded will not fire this callback</summary>
+        public static T OnRewind<T>(this T t, TweenCallback action) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.onRewind = action;
             return t;
         }
 
@@ -303,7 +312,7 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>If isRelative is TRUE sets the tween as relative
+        /// <summary>Sets the tween as relative
         /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetRelative<T>(this T t) where T : Tween
@@ -525,23 +534,6 @@ namespace DG.Tweening
             return t;
         }
 
-        #endregion
-
-        #region Internals
-
-        // Used internally by DO shortcuts to set a tween's target
-        internal static T SetTarget<T>(this T t, object target) where T : Tween
-        {
-            t.target = target;
-            return t;
-        }
-
-        // Used internally by DO shortcuts to set special startup mode
-        internal static T SetSpecialStartupMode<T>(this T t, SpecialStartupMode mode) where T : Tween
-        {
-            t.specialStartupMode = mode;
-            return t;
-        }
         #endregion
     }
 }
