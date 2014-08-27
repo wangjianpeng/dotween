@@ -25,6 +25,7 @@ public class TempTestsBrain : BrainBase
 		tween = DOTween.ToAxis(()=>targets[0].position, x=> targets[0].position = x, 3f, 1.5f)
 			// .Delay(delay).Relative()
 			.SetLoops(loops, loopType).SetAutoKill(false)
+			.OnRewind(()=> Debug.Log("Rewind"))
 			.OnStart(()=> Debug.Log("Start"))
 			.OnStepComplete(()=> Debug.Log("Step Complete"))
 			.OnComplete(()=> Debug.Log("Complete"))
