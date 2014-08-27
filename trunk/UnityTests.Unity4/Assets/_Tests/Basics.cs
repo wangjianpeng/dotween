@@ -2,7 +2,7 @@
 using DG.Tweening.Plugins;
 using UnityEngine;
 
-public class BasicsBrain : BrainBase
+public class Basic : BrainBase
 {
 	public Vector3 toRotation = new Vector3(0, 180, 0);
 	public Transform[] targets;

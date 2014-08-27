@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class CoroutinesBrain : BrainBase
+public class Coroutines : BrainBase
 {
 	public Transform[] targets;
 

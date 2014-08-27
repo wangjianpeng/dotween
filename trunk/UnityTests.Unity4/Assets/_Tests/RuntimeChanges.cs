@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class RuntimeChangesBrain : BrainBase
+public class RuntimeChanges : BrainBase
 {
 	enum FollowMode
 	{

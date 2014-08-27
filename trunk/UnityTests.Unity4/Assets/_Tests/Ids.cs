@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class IdsBrain : BrainBase
+public class Ids : BrainBase
 {
 	public GameObject prefab;
 

@@ -5,7 +5,7 @@ using System.Collections;
 
 using LoopType = DG.Tweening.LoopType;
 
-public class TempTestsBrain : BrainBase
+public class TempTests : BrainBase
 {
 	public bool useSafeMode;
 	public int loops = 3;

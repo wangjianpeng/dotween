@@ -2,7 +2,7 @@
 using System.Text;
 using UnityEngine;
 
-public class SequencesBrain : BrainBase
+public class Sequences : BrainBase
 {
 	public int loops = 10001;
 	public LoopType loopType;

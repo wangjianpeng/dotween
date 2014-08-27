@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LoopsBrain : BrainBase
+public class Loops : BrainBase
 {
 	public Transform[] targets;
 
