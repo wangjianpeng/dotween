@@ -27,11 +27,11 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>..\bin_pro\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\bin\DOTween.XML</DocumentationFile>
+    <DocumentationFile>..\bin_pro\DOTweenPro.XML</DocumentationFile>
     <NoWarn>1573</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -56,13 +56,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set BinDir=bin.Global\DOTween
+    <PostBuildEvent>set BinDir=bin.Global\DOTweenPro
 set DestinationDir=$(SolutionDir)..\%25BinDir%25
-set BinDirNoMeta=bin.Global_no_meta\DOTween
+set BinDirNoMeta=bin.Global_no_meta\DOTweenPro
 set DestinationDirNoMeta=$(SolutionDir)..\%25BinDirNoMeta%25
-set BinDirUnityTests=UnityTests.Unity4\Assets\Demigiant\DOTween
+set BinDirUnityTests=UnityTests.Unity4\Assets\Demigiant\DOTweenPro
 set DestinationDirUnityTests=$(SolutionDir)%25BinDirUnityTests%25
-set BinDirCompatibilityTests=UnityCompatibilityTests.Unity35\Assets\Demigiant\DOTween
+set BinDirCompatibilityTests=UnityCompatibilityTests.Unity35\Assets\Demigiant\DOTweenPro
 set DestinationDirCompatibilityTests=$(SolutionDir)%25BinDirCompatibilityTests%25
 
 echo %25DestinationDir%25
@@ -77,16 +77,16 @@ DEL $(TargetName).pdb
 
 echo Exporting Assembly to %25DestinationDir%25
 echo Copying files to Destination...
-echo f | xcopy "$(SolutionDir)\bin" %25DestinationDir%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin_pro" %25DestinationDir%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirNoMeta%25
-echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin_pro" %25DestinationDirNoMeta%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirUnityTests%25
-echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirUnityTests%25 /Y /I /E
+echo f | xcopy "$(SolutionDir)\bin_pro" %25DestinationDirUnityTests%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirCompatibilityTests%25
-echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirCompatibilityTests%25 /Y /I /E</PostBuildEvent>
+echo f | xcopy "$(SolutionDir)\bin_pro" %25DestinationDirCompatibilityTests%25 /Y /I /E</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
