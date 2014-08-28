@@ -52,6 +52,7 @@ public class Basics : BrainBase
 			}
 			Tween tween = tweens[i];
 			tween.OnStart(()=> Debug.Log("OnStart: " + t.name))
+				.OnPlay(()=> Debug.Log("OnPlay: " + t.name))
 				.OnComplete(()=> Debug.Log("OnComplete: " + t.name))
 				.Pause();
 			switch (i) {

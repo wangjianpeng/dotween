@@ -116,12 +116,23 @@ namespace DG.Tweening
         }
 
         /// <summary>Sets the onStart callback for the tween.
-        /// Called when the tween is set in a playing state the first time, after any eventual delay</summary>
+        /// Called the first time the tween is set in a playing state, after any eventual delay</summary>
         public static T OnStart<T>(this T t, TweenCallback action) where T : Tween
         {
             if (!t.active) return t;
 
             t.onStart = action;
+            return t;
+        }
+
+        /// <summary>Sets the onPlay callback for the tween.
+        /// Called when the tween is set in a playing state, after any eventual delay.
+        /// Also called each time the tween resumes playing from a paused state</summary>
+        public static T OnPlay<T>(this T t, TweenCallback action) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.onPlay = action;
             return t;
         }
 

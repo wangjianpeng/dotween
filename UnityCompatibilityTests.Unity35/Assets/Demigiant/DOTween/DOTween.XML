@@ -572,7 +572,12 @@
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnStart``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onStart callback for the tween.
-            Called when the tween is set in a playing state the first time, after any eventual delay</summary>
+            Called the first time the tween is set in a playing state, after any eventual delay</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.OnPlay``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onPlay callback for the tween.
+            Called when the tween is set in a playing state, after any eventual delay.
+            Also called each time the tween resumes playing from a paused state</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnRewind``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onRewind callback for the tween.
@@ -754,7 +759,7 @@
             </summary>
         </member>
         <member name="F:DG.Tweening.Core.ABSSequentiable.onStart">
-            <summary>Called when the tween is set in a playing state the first time, after any eventual delay</summary>
+            <summary>Called the first time the tween is set in a playing state, after any eventual delay</summary>
         </member>
         <member name="F:DG.Tweening.Tween.timeScale">
             <summary>TimeScale for the tween</summary>
@@ -764,6 +769,10 @@
         </member>
         <member name="F:DG.Tweening.Tween.id">
             <summary>Id (usable for filtering with DOTween static methods). Can be an int, a string, an object, or anything else</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onPlay">
+            <summary>Called when the tween is set in a playing state, after any eventual delay.
+            Also called each time the tween resumes playing from a paused state</summary>
         </member>
         <member name="F:DG.Tweening.Tween.onRewind">
             <summary>Called when the tween is rewinded,

@@ -13,7 +13,7 @@ namespace DG.Tweening.Core
         internal float sequencedPosition; // position in Sequence
         internal float sequencedEndPosition; // end position in Sequence
 
-        /// <summary>Called when the tween is set in a playing state the first time, after any eventual delay</summary>
+        /// <summary>Called the first time the tween is set in a playing state, after any eventual delay</summary>
         public TweenCallback onStart; // Used also by SequenceCallback as main callback
     }
 }

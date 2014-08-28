@@ -28,6 +28,9 @@ namespace DG.Tweening
         // Update type (changed via TweenManager.SetUpdateType)
         internal UpdateType updateType;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
+        /// <summary>Called when the tween is set in a playing state, after any eventual delay.
+        /// Also called each time the tween resumes playing from a paused state</summary>
+        public TweenCallback onPlay;
         /// <summary>Called when the tween is rewinded,
         /// either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
         /// Rewinding a tween that is already rewinded will not fire this callback</summary>
@@ -147,13 +150,16 @@ namespace DG.Tweening
             if (!t.startupDone) {
                 if (!t.Startup()) return true;
             }
-            // OnStart callback
+            // OnStart and first OnPlay callbacks
             if (!t.playedOnce && updateMode == UpdateMode.Update) {
                 t.playedOnce = true;
                 if (t.onStart != null) {
                     t.onStart();
-                    // Tween might have been killed by onStart callback: verify
-                    if (!t.active) return true;
+                    if (!t.active) return true; // Tween might have been killed by onStart callback
+                }
+                if (t.onPlay != null) {
+                    t.onPlay();
+                    if (!t.active) return true; // Tween might have been killed by onPlay callback
                 }
             }
 

@@ -234,6 +234,7 @@ namespace DG.Tweening.Core
         {
             if (!t.isPlaying && (!t.isBackwards && !t.isComplete || t.isBackwards && (t.completedLoops > 0 || t.position > 0))) {
                 t.isPlaying = true;
+                if (t.playedOnce && t.onPlay != null) t.onPlay(); // Don't call in case it hasn't started because onStart routine will call it
                 return true;
             }
             return false;
@@ -261,9 +262,11 @@ namespace DG.Tweening.Core
 
         internal static bool Restart(Tween t, bool includeDelay = true)
         {
+            bool wasPaused = t.isPlaying;
             t.isBackwards = false;
             Rewind(t, includeDelay);
             t.isPlaying = true;
+            if (wasPaused && t.playedOnce && t.onPlay != null) t.onPlay(); // Don't call in case it hasn't started because onStart routine will call it
             return true;
         }
 
