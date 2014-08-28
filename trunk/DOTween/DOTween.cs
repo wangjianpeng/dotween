@@ -22,7 +22,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.7.475";
+        public static readonly string Version = "0.8.000";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -376,12 +376,20 @@ namespace DG.Tweening
         public static Tweener To(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset endValue, float duration)
         { return ApplyTo<RectOffset, RectOffset, NoOptions>(getter, setter, endValue, duration, false); }
 
-        /// <summary>Tweens a property or field to the given value using a custom plugin with eventual options</summary>
-        /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
-        /// <param name="duration">The tween's duration</param>
-        public static Tweener To<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
-            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
-        { return ApplyTo(plugSetter, duration, false); }
+        /// <summary>Tweens a property or field to the given value using a custom plugin</summary>
+        /// <param name="plugin">The plugin to use. Each custom plugin implements a static <code>Get()</code> method
+        /// you'll need to call to assign the correct plugin in the correct way, like this:
+        /// <para><code>CustomPlugin.Get()</code></para></param>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static TweenerCore<T1, T2, TPlugOptions> To<T1, T2, TPlugOptions>(
+            ABSTweenPlugin<T1, T2, TPlugOptions> plugin, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration
+        )
+            where TPlugOptions : struct
+        { return ApplyTo(getter, setter, endValue, duration, false, plugin); }
 
         /// <summary>Tweens only one axis of a Vector3 to the given value using default plugins.</summary>
         /// <param name="getter">A getter for the field or property to tween.
@@ -498,12 +506,20 @@ namespace DG.Tweening
         public static Tweener From(DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, RectOffset fromValue, float duration)
         { return ApplyTo<RectOffset, RectOffset, NoOptions>(getter, setter, fromValue, duration, true); }
 
-        /// <summary>Tweens a property or field from the given value using a custom plugin with eventual options</summary>
-        /// <param name="plugSetter">The plugin to use. Example: <code>Plug.Vector3X(()=> myVector, x=> myVector = x, 100)</code></param>
-        /// <param name="duration">The tween's duration</param>
-        public static Tweener From<T1, T2, TPlugin, TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter, float duration)
-            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
-        { return ApplyTo(plugSetter, duration, true); }
+        /// <summary>Tweens a property or field from the given value using a custom plugin</summary>
+        /// <param name="plugin">The plugin to use. Each custom plugin implements a static <code>Get()</code> method
+        /// you'll need to call to assign the correct plugin in the correct way, like this:
+        /// <para><code>CustomPlugin.Get()</code></para></param>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The tween's duration</param>
+        public static TweenerCore<T1, T2, TPlugOptions> From<T1, T2, TPlugOptions>(
+            ABSTweenPlugin<T1, T2, TPlugOptions> plugin, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration
+        )
+            where TPlugOptions : struct
+        { return ApplyTo(getter, setter, endValue, duration, true, plugin); }
 
         /// <summary>Tweens only one axis of a Vector3 from the given value using default plugins.</summary>
         /// <param name="getter">A getter for the field or property to tween.
@@ -848,32 +864,15 @@ namespace DG.Tweening
             Debugger.LogWarning("DOTween auto-initialized with default settings (recycleAllByDefault: " + defaultRecyclable + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
         }
 
-        // Tweens a property using default plugins with options
         static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugOptions>(
-            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration, bool isFrom
+            DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration, bool isFrom, ABSTweenPlugin<T1, T2, TPlugOptions> plugin = null
         )
             where TPlugOptions : struct
         {
             InitCheck();
             TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
             tweener.isFrom = isFrom;
-            if (!Tweener.Setup(tweener, getter, setter, endValue, duration)) {
-                TweenManager.Despawn(tweener);
-                return null;
-            }
-            return tweener;
-        }
-        // Tweens a property using a custom plugin with eventual options
-        static TweenerCore<T1, T2, TPlugOptions> ApplyTo<T1, T2, TPlugin, TPlugOptions>(
-            IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter, float duration, bool isFrom
-        )
-            where TPlugin : ITweenPlugin, new()
-            where TPlugOptions : struct
-        {
-            InitCheck();
-            TweenerCore<T1, T2, TPlugOptions> tweener = TweenManager.GetTweener<T1, T2, TPlugOptions>();
-            tweener.isFrom = isFrom;
-            if (!Tweener.Setup(tweener, plugSetter, duration)) {
+            if (!Tweener.Setup(tweener, getter, setter, endValue, duration, plugin)) {
                 TweenManager.Despawn(tweener);
                 return null;
             }

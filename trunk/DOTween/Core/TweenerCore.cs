@@ -21,10 +21,10 @@ namespace DG.Tweening.Core
         // SETUP DATA ////////////////////////////////////////////////
 
         public T2 startValue, endValue, changeValue;
+        public TPlugOptions plugOptions;
         internal DOGetter<T1> getter;
         internal DOSetter<T1> setter;
         internal ABSTweenPlugin<T1, T2, TPlugOptions> tweenPlugin;
-        internal TPlugOptions plugOptions;
         internal bool hasManuallySetStartValue; // TRUE when start value has been changed via ChangeStart/Values (allows DoStartup to take it into account)
 
         const string _TxtCantChangeSequencedValues = "You cannot change the values of a tween contained inside a Sequence";
@@ -95,9 +95,9 @@ namespace DG.Tweening.Core
         {
             base.Reset();
 
+            plugOptions = new TPlugOptions();
             getter = null;
             setter = null;
-            plugOptions = new TPlugOptions();
             hasManuallySetStartValue = false;
         }
 

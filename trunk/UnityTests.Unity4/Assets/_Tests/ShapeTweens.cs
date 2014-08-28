@@ -19,6 +19,11 @@ public class ShapeTweens : BrainBase
 	{
 		yield return new WaitForSeconds(1);
 
+		targets[0].DOSpiral(2).SetEase(Ease.OutQuint);
+		// DOTween.To(SpiralPlugin.Get(), () => targets[0].position, x => targets[0].position = x, Vector3.forward, 2);
+
+		yield break;
+
 		animate = true;
 		
 		speed *= 10 / frequency;
@@ -26,16 +31,18 @@ public class ShapeTweens : BrainBase
 		startPositions = new Vector3[targets.Length];
 		for (int i = 0; i < startPositions.Length; ++i) startPositions[i] = targets[i].position;
 
-		startupTime = Time.realtimeSinceStartup;
+		startupTime = Time.time;
 	}
 
 	void Update()
 	{
 		if (!animate) return;
 
-		float elapsedSinceStartup = (Time.realtimeSinceStartup - startupTime) * speed;
-
-		unit = elapsedSinceStartup;
+		float elapsedSinceStartup = unit = (Time.time - startupTime) * speed;
+		if (elapsedSinceStartup > 2) {
+			// Start spiraling IN
+			unit = 2 - (elapsedSinceStartup - 2);
+		}
 		Vector3 spiral = new Vector3(
 			unit * Mathf.Cos(elapsedSinceStartup * frequency),
 			unit * Mathf.Sin(elapsedSinceStartup * frequency),
