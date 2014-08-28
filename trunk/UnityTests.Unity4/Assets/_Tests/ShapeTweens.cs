@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class ShapeTweens : BrainBase
 {
+	public float duration = 1;
+	public int loops = 1;
+	public LoopType loopType = LoopType.Yoyo;
+	public Ease ease = Ease.Linear;
+	public SpiralMode spiralMode;
 	public float frequency = 4;
 	public float speed = 1;
+	public float depth = 0;
 	public Vector3 direction = Vector3.up;
+	public bool snapping;
 	public Transform[] targets;
 
 	float unit;
@@ -19,8 +26,9 @@ public class ShapeTweens : BrainBase
 	{
 		yield return new WaitForSeconds(1);
 
-		targets[0].DOSpiral(2).SetEase(Ease.OutQuint);
-		// DOTween.To(SpiralPlugin.Get(), () => targets[0].position, x => targets[0].position = x, Vector3.forward, 2);
+		targets[0].DOSpiral(duration, direction, spiralMode, speed, frequency, depth, snapping)
+			.SetEase(ease)
+			.SetLoops(loops, loopType);
 
 		yield break;
 

@@ -13,14 +13,6 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins
 {
-    public enum SpiralMode
-    {
-        /// <summary>The spiral motion will expand outwards for the whole the tween</summary>
-        Expand,
-        /// <summary>The spiral motion will expand outwards for half the tween and then will spiral back to the starting position</summary>
-        ExpandThenContract
-    }
-
     public struct SpiralOptions
     {
 //        public Vector3 axis; // Axis around which the spiral will rotate (replaced by plugin's endValue)
@@ -31,7 +23,7 @@ namespace DG.Tweening.Plugins
         public bool snapping;
 
         internal float unit;
-        internal Quaternion directionQ;
+        internal Quaternion axisQ;
     }
 
     /// <summary>
@@ -61,9 +53,9 @@ namespace DG.Tweening.Plugins
         {
             // Change value is not used.
             // Instead use this method to set correct speed (so that 1 equals to 360* x second)
-            // and to get directionQ
+            // and to get axisQ
             t.plugOptions.speed *= 10 / t.plugOptions.frequency;
-            t.plugOptions.directionQ = Quaternion.LookRotation(t.endValue, Vector3.up);
+            t.plugOptions.axisQ = Quaternion.LookRotation(t.endValue, Vector3.up);
         }
 
         public override float GetSpeedBasedDuration(SpiralOptions options, float unitsXSecond, Vector3 changeValue)
@@ -73,19 +65,18 @@ namespace DG.Tweening.Plugins
 
         public override Vector3 Evaluate(SpiralOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
-            // TODO Incremental
-            if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
-
             float elapsedPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            float pluginElapsed = elapsed * options.speed;
-            options.unit = pluginElapsed;
+            float unitElapsedPerc = (options.mode == SpiralMode.ExpandThenContract && elapsedPerc > 0.5f) ? 0.5f - (elapsedPerc - 0.5f) : elapsedPerc;
+            if (t.loopType == LoopType.Incremental) elapsedPerc += (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+            float frequencyElapsed = duration * options.speed * elapsedPerc;
+            options.unit = duration * options.speed * unitElapsedPerc;
 
             Vector3 spiral = new Vector3(
-                options.unit * Mathf.Cos(pluginElapsed * options.frequency),
-                options.unit * Mathf.Sin(pluginElapsed * options.frequency),
+                options.unit * Mathf.Cos(frequencyElapsed * options.frequency),
+                options.unit * Mathf.Sin(frequencyElapsed * options.frequency),
                 options.depth * elapsedPerc
             );
-            spiral = options.directionQ * spiral + startValue; // Orient to chosen direction
+            spiral = options.axisQ * spiral + startValue; // Orient to chosen direction
             if (options.snapping) {
                 spiral.x = (float)Math.Round(spiral.x);
                 spiral.y = (float)Math.Round(spiral.y);
