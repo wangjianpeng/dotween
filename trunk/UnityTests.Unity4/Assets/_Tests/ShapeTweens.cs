@@ -16,48 +16,24 @@ public class ShapeTweens : BrainBase
 	public bool snapping;
 	public Transform[] targets;
 
-	float unit;
-	Quaternion directionQ;
-	Vector3[] startPositions;
-	bool animate;
-	float startupTime;
-
-	IEnumerator Start()
+	void Start()
 	{
-		yield return new WaitForSeconds(1);
-
 		targets[0].DOSpiral(duration, direction, spiralMode, speed, frequency, depth, snapping)
 			.SetEase(ease)
-			.SetLoops(loops, loopType);
-
-		yield break;
-
-		animate = true;
-		
-		speed *= 10 / frequency;
-		directionQ = Quaternion.LookRotation(direction, Vector3.up);
-		startPositions = new Vector3[targets.Length];
-		for (int i = 0; i < startPositions.Length; ++i) startPositions[i] = targets[i].position;
-
-		startupTime = Time.time;
+			.SetLoops(loops, loopType)
+			.SetAutoKill(false)
+			.Pause();
 	}
 
-	void Update()
+	void OnGUI()
 	{
-		if (!animate) return;
+		DGUtils.BeginGUI();
 
-		float elapsedSinceStartup = unit = (Time.time - startupTime) * speed;
-		if (elapsedSinceStartup > 2) {
-			// Start spiraling IN
-			unit = 2 - (elapsedSinceStartup - 2);
-		}
-		Vector3 spiral = new Vector3(
-			unit * Mathf.Cos(elapsedSinceStartup * frequency),
-			unit * Mathf.Sin(elapsedSinceStartup * frequency),
-			0
-		);
-		spiral = directionQ * spiral;
-		spiral += startPositions[0];
-		targets[0].position = spiral;
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
+		if (GUILayout.Button("Restart")) DOTween.Restart();
+		GUILayout.EndHorizontal();
+
+		DGUtils.EndGUI();
 	}
 }
