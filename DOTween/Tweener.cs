@@ -53,15 +53,18 @@ namespace DG.Tweening
         // CALLED BY DOTween when spawning/creating a new Tweener.
         // Returns TRUE if the setup is successful
         internal static bool Setup<T1, T2, TPlugOptions>(
-            TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration
+            TweenerCore<T1, T2, TPlugOptions> t, DOGetter<T1> getter, DOSetter<T1> setter, T2 endValue, float duration, ABSTweenPlugin<T1, T2, TPlugOptions> plugin = null
         )
             where TPlugOptions : struct
         {
-            if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
-            if (t.tweenPlugin == null) {
-                // No suitable plugin found. Kill
-                Debugger.LogError("No suitable plugin found for this type");
-                return false;
+            if (plugin != null) t.tweenPlugin = plugin;
+            else {
+                if (t.tweenPlugin == null) t.tweenPlugin = PluginsManager.GetDefaultPlugin<T1, T2, TPlugOptions>();
+                if (t.tweenPlugin == null) {
+                    // No suitable plugin found. Kill
+                    Debugger.LogError("No suitable plugin found for this type");
+                    return false;
+                }
             }
 
             t.getter = getter;
@@ -74,25 +77,6 @@ namespace DG.Tweening
             t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
             t.easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
             t.easePeriod = DOTween.defaultEasePeriod;
-            t.loopType = DOTween.defaultLoopType;
-            t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
-            return true;
-        }
-        internal static bool Setup<T1, T2, TPlugOptions, TPlugin>(
-            TweenerCore<T1, T2, TPlugOptions> t, IPlugSetter<T1, T2, TPlugin, TPlugOptions> plugSetter, float duration
-        )
-            where TPlugOptions : struct where TPlugin : ITweenPlugin, new()
-        {
-            t.getter = plugSetter.Getter();
-            t.setter = plugSetter.Setter();
-            t.endValue = plugSetter.EndValue();
-            t.plugOptions = plugSetter.GetOptions();
-            t.duration = duration;
-            t.tweenPlugin = PluginsManager.GetCustomPlugin(plugSetter);
-            // Defaults
-            t.autoKill = DOTween.defaultAutoKill;
-            t.isRecyclable = DOTween.defaultRecyclable;
-            t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
             t.loopType = DOTween.defaultLoopType;
             t.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlayTweeners;
             return true;

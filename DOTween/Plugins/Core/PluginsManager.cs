@@ -89,8 +89,10 @@ namespace DG.Tweening.Plugins.Core
             return null;
         }
 
-        internal static ABSTweenPlugin<T1,T2,TPlugOptions> GetCustomPlugin<T1,T2,TPlugin,TPlugOptions>(IPlugSetter<T1,T2,TPlugin,TPlugOptions> plugSetter)
-            where TPlugin : ITweenPlugin, new() where TPlugOptions : struct
+        // Public so it can be used by custom plugins Get method
+        public static ABSTweenPlugin<T1, T2, TPlugOptions> GetCustomPlugin<TPlugin, T1, T2, TPlugOptions>()
+            where TPlugin : ITweenPlugin, new()
+            where TPlugOptions : struct
         {
             Type t = typeof(TPlugin);
             ITweenPlugin plugin;

@@ -55,8 +55,10 @@ namespace DG.Tweening
         internal bool isRelative;
         internal Ease easeType;
         internal EaseFunction customEase; // Used both for AnimationCurve and custom eases
-        internal float easeOvershootOrAmplitude;
-        internal float easePeriod;
+#pragma warning disable 1591
+        public float easeOvershootOrAmplitude; // Public so it can be used with custom plugins
+        public float easePeriod; // Public so it can be used with custom plugins
+#pragma warning restore 1591
 
         // SETUP DATA ////////////////////////////////////////////////
 

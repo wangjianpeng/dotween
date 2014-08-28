@@ -2,18 +2,14 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Friends
-[assembly: InternalsVisibleTo("DOTweenEditor")]
-[assembly: InternalsVisibleTo("DOTweenPro")]
-
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DOTween")]
+[assembly: AssemblyTitle("DOTweenPro")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Demigiant")]
-[assembly: AssemblyProduct("DOTween")]
+[assembly: AssemblyProduct("DOTweenPro")]
 [assembly: AssemblyCopyright("Copyright © Daniele Giardini, 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
