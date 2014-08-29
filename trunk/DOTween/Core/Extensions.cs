@@ -13,13 +13,6 @@ namespace DG.Tweening.Core
     /// </summary>
     public static class Extensions
     {
-        /// <summary>Sets a tween target (different from setting its ID)</summary>
-        public static T SetTarget<T>(this T t, object target) where T : Tween
-        {
-            t.target = target;
-            return t;
-        }
-
         // Used internally by DO shortcuts to set special startup mode
         internal static T SetSpecialStartupMode<T>(this T t, SpecialStartupMode mode) where T : Tween
         {

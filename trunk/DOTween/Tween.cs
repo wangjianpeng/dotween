@@ -25,6 +25,8 @@ namespace DG.Tweening
         public bool isBackwards;
         /// <summary>Id (usable for filtering with DOTween static methods). Can be an int, a string, an object, or anything else</summary>
         public object id;
+        /// <summary>Tween target (usable for filtering with DOTween static methods). Automatically set by tween creation shorcuts</summary>
+        public object target; // Automatically set by DO shortcuts using SetTarget extension. Also used during Tweener.DoStartup in some special cases
         // Update type (changed via TweenManager.SetUpdateType)
         internal UpdateType updateType;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
@@ -45,7 +47,6 @@ namespace DG.Tweening
         public TweenCallback onKill;
         
         // Fixed after creation
-        internal object target; // Automatically set by DO shortcuts using SetTarget extension. Also used during Tweener.DoStartup in some special cases
         internal bool isFrom;
         internal bool isRecyclable;
         internal bool isSpeedBased;

@@ -527,9 +527,6 @@
             Public only so custom shortcuts can access some of these methods
             </summary>
         </member>
-        <member name="M:DG.Tweening.Core.Extensions.SetTarget``1(``0,System.Object)">
-            <summary>Sets a tween target (different from setting its ID)</summary>
-        </member>
         <member name="T:DG.Tweening.TweenSettingsExtensions">
             <summary>
             Methods that extend Tween objects and allow to set their parameters
@@ -545,8 +542,15 @@
             <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetId``1(``0,System.Object)">
-            <summary>Sets an ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+            <summary>Sets an ID for the tween, which can then be used as a filter with DOTween's static methods.</summary>
             <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetTarget``1(``0,System.Object)">
+            <summary>Sets the target for the tween, which can then be used as a filter with DOTween's static methods.
+            <para>IMPORTANT: use it with caution. If you just want to set an ID for the tween use <code>SetId</code> instead.</para>
+            When using shorcuts the shortcut target is already assigned as the tween's target,
+            so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
+            <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetLoops``1(``0,System.Int32)">
             <summary>Sets the looping options for the tween. 
@@ -603,7 +607,8 @@
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs``1(``0,DG.Tweening.Tween)">
             <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
-            Doesn't copy specific SetOptions settings: those will need to be applied manually each time</summary>
+            Doesn't copy specific SetOptions settings: those will need to be applied manually each time.
+            <para>NOTE: the tween's <code>target</code> will not be changed</para></summary>
             <param name="asTween">Tween from which to copy the parameters</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
@@ -769,6 +774,9 @@
         </member>
         <member name="F:DG.Tweening.Tween.id">
             <summary>Id (usable for filtering with DOTween static methods). Can be an int, a string, an object, or anything else</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.target">
+            <summary>Tween target (usable for filtering with DOTween static methods). Automatically set by tween creation shorcuts</summary>
         </member>
         <member name="F:DG.Tweening.Tween.onPlay">
             <summary>Called when the tween is set in a playing state, after any eventual delay.

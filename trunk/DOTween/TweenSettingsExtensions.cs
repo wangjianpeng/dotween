@@ -39,13 +39,26 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets an ID for the tween (which can then be used as a filter with DOTween's static methods)</summary>
+        /// <summary>Sets an ID for the tween, which can then be used as a filter with DOTween's static methods.</summary>
         /// <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
         public static T SetId<T>(this T t, object id) where T : Tween
         {
             if (!t.active) return t;
 
             t.id = id;
+            return t;
+        }
+
+        /// <summary>Sets the target for the tween, which can then be used as a filter with DOTween's static methods.
+        /// <para>IMPORTANT: use it with caution. If you just want to set an ID for the tween use <code>SetId</code> instead.</para>
+        /// When using shorcuts the shortcut target is already assigned as the tween's target,
+        /// so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
+        /// <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
+        public static T SetTarget<T>(this T t, object target) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.target = target;
             return t;
         }
 
@@ -189,7 +202,8 @@ namespace DG.Tweening
         }
 
         /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
-        /// Doesn't copy specific SetOptions settings: those will need to be applied manually each time</summary>
+        /// Doesn't copy specific SetOptions settings: those will need to be applied manually each time.
+        /// <para>NOTE: the tween's <code>target</code> will not be changed</para></summary>
         /// <param name="asTween">Tween from which to copy the parameters</param>
         public static T SetAs<T>(this T t, Tween asTween) where T : Tween
         {
@@ -197,6 +211,7 @@ namespace DG.Tweening
 
 //            t.isFrom = asTween.isFrom;
 //            t.target = asTween.target;
+
             t.timeScale = asTween.timeScale;
             t.isBackwards = asTween.isBackwards;
             t.updateType = asTween.updateType;
