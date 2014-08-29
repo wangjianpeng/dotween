@@ -602,8 +602,8 @@
             Called the moment the tween is killed</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs``1(``0,DG.Tweening.Tween)">
-            <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
-            (doesn't copy specific SetOptions settings: those will need to be applied manually each time)</summary>
+            <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
+            Doesn't copy specific SetOptions settings: those will need to be applied manually each time</summary>
             <param name="asTween">Tween from which to copy the parameters</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.Append(DG.Tweening.Sequence,DG.Tweening.Tween)">
