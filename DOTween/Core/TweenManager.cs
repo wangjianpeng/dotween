@@ -15,7 +15,7 @@ namespace DG.Tweening.Core
     {
         const int _DefaultMaxTweeners = 200;
         const int _DefaultMaxSequences = 50;
-        const string _MaxTweensReached = "Max number of Tweens has been reached, capacity is now being automatically increased. Use DOTween.SetTweensCapacity to set it manually at startup";
+        const string _MaxTweensReached = "Max Tweens reached: capacity will be automatically increased from #0 to #1. Use DOTween.SetTweensCapacity to set it manually at startup";
 
         internal static int maxActive = _DefaultMaxTweeners; // Always equal to maxTweeners
         internal static int maxTweeners = _DefaultMaxTweeners; // Always >= maxSequences
@@ -80,7 +80,10 @@ namespace DG.Tweening.Core
             } else {
                 // Increase capacity in case max number of Tweeners has already been reached, then continue
                 if (totTweeners >= maxTweeners) {
-                    if (Debugger.logPriority >= 1) Debugger.LogWarning(_MaxTweensReached);
+                    if (Debugger.logPriority >= 1) Debugger.LogWarning(_MaxTweensReached
+                        .Replace("#0", maxTweeners + "/" + maxSequences)
+                        .Replace("#1", (maxTweeners + _DefaultMaxTweeners) + "/" + maxSequences)
+                    );
                     IncreaseCapacities(CapacityIncreaseMode.TweenersOnly);
                 }
             }
@@ -106,7 +109,10 @@ namespace DG.Tweening.Core
             }
             // Increase capacity in case max number of Sequences has already been reached, then continue
             if (totSequences >= maxSequences) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning(_MaxTweensReached);
+                if (Debugger.logPriority >= 1) Debugger.LogWarning(_MaxTweensReached
+                    .Replace("#0", maxTweeners + "/" + maxSequences)
+                    .Replace("#1", maxTweeners + "/" + (maxSequences + _DefaultMaxSequences))
+                );
                 IncreaseCapacities(CapacityIncreaseMode.SequencesOnly);
             }
             // Not found: create new Sequence
