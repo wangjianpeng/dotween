@@ -188,27 +188,40 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one
-        /// (doesn't copy specific SetOptions settings: those will need to be applied manually each time)</summary>
+        /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
+        /// Doesn't copy specific SetOptions settings: those will need to be applied manually each time</summary>
         /// <param name="asTween">Tween from which to copy the parameters</param>
         public static T SetAs<T>(this T t, Tween asTween) where T : Tween
         {
             if (!t.active || t.creationLocked) return t;
 
-//            target.isFrom = asTween.isFrom;
-            t.autoKill = asTween.autoKill;
+//            t.isFrom = asTween.isFrom;
+//            t.target = asTween.target;
             t.timeScale = asTween.timeScale;
+            t.isBackwards = asTween.isBackwards;
+            t.updateType = asTween.updateType;
             t.id = asTween.id;
             t.onStart = asTween.onStart;
+            t.onPlay = asTween.onPlay;
+            t.onRewind = asTween.onRewind;
+            t.onUpdate = asTween.onUpdate;
             t.onStepComplete = asTween.onStepComplete;
             t.onComplete = asTween.onComplete;
+            t.onKill = asTween.onKill;
+
+            t.isRecyclable = asTween.isRecyclable;
+            t.isSpeedBased = asTween.isSpeedBased;
+            t.autoKill = asTween.autoKill;
             t.loops = asTween.loops;
             t.loopType = asTween.loopType;
+
             t.delay = asTween.delay;
             if (t.delay > 0) t.delayComplete = false;
             t.isRelative = asTween.isRelative;
             t.easeType = asTween.easeType;
             t.customEase = asTween.customEase;
+            t.easeOvershootOrAmplitude = asTween.easeOvershootOrAmplitude;
+            t.easePeriod = asTween.easePeriod;
 
             return t;
         }
