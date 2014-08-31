@@ -22,7 +22,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.030";
+        public static readonly string Version = "0.8.035";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -576,12 +576,13 @@ namespace DG.Tweening
         /// <param name="elasticity">Represents how much (0 to 1) the vector will go beyond the starting position when bouncing backwards.
         /// 1 creates a full oscillation between the direction and the opposite decaying direction,
         /// while 0 oscillates only between the starting position and the decaying direction</param>
-        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Punch(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 direction, float duration, float vibrato = 10, float elasticity = 1)
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Punch(DOGetter<Vector3> getter, DOSetter<Vector3> setter, Vector3 direction, float duration, int vibrato = 10, float elasticity = 1)
         {
             if (elasticity > 1) elasticity = 1;
             else if (elasticity < 0) elasticity = 0;
             float strength = direction.magnitude;
             int totIterations = (int)(vibrato * duration);
+            if (totIterations < 2) totIterations = 2;
             float decayXTween = strength / totIterations;
             // Calculate and store the duration of each tween
             float[] tDurations = new float[totIterations];
@@ -618,9 +619,10 @@ namespace DG.Tweening
         /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
         /// Setting it to 0 will shake along a single direction and behave like a random punch.</param>
         /// <param name="ignoreZAxis">If TRUE only shakes on the X Y axis (looks better with things like cameras).</param>
-        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, float vibrato = 10, float randomness = 90, bool ignoreZAxis = true)
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, int vibrato = 10, float randomness = 90, bool ignoreZAxis = true)
         {
             int totIterations = (int)(vibrato * duration);
+            if (totIterations < 2) totIterations = 2;
             float decayXTween = strength / totIterations;
             // Calculate and store the duration of each tween
             float[] tDurations = new float[totIterations];

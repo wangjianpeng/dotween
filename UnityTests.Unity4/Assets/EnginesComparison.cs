@@ -244,14 +244,14 @@ public static class HOTweenTester
 {
 	public static void Start(Transform[] ts, Vector3[] to)
 	{
-		TweenParms tp = new TweenParms().Ease(EaseType.EaseInOutQuad).Loops(-1, Holoville.HOTween.LoopType.Yoyo);
+		Holoville.HOTween.TweenParms tp = new Holoville.HOTween.TweenParms().Ease(EaseType.EaseInOutQuad).Loops(-1, Holoville.HOTween.LoopType.Yoyo);
 		for (int i = 0; i < ts.Length; ++i) {
 			HOTween.To(ts[i], 1, tp.NewProp("position", to[i]));
 		}
 	}
 	public static void Start(SampleClass[] cs, float[] to)
 	{
-		TweenParms tp = new TweenParms().Ease(EaseType.EaseInOutQuad).Loops(-1, Holoville.HOTween.LoopType.Yoyo);
+		Holoville.HOTween.TweenParms tp = new Holoville.HOTween.TweenParms().Ease(EaseType.EaseInOutQuad).Loops(-1, Holoville.HOTween.LoopType.Yoyo);
 		for (int i = 0; i < cs.Length; ++i) {
 			HOTween.To(cs[i], 1, tp.NewProp("floatVal", to[i]));
 		}
