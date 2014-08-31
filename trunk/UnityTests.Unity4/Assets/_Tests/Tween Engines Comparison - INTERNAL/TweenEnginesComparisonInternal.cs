@@ -214,7 +214,7 @@ public class TweenEnginesComparisonInternal : BrainBase
 				TestObjectData data = testObjsData[i];
 				switch (engine) {
 				case Engine.HOTween:
-					HOTween.To(data, duration, new TweenParms()
+					HOTween.To(data, duration, new Holoville.HOTween.TweenParms()
 						.Prop("floatValue", rndFloats[i])
 						.Ease(hotweenEase)
 						.Loops(loops, hotweenLoopType)
@@ -256,7 +256,7 @@ public class TweenEnginesComparisonInternal : BrainBase
 				GameObject go = testObjsGos[i]; // Used by LeanTween and iTween
 				switch (engine) {
 				case Engine.HOTween:
-					TweenParms tp = new TweenParms()
+					Holoville.HOTween.TweenParms tp = new Holoville.HOTween.TweenParms()
 						.Ease(hotweenEase)
 						.Loops(loops, hotweenLoopType);
 					if (positionTween) {
@@ -384,7 +384,7 @@ public class TweenEnginesComparisonInternal : BrainBase
 	void EmitHOTweenPositionFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)
 	{
 		t.position = Vector3.zero;
-		HOTween.To(t, twDuration, new TweenParms()
+		HOTween.To(t, twDuration, new Holoville.HOTween.TweenParms()
 			.Prop("position", to)
 			.Ease(ease)
 			.OnComplete(()=> EmitHOTweenPositionFor(t, to, twDuration, ease))
@@ -393,7 +393,7 @@ public class TweenEnginesComparisonInternal : BrainBase
 	void EmitHOTweenRotationFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)
 	{
 		t.rotation = Quaternion.identity;
-		HOTween.To(t, twDuration, new TweenParms()
+		HOTween.To(t, twDuration, new Holoville.HOTween.TweenParms()
 			.Prop("rotation", to)
 			.Ease(ease)
 			.OnComplete(()=> EmitHOTweenRotationFor(t, to, twDuration, ease))
@@ -402,7 +402,7 @@ public class TweenEnginesComparisonInternal : BrainBase
 	void EmitHOTweenScaleFor(Transform t, Vector3 to, float twDuration, Holoville.HOTween.EaseType ease)
 	{
 		t.localScale = Vector3.one;
-		HOTween.To(t, twDuration, new TweenParms()
+		HOTween.To(t, twDuration, new Holoville.HOTween.TweenParms()
 			.Prop("localScale", to)
 			.Ease(ease)
 			.OnComplete(()=> EmitHOTweenScaleFor(t, to, twDuration, ease))

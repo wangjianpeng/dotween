@@ -9,9 +9,9 @@ public class ShakePunch : BrainBase
 	public float shakePosStrength = 2; // Shake position power
 	public float shakeRotStrength = 90; // Shake rotation power
 	public float shakeScaleStrength = 2; // Shake scale power
-	public float shakeVibrato = 10; // Shake iterations x seconds
+	public int shakeVibrato = 10; // Shake iterations x seconds
 	public float shakeRandomness = 90;
-	public float punchVibrato = 10;
+	public int punchVibrato = 10;
 	public float punchElasticity = 1;
 	public Vector3 punchDirection = Vector3.up;
 	public Vector3 punchScale = new Vector3(2,2,2);
