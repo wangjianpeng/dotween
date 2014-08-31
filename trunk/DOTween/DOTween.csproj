@@ -86,6 +86,7 @@
     <Compile Include="Plugins\Core\DefaultPlugins\StringPlugin.cs" />
     <Compile Include="Sequence.cs" />
     <Compile Include="ShortcutExtensions.cs" />
+    <Compile Include="TweenParms.cs" />
     <Compile Include="TweenSettingsExtensions.cs" />
     <Compile Include="LogBehaviour.cs" />
     <Compile Include="Plugins\Core\ABSTweenPlugin.cs" />
