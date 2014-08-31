@@ -203,7 +203,8 @@ namespace DG.Tweening
 
         /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
         /// Doesn't copy specific SetOptions settings: those will need to be applied manually each time.
-        /// <para>NOTE: the tween's <code>target</code> will not be changed</para></summary>
+        /// <para>Has no effect if the tween has already started.</para>
+        /// NOTE: the tween's <code>target</code> will not be changed</summary>
         /// <param name="asTween">Tween from which to copy the parameters</param>
         public static T SetAs<T>(this T t, Tween asTween) where T : Tween
         {
@@ -214,7 +215,7 @@ namespace DG.Tweening
 
             t.timeScale = asTween.timeScale;
             t.isBackwards = asTween.isBackwards;
-            t.updateType = asTween.updateType;
+            TweenManager.SetUpdateType(t, asTween.updateType);
             t.id = asTween.id;
             t.onStart = asTween.onStart;
             t.onPlay = asTween.onPlay;
@@ -229,9 +230,13 @@ namespace DG.Tweening
             t.autoKill = asTween.autoKill;
             t.loops = asTween.loops;
             t.loopType = asTween.loopType;
+            if (t.tweenType == TweenType.Tweener) {
+                if (t.loops > -1) t.fullDuration = t.duration * t.loops;
+                else t.fullDuration = Mathf.Infinity;
+            }
 
             t.delay = asTween.delay;
-            if (t.delay > 0) t.delayComplete = false;
+            t.delayComplete = t.delay <= 0;
             t.isRelative = asTween.isRelative;
             t.easeType = asTween.easeType;
             t.customEase = asTween.customEase;
@@ -240,6 +245,45 @@ namespace DG.Tweening
 
             return t;
         }
+
+        /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given TweenParms.
+        /// <para>Has no effect if the tween has already started.</para></summary>
+        /// <param name="tweenParms">TweenParms from which to copy the parameters</param>
+        public static T SetAs<T>(this T t, TweenParms tweenParms) where T : Tween
+        {
+            if (!t.active || t.creationLocked) return t;
+
+            TweenManager.SetUpdateType(t, tweenParms.updateType);
+            t.id = tweenParms.id;
+            t.onStart = tweenParms.onStart;
+            t.onPlay = tweenParms.onPlay;
+            t.onRewind = tweenParms.onRewind;
+            t.onUpdate = tweenParms.onUpdate;
+            t.onStepComplete = tweenParms.onStepComplete;
+            t.onComplete = tweenParms.onComplete;
+            t.onKill = tweenParms.onKill;
+
+            t.isRecyclable = tweenParms.isRecyclable;
+            t.isSpeedBased = tweenParms.isSpeedBased;
+            t.autoKill = tweenParms.autoKill;
+            t.loops = tweenParms.loops;
+            t.loopType = tweenParms.loopType;
+            if (t.tweenType == TweenType.Tweener) {
+                if (t.loops > -1) t.fullDuration = t.duration * t.loops;
+                else t.fullDuration = Mathf.Infinity;
+            }
+
+            t.delay = tweenParms.delay;
+            t.delayComplete = t.delay <= 0;
+            t.isRelative = tweenParms.isRelative;
+            t.easeType = tweenParms.easeType;
+            t.customEase = tweenParms.customEase;
+            t.easeOvershootOrAmplitude = tweenParms.easeOvershootOrAmplitude;
+            t.easePeriod = tweenParms.easePeriod;
+
+            return t;
+        }
+
         #endregion
 
         #region Sequences-only

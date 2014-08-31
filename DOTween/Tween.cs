@@ -98,7 +98,7 @@ namespace DG.Tweening
             isBackwards = false;
             id = null;
             updateType = UpdateType.Default;
-            onStart = onUpdate = onComplete = onStepComplete = onKill = null;
+            onStart = onPlay = onRewind = onUpdate = onComplete = onStepComplete = onKill = null;
 
             target = null;
             isFrom = isSpeedBased = false;
@@ -120,6 +120,8 @@ namespace DG.Tweening
 //            autoKill = DOTween.defaultAutoKill;
 //            loopType = DOTween.defaultLoopType;
 //            easeType = DOTween.defaultEaseType;
+//            easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
+//            easePeriod = DOTween.defaultEasePeriod
         }
 
         // Called by TweenManager in case a tween has a delay that needs to be updated.
