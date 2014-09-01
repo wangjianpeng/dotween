@@ -54,7 +54,7 @@ namespace DG.Tweening
 
         /// <summary>Clears and resets this TweenParms instance using default values,
         /// so it can be reused without instantiating another one</summary>
-        public void Clear()
+        public TweenParms Clear()
         {
             id = target = null;
             updateType = UpdateType.Default;
@@ -70,6 +70,8 @@ namespace DG.Tweening
             customEase = null;
             easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
             easePeriod = DOTween.defaultEasePeriod;
+
+            return this;
         }
 
         #endregion
