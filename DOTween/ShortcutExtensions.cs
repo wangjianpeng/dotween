@@ -493,7 +493,8 @@ namespace DG.Tweening
 
         #region Camera Shortcuts
 
-        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.</summary>
+        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="strength">The shake strength</param>
         /// <param name="vibrato">Indicates how much will the shake vibrate</param>
@@ -505,7 +506,8 @@ namespace DG.Tweening
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
         }
 
-        /// <summary>Shakes a Camera's localRotation.</summary>
+        /// <summary>Shakes a Camera's localRotation.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="strength">The shake strength</param>
         /// <param name="vibrato">Indicates how much will the shake vibrate</param>
@@ -515,6 +517,21 @@ namespace DG.Tweening
         {
             return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness, false)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+
+        /// <summary>Tweens a Camera's backgroundColor to the given value.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Camera target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.backgroundColor, x => target.backgroundColor = x, endValue, duration).SetTarget(target);
+        }
+        /// <summary>Tweens a Camera's backgroundColor from the given value to its current one.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColorFrom(this Camera target, Color fromValue, float duration)
+        {
+            return DOTween.From(() => target.backgroundColor, x => target.backgroundColor = x, fromValue, duration).SetTarget(target);
         }
 
         #endregion
