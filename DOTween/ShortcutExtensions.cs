@@ -574,6 +574,40 @@ namespace DG.Tweening
 
         #endregion
 
+        #region Light Shortcuts
+
+        /// <summary>Tweens a Light's color to the given value.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Light target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
+        }
+        /// <summary>Tweens a Light's color from the given value to its current one.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColorFrom(this Light target, Color fromValue, float duration)
+        {
+            return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Light's intensity to the given value.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOIntensity(this Light target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.intensity, x => target.intensity = x, endValue, duration).SetTarget(target);
+        }
+        /// <summary>Tweens a Light's intensity from the given value to its current one.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOIntensityFrom(this Light target, float fromValue, float duration)
+        {
+            return DOTween.From(() => target.intensity, x => target.intensity = x, fromValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
         // ===================================================================================
         // OPERATION SHORTCUTS ---------------------------------------------------------------
 
