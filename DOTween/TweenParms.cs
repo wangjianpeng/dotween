@@ -79,7 +79,7 @@ namespace DG.Tweening
         /// <summary>Sets the autoKill behaviour of the tween. 
         /// Has no effect if the tween has already started</summary>
         /// <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
-        public TweenParms SetAutoKill(bool autoKillOnCompletion = false)
+        public TweenParms SetAutoKill(bool autoKillOnCompletion = true)
         {
             this.autoKill = autoKillOnCompletion;
             return this;
