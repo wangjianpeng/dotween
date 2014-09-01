@@ -1579,6 +1579,26 @@
             Also stores the material as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.Light,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Light's color to the given value.
+            Also stores the light as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOColorFrom(UnityEngine.Light,UnityEngine.Color,System.Single)">
+            <summary>Tweens a Light's color from the given value to its current one.
+            Also stores the light as the tween's target so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOIntensity(UnityEngine.Light,System.Single,System.Single)">
+            <summary>Tweens a Light's intensity to the given value.
+            Also stores the light as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOIntensityFrom(UnityEngine.Light,System.Single,System.Single)">
+            <summary>Tweens a Light's intensity from the given value to its current one.
+            Also stores the light as the tween's target so it can be used for filtered operations</summary>
+            <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOKill(UnityEngine.Transform)">
             <summary>
             Kills all tweens that have this target as a reference
