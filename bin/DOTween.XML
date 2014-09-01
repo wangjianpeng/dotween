@@ -789,7 +789,7 @@
             so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
             <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
         </member>
-        <member name="M:DG.Tweening.TweenParms.SetLoops(System.Int32,DG.Tweening.LoopType)">
+        <member name="M:DG.Tweening.TweenParms.SetLoops(System.Int32,System.Nullable{DG.Tweening.LoopType})">
             <summary>Sets the looping options for the tween. 
             Has no effect if the tween has already started</summary>
             <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
