@@ -108,18 +108,18 @@ namespace DG.Tweening
         /// Has no effect if the tween has already started</summary>
         /// <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
         /// <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
-        public TweenParms SetLoops(int loops, LoopType loopType)
+        public TweenParms SetLoops(int loops, LoopType? loopType = null)
         {
             if (loops < -1) loops = -1;
             else if (loops == 0) loops = 1;
             this.loops = loops;
-            this.loopType = loopType;
+            if (loopType != null) this.loopType = (LoopType)loopType;
             return this;
         }
 
         /// <summary>Sets the recycling behaviour for the tween.</summary>
         /// <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
-        public TweenParms SetRecyclable(bool recyclable)
+        public TweenParms SetRecyclable(bool recyclable = true)
         {
             this.isRecyclable = recyclable;
             return this;
@@ -207,7 +207,7 @@ namespace DG.Tweening
         /// <summary>If isRelative is TRUE sets the tween as relative
         /// (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
-        public TweenParms SetRelative(bool isRelative)
+        public TweenParms SetRelative(bool isRelative = true)
         {
             this.isRelative = isRelative;
             return this;
@@ -216,7 +216,7 @@ namespace DG.Tweening
         /// <summary>If isSpeedBased is TRUE sets the tween as speed based
         /// (the duration will represent the number of units the tween moves x second).
         /// <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
-        public TweenParms SetSpeedBased(bool isSpeedBased)
+        public TweenParms SetSpeedBased(bool isSpeedBased = true)
         {
             this.isSpeedBased = isSpeedBased;
             return this;
