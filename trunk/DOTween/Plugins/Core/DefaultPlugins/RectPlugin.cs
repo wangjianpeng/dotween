@@ -49,7 +49,13 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override Rect Evaluate(RectOptions options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
         {
-            // Doens't support LoopType.Incremental
+            if (t.loopType == LoopType.Incremental) {
+                int iterations = t.isComplete ? t.completedLoops - 1 : t.completedLoops;
+                startValue.x += changeValue.x * iterations;
+                startValue.y += changeValue.y * iterations;
+                startValue.width += changeValue.width * iterations;
+                startValue.height += changeValue.height * iterations;
+            }
 
             startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);

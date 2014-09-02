@@ -17,6 +17,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
     public class RectOffsetPlugin : ABSTweenPlugin<RectOffset, RectOffset, NoOptions>
     {
+        static RectOffset _r = new RectOffset(); // Used to store incremental values without creating a new RectOffset each time
+
         public override RectOffset ConvertT1toT2(TweenerCore<RectOffset, RectOffset, NoOptions> t, RectOffset value)
         {
             return new RectOffset(value.left, value.right, value.top, value.bottom);
@@ -53,13 +55,24 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
         public override RectOffset Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration)
         {
-            // Doesn't support LoopType.Incremental
+            _r.left = startValue.left;
+            _r.right = startValue.right;
+            _r.top = startValue.top;
+            _r.bottom = startValue.bottom;
+
+            if (t.loopType == LoopType.Incremental) {
+                int iterations = t.isComplete ? t.completedLoops - 1 : t.completedLoops;
+                _r.left += changeValue.left * iterations;
+                _r.right += changeValue.right * iterations;
+                _r.top += changeValue.top * iterations;
+                _r.bottom += changeValue.bottom * iterations;
+            }
 
             return new RectOffset(
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.top, changeValue.top, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue.bottom, changeValue.bottom, duration, t.easeOvershootOrAmplitude, t.easePeriod))
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.top, changeValue.top, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.bottom, changeValue.bottom, duration, t.easeOvershootOrAmplitude, t.easePeriod))
             );
         }
     }

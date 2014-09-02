@@ -15,9 +15,8 @@ namespace DG.Tweening
         Restart,
         /// <summary>The tween moves forward and backwards at alternate cycles</summary>
         Yoyo,
-        /// <summary>Continuously increments the tween at the end of each loop cycle (A to B, B to B+(A-B), and so on),
-        /// thus always moving "onward".
-        /// <para>Doesn't work with Rect, String and RectOffset values, where it will revert to Restart</para></summary>
+        /// <summary>Continuously increments the tween at the end of each loop cycle (A to B, B to B+(A-B), and so on), thus always moving "onward".
+        /// <para>In case of String tweens works only if the tween is set as relative</para></summary>
         Incremental
     }
 }
