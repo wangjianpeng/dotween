@@ -4,6 +4,8 @@
 // License Copyright (c) Daniele Giardini.
 // This work is subject to the terms at http://dotween.demigiant.com/license.php
 
+using System;
+using System.Reflection;
 using System.Text;
 using DG.Tweening;
 using DG.Tweening.Core;
@@ -17,6 +19,7 @@ namespace DG.DOTweenEditor
     {
         DOTween _src;
         string _title;
+        string _proVersion;
         readonly StringBuilder _strBuilder = new StringBuilder();
 
         // ===================================================================================
@@ -24,6 +27,13 @@ namespace DG.DOTweenEditor
 
         void OnEnable()
         {
+            try {
+                Assembly pro = Assembly.Load("DOTweenPro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+                _proVersion = pro.GetType("DG.Tweening.DOTweenPro").GetField("Version", BindingFlags.Static | BindingFlags.Public).GetValue(null) as string;
+            } catch {
+                // No DOTweenPro present
+            }
+
             _src = target as DOTween;
             _title = "DOTween v" + DOTween.Version;
 #if DEBUG
@@ -31,6 +41,7 @@ namespace DG.DOTweenEditor
 #else
             _title += " [Release build]";
 #endif
+            _title += "\n" + (_proVersion != null ? ("DOTweenPro v" + _proVersion) : "DOTweenPro not installed");
         }
 
         override public void OnInspectorGUI()
