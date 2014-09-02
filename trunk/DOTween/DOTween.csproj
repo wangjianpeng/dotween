@@ -61,6 +61,7 @@
     <Compile Include="DOTween.cs" />
     <Compile Include="Ease.cs" />
     <Compile Include="IDOTweenInit.cs" />
+    <Compile Include="Plugins\Core\DefaultPlugins\Options\QuaternionOptions.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\Options\Vector3ArrayOptions.cs" />
     <Compile Include="Plugins\Core\DefaultPlugins\Vector3ArrayPlugin.cs" />
     <Compile Include="Plugins\Core\ITPlugin.cs" />

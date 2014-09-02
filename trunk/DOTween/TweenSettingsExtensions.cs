@@ -493,6 +493,10 @@ namespace DG.Tweening
             return t;
         }
 
+        #endregion
+
+        #region Tweeners Extra Options
+
         /// <summary>Options for float tweens</summary>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         public static Tweener SetOptions(this TweenerCore<float, float, FloatOptions> t, bool snapping)
@@ -563,6 +567,17 @@ namespace DG.Tweening
 
             t.plugOptions.axisConstraint = axisConstraint;
             t.plugOptions.snapping = snapping;
+            return t;
+        }
+
+        /// <summary>Options for Quaternion tweens</summary>
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener SetOptions(this TweenerCore<Quaternion, Vector3, QuaternionOptions> t, bool useShortest360Route = true)
+        {
+            if (!t.active) return t;
+
+            t.plugOptions.beyond360 = !useShortest360Route;
             return t;
         }
 
