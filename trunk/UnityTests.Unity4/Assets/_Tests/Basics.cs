@@ -42,7 +42,6 @@ public class Basics : BrainBase
 			Transform t = targets[i];
 			switch (i) {
 			case 0:
-				default:
 				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetUpdate(UpdateType.Independent);
 				break;
 			case 1:
@@ -51,6 +50,15 @@ public class Basics : BrainBase
 				break;
 			case 2:
 				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetOptions(true).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, loopType);
+				break;
+			case 3:
+				// Vector3Array
+				Vector3[] path = new[] {
+					new Vector3(1,0,0), new Vector3(0,1,0), new Vector3(1,0,0), new Vector3(0,-1,0)
+				};
+				float[] durations = new[] { 0.5f, 0.5f, 0.5f, 0.5f };
+				tweens[i] = DOTween.ToArray(() => t.position, x => t.position = x, path, durations)
+					.SetRelative().SetLoops(loops, loopType);
 				break;
 			}
 			Tween tween = tweens[i];
