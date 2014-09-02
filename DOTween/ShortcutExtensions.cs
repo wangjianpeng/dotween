@@ -177,31 +177,43 @@ namespace DG.Tweening
         /// <summary>Tweens a Transform's rotation to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DORotate(this Transform target, Vector3 endValue, float duration)
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener DORotate(this Transform target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
-            return DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration)
+                .SetTarget(target).SetOptions(useShortest360Route);
         }
         /// <summary>Tweens a Transform's rotation from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DORotateFrom(this Transform target, Vector3 fromValue, float duration)
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener DORotateFrom(this Transform target, Vector3 fromValue, float duration, bool useShortest360Route = true)
         {
-            return DOTween.From(() => target.rotation, x => target.rotation = x, fromValue, duration).SetTarget(target);
+            return DOTween.From(() => target.rotation, x => target.rotation = x, fromValue, duration)
+                .SetTarget(target).SetOptions(useShortest360Route);
         }
 
         /// <summary>Tweens a Transform's localRotation to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalRotate(this Transform target, Vector3 endValue, float duration)
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener DOLocalRotate(this Transform target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
-            return DOTween.To(() => target.localRotation, x => target.localRotation = x, endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.localRotation, x => target.localRotation = x, endValue, duration)
+                .SetTarget(target).SetOptions(useShortest360Route);
         }
         /// <summary>Tweens a Transform's localRotation from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalRotateFrom(this Transform target, Vector3 fromValue, float duration)
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener DOLocalRotateFrom(this Transform target, Vector3 fromValue, float duration, bool useShortest360Route = true)
         {
-            return DOTween.From(() => target.localRotation, x => target.localRotation = x, fromValue, duration).SetTarget(target);
+            return DOTween.From(() => target.localRotation, x => target.localRotation = x, fromValue, duration)
+                .SetTarget(target).SetOptions(useShortest360Route);
         }
 
         /// <summary>Tweens a Transform's rotation to the given value, using its local axis system
@@ -456,16 +468,22 @@ namespace DG.Tweening
         /// <summary>Tweens a Rigidbody's rotation to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration)
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
-            return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration).SetTarget(target);
+            return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration)
+                .SetTarget(target).SetOptions(useShortest360Route);
         }
         /// <summary>Tweens a Rigidbody's rotation from the given value to its current one.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DORotateFrom(this Rigidbody target, Vector3 fromValue, float duration)
+        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not go beyond 360°.
+        /// If FALSE the rotation will be fully accounted. Has no effect if the tween is set as relative</param>
+        public static Tweener DORotateFrom(this Rigidbody target, Vector3 fromValue, float duration, bool useShortest360Route = true)
         {
-            return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration).SetTarget(target);
+            return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration)
+                .SetTarget(target).SetOptions(useShortest360Route);
         }
 
         /// <summary>Tweens a Rigidbody's rotation to the given value, using its local axis system
