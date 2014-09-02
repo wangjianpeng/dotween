@@ -45,9 +45,19 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
         // ChangeValue is the same as endValue in this plugin
         public override string Evaluate(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
         {
-            // Doesn't support LoopType.Incremental
-
             _Buffer.Remove(0, _Buffer.Length);
+
+            // Incremental works only with relative tweens (otherwise the tween makes no sense)
+            if (isRelative && t.loopType == LoopType.Incremental) {
+                int iterations = t.isComplete ? t.completedLoops - 1 : t.completedLoops;
+                if (iterations > 0) {
+                    _Buffer.Append(startValue);
+                    for (int i = 0; i < iterations; ++i) _Buffer.Append(changeValue);
+                    startValue = _Buffer.ToString();
+                    _Buffer.Remove(0, _Buffer.Length);
+                }
+            }
+
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
             int len = (int)Math.Round(EaseManager.Evaluate(t, elapsed, 0, changeValueLen, duration, t.easeOvershootOrAmplitude, t.easePeriod));
