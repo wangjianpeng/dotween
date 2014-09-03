@@ -42,10 +42,10 @@ namespace DG.Tweening
         /// <summary>
         /// Don't assign this! It's assigned automatically when creating 0 duration tweens
         /// </summary>
-        InternalZero,
+        INTERNAL_Zero,
         /// <summary>
         /// Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve or to a custom ease function
         /// </summary>
-        InternalCustom
+        INTERNAL_Custom
     }
 }

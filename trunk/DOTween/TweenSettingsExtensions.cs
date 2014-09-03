@@ -478,7 +478,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.easeType = Ease.InternalCustom;
+            t.easeType = Ease.INTERNAL_Custom;
             t.customEase = new EaseCurve(animCurve).Evaluate;
             return t;
         }
@@ -488,7 +488,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.easeType = Ease.InternalCustom;
+            t.easeType = Ease.INTERNAL_Custom;
             t.customEase = customEase;
             return t;
         }

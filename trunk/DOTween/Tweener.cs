@@ -74,7 +74,7 @@ namespace DG.Tweening
             // Defaults
             t.autoKill = DOTween.defaultAutoKill;
             t.isRecyclable = DOTween.defaultRecyclable;
-            t.easeType = DOTween.defaultEaseType; // Set to InternalZero in case of 0 duration, but in DoStartup
+            t.easeType = DOTween.defaultEaseType; // Set to INTERNAL_Zero in case of 0 duration, but in DoStartup
             t.easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
             t.easePeriod = DOTween.defaultEasePeriod;
             t.loopType = DOTween.defaultLoopType;
@@ -143,7 +143,7 @@ namespace DG.Tweening
             DOStartupDurationBased(t);
 
             // Applied here so that the eventual duration derived from a speedBased tween has been set
-            if (t.duration <= 0) t.easeType = Ease.InternalZero;
+            if (t.duration <= 0) t.easeType = Ease.INTERNAL_Zero;
             
             return true;
         }
