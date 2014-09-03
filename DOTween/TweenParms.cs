@@ -240,7 +240,7 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences</para></summary>
         public TweenParms SetEase(AnimationCurve animCurve)
         {
-            this.easeType = Ease.InternalCustom;
+            this.easeType = Ease.INTERNAL_Custom;
             this.customEase = new EaseCurve(animCurve).Evaluate;
             return this;
         }
@@ -248,7 +248,7 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences</para></summary>
         public TweenParms SetEase(EaseFunction customEase)
         {
-            this.easeType = Ease.InternalCustom;
+            this.easeType = Ease.INTERNAL_Custom;
             this.customEase = customEase;
             return this;
         }

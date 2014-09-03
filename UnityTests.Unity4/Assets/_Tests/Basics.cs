@@ -6,6 +6,8 @@ public class Basics : BrainBase
 {
 	public int loops = 100000;
 	public LoopType loopType = LoopType.Yoyo;
+	public Ease ease = Ease.OutQuad;
+	public AnimationCurve easeCurve;
 	public Vector3 toRotation = new Vector3(0, 180, 0);
 	public Transform[] targets;
 	public Renderer cubeToColorTween;
@@ -28,12 +30,17 @@ public class Basics : BrainBase
 
 	void Start()
 	{
-		DOTween.Init(true, false, LogBehaviour.ErrorsOnly);
+		DOTween.logBehaviour = LogBehaviour.ErrorsOnly;
 
 		txtInfo.text = txtInfo.text.Replace("#N", loops.ToString("N0"));
 
 		// Set RectOffset since it can't be set before
 		rectOffsetToTween = new RectOffset(0, 0, 0, 0);
+
+		TweenParms tp = new TweenParms();
+		tp.SetLoops(loops, loopType).SetAutoKill(false);
+		if (ease == Ease.INTERNAL_Custom) tp.SetEase(easeCurve);
+		else tp.SetEase(ease);
 
 		// Transform tweens
 		tweens = new Tween[targets.Length];
@@ -42,14 +49,14 @@ public class Basics : BrainBase
 			Transform t = targets[i];
 			switch (i) {
 			case 0:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetUpdate(UpdateType.Independent);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetAs(tp).SetRelative().SetUpdate(UpdateType.Independent).SetAutoKill(true);
 				break;
 			case 1:
 				// Red cube (rotation)
-				tweens[i] = DOTween.To(()=> t.rotation, x=> t.rotation = x, toRotation, 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false);
+				tweens[i] = DOTween.To(()=> t.rotation, x=> t.rotation = x, toRotation, 1.5f).SetAs(tp).SetRelative();
 				break;
 			case 2:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetOptions(true).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, loopType);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetAs(tp).SetOptions(true).SetRelative().SetAutoKill(true);
 				break;
 			case 3:
 				// Vector3Array
@@ -58,7 +65,7 @@ public class Basics : BrainBase
 				};
 				float[] durations = new[] { 0.5f, 0.5f, 0.5f, 0.5f };
 				tweens[i] = DOTween.ToArray(() => t.position, x => t.position = x, path, durations)
-					.SetRelative().SetLoops(loops, loopType);
+					.SetAs(tp).SetRelative();
 				break;
 			}
 			Tween tween = tweens[i];
@@ -81,29 +88,29 @@ public class Basics : BrainBase
 		}
 		// Additional tweens //////////////////////////
 		// Float
-		DOTween.To(()=> floatToTween, x=> floatToTween = x, 100, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> floatToTween, x=> floatToTween = x, 100, 1.5f).SetAs(tp).Pause();
 		// Int
-		DOTween.To(()=> intToTween, x=> intToTween = x, 100, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> intToTween, x=> intToTween = x, 100, 1.5f).SetAs(tp).Pause();
 		// Uint
-		DOTween.To(()=> uintToTween, x=> uintToTween = x, 50, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> uintToTween, x=> uintToTween = x, 50, 1.5f).SetAs(tp).Pause();
 		// Vector2
-		DOTween.To(()=> vector2toTween, x=> vector2toTween = x, new Vector2(50,100), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> vector2toTween, x=> vector2toTween = x, new Vector2(50,100), 1.5f).SetAs(tp).Pause();
 		// Vector4
-		DOTween.To(()=> vector4toTween, x=> vector4toTween = x, new Vector4(50,100,150,200), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> vector4toTween, x=> vector4toTween = x, new Vector4(50,100,150,200), 1.5f).SetAs(tp).Pause();
 		// Rect
-		DOTween.To(()=> rectToTween, x=> rectToTween = x, new Rect(10, 20, 50, 100), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> rectToTween, x=> rectToTween = x, new Rect(10, 20, 50, 100), 1.5f).SetAs(tp).Pause();
 		// RectOffset
-		DOTween.To(()=> rectOffsetToTween, x=> rectOffsetToTween = x, new RectOffset(10, 20, 50, 100), 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> rectOffsetToTween, x=> rectOffsetToTween = x, new RectOffset(10, 20, 50, 100), 1.5f).SetAs(tp).Pause();
 		// Color
-		DOTween.To(()=> guiTexColor.color, x=> guiTexColor.color = x, Color.green, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> guiTexColor.color, x=> guiTexColor.color = x, Color.green, 1.5f).SetAs(tp).Pause();
 		// Alpha
-		DOTween.ToAlpha(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.ToAlpha(()=> guiTexAlpha.color, x=> guiTexAlpha.color = x, 0f, 1.5f).SetAs(tp).Pause();
 		// String
-		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> stringToTween0, x=> stringToTween0 = x, "Hello I'm a new string!", 1.5f).SetAs(tp).Pause();
 		// String
-		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetAs(tp).Pause();
 		// String (relative)
-		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetRelative().SetEase(Ease.InOutQuad).SetLoops(loops, loopType).SetAutoKill(false).Pause();
+		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetAs(tp).SetRelative().Pause();
 	}
 
 	void LateUpdate()
@@ -127,10 +134,7 @@ public class Basics : BrainBase
 
 	void OnGUI()
 	{
-		GUILayout.BeginArea(new Rect(10, 10, Screen.width - 20, Screen.height - 20));
-		GUILayout.BeginHorizontal();
-		GUILayout.FlexibleSpace();
-		GUILayout.BeginVertical();
+		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Play All")) Debug.Log("Played tweens: " + DOTween.Play());
@@ -205,9 +209,6 @@ public class Basics : BrainBase
 		}
 		GUILayout.EndHorizontal();
 
-		GUILayout.EndVertical();
-		GUILayout.FlexibleSpace();
-		GUILayout.EndHorizontal();
-		GUILayout.EndArea();
+		DGUtils.EndGUI();
 	}
 }

@@ -35,13 +35,17 @@ namespace DG.DOTweenEditor
             }
 
             _src = target as DOTween;
-            _title = "DOTween v" + DOTween.Version;
+            _strBuilder.Remove(0, _strBuilder.Length);
+            _strBuilder.Append("DOTween v").Append(DOTween.Version);
 #if DEBUG
-            _title += " [Debug build]";
+            _strBuilder.Append(" [Debug build]");
 #else
-            _title += " [Release build]";
+            _strBuilder.Append(" [Release build]");
 #endif
-            _title += "\n" + (_proVersion != null ? ("DOTweenPro v" + _proVersion) : "DOTweenPro not installed");
+            _strBuilder.Append("\n");
+            if (_proVersion != null) _strBuilder.Append("DOTweenPro v").Append(_proVersion);
+            else _strBuilder.Append("DOTweenPro not installed");
+            _title = _strBuilder.ToString();
         }
 
         override public void OnInspectorGUI()
@@ -69,6 +73,25 @@ namespace DG.DOTweenEditor
             _strBuilder.Append("Tweens Capacity: ").Append(TweenManager.maxTweeners).Append("/").Append(TweenManager.maxSequences)
                 .Append("\nMax Simultaneous Active Tweens: ").Append(DOTween.maxActiveTweenersReached).Append("/").Append(DOTween.maxActiveSequencesReached);
             GUILayout.Label(_strBuilder.ToString());
+
+            GUILayout.Space(8);
+            _strBuilder.Remove(0, _strBuilder.Length);
+            _strBuilder.Append("Safe Mode: ").Append(DOTween.useSafeMode ? "ON" : "OFF");
+            _strBuilder.Append("\nTimeScale: ").Append(DOTween.timeScale);
+            _strBuilder.Append("\nLog Behaviour: ").Append(DOTween.logBehaviour);
+            _strBuilder.Append("\nShow Unity Editor Report: ").Append(DOTween.showUnityEditorReport);
+            GUILayout.Label(_strBuilder.ToString());
+
+            GUILayout.Space(8);
+            _strBuilder.Remove(0, _strBuilder.Length);
+            _strBuilder.Append("DEFAULTS ▼");
+            _strBuilder.Append("\ndefaultRecyclable: ").Append(DOTween.defaultRecyclable);
+            _strBuilder.Append("\ndefaultAutoKill: ").Append(DOTween.defaultAutoKill);
+            _strBuilder.Append("\ndefaultAutoPlay: ").Append(DOTween.defaultAutoPlay);
+            _strBuilder.Append("\ndefaultEaseType: ").Append(DOTween.defaultEaseType);
+            _strBuilder.Append("\ndefaultLoopType: ").Append(DOTween.defaultLoopType);
+            GUILayout.Label(_strBuilder.ToString());
+
             GUILayout.Space(8);
         }
     }

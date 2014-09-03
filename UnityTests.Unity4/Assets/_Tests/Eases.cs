@@ -28,7 +28,7 @@ public class Eases : BrainBase
 			Tween tween = t.DOMoveY(2, 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
 			Ease easeType = (Ease)i;
 			Debug.Log(i + ", " + easeType);
-			if (easeType == Ease.InternalCustom) tween.SetEase(easeCurve);
+			if (easeType == Ease.INTERNAL_Custom) tween.SetEase(easeCurve);
 			else tween.SetEase(easeType);
 		}
 	}
