@@ -36,13 +36,6 @@ namespace DG.DOTweenEditor
             } catch {
                 // No DOTweenPro present
             }
-            // DOTween43 version
-            try {
-                additionalAssembly = Assembly.Load("DOTween43, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
-                _43Version = additionalAssembly.GetType("DG.Tweening.DOTween43").GetField("Version", BindingFlags.Static | BindingFlags.Public).GetValue(null) as string;
-            } catch {
-                // No DOTweenPro present
-            }
 
             _src = target as DOTween;
             _strBuilder.Remove(0, _strBuilder.Length);
@@ -52,7 +45,6 @@ namespace DG.DOTweenEditor
 #else
             _strBuilder.Append(" [Release build]");
 #endif
-            if (_43Version != null) _strBuilder.Append("\nDOTween43 v").Append(_43Version);
             if (_proVersion != null) _strBuilder.Append("\nDOTweenPro v").Append(_proVersion);
             else _strBuilder.Append("\nDOTweenPro not installed");
             _title = _strBuilder.ToString();
