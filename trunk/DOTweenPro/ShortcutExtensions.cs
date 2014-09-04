@@ -6,6 +6,7 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Plugins;
+using DG.Tweening.Plugins.PathCore;
 using UnityEngine;
 
 namespace DG.Tweening
@@ -16,6 +17,16 @@ namespace DG.Tweening
     public static class ShortcutExtensions
     {
         #region Transform
+
+        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Path path, float duration, int subdivisionsXSegment = 16)
+        {
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, path, duration)
+                .SetTarget(target);
+
+            if (subdivisionsXSegment < 1) subdivisionsXSegment = 1;
+            t.plugOptions.subdivisionsXSegment = subdivisionsXSegment;
+            return t;
+        }
 
         /// <summary>Tweens a Transform's localPosition in a spiral shape.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>

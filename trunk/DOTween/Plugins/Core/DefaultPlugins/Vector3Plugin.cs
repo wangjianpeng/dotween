@@ -15,7 +15,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class Vector3Plugin : ABSTweenPlugin<Vector3,Vector3,VectorOptions>
     {
-        public override Vector3 ConvertT1toT2(TweenerCore<Vector3, Vector3, VectorOptions> t, Vector3 value)
+        public override Vector3 ConvertToStartValue(TweenerCore<Vector3, Vector3, VectorOptions> t, Vector3 value)
         {
             return value;
         }

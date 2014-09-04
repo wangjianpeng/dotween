@@ -13,7 +13,7 @@ namespace DG.Tweening.Plugins.Core
     public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin where TPlugOptions : struct
     {
         // getter and isRelative are there because some rare plugins need them
-        public abstract T2 ConvertT1toT2(TweenerCore<T1, T2, TPlugOptions> t, T1 value);
+        public abstract T2 ConvertToStartValue(TweenerCore<T1, T2, TPlugOptions> t, T1 value);
         public abstract void SetRelativeEndValue(TweenerCore<T1, T2, TPlugOptions> t);
         public abstract void SetChangeValue(TweenerCore<T1, T2, TPlugOptions> t);
         public abstract float GetSpeedBasedDuration(TPlugOptions options, float unitsXSecond, T2 changeValue);

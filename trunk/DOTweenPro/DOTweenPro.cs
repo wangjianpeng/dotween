@@ -8,6 +8,6 @@ namespace DG.Tweening
 {
     class DOTweenPro
     {
-        public static readonly string Version = "0.5.000";
+        public static readonly string Version = "0.7.000";
     }
 }

@@ -15,7 +15,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class RectPlugin : ABSTweenPlugin<Rect, Rect, RectOptions>
     {
-        public override Rect ConvertT1toT2(TweenerCore<Rect, Rect, RectOptions> t, Rect value)
+        public override Rect ConvertToStartValue(TweenerCore<Rect, Rect, RectOptions> t, Rect value)
         {
             return value;
         }
