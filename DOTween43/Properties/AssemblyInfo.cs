@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DOTweenPro")]
-[assembly: AssemblyDescription("Additional DOTween shorcuts that require Unity 4.3 or later")]
+[assembly: AssemblyTitle("DOTween43")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Demigiant")]
-[assembly: AssemblyProduct("DOTweenPro")]
+[assembly: AssemblyProduct("DOTween43")]
 [assembly: AssemblyCopyright("Copyright © Daniele Giardini, 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
