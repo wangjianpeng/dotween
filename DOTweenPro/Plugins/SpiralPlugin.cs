@@ -39,7 +39,7 @@ namespace DG.Tweening.Plugins
             return PluginsManager.GetCustomPlugin<SpiralPlugin, Vector3, Vector3, SpiralOptions>();
         }
 
-        public override Vector3 ConvertT1toT2(TweenerCore<Vector3, Vector3, SpiralOptions> t, Vector3 value)
+        public override Vector3 ConvertToStartValue(TweenerCore<Vector3, Vector3, SpiralOptions> t, Vector3 value)
         {
             return value;
         }

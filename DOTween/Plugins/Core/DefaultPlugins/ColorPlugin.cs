@@ -14,7 +14,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class ColorPlugin : ABSTweenPlugin<Color, Color, ColorOptions>
     {
-        public override Color ConvertT1toT2(TweenerCore<Color, Color, ColorOptions> t, Color value)
+        public override Color ConvertToStartValue(TweenerCore<Color, Color, ColorOptions> t, Color value)
         {
             return value;
         }
