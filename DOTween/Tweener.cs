@@ -120,7 +120,7 @@ namespace DG.Tweening
                 if (DOTween.useSafeMode) {
                     try {
                         t.startValue = t.tweenPlugin.ConvertToStartValue(t, t.getter());
-                    } catch (UnassignedReferenceException) {
+                    } catch {
                         // Target/field doesn't exist: kill tween
                         return false;
                     }
@@ -191,7 +191,7 @@ namespace DG.Tweening
                     if (DOTween.useSafeMode) {
                         try {
                             t.startValue = t.tweenPlugin.ConvertToStartValue(t, t.getter());
-                        } catch (UnassignedReferenceException) {
+                        } catch {
                             // Target/field doesn't exist: kill tween
                             TweenManager.Despawn(t);
                             return null;
