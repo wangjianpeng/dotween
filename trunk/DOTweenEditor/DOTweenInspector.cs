@@ -20,6 +20,7 @@ namespace DG.DOTweenEditor
         DOTween _src;
         string _title;
         string _proVersion;
+        string _43Version;
         readonly StringBuilder _strBuilder = new StringBuilder();
 
         // ===================================================================================
@@ -27,9 +28,18 @@ namespace DG.DOTweenEditor
 
         void OnEnable()
         {
+            // Additional DLLs versions
+            Assembly additionalAssembly;
             try {
-                Assembly pro = Assembly.Load("DOTweenPro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
-                _proVersion = pro.GetType("DG.Tweening.DOTweenPro").GetField("Version", BindingFlags.Static | BindingFlags.Public).GetValue(null) as string;
+                additionalAssembly = Assembly.Load("DOTweenPro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+                _proVersion = additionalAssembly.GetType("DG.Tweening.DOTweenPro").GetField("Version", BindingFlags.Static | BindingFlags.Public).GetValue(null) as string;
+            } catch {
+                // No DOTweenPro present
+            }
+            // DOTween43 version
+            try {
+                additionalAssembly = Assembly.Load("DOTween43, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
+                _43Version = additionalAssembly.GetType("DG.Tweening.DOTween43").GetField("Version", BindingFlags.Static | BindingFlags.Public).GetValue(null) as string;
             } catch {
                 // No DOTweenPro present
             }
@@ -42,9 +52,9 @@ namespace DG.DOTweenEditor
 #else
             _strBuilder.Append(" [Release build]");
 #endif
-            _strBuilder.Append("\n");
-            if (_proVersion != null) _strBuilder.Append("DOTweenPro v").Append(_proVersion);
-            else _strBuilder.Append("DOTweenPro not installed");
+            if (_43Version != null) _strBuilder.Append("\nDOTween43 v").Append(_43Version);
+            if (_proVersion != null) _strBuilder.Append("\nDOTweenPro v").Append(_proVersion);
+            else _strBuilder.Append("\nDOTweenPro not installed");
             _title = _strBuilder.ToString();
         }
 
@@ -54,9 +64,10 @@ namespace DG.DOTweenEditor
             int totPlayingTweens = TweenManager.TotPlayingTweens();
             int totPausedTweens = totActiveTweens - totPlayingTweens;
 
+            GUILayout.Space(4);
             GUILayout.Label(_title);
+            GUILayout.Label("-----------------------");
 
-            GUILayout.Space(8);
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("Active tweens: ").Append(totActiveTweens)
                     .Append(" (").Append(TweenManager.totActiveTweeners)

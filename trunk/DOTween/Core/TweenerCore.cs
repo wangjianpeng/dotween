@@ -125,7 +125,7 @@ namespace DG.Tweening.Core
             if (DOTween.useSafeMode) {
                 try {
                     setter(tweenPlugin.Evaluate(plugOptions, this, isRelative, getter, updatePosition, startValue, changeValue, duration));
-                } catch (MissingReferenceException) {
+                } catch {
                     // Target/field doesn't exist anymore: kill tween
                     return true;
                 }
