@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public static class DGUtils
 {
@@ -13,7 +14,10 @@ public static class DGUtils
 		GUILayout.FlexibleSpace();
 		GUILayout.BeginVertical();
 
-		if (GUILayout.Button("RELOAD SCENE")) Application.LoadLevel(Application.loadedLevel);
+		if (GUILayout.Button("RELOAD SCENE")) {
+			DOTween.Kill();
+			Application.LoadLevel(Application.loadedLevel);
+		}
 	}
 
 	public static void EndGUI()

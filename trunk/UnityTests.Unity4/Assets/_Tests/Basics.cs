@@ -9,10 +9,10 @@ public class Basics : BrainBase
 	public Ease ease = Ease.OutQuad;
 	public AnimationCurve easeCurve;
 	public Vector3 toRotation = new Vector3(0, 180, 0);
-	public Color toCamColor;
-	public Color toLightColor;
+	public Color toCamColor, toLightColor, toSpriteColor;
 	public Transform[] targets;
 	public Light mainLight;
+	public SpriteRenderer spriteRenderer;
 	public GUITexture guiTexAlpha, guiTexColor;
 	public GUIText txtInfo, txtFloat, txtInt, txtUint, txtVector2, txtVector4, txtRect, txtRectOffset, txtString0, txtString1, txtString2;
 	public GameObject txtBackwards;
@@ -118,6 +118,8 @@ public class Basics : BrainBase
 		// Light
 		mainLight.DOColor(toLightColor, 1.5f).SetAs(tp).Pause();
 		mainLight.DOIntensity(4, 1.5f).SetAs(tp).Pause();
+		// SpriteRenderer
+		spriteRenderer.DOColor(toSpriteColor, 1.5f).SetAs(tp).Pause();
 	}
 
 	void LateUpdate()

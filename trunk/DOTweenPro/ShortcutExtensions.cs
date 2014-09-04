@@ -6,7 +6,6 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Plugins;
-using DG.Tweening.Plugins.PathCore;
 using UnityEngine;
 
 namespace DG.Tweening

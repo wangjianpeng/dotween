@@ -9,15 +9,17 @@ public class BrainBase : MonoBehaviour
 	public bool recycleTweens = true;
 	public bool safeMode = false;
 
-	[System.NonSerialized] public HOFpsGadget fpsGadget;
+	public static HOFpsGadget fpsGadget;
 
 	virtual protected void Awake()
 	{
-		GameObject fpsGadgetGo = new GameObject("FPS");
-		DontDestroyOnLoad(fpsGadgetGo);
-		fpsGadget = fpsGadgetGo.AddComponent<HOFpsGadget>();
-		if (forceFrameRate) fpsGadget.limitFrameRate = forcedFrameRate;
-		fpsGadget.showMemory = true;
+		if (fpsGadget == null) {
+			GameObject fpsGadgetGo = new GameObject("FPS");
+			DontDestroyOnLoad(fpsGadgetGo);
+			fpsGadget = fpsGadgetGo.AddComponent<HOFpsGadget>();
+			if (forceFrameRate) fpsGadget.limitFrameRate = forcedFrameRate;
+			fpsGadget.showMemory = true;
+		}
 
 		DOTween.showUnityEditorReport = true;
 		DOTween.useSafeMode = safeMode;
