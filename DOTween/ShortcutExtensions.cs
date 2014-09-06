@@ -182,7 +182,7 @@ namespace DG.Tweening
         public static Tweener DORotate(this Transform target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration)
-                .SetTarget(target).SetOptions(useShortest360Route);
+                .SetOptions(useShortest360Route).SetTarget(target);
         }
         /// <summary>Tweens a Transform's rotation from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -192,7 +192,7 @@ namespace DG.Tweening
         public static Tweener DORotateFrom(this Transform target, Vector3 fromValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.From(() => target.rotation, x => target.rotation = x, fromValue, duration)
-                .SetTarget(target).SetOptions(useShortest360Route);
+                .SetOptions(useShortest360Route).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's localRotation to the given value.
@@ -203,7 +203,7 @@ namespace DG.Tweening
         public static Tweener DOLocalRotate(this Transform target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.To(() => target.localRotation, x => target.localRotation = x, endValue, duration)
-                .SetTarget(target).SetOptions(useShortest360Route);
+                .SetOptions(useShortest360Route).SetTarget(target);
         }
         /// <summary>Tweens a Transform's localRotation from the given value to its current one.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -213,7 +213,7 @@ namespace DG.Tweening
         public static Tweener DOLocalRotateFrom(this Transform target, Vector3 fromValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.From(() => target.localRotation, x => target.localRotation = x, fromValue, duration)
-                .SetTarget(target).SetOptions(useShortest360Route);
+                .SetOptions(useShortest360Route).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's rotation to the given value, using its local axis system
@@ -224,7 +224,8 @@ namespace DG.Tweening
         public static Tweener DOLocalAxisRotate(this Transform target, Vector3 endValue, float duration)
         {
             return DOTween.To(() => Quaternion.identity, x => target.localRotation = x, endValue, duration)
-                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
+                .SetOptions(false).SetTarget(target);
         }
         /// <summary>Tweens a Transform's rotation from the given value to its current one, using its local axis system
         /// (like when rotating an object with the "local" switch enabled in Unity's editor).
@@ -234,7 +235,8 @@ namespace DG.Tweening
         public static Tweener DOLocalAxisRotateFrom(this Transform target, Vector3 endValue, float duration)
         {
             return DOTween.From(() => Quaternion.identity, x => target.localRotation = x, endValue, duration)
-                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
+                .SetOptions(false).SetTarget(target);
         }
 
         /// <summary>Tweens a Transform's localScale to the given value.
@@ -473,7 +475,7 @@ namespace DG.Tweening
         public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration)
-                .SetTarget(target).SetOptions(useShortest360Route);
+                .SetOptions(useShortest360Route).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's rotation from the given value to its current one.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
@@ -483,7 +485,7 @@ namespace DG.Tweening
         public static Tweener DORotateFrom(this Rigidbody target, Vector3 fromValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration)
-                .SetTarget(target).SetOptions(useShortest360Route);
+                .SetOptions(useShortest360Route).SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's rotation to the given value, using its local axis system
@@ -494,7 +496,8 @@ namespace DG.Tweening
         public static Tweener DOLocalAxisRotate(this Rigidbody target, Vector3 endValue, float duration)
         {
             return DOTween.To(() => Quaternion.identity, target.MoveRotation, endValue, duration)
-                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
+                .SetOptions(false).SetTarget(target);
         }
         /// <summary>Tweens a Rigidbody's rotation from the given value to its current one, using its local axis system
         /// (like when rotating an object with the "local" switch enabled in Unity's editor).
@@ -504,7 +507,8 @@ namespace DG.Tweening
         public static Tweener DOLocalAxisRotateFrom(this Rigidbody target, Vector3 endValue, float duration)
         {
             return DOTween.From(() => Quaternion.identity, target.MoveRotation, endValue, duration)
-                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter).SetTarget(target);
+                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
+                .SetOptions(false).SetTarget(target);
         }
 
         #endregion
