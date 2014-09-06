@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
@@ -22,7 +23,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.130";
+        public static readonly string Version = "0.8.140";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -67,6 +68,7 @@ namespace DG.Tweening
         internal static DOTween instance;
         internal static bool isUnityEditor;
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
+        internal static List<TweenCallback> onDrawGizmos; // Can be used by other classes to call internal gizmo draw methods
         static bool _initialized;
         float _unscaledTime;
 
@@ -95,6 +97,14 @@ namespace DG.Tweening
                     if (TweenManager.totActiveSequences > maxActiveSequencesReached) maxActiveSequencesReached = TweenManager.totActiveSequences;
                 }
             }
+        }
+
+        void OnDrawGizmos()
+        {
+            if (onDrawGizmos == null) return;
+
+            int len = onDrawGizmos.Count;
+            for (int i = 0; i < len; ++i) onDrawGizmos[i]();
         }
 
         void OnDestroy()
