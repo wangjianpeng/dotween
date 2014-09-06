@@ -47,7 +47,7 @@
     <Compile Include="Plugins\PathCore\ABSPathDecoder.cs" />
     <Compile Include="Plugins\PathCore\CatmullRomDecoder.cs" />
     <Compile Include="Plugins\PathCore\LinearDecoder.cs" />
-    <Compile Include="Path.cs" />
+    <Compile Include="Plugins\PathCore\Path.cs" />
     <Compile Include="Plugins\PathPlugin.cs" />
     <Compile Include="Plugins\SpiralPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

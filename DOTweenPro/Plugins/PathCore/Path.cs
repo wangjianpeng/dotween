@@ -4,11 +4,10 @@
 // License Copyright (c) Daniele Giardini.
 // This work is subject to the terms at http://dotween.demigiant.com/license.php
 
-using DG.Tweening.Plugins.PathCore;
 using UnityEngine;
 
 #pragma warning disable 1591
-namespace DG.Tweening
+namespace DG.Tweening.Plugins.PathCore
 {
     // Public so it can be used internally as a T2 for PathPlugin
     public class Path

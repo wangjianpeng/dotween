@@ -95,6 +95,9 @@ namespace DG.Tweening.Plugins
             // Apply correct values to path and set needed data
             path.wps = wps;
             path.SetTimeToLenTables(wpsLen * t.plugOptions.subdivisionsXSegment);
+
+            // Set changeValue as a reference to endValue
+            t.changeValue = t.endValue;
         }
 
         public override float GetSpeedBasedDuration(PathOptions options, float unitsXSecond, Path changeValue)

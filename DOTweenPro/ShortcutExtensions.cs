@@ -6,6 +6,7 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Plugins;
+using DG.Tweening.Plugins.PathCore;
 using UnityEngine;
 
 namespace DG.Tweening
@@ -17,9 +18,9 @@ namespace DG.Tweening
     {
         #region Transform
 
-        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Path path, float duration, int subdivisionsXSegment = 16)
+        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear, int subdivisionsXSegment = 16)
         {
-            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, path, duration)
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, new Path(pathType, path), duration)
                 .SetTarget(target);
 
             if (subdivisionsXSegment < 1) subdivisionsXSegment = 1;

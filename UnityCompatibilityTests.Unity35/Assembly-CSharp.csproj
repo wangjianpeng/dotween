@@ -48,6 +48,9 @@
  <Reference Include="DOTween">
  <HintPath>Assets\Demigiant\DOTween\DOTween.dll</HintPath>
  </Reference>
+ <Reference Include="DOTweenPro">
+ <HintPath>Assets\Demigiant\DOTweenPro\DOTweenPro.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

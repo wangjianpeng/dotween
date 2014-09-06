@@ -19,7 +19,9 @@ public class CompatibilityTest : MonoBehaviour
 		logo.color = c;
 
 		// Create sequence
-		Sequence seq = DOTween.Sequence().SetLoops(-1, LoopType.Restart).OnStepComplete(Success);
+		Sequence seq = DOTween.Sequence()
+			.SetLoops(-1, LoopType.Restart)
+			.OnStepComplete(Success);
 		seq.Append(cubeCont.DORotate(new Vector3(0, 720, 360), 2.25f).SetRelative().SetEase(Ease.Linear));
 		foreach (Transform trans in cubes) {
 			Transform t = trans;
