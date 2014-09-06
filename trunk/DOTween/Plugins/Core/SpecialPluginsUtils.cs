@@ -14,7 +14,7 @@ namespace DG.Tweening.Plugins.Core
     internal static class SpecialPluginsUtils
     {
         // Returns TRUE if it's successful, FALSE otherwise
-        internal static bool SetLocalAxisSetter(TweenerCore<Quaternion, Vector3, NoOptions> t)
+        internal static bool SetLocalAxisSetter(TweenerCore<Quaternion, Vector3, QuaternionOptions> t)
         {
             Transform trans = t.target as Transform;
             if (trans != null) {
