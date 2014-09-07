@@ -31,6 +31,8 @@ public struct PlugCustomPlugin : IPlugSetter<Vector3, Vector3, CustomPlugin, NoO
 
 public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
 {
+	public override void Reset(TweenerCore<Vector3, Vector3, NoOptions> t) {}
+
     public override Vector3 ConvertToStartValue(TweenerCore<Vector3, Vector3, NoOptions> t, Vector3 value)
     {
         return value;

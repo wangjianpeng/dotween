@@ -14,6 +14,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3,QuaternionOptions>
     {
+        public override void Reset(TweenerCore<Quaternion, Vector3, QuaternionOptions> t) { }
+
         public override Vector3 ConvertToStartValue(TweenerCore<Quaternion, Vector3, QuaternionOptions> t, Quaternion value)
         {
             return value.eulerAngles;

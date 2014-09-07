@@ -17,7 +17,6 @@ namespace DG.Tweening.Plugins
     {
         public AxisConstraint lockPositionAxis;
         public bool isClosedPath;
-        public int subdivisionsXSegment; // Subdivisions per each path segment
     }
 
     /// <summary>
@@ -25,6 +24,12 @@ namespace DG.Tweening.Plugins
     /// </summary>
     public class PathPlugin : ABSTweenPlugin<Vector3, Path, PathOptions>
     {
+        public override void Reset(TweenerCore<Vector3, Path, PathOptions> t)
+        {
+            t.endValue.Destroy(); // Clear path
+            t.startValue = t.endValue = t.changeValue = null;
+        }
+
         public static ABSTweenPlugin<Vector3, Path, PathOptions> Get()
         {
             return PluginsManager.GetCustomPlugin<PathPlugin, Vector3, Path, PathOptions>();
@@ -94,7 +99,8 @@ namespace DG.Tweening.Plugins
 
             // Apply correct values to path and set needed data
             path.wps = wps;
-            path.SetTimeToLenTables(wpsLen * t.plugOptions.subdivisionsXSegment);
+            path.subdivisions = wpsLen * path.subdivisionsXSegment;
+            path.SetTimeToLenTables();
 
             // Set changeValue as a reference to endValue
             t.changeValue = t.endValue;

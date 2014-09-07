@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DOTweenPro.cs" />
+    <Compile Include="PathMode.cs" />
     <Compile Include="PathType.cs" />
     <Compile Include="Plugins\PathCore\ABSPathDecoder.cs" />
     <Compile Include="Plugins\PathCore\CatmullRomDecoder.cs" />

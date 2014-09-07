@@ -14,6 +14,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class FloatPlugin : ABSTweenPlugin<float,float,FloatOptions>
     {
+        public override void Reset(TweenerCore<float, float, FloatOptions> t) { }
+
         public override float ConvertToStartValue(TweenerCore<float, float, FloatOptions> t, float value)
         {
             return value;

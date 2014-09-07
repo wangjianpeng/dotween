@@ -12,7 +12,7 @@ namespace DG.Tweening.Plugins.Core
     // Public so it can be extended by custom plugins
     public abstract class ABSTweenPlugin<T1,T2,TPlugOptions> : ITweenPlugin where TPlugOptions : struct
     {
-        // getter and isRelative are there because some rare plugins need them
+        public abstract void Reset(TweenerCore<T1, T2, TPlugOptions> t); // Resets specific TweenerCore stuff, not the plugin itself
         public abstract T2 ConvertToStartValue(TweenerCore<T1, T2, TPlugOptions> t, T1 value);
         public abstract void SetRelativeEndValue(TweenerCore<T1, T2, TPlugOptions> t);
         public abstract void SetChangeValue(TweenerCore<T1, T2, TPlugOptions> t);

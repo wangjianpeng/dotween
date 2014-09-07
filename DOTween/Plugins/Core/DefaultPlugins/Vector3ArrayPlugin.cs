@@ -18,6 +18,11 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     /// </summary>
     public class Vector3ArrayPlugin : ABSTweenPlugin<Vector3, Vector3[], Vector3ArrayOptions>
     {
+        public override void Reset(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
+        {
+            t.startValue = t.endValue = t.changeValue = null;
+        }
+
         public override Vector3[] ConvertToStartValue(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t, Vector3 value)
         {
             int len = t.endValue.Length;
