@@ -125,13 +125,15 @@ namespace DG.Tweening.Plugins
             return changeValue.length / unitsXSecond;
         }
 
-        public override Vector3 Evaluate(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Path startValue, Path changeValue, float duration)
+        public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration)
         {
             float pathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            Vector3 newPos = changeValue.GetPoint(pathPerc, true);
+            setter(changeValue.GetPoint(pathPerc, true));
 
             Transform trans = (Transform)t.target;
 
+            // If orientation is needed immediately position transform at correct position
+            // (otherwise lookAt won't obviously work because it will be based on previous coordinates)
             switch (options.orientType) {
             case OrientType.LookAtPosition:
                 trans.LookAt(options.lookAtPosition, trans.up);
@@ -142,8 +144,6 @@ namespace DG.Tweening.Plugins
                 if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
                 break;
             }
-
-            return newPos;
         }
     }
 }

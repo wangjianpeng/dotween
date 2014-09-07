@@ -49,7 +49,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return diag / unitsXSecond;
         }
 
-        public override Rect Evaluate(RectOptions options, Tween t, bool isRelative, DOGetter<Rect> getter, float elapsed, Rect startValue, Rect changeValue, float duration)
+        public override void EvaluateAndApply(RectOptions options, Tween t, bool isRelative, DOGetter<Rect> getter, DOSetter<Rect> setter, float elapsed, Rect startValue, Rect changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) {
                 int iterations = t.isComplete ? t.completedLoops - 1 : t.completedLoops;
@@ -69,7 +69,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                 startValue.width = (float)Math.Round(startValue.width);
                 startValue.height = (float)Math.Round(startValue.height);
             }
-            return startValue;
+            setter(startValue);
         }
     }
 }

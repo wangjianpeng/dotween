@@ -47,7 +47,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return changeValue.magnitude / unitsXSecond;
         }
 
-        public override Vector2 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector2> getter, float elapsed, Vector2 startValue, Vector2 changeValue, float duration)
+        public override void EvaluateAndApply(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector2> getter, DOSetter<Vector2> setter, float elapsed, Vector2 startValue, Vector2 changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
 
@@ -56,12 +56,14 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                 Vector2 resX = getter();
                 resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resX.x = (float)Math.Round(resX.x);
-                return resX;
+                setter(resX);
+                break;
             case AxisConstraint.Y:
                 Vector2 resY = getter();
                 resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resY.y = (float)Math.Round(resY.y);
-                return resY;
+                setter(resY);
+                break;
             default:
                 startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
@@ -69,7 +71,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                     startValue.x = (float)Math.Round(startValue.x);
                     startValue.y = (float)Math.Round(startValue.y);
                 }
-                return startValue;
+                setter(startValue);
+                break;
             }
         }
     }

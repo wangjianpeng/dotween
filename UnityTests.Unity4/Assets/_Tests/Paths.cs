@@ -33,7 +33,7 @@ public class Paths : BrainBase
 			.Pause();
 		targets[1].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[1])
 			.SetOptions(closePaths)
-			.SetLookAt(targets[0], forward)
+			.SetLookAt(targets[2], forward)
 			.SetAs(tp)
 			.Pause();
 
@@ -57,6 +57,7 @@ public class Paths : BrainBase
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
+		if (GUILayout.Button("Goto 1.5")) DOTween.Goto(1.5f);
 		if (GUILayout.Button("Kill")) DOTween.Kill();
 		GUILayout.EndHorizontal();
 

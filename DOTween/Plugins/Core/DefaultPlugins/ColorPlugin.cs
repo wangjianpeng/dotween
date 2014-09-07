@@ -36,7 +36,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return 1f / unitsXSecond;
         }
 
-        public override Color Evaluate(ColorOptions options, Tween t, bool isRelative, DOGetter<Color> getter, float elapsed, Color startValue, Color changeValue, float duration)
+        public override void EvaluateAndApply(ColorOptions options, Tween t, bool isRelative, DOGetter<Color> getter, DOSetter<Color> setter, float elapsed, Color startValue, Color changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
 
@@ -45,13 +45,14 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                 startValue.g = EaseManager.Evaluate(t, elapsed, startValue.g, changeValue.g, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 startValue.b = EaseManager.Evaluate(t, elapsed, startValue.b, changeValue.b, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 startValue.a = EaseManager.Evaluate(t, elapsed, startValue.a, changeValue.a, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                return startValue;
+                setter(startValue);
+                return;
             }
 
             // Alpha only
             Color res = getter();
             res.a = EaseManager.Evaluate(t, elapsed, startValue.a, changeValue.a, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            return res;
+            setter(res);
         }
     }
 }

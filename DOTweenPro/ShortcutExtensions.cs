@@ -115,6 +115,7 @@ namespace DG.Tweening
         static void SetPathForwardDirection(this TweenerCore<Vector3, Path, PathOptions> t, Vector3? forwardDirection = null, Vector3? up = null)
         {
             t.plugOptions.hasCustomForwardDirection = forwardDirection != null || up != null;
+            if (forwardDirection == Vector3.zero) forwardDirection = Vector3.forward;
             if (t.plugOptions.hasCustomForwardDirection) {
                 t.plugOptions.forward = Quaternion.LookRotation(
                     forwardDirection == null ? Vector3.forward : (Vector3)forwardDirection,

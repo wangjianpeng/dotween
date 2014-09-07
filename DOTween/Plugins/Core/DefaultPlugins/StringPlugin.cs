@@ -48,7 +48,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override string Evaluate(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, float elapsed, string startValue, string changeValue, float duration)
+        public override void EvaluateAndApply(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, DOSetter<string> setter, float elapsed, string startValue, string changeValue, float duration)
         {
             _Buffer.Remove(0, _Buffer.Length);
 
@@ -71,12 +71,17 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 
             if (isRelative) {
                 _Buffer.Append(startValue);
-                if (options.scramble) return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
-                return _Buffer.Append(changeValue, 0, len).ToString();
+                if (options.scramble) {
+                    setter(_Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                    return;
+                }
+                setter(_Buffer.Append(changeValue, 0, len).ToString());
+                return;
             }
 
             if (options.scramble) {
-                return _Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString();
+                setter(_Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                return;
             }
 
             int diff = startValueLen - changeValueLen;
@@ -88,7 +93,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             } else startValueMaxLen -= len;
             _Buffer.Append(changeValue, 0, len);
             if (len < changeValueLen && len < startValueLen) _Buffer.Append(startValue, len, startValueMaxLen);
-            return _Buffer.ToString();
+            setter(_Buffer.ToString());
         }
     }
 

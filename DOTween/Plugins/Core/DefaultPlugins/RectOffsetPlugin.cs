@@ -58,7 +58,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return diag / unitsXSecond;
         }
 
-        public override RectOffset Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<RectOffset> getter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration)
+        public override void EvaluateAndApply(NoOptions options, Tween t, bool isRelative, DOGetter<RectOffset> getter, DOSetter<RectOffset> setter, float elapsed, RectOffset startValue, RectOffset changeValue, float duration)
         {
             _r.left = startValue.left;
             _r.right = startValue.right;
@@ -73,11 +73,13 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                 _r.bottom += changeValue.bottom * iterations;
             }
 
-            return new RectOffset(
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.top, changeValue.top, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.bottom, changeValue.bottom, duration, t.easeOvershootOrAmplitude, t.easePeriod))
+            setter(
+                new RectOffset(
+                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.top, changeValue.top, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
+                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.bottom, changeValue.bottom, duration, t.easeOvershootOrAmplitude, t.easePeriod))
+                )
             );
         }
     }
