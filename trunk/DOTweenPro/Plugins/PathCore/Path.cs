@@ -35,7 +35,7 @@ namespace DG.Tweening.Plugins.PathCore
         Vector3[] _drawWps; // Used to store the path gizmo points when inside Unity editor
         internal Vector3 targetPosition; // Set by PathPlugin at each update
         internal Vector3? lookAtPosition; // Set by PathPlugin in case there's a lookAt active
-        Color _gizmoColor = Color.white;
+        Color _gizmoColor = new Color(1, 1, 1, 0.7f);
 
         // ***********************************************************************************
         // CONSTRUCTOR
@@ -139,7 +139,7 @@ namespace DG.Tweening.Plugins.PathCore
             if (timesTable == null) return;
 
             Color gizmosFadedCol = _gizmoColor;
-            gizmosFadedCol.a = 0.5f;
+            gizmosFadedCol.a *= 0.5f;
             Gizmos.color = _gizmoColor;
             int wpsCount = wps.Length;
 
@@ -181,15 +181,16 @@ namespace DG.Tweening.Plugins.PathCore
             }
 
             Gizmos.color = gizmosFadedCol;
+            const float spheresSize = 0.075f;
 
             // Draw path control points
-            for (int i = 1; i < wpsCount - 1; ++i) Gizmos.DrawSphere(wps[i], 0.075f);
+            for (int i = 1; i < wpsCount - 1; ++i) Gizmos.DrawSphere(wps[i], spheresSize);
 
             // Draw eventual path lookAt
             if (lookAtPosition != null) {
-//                Gizmos.color = gizmosFadedCol;
                 Vector3 lookAtP = (Vector3)lookAtPosition;
                 Gizmos.DrawLine(targetPosition, lookAtP);
+                Gizmos.DrawWireSphere(lookAtP, spheresSize);
             }
         }
     }
