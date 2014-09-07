@@ -128,7 +128,9 @@ namespace DG.Tweening.Plugins
         public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration)
         {
             float pathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            setter(changeValue.GetPoint(pathPerc, true));
+            Vector3 newPos = changeValue.GetPoint(pathPerc, true);
+            changeValue.targetPosition = newPos; // Used to draw editor gizmos
+            setter(newPos);
 
             Transform trans = (Transform)t.target;
 
@@ -136,12 +138,16 @@ namespace DG.Tweening.Plugins
             // (otherwise lookAt won't obviously work because it will be based on previous coordinates)
             switch (options.orientType) {
             case OrientType.LookAtPosition:
+                changeValue.lookAtPosition = options.lookAtPosition; // Used to draw editor gizmos
                 trans.LookAt(options.lookAtPosition, trans.up);
                 if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
                 break;
             case OrientType.LookAtTransform:
-                if (options.lookAtTransform != null) trans.LookAt(options.lookAtTransform, trans.up);
-                if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
+                if (options.lookAtTransform != null) {
+                    changeValue.lookAtPosition = options.lookAtTransform.position; // Used to draw editor gizmos
+                    trans.LookAt(options.lookAtTransform, trans.up);
+                    if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
+                }
                 break;
             }
         }

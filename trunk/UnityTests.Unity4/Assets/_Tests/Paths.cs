@@ -12,6 +12,8 @@ public class Paths : BrainBase
 	public Color[] pathsColors = new Color[2];
 	public Transform[] targets;
 
+	Tween controller;
+
 	void Start()
 	{
 		Vector3[] path = new[] {
@@ -26,7 +28,7 @@ public class Paths : BrainBase
 			.SetLoops(-1, loopType);
 
 		// Relative VS non relative
-		targets[0].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
+		controller = targets[0].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
 			.SetOptions(closePaths)
 			.SetAs(tp)
 			.SetRelative()
@@ -54,6 +56,8 @@ public class Paths : BrainBase
 	void OnGUI()
 	{
 		DGUtils.BeginGUI();
+
+		DGUtils.GUIScrubber(controller);
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();

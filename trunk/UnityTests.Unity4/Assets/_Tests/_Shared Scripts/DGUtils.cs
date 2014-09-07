@@ -3,6 +3,8 @@ using UnityEngine;
 
 public static class DGUtils
 {
+	static float sliderPos;
+
 	public static void Log(object o) {
 		Debug.Log(Time.frameCount + "/" + Time.realtimeSinceStartup + " : " + o);
 	}
@@ -25,5 +27,30 @@ public static class DGUtils
 		GUILayout.FlexibleSpace();
 		GUILayout.EndHorizontal();
 		GUILayout.EndArea();
+	}
+
+	public static void GUIScrubber(float duration) {
+		GUIScrubber(duration, null);
+	}
+	public static void GUIScrubber(Tween controller) {
+		GUIScrubber(-1, controller);
+	}
+	static void GUIScrubber(float duration, Tween controller)
+	{
+		if (controller == null) {
+			float prevSliderPos = sliderPos;
+			sliderPos = GUILayout.HorizontalSlider(sliderPos, 0.0f, duration);
+			if (!Mathf.Approximately(sliderPos, prevSliderPos)) DOTween.Goto(sliderPos);
+		} else {
+			// Get slider ID to be used to check mouseDown behaviour
+			int sliderId = GUIUtility.GetControlID(FocusType.Passive) + 1;
+			DOTween.Goto(GUILayout.HorizontalSlider(controller.Elapsed(false), 0.0f, controller.Duration(false)), controller.IsPlaying());
+			// Check mouse down on slider, and pause tweens accordingly.
+			if (sliderId != 0 && Event.current.type == EventType.used) {
+				if (GUIUtility.hotControl == sliderId) DOTween.Pause();
+			}
+
+			// DOTween.Goto(GUILayout.HorizontalSlider(controller.Elapsed(false), 0.0f, controller.Duration(false)), controller.IsPlaying());
+		}
 	}
 }
