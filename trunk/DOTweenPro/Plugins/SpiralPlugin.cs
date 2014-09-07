@@ -65,7 +65,7 @@ namespace DG.Tweening.Plugins
             return unitsXSecond; // this plugin has already a speed option, so ignore this method
         }
 
-        public override Vector3 Evaluate(SpiralOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
+        public override void EvaluateAndApply(SpiralOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
             float elapsedPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             float unitElapsedPerc = (options.mode == SpiralMode.ExpandThenContract && elapsedPerc > 0.5f) ? 0.5f - (elapsedPerc - 0.5f) : elapsedPerc;
@@ -84,7 +84,7 @@ namespace DG.Tweening.Plugins
                 spiral.y = (float)Math.Round(spiral.y);
                 spiral.z = (float)Math.Round(spiral.z);
             }
-            return spiral;
+            setter(spiral);
         }
     }
 }

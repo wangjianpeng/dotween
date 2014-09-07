@@ -50,7 +50,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return changeValue.magnitude / unitsXSecond;
         }
 
-        public override Vector3 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
+        public override void EvaluateAndApply(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
 
@@ -59,17 +59,20 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                 Vector3 resX = getter();
                 resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resX.x = (float)Math.Round(resX.x);
-                return resX;
+                setter(resX);
+                break;
             case AxisConstraint.Y:
                 Vector3 resY = getter();
                 resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resY.y = (float)Math.Round(resY.y);
-                return resY;
+                setter(resY);
+                break;
             case AxisConstraint.Z:
                 Vector3 resZ = getter();
                 resZ.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 if (options.snapping) resZ.z = (float)Math.Round(resZ.z);
-                return resZ;
+                setter(resZ);
+                break;
             default:
                 startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
@@ -79,7 +82,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                     startValue.y = (float)Math.Round(startValue.y);
                     startValue.z = (float)Math.Round(startValue.z);
                 }
-                return startValue;
+                setter(startValue);
+                break;
             }
         }
     }

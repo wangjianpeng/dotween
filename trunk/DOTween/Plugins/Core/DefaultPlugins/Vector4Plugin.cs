@@ -53,21 +53,49 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return changeValue.magnitude / unitsXSecond;
         }
 
-        public override Vector4 Evaluate(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector4> getter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
+        public override void EvaluateAndApply(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector4> getter, DOSetter<Vector4> setter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
 
-            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.w = EaseManager.Evaluate(t, elapsed, startValue.w, changeValue.w, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            if (options.snapping) {
-                startValue.x = (float)Math.Round(startValue.x);
-                startValue.y = (float)Math.Round(startValue.y);
-                startValue.z = (float)Math.Round(startValue.z);
-                startValue.w = (float)Math.Round(startValue.w);
+            switch (options.axisConstraint) {
+            case AxisConstraint.X:
+                Vector4 resX = getter();
+                resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                if (options.snapping) resX.x = (float)Math.Round(resX.x);
+                setter(resX);
+                break;
+            case AxisConstraint.Y:
+                Vector4 resY = getter();
+                resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                if (options.snapping) resY.y = (float)Math.Round(resY.y);
+                setter(resY);
+                break;
+            case AxisConstraint.Z:
+                Vector4 resZ = getter();
+                resZ.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                if (options.snapping) resZ.z = (float)Math.Round(resZ.z);
+                setter(resZ);
+                break;
+            case AxisConstraint.W:
+                Vector4 resW = getter();
+                resW.w = EaseManager.Evaluate(t, elapsed, startValue.w, changeValue.w, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                if (options.snapping) resW.w = (float)Math.Round(resW.w);
+                setter(resW);
+                break;
+            default:
+                startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.w = EaseManager.Evaluate(t, elapsed, startValue.w, changeValue.w, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                if (options.snapping) {
+                    startValue.x = (float)Math.Round(startValue.x);
+                    startValue.y = (float)Math.Round(startValue.y);
+                    startValue.z = (float)Math.Round(startValue.z);
+                    startValue.w = (float)Math.Round(startValue.w);
+                }
+                setter(startValue);
+                break;
             }
-            return startValue;
         }
     }
 }

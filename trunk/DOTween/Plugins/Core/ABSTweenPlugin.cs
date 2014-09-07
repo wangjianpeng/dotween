@@ -17,6 +17,6 @@ namespace DG.Tweening.Plugins.Core
         public abstract void SetRelativeEndValue(TweenerCore<T1, T2, TPlugOptions> t);
         public abstract void SetChangeValue(TweenerCore<T1, T2, TPlugOptions> t);
         public abstract float GetSpeedBasedDuration(TPlugOptions options, float unitsXSecond, T2 changeValue);
-        public abstract T1 Evaluate(TPlugOptions options, Tween t, bool isRelative, DOGetter<T1> getter, float elapsed, T2 startValue, T2 changeValue, float duration);
+        public abstract void EvaluateAndApply(TPlugOptions options, Tween t, bool isRelative, DOGetter<T1> getter, DOSetter<T1> setter, float elapsed, T2 startValue, T2 changeValue, float duration);
     }
 }

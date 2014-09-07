@@ -38,11 +38,11 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             return res;
         }
 
-        public override uint Evaluate(NoOptions options, Tween t, bool isRelative, DOGetter<uint> getter, float elapsed, uint startValue, uint changeValue, float duration)
+        public override void EvaluateAndApply(NoOptions options, Tween t, bool isRelative, DOGetter<uint> getter, DOSetter<uint> setter, float elapsed, uint startValue, uint changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += (uint)(changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops));
 
-            return (uint)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod));
+            setter((uint)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod)));
         }
     }
 }
