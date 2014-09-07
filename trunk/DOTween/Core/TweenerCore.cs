@@ -95,6 +95,7 @@ namespace DG.Tweening.Core
         {
             base.Reset();
 
+            if (tweenPlugin != null) tweenPlugin.Reset(this);
             plugOptions = new TPlugOptions();
             getter = null;
             setter = null;

@@ -34,6 +34,8 @@ namespace DG.Tweening.Plugins
     {
         public static readonly Vector3 DefaultDirection = Vector3.forward;
 
+        public override void Reset(TweenerCore<Vector3, Vector3, SpiralOptions> t) { }
+
         public static ABSTweenPlugin<Vector3, Vector3, SpiralOptions> Get()
         {
             return PluginsManager.GetCustomPlugin<SpiralPlugin, Vector3, Vector3, SpiralOptions>();

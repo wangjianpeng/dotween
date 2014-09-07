@@ -14,6 +14,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
 {
     public class UintPlugin : ABSTweenPlugin<uint, uint, NoOptions>
     {
+        public override void Reset(TweenerCore<uint, uint, NoOptions> t) { }
+
         public override uint ConvertToStartValue(TweenerCore<uint, uint, NoOptions> t, uint value)
         {
             return value;

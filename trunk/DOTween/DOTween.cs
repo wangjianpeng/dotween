@@ -23,7 +23,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.145";
+        public static readonly string Version = "0.8.150";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -68,12 +68,19 @@ namespace DG.Tweening
         internal static DOTween instance;
         internal static bool isUnityEditor;
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
-        internal static List<TweenCallback> onDrawGizmos; // Can be used by other classes to call internal gizmo draw methods
+        internal static readonly List<TweenCallback> onDrawGizmos = new List<TweenCallback>(); // Can be used by other classes to call internal gizmo draw methods
         static bool _initialized;
         float _unscaledTime;
 
-        // ===================================================================================
-        // UNITY METHODS ---------------------------------------------------------------------
+        #region Static Constructor
+
+        static DOTween()
+        {
+            isUnityEditor = Application.isEditor;
+        }
+
+        #endregion
+
         #region Unity Methods
 
         void Awake()
@@ -118,8 +125,6 @@ namespace DG.Tweening
         }
         #endregion
 
-        // ===================================================================================
-        // YIELD COROUTINES ------------------------------------------------------------------
         #region Yield Coroutines
 
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be complete (or killed)
@@ -153,8 +158,6 @@ namespace DG.Tweening
         }
         #endregion
 
-        // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
         #region Public Methods
 
         /// <summary>
@@ -187,7 +190,6 @@ namespace DG.Tweening
             if (_initialized) return instance;
 
             _initialized = true;
-            isUnityEditor = Application.isEditor;
             // Options
             DOTween.defaultRecyclable = recycleAllByDefault;
             DOTween.useSafeMode = useSafeMode;

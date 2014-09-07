@@ -19,6 +19,11 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     {
         static RectOffset _r = new RectOffset(); // Used to store incremental values without creating a new RectOffset each time
 
+        public override void Reset(TweenerCore<RectOffset, RectOffset, NoOptions> t)
+        {
+            t.startValue = t.endValue = t.changeValue = null;
+        }
+
         public override RectOffset ConvertToStartValue(TweenerCore<RectOffset, RectOffset, NoOptions> t, RectOffset value)
         {
             return new RectOffset(value.left, value.right, value.top, value.bottom);

@@ -18,13 +18,11 @@ namespace DG.Tweening
     {
         #region Transform
 
-        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear, int subdivisionsXSegment = 16)
+        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear, int resolution = 10, Color? gizmoColor = null)
         {
-            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, new Path(pathType, path), duration)
+            if (resolution < 1) resolution = 1;
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, new Path(pathType, path, resolution, gizmoColor), duration)
                 .SetTarget(target);
-
-            if (subdivisionsXSegment < 1) subdivisionsXSegment = 1;
-            t.plugOptions.subdivisionsXSegment = subdivisionsXSegment;
             return t;
         }
 
