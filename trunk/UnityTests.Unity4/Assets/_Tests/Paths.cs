@@ -8,6 +8,7 @@ public class Paths : BrainBase
 	public LoopType loopType = LoopType.Yoyo;
 	public int pathResolution = 10;
 	public bool closePaths;
+	public Vector3 forward = Vector3.forward;
 	public Color[] pathsColors = new Color[2];
 	public Transform[] targets;
 
@@ -32,6 +33,7 @@ public class Paths : BrainBase
 			.Pause();
 		targets[1].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[1])
 			.SetOptions(closePaths)
+			.SetLookAt(targets[0], forward)
 			.SetAs(tp)
 			.Pause();
 
@@ -43,6 +45,7 @@ public class Paths : BrainBase
 			.Pause();
 		targets[3].DOPath(path, 3, PathType.Linear, PathMode.Full3D, pathResolution, pathsColors[1])
 			.SetOptions(closePaths)
+			.SetLookAt(Vector3.zero, forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
