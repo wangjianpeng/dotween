@@ -28,8 +28,13 @@ namespace DG.Tweening.Plugins.PathCore
         internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
 
         readonly ABSPathDecoder _decoder;
-        Vector3[] _drawWps; // Used to store the path gizmo points when inside Unity editor
+
+        // GIZMOS DATA ///////////////////////////////////////////////
+
         bool _changed; // Indicates that the path has changed (after an incremental loop moved on/back) and the gizmo points need to be recalculated
+        Vector3[] _drawWps; // Used to store the path gizmo points when inside Unity editor
+        internal Vector3 targetPosition; // Set by PathPlugin at each update
+        internal Vector3? lookAtPosition; // Set by PathPlugin in case there's a lookAt active
         Color _gizmoColor = Color.white;
 
         // ***********************************************************************************
@@ -133,6 +138,8 @@ namespace DG.Tweening.Plugins.PathCore
         {
             if (timesTable == null) return;
 
+            Color gizmosFadedCol = _gizmoColor;
+            gizmosFadedCol.a = 0.5f;
             Gizmos.color = _gizmoColor;
             int wpsCount = wps.Length;
 
@@ -150,6 +157,7 @@ namespace DG.Tweening.Plugins.PathCore
                     }
                 }
             }
+
             // Draw path
             Vector3 prevPt;
             switch (type) {
@@ -171,8 +179,18 @@ namespace DG.Tweening.Plugins.PathCore
                 }
                 break;
             }
+
+            Gizmos.color = gizmosFadedCol;
+
             // Draw path control points
             for (int i = 1; i < wpsCount - 1; ++i) Gizmos.DrawSphere(wps[i], 0.075f);
+
+            // Draw eventual path lookAt
+            if (lookAtPosition != null) {
+//                Gizmos.color = gizmosFadedCol;
+                Vector3 lookAtP = (Vector3)lookAtPosition;
+                Gizmos.DrawLine(targetPosition, lookAtP);
+            }
         }
     }
 }
