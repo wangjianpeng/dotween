@@ -15,6 +15,7 @@ namespace DG.Tweening.Plugins
 {
     public struct PathOptions
     {
+        public PathMode mode;
         public AxisConstraint lockPositionAxis;
         public bool isClosedPath;
     }

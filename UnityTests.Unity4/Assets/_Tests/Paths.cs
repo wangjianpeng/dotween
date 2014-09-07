@@ -7,6 +7,7 @@ public class Paths : BrainBase
 	public Ease ease = Ease.Linear;
 	public LoopType loopType = LoopType.Yoyo;
 	public int pathResolution = 10;
+	public bool closePaths;
 	public Color[] pathsColors = new Color[2];
 	public Transform[] targets;
 
@@ -24,20 +25,24 @@ public class Paths : BrainBase
 			.SetLoops(-1, loopType);
 
 		// Relative VS non relative
-		targets[0].DOPath(path, 3, PathType.CatmullRom, pathResolution, pathsColors[0])
+		targets[0].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
+			.SetOptions(closePaths)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
-		targets[1].DOPath(path, 3, PathType.CatmullRom, pathResolution, pathsColors[1])
+		targets[1].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[1])
+			.SetOptions(closePaths)
 			.SetAs(tp)
 			.Pause();
 
 		// Linear VS curved
-		targets[2].DOPath(path, 3, PathType.CatmullRom, pathResolution, pathsColors[0])
+		targets[2].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
+			.SetOptions(closePaths)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
-		targets[3].DOPath(path, 3, PathType.Linear, pathResolution, pathsColors[1])
+		targets[3].DOPath(path, 3, PathType.Linear, PathMode.Full3D, pathResolution, pathsColors[1])
+			.SetOptions(closePaths)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();

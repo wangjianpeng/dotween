@@ -14,7 +14,9 @@ public static class DGUtils
 		GUILayout.FlexibleSpace();
 		GUILayout.BeginVertical();
 
+		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("RELOAD SCENE")) Application.LoadLevel(Application.loadedLevel);
+		GUILayout.EndHorizontal();
 	}
 
 	public static void EndGUI()
