@@ -18,11 +18,13 @@ namespace DG.Tweening
     {
         #region Transform
 
-        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear, int resolution = 10, Color? gizmoColor = null)
+        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null)
         {
             if (resolution < 1) resolution = 1;
             TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, new Path(pathType, path, resolution, gizmoColor), duration)
                 .SetTarget(target);
+
+            t.plugOptions.mode = pathMode;
             return t;
         }
 
@@ -77,6 +79,16 @@ namespace DG.Tweening
             t.plugOptions.frequency = frequency;
             t.plugOptions.depth = depth;
             t.plugOptions.snapping = snapping;
+            return t;
+        }
+
+        #endregion
+
+        #region Specific Options
+
+        public static Tweener SetOptions(this TweenerCore<Vector3, Path, PathOptions> t, bool closePath)
+        {
+            t.plugOptions.isClosedPath = closePath;
             return t;
         }
 
