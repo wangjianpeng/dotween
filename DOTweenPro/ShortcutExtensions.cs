@@ -86,10 +86,41 @@ namespace DG.Tweening
 
         #region Specific Options
 
-        public static Tweener SetOptions(this TweenerCore<Vector3, Path, PathOptions> t, bool closePath)
+        public static TweenerCore<Vector3, Path, PathOptions> SetOptions(this TweenerCore<Vector3, Path, PathOptions> t, bool closePath)
         {
             t.plugOptions.isClosedPath = closePath;
             return t;
+        }
+
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(this TweenerCore<Vector3, Path, PathOptions> t, Vector3 position, Vector3? forwardDirection = null, Vector3? up = null)
+        {
+            t.plugOptions.orientType = OrientType.LookAtPosition;
+            t.plugOptions.lookAtPosition = position;
+            SetPathForwardDirection(t, forwardDirection, up);
+            return t;
+        }
+
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(this TweenerCore<Vector3, Path, PathOptions> t, Transform transform, Vector3? forwardDirection = null, Vector3? up = null)
+        {
+            t.plugOptions.orientType = OrientType.LookAtTransform;
+            t.plugOptions.lookAtTransform = transform;
+            SetPathForwardDirection(t, forwardDirection, up);
+            return t;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        static void SetPathForwardDirection(this TweenerCore<Vector3, Path, PathOptions> t, Vector3? forwardDirection = null, Vector3? up = null)
+        {
+            t.plugOptions.hasCustomForwardDirection = forwardDirection != null || up != null;
+            if (t.plugOptions.hasCustomForwardDirection) {
+                t.plugOptions.forward = Quaternion.LookRotation(
+                    forwardDirection == null ? Vector3.forward : (Vector3)forwardDirection,
+                    up == null ? Vector3.up : (Vector3)up
+                );
+            } else t.plugOptions.forward = Quaternion.identity;
         }
 
         #endregion

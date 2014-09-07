@@ -13,11 +13,24 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening.Plugins
 {
+    public enum OrientType
+    {
+        None,
+        ToPath,
+        LookAtTransform,
+        LookAtPosition
+    }
+
     public struct PathOptions
     {
         public PathMode mode;
+        public OrientType orientType;
         public AxisConstraint lockPositionAxis;
         public bool isClosedPath;
+        public Vector3 lookAtPosition;
+        public Transform lookAtTransform;
+        public bool hasCustomForwardDirection;
+        public Quaternion forward;
     }
 
     /// <summary>
@@ -115,7 +128,22 @@ namespace DG.Tweening.Plugins
         public override Vector3 Evaluate(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, float elapsed, Path startValue, Path changeValue, float duration)
         {
             float pathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            return changeValue.GetPoint(pathPerc, true);
+            Vector3 newPos = changeValue.GetPoint(pathPerc, true);
+
+            Transform trans = (Transform)t.target;
+
+            switch (options.orientType) {
+            case OrientType.LookAtPosition:
+                trans.LookAt(options.lookAtPosition, trans.up);
+                if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
+                break;
+            case OrientType.LookAtTransform:
+                if (options.lookAtTransform != null) trans.LookAt(options.lookAtTransform, trans.up);
+                if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
+                break;
+            }
+
+            return newPos;
         }
     }
 }
