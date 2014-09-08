@@ -36,7 +36,7 @@
             <summary>DOTween's version</summary>
         </member>
         <member name="F:DG.Tweening.DOTween.useSafeMode">
-            <summary>If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
+            <summary>If TRUE (default) makes tweens slightly slower but safer, automatically taking care of a series of things
             (like targets becoming null while a tween is playing)</summary>
         </member>
         <member name="F:DG.Tweening.DOTween.showUnityEditorReport">
@@ -1037,6 +1037,9 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.CompletedLoops(DG.Tweening.Tween)">
             <summary>Returns the total number of loops completed by this tween</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenExtensions.Delay(DG.Tweening.Tween)">
+            <summary>Returns the eventual delay set for this tween</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Duration(DG.Tweening.Tween,System.Boolean)">
             <summary>Returns the duration of this tween (delays excluded).
