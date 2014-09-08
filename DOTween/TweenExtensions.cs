@@ -259,6 +259,17 @@ namespace DG.Tweening
             return t.completedLoops;
         }
 
+        /// <summary>Returns the eventual delay set for this tween</summary>
+        public static float Delay(this Tween t)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return 0;
+            }
+
+            return t.delay;
+        }
+
         /// <summary>Returns the duration of this tween (delays excluded).
         /// <para>NOTE: when using settings like SpeedBased, the duration will be recalculated when the tween starts</para></summary>
         /// <param name="includeLoops">If TRUE returns the full duration loops included,

@@ -23,14 +23,14 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.150";
+        public static readonly string Version = "0.8.160";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
 
-        /// <summary>If TRUE makes tweens slightly slower but safer, automatically taking care of a series of things
+        /// <summary>If TRUE (default) makes tweens slightly slower but safer, automatically taking care of a series of things
         /// (like targets becoming null while a tween is playing)</summary>
-        public static bool useSafeMode = false;
+        public static bool useSafeMode = true;
         /// <summary>If TRUE you will get a DOTween report when exiting play mode (only in the Editor).
         /// Useful to know how many max Tweeners and Sequences you reached and optimize your final project accordingly.
         /// Beware, this will slightly slow down your tweens while inside Unity Editor.
