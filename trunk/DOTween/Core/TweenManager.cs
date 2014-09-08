@@ -198,7 +198,10 @@ namespace DG.Tweening.Core
                 Tween.DoGoto(t, t.duration, t.loops, UpdateMode.Goto);
                 t.isPlaying = false;
                 // Despawn if needed
-                if (t.autoKill) Despawn(t, modifyActiveLists);
+                if (t.autoKill) {
+                    if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+                    else Despawn(t, modifyActiveLists);
+                }
                 return true;
             }
             return false;

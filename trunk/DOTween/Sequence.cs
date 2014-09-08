@@ -178,6 +178,7 @@ namespace DG.Tweening
             if (isGoingBackwards) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
+                    if (!s.active) return true; // Killed by some internal callback
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
                     if (updateMode == UpdateMode.Update && (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos)) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
@@ -195,6 +196,7 @@ namespace DG.Tweening
             } else {
                 int len = s._sequencedObjs.Count;
                 for (int i = 0; i < len; ++i) {
+                    if (!s.active) return true; // Killed by some internal callback
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
                     if (updateMode == UpdateMode.Update && (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos)) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
