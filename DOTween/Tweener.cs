@@ -135,7 +135,7 @@ namespace DG.Tweening
                 t.startValue = t.endValue;
                 t.endValue = prevStartValue;
                 t.tweenPlugin.SetChangeValue(t);
-                // Jump (no need for safeMode checks since they already happened when assigning start value
+                // Jump (no need for safeMode checks since they already happened when assigning start value)
                 t.tweenPlugin.EvaluateAndApply(t.plugOptions, t, t.isRelative, t.getter, t.setter, 0, t.startValue, t.endValue, 1);
             } else t.tweenPlugin.SetChangeValue(t);
 

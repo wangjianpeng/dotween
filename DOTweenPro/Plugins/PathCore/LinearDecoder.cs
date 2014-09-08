@@ -10,25 +10,29 @@ namespace DG.Tweening.Plugins.PathCore
 {
     internal class LinearDecoder : ABSPathDecoder
     {
-        internal override Vector3 GetPoint(float perc, Vector3[] wps, float pathLen = -1, float[] timesTable = null)
+        internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p = null)
         {
-            if (perc <= 0) return wps[1];
+            if (perc <= 0) {
+                p.linearWPIndex = 1;
+                return wps[1];
+            }
 
             int startPIndex = 0;
             int endPIndex = 0;
-            int count = timesTable.Length;
+            int count = p.timesTable.Length;
             for (int i = 1; i < count; i++) {
-                if (timesTable[i] >= perc) {
+                if (p.timesTable[i] >= perc) {
                     startPIndex = i - 1;
                     endPIndex = i;
                     break;
                 }
             }
-            float startPPerc = timesTable[startPIndex];
+            float startPPerc = p.timesTable[startPIndex];
             float partialPerc = perc - startPPerc;
-            float partialLen = pathLen * partialPerc;
+            float partialLen = p.length * partialPerc;
             Vector3 wp0 = wps[startPIndex];
             Vector3 wp1 = wps[endPIndex];
+            p.linearWPIndex = endPIndex;
             return wp0 + Vector3.ClampMagnitude(wp1 - wp0, partialLen);
         }
 

@@ -30,6 +30,7 @@ public class Paths : BrainBase
 		// Relative VS non relative
 		controller = targets[0].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
 			.SetOptions(closePaths)
+			.SetLookAt(0.1f, forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
@@ -42,12 +43,13 @@ public class Paths : BrainBase
 		// Linear VS curved
 		targets[2].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
 			.SetOptions(closePaths)
+			.SetLookAt(Vector3.zero, forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
 		targets[3].DOPath(path, 3, PathType.Linear, PathMode.Full3D, pathResolution, pathsColors[1])
 			.SetOptions(closePaths)
-			.SetLookAt(Vector3.zero, forward)
+			.SetLookAt(0.1f, forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
@@ -57,7 +59,7 @@ public class Paths : BrainBase
 	{
 		DGUtils.BeginGUI();
 
-		DGUtils.GUIScrubber(controller);
+		// DGUtils.GUIScrubber(controller);
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
