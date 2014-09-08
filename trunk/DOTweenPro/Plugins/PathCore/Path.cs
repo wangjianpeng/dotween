@@ -26,6 +26,7 @@ namespace DG.Tweening.Plugins.PathCore
 
         internal float[] timesTable; // Connected to lengthsTable, used for constant speed calculations
         internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
+        internal int linearWPIndex = -1; // Waypoint towards which we're moving (only stored for linear paths, when calling GetPoint)
 
         readonly ABSPathDecoder _decoder;
 
@@ -71,40 +72,15 @@ namespace DG.Tweening.Plugins.PathCore
         /// Gets the point on the path at the given percentage (0 to 1)
         /// </summary>
         /// <param name="perc">The percentage (0 to 1) at which to get the point</param>
-        /// <param name="useConstantSpeed">If TRUE constant speed is taken into account, otherwise not</param>
-        internal Vector3 GetPoint(float perc, bool useConstantSpeed = false)
+        /// <param name="convertToConstantPerc">If TRUE constant speed is taken into account, otherwise not</param>
+        internal Vector3 GetPoint(float perc, bool convertToConstantPerc = false)
         {
-            if (useConstantSpeed) perc = ConvertToConstantPathPerc(perc);
-            return _decoder.GetPoint(perc, wps, length, timesTable);
-        }
-
-        // If path is linear subdivisions is ignored
-        // and wpLengths are stored here instead than when calling SetWaypointsLengths
-        internal void SetTimeToLenTables()
-        {
-            _decoder.SetTimeToLengthTables(this, subdivisions);
-        }
-
-        // Stops drawing the path gizmo
-        internal void Destroy()
-        {
-            if (DOTween.isUnityEditor) DOTween.onDrawGizmos.Remove(Draw);
-            wps = null;
-            wpLengths = timesTable = lengthsTable = null;
-            _drawWps = null;
-        }
-
-        // ===================================================================================
-        // METHODS ---------------------------------------------------------------------------
-
-        // If path is linear wpLengths were stored when calling SetTimeToLenTables
-        void StoreWaypointsLengths()
-        {
-            _decoder.SetWaypointsLengths(this, subdivisions);
+            if (convertToConstantPerc) perc = ConvertToConstantPathPerc(perc);
+            return _decoder.GetPoint(perc, wps, this);
         }
 
         // Converts the given raw percentage to the correct percentage considering constant speed
-        float ConvertToConstantPathPerc(float perc)
+        internal float ConvertToConstantPathPerc(float perc)
         {
             if (type == PathType.Linear) return perc;
 
@@ -131,6 +107,31 @@ namespace DG.Tweening.Plugins.PathCore
             else if (perc < 0) perc = 0;
 
             return perc;
+        }
+
+        // If path is linear subdivisions is ignored
+        // and wpLengths are stored here instead than when calling SetWaypointsLengths
+        internal void SetTimeToLenTables()
+        {
+            _decoder.SetTimeToLengthTables(this, subdivisions);
+        }
+
+        // Stops drawing the path gizmo
+        internal void Destroy()
+        {
+            if (DOTween.isUnityEditor) DOTween.onDrawGizmos.Remove(Draw);
+            wps = null;
+            wpLengths = timesTable = lengthsTable = null;
+            _drawWps = null;
+        }
+
+        // ===================================================================================
+        // METHODS ---------------------------------------------------------------------------
+
+        // If path is linear wpLengths were stored when calling SetTimeToLenTables
+        void StoreWaypointsLengths()
+        {
+            _decoder.SetWaypointsLengths(this, subdivisions);
         }
 
         // Used in DOTween.OnDrawGizmos if we're inside Unity Editor

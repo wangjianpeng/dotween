@@ -11,8 +11,8 @@ namespace DG.Tweening.Plugins.PathCore
 {
     internal class CatmullRomDecoder : ABSPathDecoder
     {
-        // pathLen and timesTable are not used (only LinearDecoder uses them)
-        internal override Vector3 GetPoint(float perc, Vector3[] wps, float pathLen = -1, float[] timesTable = null)
+        // Path is not used (only LinearDecoder uses it)
+        internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p = null)
         {
             int numSections = wps.Length - 3;
             int tSec = (int)Math.Floor(perc * numSections);

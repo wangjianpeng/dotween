@@ -108,6 +108,15 @@ namespace DG.Tweening
             return t;
         }
 
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(this TweenerCore<Vector3, Path, PathOptions> t, float lookAhead, Vector3? forwardDirection = null, Vector3? up = null)
+        {
+            t.plugOptions.orientType = OrientType.ToPath;
+            if (lookAhead < PathPlugin.MinLookAhead) lookAhead = PathPlugin.MinLookAhead;
+            t.plugOptions.lookAhead = lookAhead;
+            SetPathForwardDirection(t, forwardDirection, up);
+            return t;
+        }
+
         #endregion
 
         #region Private Methods
