@@ -59,7 +59,6 @@ namespace DG.Tweening.Core
                     if (tween != null && tween.typeofT1 == typeofT1 && tween.typeofT2 == typeofT2 && tween.typeofTPlugOptions == typeofTPlugOptions) {
                         // Pooled Tweener exists: spawn it
                         t = (TweenerCore<T1, T2, TPlugOptions>)tween;
-                        t.active = true;
                         AddActiveTween(t);
                         _pooledTweeners[i] = null;
                         if (_maxPooledTweenerId != _minPooledTweenerId) {
@@ -90,7 +89,6 @@ namespace DG.Tweening.Core
             // Not found: create new TweenerController
             t = new TweenerCore<T1,T2,TPlugOptions>();
             totTweeners++;
-            t.active = true;
             AddActiveTween(t);
             return t;
         }
@@ -102,7 +100,6 @@ namespace DG.Tweening.Core
             Sequence s;
             if (totPooledSequences > 0) {
                 s = (Sequence)_PooledSequences.Pop();
-                s.active = true;
                 AddActiveTween(s);
                 totPooledSequences--;
                 return s;
@@ -118,7 +115,6 @@ namespace DG.Tweening.Core
             // Not found: create new Sequence
             s = new Sequence();
             totSequences++;
-            s.active = true;
             AddActiveTween(s);
             return s;
         }
@@ -416,7 +412,7 @@ namespace DG.Tweening.Core
             bool hasDespawned = false;
             for (int i = _maxActiveLookupId; i > -1; --i) {
                 Tween t = _activeTweens[i];
-                if (t == null) continue;
+                if (t == null || t.active) continue;
 
                 bool isFilterCompliant = false;
                 switch (filterType) {
@@ -487,7 +483,6 @@ namespace DG.Tweening.Core
             }
             // Special additional operations in case of despawn
             if (hasDespawned) {
-                Debug.Log(_KillList.Count);
                 int count = _KillList.Count - 1;
                 for (int i = count; i > -1; --i) RemoveActiveTween(_KillList[i]);
                 _KillList.Clear();
@@ -576,6 +571,7 @@ namespace DG.Tweening.Core
         {
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
 
+            t.active = true;
             t.updateType = UpdateType.Default;
             t.activeId = _maxActiveLookupId = totActiveTweens;
             _activeTweens[totActiveTweens] = t;
@@ -628,7 +624,6 @@ namespace DG.Tweening.Core
         static void RemoveActiveTween(Tween t)
         {
             int index = t.activeId;
-            if (index == -1) return; // Was already removed by internal update loop
 
             t.activeId = -1;
             _requiresActiveReorganization = true;

@@ -69,7 +69,7 @@ namespace DG.Tweening
         internal Type typeofT1; // Only used by Tweeners
         internal Type typeofT2; // Only used by Tweeners
         internal Type typeofTPlugOptions; // Only used by Tweeners
-        internal bool active; // FALSE when tween is despawned - set only by TweenManager
+        internal bool active; // FALSE when tween is (or should be) despawned - set only by TweenManager
         internal bool isSequenced; // Set by Sequence when adding a Tween to it
         internal int activeId = -1; // Index inside its active list (touched only by TweenManager)
         internal SpecialStartupMode specialStartupMode;
@@ -90,7 +90,7 @@ namespace DG.Tweening
         // ===================================================================================
         // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
 
-        // Doesn't reset active state and activeId, since those are only touched by TweenManager
+        // Doesn't reset active state, activeId and despawned, since those are only touched by TweenManager
         // Doesn't reset default values since those are set when Tweener.Setup is called
         internal virtual void Reset()
         {
