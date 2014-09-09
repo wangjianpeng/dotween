@@ -18,8 +18,10 @@ namespace DG.Tweening
     {
         #region Transform
 
-        public static TweenerCore<Vector3, Path, PathOptions> DOPath(this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear, PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null)
-        {
+        public static TweenerCore<Vector3, Path, PathOptions> DOPath(
+            this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear,
+            PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null
+        ) {
             if (resolution < 1) resolution = 1;
             TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, new Path(pathType, path, resolution, gizmoColor), duration)
                 .SetTarget(target);
@@ -37,8 +39,10 @@ namespace DG.Tweening
         /// <param name="frequency">Frequency of the rotation. Higher values lead to wider spirals</param>
         /// <param name="depth">Indicates how much the tween should move along the spiral's axis</param>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOSpiral(this Transform target, float duration, Vector3? axis = null, SpiralMode mode = SpiralMode.Expand, float speed = 1, float frequency = 10, float depth = 0, bool snapping = false)
-        {
+        public static Tweener DOSpiral(
+            this Transform target, float duration, Vector3? axis = null, SpiralMode mode = SpiralMode.Expand,
+            float speed = 1, float frequency = 10, float depth = 0, bool snapping = false
+        ) {
             if (Mathf.Approximately(speed, 0)) speed = 1;
             if (axis == null || axis == Vector3.zero) axis = Vector3.forward;
 
@@ -66,8 +70,10 @@ namespace DG.Tweening
         /// <param name="frequency">Frequency of the rotation. Higher values lead to wider spirals</param>
         /// <param name="depth">Indicates how much the tween should move along the spiral's axis</param>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOSpiral(this Rigidbody target, float duration, Vector3? axis = null, SpiralMode mode = SpiralMode.Expand, float speed = 1, float frequency = 10, float depth = 0, bool snapping = false)
-        {
+        public static Tweener DOSpiral(
+            this Rigidbody target, float duration, Vector3? axis = null, SpiralMode mode = SpiralMode.Expand,
+            float speed = 1, float frequency = 10, float depth = 0, bool snapping = false
+        ) {
             if (Mathf.Approximately(speed, 0)) speed = 1;
             if (axis == null || axis == Vector3.zero) axis = Vector3.forward;
 
@@ -86,30 +92,42 @@ namespace DG.Tweening
 
         #region Specific Options
 
-        public static TweenerCore<Vector3, Path, PathOptions> SetOptions(this TweenerCore<Vector3, Path, PathOptions> t, bool closePath)
-        {
+        public static TweenerCore<Vector3, Path, PathOptions> SetOptions(
+            this TweenerCore<Vector3, Path, PathOptions> t, AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
+        ) {
+            return SetOptions(t, false, lockPosition, lockRotation);
+        }
+        public static TweenerCore<Vector3, Path, PathOptions> SetOptions(
+            this TweenerCore<Vector3, Path, PathOptions> t, bool closePath,
+            AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
+        ) {
             t.plugOptions.isClosedPath = closePath;
+            t.plugOptions.lockPositionAxis = lockPosition;
+            t.plugOptions.lockRotationAxis = lockRotation;
             return t;
         }
 
-        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(this TweenerCore<Vector3, Path, PathOptions> t, Vector3 position, Vector3? forwardDirection = null, Vector3? up = null)
-        {
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
+            this TweenerCore<Vector3, Path, PathOptions> t, Vector3 position, Vector3? forwardDirection = null, Vector3? up = null
+        ) {
             t.plugOptions.orientType = OrientType.LookAtPosition;
             t.plugOptions.lookAtPosition = position;
             SetPathForwardDirection(t, forwardDirection, up);
             return t;
         }
 
-        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(this TweenerCore<Vector3, Path, PathOptions> t, Transform transform, Vector3? forwardDirection = null, Vector3? up = null)
-        {
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
+            this TweenerCore<Vector3, Path, PathOptions> t, Transform transform, Vector3? forwardDirection = null, Vector3? up = null
+        ) {
             t.plugOptions.orientType = OrientType.LookAtTransform;
             t.plugOptions.lookAtTransform = transform;
             SetPathForwardDirection(t, forwardDirection, up);
             return t;
         }
 
-        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(this TweenerCore<Vector3, Path, PathOptions> t, float lookAhead, Vector3? forwardDirection = null, Vector3? up = null)
-        {
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
+            this TweenerCore<Vector3, Path, PathOptions> t, float lookAhead, Vector3? forwardDirection = null, Vector3? up = null
+        ) {
             t.plugOptions.orientType = OrientType.ToPath;
             if (lookAhead < PathPlugin.MinLookAhead) lookAhead = PathPlugin.MinLookAhead;
             t.plugOptions.lookAhead = lookAhead;
