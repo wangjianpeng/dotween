@@ -412,7 +412,7 @@ namespace DG.Tweening.Core
             bool hasDespawned = false;
             for (int i = _maxActiveLookupId; i > -1; --i) {
                 Tween t = _activeTweens[i];
-                if (t == null || t.active) continue;
+                if (t == null || !t.active) continue;
 
                 bool isFilterCompliant = false;
                 switch (filterType) {
