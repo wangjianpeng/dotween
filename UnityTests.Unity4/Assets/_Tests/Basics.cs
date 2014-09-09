@@ -15,6 +15,7 @@ public class Basics : BrainBase
 	public Light mainLight;
 	public SpriteRenderer spriteRenderer;
 	public GameObject specularSphere;
+	public Transform targetToRotateTowards;
 	public GUITexture guiTexAlpha, guiTexColor;
 	public GUIText txtInfo, txtFloat, txtInt, txtUint, txtVector2, txtVector4, txtRect, txtRectOffset, txtString0, txtString1, txtString2;
 	public GameObject txtBackwards;
@@ -126,6 +127,8 @@ public class Basics : BrainBase
 		spriteRenderer.DOColor(toSpriteColor, 1.5f).SetAs(tp).Pause();
 		// Specular material tween
 		specularSphere.renderer.material.DOColor(Color.green, "_SpecColor", 1.5f).SetAs(tp).Pause();
+		// Rotate towards
+		targetToRotateTowards.DORotateTowards(specularSphere.transform.position, 1.5f).SetAs(tp).Pause();
 	}
 
 	void LateUpdate()
