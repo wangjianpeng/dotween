@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class TempBugTests : BrainBase
 {
-	public Transform[] targets;
+	public GameObject[] targets;
 
 	public Sequence seqMain, seqA, seqB;
 
 	void Start()
 	{
-		seqMain = DOTween.Sequence().SetId("seqMain");
-        seqA = DOTween.Sequence().SetId("seqA");
-        seqB = DOTween.Sequence().SetId("seqB");
- 
-        seqA.Append(targets[0].DOMove(new Vector3(), 10f).SetId("seqA tween 0"));
-        seqA.Append(targets[0].DOScale(new Vector3(3, 3, 3), 10f).SetId("seqA tween 1"));
- 
-        seqB.Append(targets[2].DOMove(new Vector3(), 2f).SetId("seqB tween 0"));
-        seqB.AppendCallback(Fin);
- 
-        seqMain.Append(seqA);
-        seqMain.Insert(0, seqB);
+		FadeIn(0);
 	}
 
-	void Fin() {
-        seqMain.Complete();
+    void FadeIn(int id)
+    {
+        if (id > 2) return;
+
+        DOTween.FromAlpha (
+            () => targets[id].renderer.material.color,
+            x => targets[id].renderer.material.color = x,
+            0f, 0.5f)
+        .OnComplete(()=> FadeIn(id + 1));
+    }
+
+	// void OnShowCompleteCallback()
+ //    {
+ //       ProcessToNextSequence();
+ //    }
+
+ //    void ProcessToNextSequence()
+ //    {
+ //       DOTween.Complete();
+ //       // Some show and fade in
+ //    }
+
+    void OnGUI()
+    {
+        if (GUILayout.Button("Complete")) DOTween.Complete();
     }
 }

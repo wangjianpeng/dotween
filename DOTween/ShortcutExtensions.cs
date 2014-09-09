@@ -575,6 +575,25 @@ namespace DG.Tweening
             return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetTarget(target);
         }
 
+        /// <summary>Tweens a Material's specific color property to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="property">The name of the color property to twee (like _Tint or _SpecColor)</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Material target, Color endValue, string property, float duration)
+        {
+            return DOTween.To(() => target.GetColor(property), x => target.SetColor(property, x), endValue, duration).SetTarget(target);
+        }
+        /// <summary>Tweens a Material's specific color property from the given value to its current one.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="fromValue">The value to tween from</param>
+        /// <param name="property">The name of the color property to twee (like _Tint or _SpecColor)</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOColorFrom(this Material target, Color fromValue, string property, float duration)
+        {
+            return DOTween.From(() => target.GetColor(property), x => target.SetColor(property, x), fromValue, duration).SetTarget(target);
+        }
+
         /// <summary>Tweens a Material's alpha color to the given value
         /// (will have no effect unless your material supports transparency).
         /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
