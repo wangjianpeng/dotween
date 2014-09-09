@@ -195,6 +195,18 @@ namespace DG.Tweening
                 .SetOptions(useShortest360Route).SetTarget(target);
         }
 
+        /// <summary>Tweens a Transform's rotation so that it will look towards the given position.
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        public static Tweener DORotateTowards(this Transform target, Vector3 towards, float duration, Vector3? up = null)
+        {
+            Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
+            Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
+            return DOTween.To(() => target.rotation, x => target.rotation = x, lookAtRotation, duration)
+                .SetTarget(target);
+        }
+
         /// <summary>Tweens a Transform's localRotation to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
@@ -486,6 +498,18 @@ namespace DG.Tweening
         {
             return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration)
                 .SetOptions(useShortest360Route).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        public static Tweener DORotateTowards(this Rigidbody target, Vector3 towards, float duration, Vector3? up = null)
+        {
+            Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
+            Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
+            return DOTween.From(() => target.rotation, target.MoveRotation, lookAtRotation, duration)
+                .SetTarget(target);
         }
 
         /// <summary>Tweens a Rigidbody's rotation to the given value, using its local axis system
