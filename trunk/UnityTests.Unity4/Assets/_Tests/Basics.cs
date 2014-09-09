@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Basics : BrainBase
 {
+	public bool tweenLightAndCam = true;
 	public int loops = 100000;
 	public LoopType loopType = LoopType.Yoyo;
 	public Ease ease = Ease.OutQuad;
@@ -13,6 +14,7 @@ public class Basics : BrainBase
 	public Transform[] targets;
 	public Light mainLight;
 	public SpriteRenderer spriteRenderer;
+	public GameObject specularSphere;
 	public GUITexture guiTexAlpha, guiTexColor;
 	public GUIText txtInfo, txtFloat, txtInt, txtUint, txtVector2, txtVector4, txtRect, txtRectOffset, txtString0, txtString1, txtString2;
 	public GameObject txtBackwards;
@@ -113,13 +115,17 @@ public class Basics : BrainBase
 		DOTween.To(()=> stringToTween1, x=> stringToTween1 = x, "Hello I'm a new string!", 1.5f).SetAs(tp).Pause();
 		// String (relative)
 		DOTween.To(()=> stringToTween2, x=> stringToTween2 = x, "Hello I'm a new string!", 1.5f).SetAs(tp).SetRelative().Pause();
-		// Camera
-		Camera.main.DOColor(toCamColor, 1.5f).SetAs(tp).Pause();
-		// Light
-		mainLight.DOColor(toLightColor, 1.5f).SetAs(tp).Pause();
-		mainLight.DOIntensity(4, 1.5f).SetAs(tp).Pause();
+		if (tweenLightAndCam) {
+			// Camera
+			Camera.main.DOColor(toCamColor, 1.5f).SetAs(tp).Pause();
+			// Light
+			mainLight.DOColor(toLightColor, 1.5f).SetAs(tp).Pause();
+			mainLight.DOIntensity(4, 1.5f).SetAs(tp).Pause();
+		}
 		// SpriteRenderer
 		spriteRenderer.DOColor(toSpriteColor, 1.5f).SetAs(tp).Pause();
+		// Specular material tween
+		specularSphere.renderer.material.DOColor(Color.green, "_SpecColor", 1.5f).SetAs(tp).Pause();
 	}
 
 	void LateUpdate()

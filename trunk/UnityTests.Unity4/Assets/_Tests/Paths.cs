@@ -59,7 +59,7 @@ public class Paths : BrainBase
 	{
 		DGUtils.BeginGUI();
 
-		// DGUtils.GUIScrubber(controller);
+		DGUtils.GUIScrubber(controller);
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
