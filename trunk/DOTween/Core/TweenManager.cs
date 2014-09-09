@@ -431,10 +431,8 @@ namespace DG.Tweening.Core
                     switch (operationType) {
                     case OperationType.Despawn:
                         totInvolved++;
-                        if (isUpdateLoop) {
-                            // Just mark it for killing, so the update loop will take care of it
-                            t.active = false;
-                        } else {
+                        if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+                        else {
                             Despawn(t, false);
                             hasDespawned = true;
                             _KillList.Add(t);
@@ -444,10 +442,13 @@ namespace DG.Tweening.Core
                         bool hasAutoKill = t.autoKill;
                         if (Complete(t, false)) {
                             totInvolved++;
-                            if (hasAutoKill) {
-                                hasDespawned = true;
-                                _KillList.Add(t);
-                            }
+//                            if (hasAutoKill) {
+//                                if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+//                                else {
+//                                    hasDespawned = true;
+//                                    _KillList.Add(t);
+//                                }
+//                            }
                         }
                         break;
                     case OperationType.Flip:
@@ -486,6 +487,7 @@ namespace DG.Tweening.Core
             }
             // Special additional operations in case of despawn
             if (hasDespawned) {
+                Debug.Log(_KillList.Count);
                 int count = _KillList.Count - 1;
                 for (int i = count; i > -1; --i) RemoveActiveTween(_KillList[i]);
                 _KillList.Clear();
@@ -626,6 +628,7 @@ namespace DG.Tweening.Core
         static void RemoveActiveTween(Tween t)
         {
             int index = t.activeId;
+            if (index == -1) return; // Was already removed by internal update loop
 
             t.activeId = -1;
             _requiresActiveReorganization = true;
