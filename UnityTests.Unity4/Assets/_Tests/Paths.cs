@@ -5,6 +5,8 @@ using UnityEngine;
 public class Paths : BrainBase
 {
 	public Ease ease = Ease.Linear;
+	public AxisConstraint lockPosition;
+	public AxisConstraint lockRotation;
 	public LoopType loopType = LoopType.Yoyo;
 	public int pathResolution = 10;
 	public bool closePaths;
@@ -29,26 +31,26 @@ public class Paths : BrainBase
 
 		// Relative VS non relative
 		controller = targets[0].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
-			.SetOptions(closePaths)
+			.SetOptions(closePaths, lockPosition, lockRotation)
 			.SetLookAt(0.1f, forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
 		targets[1].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[1])
-			.SetOptions(closePaths)
+			.SetOptions(closePaths, lockPosition, lockRotation)
 			.SetLookAt(targets[2], forward)
 			.SetAs(tp)
 			.Pause();
 
 		// Linear VS curved
 		targets[2].DOPath(path, 3, PathType.CatmullRom, PathMode.Full3D, pathResolution, pathsColors[0])
-			.SetOptions(closePaths)
+			.SetOptions(closePaths, lockPosition, lockRotation)
 			.SetLookAt(Vector3.zero, forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
 		targets[3].DOPath(path, 3, PathType.Linear, PathMode.Full3D, pathResolution, pathsColors[1])
-			.SetOptions(closePaths)
+			.SetOptions(closePaths, lockPosition, lockRotation)
 			.SetLookAt(0.1f, forward)
 			.SetAs(tp)
 			.SetRelative()

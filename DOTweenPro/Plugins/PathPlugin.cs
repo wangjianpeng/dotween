@@ -137,79 +137,80 @@ namespace DG.Tweening.Plugins
 
         public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration)
         {
-            float constantPathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            constantPathPerc = changeValue.ConvertToConstantPathPerc(constantPathPerc);
+            float pathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float constantPathPerc = changeValue.ConvertToConstantPathPerc(pathPerc);
             Vector3 newPos = changeValue.GetPoint(constantPathPerc);
             changeValue.targetPosition = newPos; // Used to draw editor gizmos
             setter(newPos);
 
-            Transform trans = (Transform)t.target;
+            if (options.orientType != OrientType.None) {
+                Transform trans = (Transform)t.target;
+                Quaternion newRot = Quaternion.identity;
 
-            // If orientation is needed immediately position transform at correct position
-            // (otherwise lookAt won't obviously work because it will be based on previous coordinates)
-            switch (options.orientType) {
-            case OrientType.LookAtPosition:
-                changeValue.lookAtPosition = options.lookAtPosition; // Used to draw editor gizmos
-                trans.LookAt(options.lookAtPosition, trans.up);
-                if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
-                break;
-            case OrientType.LookAtTransform:
-                if (options.lookAtTransform != null) {
-                    changeValue.lookAtPosition = options.lookAtTransform.position; // Used to draw editor gizmos
-                    trans.LookAt(options.lookAtTransform, trans.up);
-                    if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
-                }
-                break;
-            case OrientType.ToPath:
-                Vector3 lookAtP;
-                if (changeValue.type == PathType.Linear && options.lookAhead <= MinLookAhead) {
-                    // Calculate lookAhead so that it doesn't turn until it starts moving on next waypoint
-                    lookAtP = newPos + changeValue.wps[changeValue.linearWPIndex] - changeValue.wps[changeValue.linearWPIndex - 1];
-                } else {
-                    float lookAheadPerc = constantPathPerc + options.lookAhead;
-                    if (lookAheadPerc > 1) lookAheadPerc = (options.isClosedPath ? lookAheadPerc - 1 : 1.000001f);
-                    lookAtP = changeValue.GetPoint(lookAheadPerc);
-                }
-                Vector3 transUp = trans.up;
-                // Apply basic modification for local position movement
-                if (options.useLocalPosition && options.parent != null) lookAtP = options.parent.TransformPoint(lookAtP);
-                // LookAt axis constraint
-                if (options.lockRotationAxis != AxisConstraint.None) {
-                    if ((options.lockRotationAxis & AxisConstraint.X) == AxisConstraint.X) {
-                        Vector3 v0 = trans.InverseTransformPoint(lookAtP);
-                        v0.y = 0;
-                        lookAtP = trans.TransformPoint(v0);
-                        transUp = options.useLocalPosition && options.parent != null ? options.parent.up : Vector3.up;
+                switch (options.orientType) {
+                case OrientType.LookAtPosition:
+                    changeValue.lookAtPosition = options.lookAtPosition; // Used to draw editor gizmos
+                    newRot = Quaternion.LookRotation(options.lookAtPosition - trans.position, trans.up);
+                    break;
+                case OrientType.LookAtTransform:
+                    if (options.lookAtTransform != null) {
+                        changeValue.lookAtPosition = options.lookAtTransform.position; // Used to draw editor gizmos
+                        newRot = Quaternion.LookRotation(options.lookAtTransform.position - trans.position, trans.up);
                     }
-                    if ((options.lockRotationAxis & AxisConstraint.Y) == AxisConstraint.Y) {
-                        Vector3 v0 = trans.InverseTransformPoint(lookAtP);
-                        if (v0.z < 0) v0.z = -v0.z;
-                        v0.x = 0;
-                        lookAtP = trans.TransformPoint(v0);
+                    break;
+                case OrientType.ToPath:
+                    Vector3 lookAtP;
+                    if (changeValue.type == PathType.Linear && options.lookAhead <= MinLookAhead) {
+                        // Calculate lookAhead so that it doesn't turn until it starts moving on next waypoint
+                        lookAtP = newPos + changeValue.wps[changeValue.linearWPIndex] - changeValue.wps[changeValue.linearWPIndex - 1];
+                    } else {
+                        float lookAheadPerc = constantPathPerc + options.lookAhead;
+                        if (lookAheadPerc > 1) lookAheadPerc = (options.isClosedPath ? lookAheadPerc - 1 : 1.00001f);
+                        lookAtP = changeValue.GetPoint(lookAheadPerc);
                     }
-                    if ((options.lockRotationAxis & AxisConstraint.Z) == AxisConstraint.Z) {
-                        // Fix to allow racing loops to keep cars straight and not flip it
-                        if (options.useLocalPosition && options.parent != null) transUp = options.parent.TransformDirection(Vector3.up);
-                        else transUp = trans.TransformDirection(Vector3.up);
-                        transUp.z = options.startupZRot;
+                    Vector3 transUp = trans.up;
+                    // Apply basic modification for local position movement
+                    if (options.useLocalPosition && options.parent != null) lookAtP = options.parent.TransformPoint(lookAtP);
+                    // LookAt axis constraint
+                    if (options.lockRotationAxis != AxisConstraint.None) {
+                        if ((options.lockRotationAxis & AxisConstraint.X) == AxisConstraint.X) {
+                            Vector3 v0 = trans.InverseTransformPoint(lookAtP);
+                            v0.y = 0;
+                            lookAtP = trans.TransformPoint(v0);
+                            transUp = options.useLocalPosition && options.parent != null ? options.parent.up : Vector3.up;
+                        }
+                        if ((options.lockRotationAxis & AxisConstraint.Y) == AxisConstraint.Y) {
+                            Vector3 v0 = trans.InverseTransformPoint(lookAtP);
+                            if (v0.z < 0) v0.z = -v0.z;
+                            v0.x = 0;
+                            lookAtP = trans.TransformPoint(v0);
+                        }
+                        if ((options.lockRotationAxis & AxisConstraint.Z) == AxisConstraint.Z) {
+                            // Fix to allow racing loops to keep cars straight and not flip it
+                            if (options.useLocalPosition && options.parent != null) transUp = options.parent.TransformDirection(Vector3.up);
+                            else transUp = trans.TransformDirection(Vector3.up);
+                            transUp.z = options.startupZRot;
+                        }
                     }
+                    // Eventual 2D mode
+                    if (options.mode == PathMode.Full3D) newRot = Quaternion.LookRotation(lookAtP - trans.position, trans.up);
+                    else {
+                        // 2D path
+                        float rotY = 0;
+                        float rotZ = Utils.Angle2D(trans.position, lookAtP);
+                        if (rotZ < 0) rotZ = 360 + rotZ;
+                        if (options.mode == PathMode.Sidescroller2D) {
+                            // Manage Y and modified Z rotation
+                            rotY = lookAtP.x < trans.position.x ? 180 : 0;
+                            if (rotZ > 90 && rotZ < 270) rotZ = 180 - rotZ;
+                        }
+                        newRot = Quaternion.Euler(0, rotY, rotZ);
+                    }
+                    break;
                 }
-                // Eventual 2D mode
-                if (options.mode == PathMode.Full3D) trans.LookAt(lookAtP, transUp);
-                else {
-                    // 2D path
-                    float rotY = 0;
-                    float rotZ = Utils.Angle2D(trans.position, lookAtP);
-                    if (rotZ < 0) rotZ = 360 + rotZ;
-                    if (options.mode == PathMode.Sidescroller2D) {
-                        // Manage Y and modified Z rotation
-                        rotY = lookAtP.x < trans.position.x ? 180 : 0;
-                        if (rotZ > 90 && rotZ < 270) rotZ = 180 - rotZ;
-                    }
-                    trans.rotation = Quaternion.Euler(0, rotY, rotZ);
-                }
-                if (options.hasCustomForwardDirection) trans.rotation *= options.forward;
-                break;
+
+                if (options.hasCustomForwardDirection) newRot *= options.forward;
+                trans.rotation = newRot;
             }
         }
     }
