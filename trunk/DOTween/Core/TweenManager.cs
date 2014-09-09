@@ -442,13 +442,13 @@ namespace DG.Tweening.Core
                         bool hasAutoKill = t.autoKill;
                         if (Complete(t, false)) {
                             totInvolved++;
-//                            if (hasAutoKill) {
-//                                if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
-//                                else {
-//                                    hasDespawned = true;
-//                                    _KillList.Add(t);
-//                                }
-//                            }
+                            if (hasAutoKill) {
+                                if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+                                else {
+                                    hasDespawned = true;
+                                    _KillList.Add(t);
+                                }
+                            }
                         }
                         break;
                     case OperationType.Flip:
