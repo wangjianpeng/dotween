@@ -23,7 +23,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.200";
+        public static readonly string Version = "0.8.205";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -67,6 +67,7 @@ namespace DG.Tweening
 
         internal static DOTween instance;
         internal static bool isUnityEditor;
+        internal static bool isDebugBuild;
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
         internal static readonly List<TweenCallback> onDrawGizmos = new List<TweenCallback>(); // Can be used by other classes to call internal gizmo draw methods
         static bool _initialized;
@@ -77,6 +78,9 @@ namespace DG.Tweening
         static DOTween()
         {
             isUnityEditor = Application.isEditor;
+#if DEBUG
+            isDebugBuild = true;
+#endif
         }
 
         #endregion

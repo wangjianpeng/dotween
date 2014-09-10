@@ -23,6 +23,9 @@ namespace DG.DOTweenEditor
         string _43Version;
         readonly StringBuilder _strBuilder = new StringBuilder();
 
+        bool _guiStylesSet;
+        GUIStyle _boldLabelStyle, _greenLabelStyle, _redLabelStyle;
+
         // ===================================================================================
         // MONOBEHAVIOUR METHODS -------------------------------------------------------------
 
@@ -40,11 +43,9 @@ namespace DG.DOTweenEditor
             _src = target as DOTween;
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("DOTween v").Append(DOTween.Version);
-#if DEBUG
-            _strBuilder.Append(" [Debug build]");
-#else
-            _strBuilder.Append(" [Release build]");
-#endif
+            if (DOTween.isDebugBuild) _strBuilder.Append(" [Debug build]");
+            else _strBuilder.Append(" [Release build]");
+
             if (_proVersion != null) _strBuilder.Append("\nDOTweenPro v").Append(_proVersion);
             else _strBuilder.Append("\nDOTweenPro not installed");
             _title = _strBuilder.ToString();
@@ -52,12 +53,25 @@ namespace DG.DOTweenEditor
 
         override public void OnInspectorGUI()
         {
+            if (!_guiStylesSet) {
+                _boldLabelStyle = new GUIStyle(GUI.skin.label);
+                _boldLabelStyle.fontStyle = FontStyle.Bold;
+
+                _redLabelStyle = new GUIStyle(GUI.skin.label);
+                _redLabelStyle.normal.textColor = Color.red;
+
+                _greenLabelStyle = new GUIStyle(GUI.skin.label);
+                _greenLabelStyle.normal.textColor = Color.green;
+
+                _guiStylesSet = true;
+            }
+
             int totActiveTweens = TweenManager.totActiveTweens;
             int totPlayingTweens = TweenManager.TotPlayingTweens();
             int totPausedTweens = totActiveTweens - totPlayingTweens;
 
             GUILayout.Space(4);
-            GUILayout.Label(_title);
+            GUILayout.Label(_title, DOTween.isDebugBuild ? _redLabelStyle : _boldLabelStyle);
             GUILayout.Label("-----------------------");
 
             _strBuilder.Remove(0, _strBuilder.Length);
