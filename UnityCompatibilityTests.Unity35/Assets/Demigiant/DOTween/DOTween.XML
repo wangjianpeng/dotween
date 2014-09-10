@@ -1358,12 +1358,6 @@
             <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
             If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DORotateTowards(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
-            <summary>Tweens a Transform's rotation so that it will look towards the given position.
-            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-            <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
-            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Transform's localRotation to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -1431,6 +1425,18 @@
             <summary>Tweens a Transform's Z localScale from the given value to its current one.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
+            <summary>Tweens a Transform's rotation so that it will look towards the given position.
+            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+            <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLookFrom(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
+            <summary>Tweens a Transform's rotation so that it will look from the given position to the current one.
+            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+            <param name="from">The position to look from</param><param name="duration">The duration of the tween</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOPunchPosition(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Int32,System.Single,System.Boolean)">
             <summary>Punches a Transform's localPosition towards the given direction and then back to the starting one
@@ -1550,12 +1556,6 @@
             <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
             If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DORotateTowards(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
-            <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
-            Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-            <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
-            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLocalAxisRotate(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Rigidbody's rotation to the given value, using its local axis system
             (like when rotating an object with the "local" switch enabled in Unity's editor).
@@ -1569,6 +1569,18 @@
             <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
+            <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
+            Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+            <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLookFrom(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
+            <summary>Tweens a Rigidbody's rotation so that it will look from the given position to the current one.
+            Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+            <param name="from">The position to look at</param><param name="duration">The duration of the tween</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOShakePosition(UnityEngine.Camera,System.Single,System.Single,System.Int32,System.Single)">
             <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
