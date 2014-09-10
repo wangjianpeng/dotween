@@ -40,6 +40,10 @@ namespace DG.Tweening.Core
         static int _minPooledTweenerId = -1; // Lowest PooledTweeners id that is actually full
         static int _maxPooledTweenerId = -1; // Highest PooledTweeners id that is actually full
 
+#if DEBUG
+        static public int updateLoopCount;
+#endif
+
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
@@ -124,9 +128,14 @@ namespace DG.Tweening.Core
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
 
             isUpdateLoop = true;
+#if DEBUG
+            updateLoopCount++;
+            VerifyActiveTweensList();
+#endif
             bool willKill = false;
             for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
                 Tween t = _activeTweens[i];
+                if (t == null) continue; // Was added to a Sequence (and thus removed from active list) while inside the current updateLoop
                 if (!t.active) {
                     // Manually killed by another tween's callback
                     willKill = true;
@@ -186,6 +195,8 @@ namespace DG.Tweening.Core
             }
             isUpdateLoop = false;
         }
+
+        #region Play Operations
 
         internal static bool Complete(Tween t, bool modifyActiveLists = true)
         {
@@ -302,6 +313,8 @@ namespace DG.Tweening.Core
             if (t.isPlaying) return Pause(t);
             return Play(t);
         }
+
+        #endregion
 
         internal static void SetUpdateType(Tween t, UpdateType updateType)
         {
@@ -540,6 +553,8 @@ namespace DG.Tweening.Core
             _KillList.Capacity = maxActive;
         }
 
+        #region Info Getters
+
         internal static int TotPooledTweens()
         {
             return totPooledTweeners + totPooledSequences;
@@ -557,8 +572,9 @@ namespace DG.Tweening.Core
             return tot;
         }
 
-        // ===================================================================================
-        // METHODS ---------------------------------------------------------------------------
+        #endregion
+
+        #region Private Methods
 
         static void MarkForKilling(Tween t)
         {
@@ -608,6 +624,7 @@ namespace DG.Tweening.Core
                 }
                 t.activeId = _maxActiveLookupId = i - shift;
                 _activeTweens[i - shift] = t;
+                _activeTweens[i] = null;
             }
             _requiresActiveReorganization = false;
             _reorganizeFromId = -1;
@@ -674,6 +691,52 @@ namespace DG.Tweening.Core
             if (killAdd > 0) _KillList.Capacity += killAdd;
         }
 
+        #endregion
+
+        #region Debug Methods
+#if DEBUG
+        static void VerifyActiveTweensList()
+        {
+            int nullTweensWithinLookup = 0, inactiveTweensWithinLookup = 0, activeTweensAfterNull = 0;
+            List<int> activeTweensAfterNullIds = new List<int>();
+            
+            for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
+                Tween t = _activeTweens[i];
+                if (t == null) nullTweensWithinLookup++;
+                else if (!t.active) inactiveTweensWithinLookup++;
+            }
+            int len = _activeTweens.Length;
+            int firstNullIndex = -1;
+            for (int i = 0; i < len; ++i) {
+                if (firstNullIndex == -1 && _activeTweens[i] == null) firstNullIndex = i;
+                else if (firstNullIndex > -1 && _activeTweens[i] != null) {
+                    activeTweensAfterNull++;
+                    activeTweensAfterNullIds.Add(i);
+                }
+            }
+
+            if (nullTweensWithinLookup > 0 || inactiveTweensWithinLookup > 0 || activeTweensAfterNull > 0) {
+                string s = "VerifyActiveTweensList WARNING:";
+                if (isUpdateLoop) s += " - UPDATE LOOP (" + updateLoopCount + ")";
+                if (nullTweensWithinLookup > 0) s += " - NULL Tweens Within Lookup (" + nullTweensWithinLookup + ")";
+                if (inactiveTweensWithinLookup > 0) s += " - Inactive Tweens Within Lookup (" + inactiveTweensWithinLookup + ")";
+                if (activeTweensAfterNull > 0) {
+                    string indexes = "";
+                    len = activeTweensAfterNullIds.Count;
+                    for (int i = 0; i < len; ++i) {
+                        if (i > 0) indexes += ",";
+                        indexes += activeTweensAfterNullIds[i];
+                    }
+                    s += " - Active tweens after NULL ones (" + (firstNullIndex - 1) + "/" + activeTweensAfterNull + "[" + indexes + "]" + ")";
+                }
+                Debug.LogWarning(s);
+            }
+        }
+#endif
+        #endregion
+
+        #region Internal Classes
+
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // ||| INTERNAL CLASSES ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -684,5 +747,7 @@ namespace DG.Tweening.Core
             TweenersOnly,
             SequencesOnly
         }
+
+        #endregion
     }
 }
