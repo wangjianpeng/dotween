@@ -193,7 +193,7 @@ namespace DG.Tweening.Plugins
                         }
                     }
                     // Eventual 2D mode
-                    if (options.mode == PathMode.Full3D) newRot = Quaternion.LookRotation(lookAtP - trans.position, trans.up);
+                    if (options.mode == PathMode.Full3D) newRot = Quaternion.LookRotation(lookAtP - trans.position, transUp);
                     else {
                         // 2D path
                         float rotY = 0;
