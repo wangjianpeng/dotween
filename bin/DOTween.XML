@@ -519,6 +519,12 @@
             <summary>Toggles the play state of all tweens with the given ID or target and returns the number of actual tweens toggled
             (meaning the tweens that could be played or paused, depending on the toggle state)</summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.TotPlayingTweens">
+            <summary>
+            Returns the total number of active and playing tweens.
+            A tween is considered as in a play state even if delayed but not paused.
+            </summary>
+        </member>
         <member name="P:DG.Tweening.DOTween.logBehaviour">
             <summary>DOTween's log behaviour</summary>
         </member>
