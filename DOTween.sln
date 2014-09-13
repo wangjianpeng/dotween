@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTweenPro", "DOTweenPro\DO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTween43", "DOTween43\DOTween43.csproj", "{978C0952-38D0-4C22-B96C-823EAFEDF0FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOTweenProEditor", "DOTweenProEditor\DOTweenProEditor.csproj", "{279545AE-D268-42F0-A4C6-AA5BA15FB9BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{978C0952-38D0-4C22-B96C-823EAFEDF0FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{978C0952-38D0-4C22-B96C-823EAFEDF0FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{978C0952-38D0-4C22-B96C-823EAFEDF0FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279545AE-D268-42F0-A4C6-AA5BA15FB9BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279545AE-D268-42F0-A4C6-AA5BA15FB9BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279545AE-D268-42F0-A4C6-AA5BA15FB9BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279545AE-D268-42F0-A4C6-AA5BA15FB9BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
