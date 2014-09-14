@@ -96,7 +96,7 @@
             <para>Default: FALSE</para></param>
             <param name="logBehaviour">Type of logging to use.
             You can change this setting at any time by changing the static <see cref="P:DG.Tweening.DOTween.logBehaviour"/> property.
-            <para>Default: Default</para></param>
+            <para>Default: ErrorsOnly</para></param>
         </member>
         <member name="M:DG.Tweening.DOTween.SetCapacity(System.Int32,System.Int32)">
             <summary>
