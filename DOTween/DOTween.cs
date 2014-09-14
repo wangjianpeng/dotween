@@ -23,7 +23,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.255";
+        public static readonly string Version = "0.8.260";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -43,7 +43,7 @@ namespace DG.Tweening
             get { return _logBehaviour; }
             set { _logBehaviour = value; Debugger.SetLogPriority(_logBehaviour); }
         }
-        static LogBehaviour _logBehaviour;
+        static LogBehaviour _logBehaviour = LogBehaviour.ErrorsOnly;
 
         ///////////////////////////////////////////////
         // Default options for Tweens /////////////////
@@ -196,8 +196,8 @@ namespace DG.Tweening
         /// <para>Default: FALSE</para></param>
         /// <param name="logBehaviour">Type of logging to use.
         /// You can change this setting at any time by changing the static <see cref="DOTween.logBehaviour"/> property.
-        /// <para>Default: Default</para></param>
-        public static IDOTweenInit Init(bool recycleAllByDefault = false, bool useSafeMode = false, LogBehaviour logBehaviour = LogBehaviour.Default)
+        /// <para>Default: ErrorsOnly</para></param>
+        public static IDOTweenInit Init(bool recycleAllByDefault = false, bool useSafeMode = true, LogBehaviour logBehaviour = LogBehaviour.ErrorsOnly)
         {
             if (_initialized) return instance;
 
@@ -268,7 +268,7 @@ namespace DG.Tweening
             useSafeMode = false;
             showUnityEditorReport = false;
             timeScale = 1;
-            logBehaviour = LogBehaviour.Default;
+            logBehaviour = LogBehaviour.ErrorsOnly;
             defaultEaseType = Ease.OutQuad;
             defaultEaseOvershootOrAmplitude = 1.70158f;
             defaultEasePeriod = 0;
