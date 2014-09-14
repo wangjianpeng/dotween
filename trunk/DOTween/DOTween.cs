@@ -23,7 +23,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.215";
+        public static readonly string Version = "0.8.250";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -72,6 +72,7 @@ namespace DG.Tweening
         internal static readonly List<TweenCallback> onDrawGizmos = new List<TweenCallback>(); // Can be used by other classes to call internal gizmo draw methods
         static bool _initialized;
         float _unscaledTime;
+        float _unscaledDeltaTime;
 
         #region Static Constructor
 
@@ -95,9 +96,9 @@ namespace DG.Tweening
 
         void Update()
         {
-            if (TweenManager.hasActiveTweens) {
-                float unscaledDeltaTime = Time.realtimeSinceStartup - _unscaledTime;
-                TweenManager.Update(Time.deltaTime * timeScale, unscaledDeltaTime * timeScale);
+            _unscaledDeltaTime = Time.realtimeSinceStartup - _unscaledTime;
+            if (TweenManager.hasActiveDefaultTweens) {
+                TweenManager.Update(UpdateType.Default, Time.deltaTime * timeScale, _unscaledDeltaTime * timeScale);
             }
             _unscaledTime = Time.realtimeSinceStartup;
 
@@ -107,6 +108,13 @@ namespace DG.Tweening
                     if (TweenManager.totActiveTweeners > maxActiveTweenersReached) maxActiveTweenersReached = TweenManager.totActiveTweeners;
                     if (TweenManager.totActiveSequences > maxActiveSequencesReached) maxActiveSequencesReached = TweenManager.totActiveSequences;
                 }
+            }
+        }
+
+        void LateUpdate()
+        {
+            if (TweenManager.hasActiveLateTweens) {
+                TweenManager.Update(UpdateType.Late, Time.deltaTime * timeScale, _unscaledDeltaTime * timeScale);
             }
         }
 

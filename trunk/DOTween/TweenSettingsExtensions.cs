@@ -117,13 +117,23 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the type of update (default or independent) for the tween</summary>
-        /// <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
-        public static T SetUpdate<T>(this T t, UpdateType updateType) where T : Tween
+        /// <summary>Sets the update type to UpdateType.Default and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+        /// <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
+        public static T SetUpdate<T>(this T t, bool isIndependentUpdate) where T : Tween
         {
             if (!t.active) return t;
 
-            TweenManager.SetUpdateType(t, updateType);
+            TweenManager.SetUpdateType(t, UpdateType.Default, isIndependentUpdate);
+            return t;
+        }
+        /// <summary>Sets the type of update (default or independent) for the tween</summary>
+        /// <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
+        /// <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
+        public static T SetUpdate<T>(this T t, UpdateType updateType, bool isIndependentUpdate = false) where T : Tween
+        {
+            if (!t.active) return t;
+
+            TweenManager.SetUpdateType(t, updateType, isIndependentUpdate);
             return t;
         }
 
@@ -214,7 +224,7 @@ namespace DG.Tweening
 
             t.timeScale = asTween.timeScale;
             t.isBackwards = asTween.isBackwards;
-            TweenManager.SetUpdateType(t, asTween.updateType);
+            TweenManager.SetUpdateType(t, asTween.updateType, asTween.isIndependentUpdate);
             t.id = asTween.id;
             t.onStart = asTween.onStart;
             t.onPlay = asTween.onPlay;
@@ -252,7 +262,7 @@ namespace DG.Tweening
         {
             if (!t.active || t.creationLocked) return t;
 
-            TweenManager.SetUpdateType(t, tweenParms.updateType);
+            TweenManager.SetUpdateType(t, tweenParms.updateType, tweenParms.isIndependentUpdate);
             t.id = tweenParms.id;
             t.onStart = tweenParms.onStart;
             t.onPlay = tweenParms.onPlay;
