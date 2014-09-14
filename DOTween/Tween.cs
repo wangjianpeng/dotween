@@ -27,8 +27,9 @@ namespace DG.Tweening
         public object id;
         /// <summary>Tween target (usable for filtering with DOTween static methods). Automatically set by tween creation shorcuts</summary>
         public object target; // Automatically set by DO shortcuts using SetTarget extension. Also used during Tweener.DoStartup in some special cases
-        // Update type (changed via TweenManager.SetUpdateType)
+        // Update type and eventual independence (changed via TweenManager.SetUpdateType)
         internal UpdateType updateType;
+        internal bool isIndependentUpdate;
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
         /// <summary>Called when the tween is set in a playing state, after any eventual delay.
         /// Also called each time the tween resumes playing from a paused state</summary>
@@ -98,6 +99,7 @@ namespace DG.Tweening
             isBackwards = false;
             id = null;
             updateType = UpdateType.Default;
+            isIndependentUpdate = false;
             onStart = onPlay = onRewind = onUpdate = onComplete = onStepComplete = onKill = null;
 
             target = null;

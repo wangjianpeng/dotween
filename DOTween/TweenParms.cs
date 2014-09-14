@@ -19,6 +19,7 @@ namespace DG.Tweening
         internal object id;
         internal object target;
         internal UpdateType updateType;
+        internal bool isIndependentUpdate;
         internal TweenCallback onStart;
         internal TweenCallback onPlay;
         internal TweenCallback onRewind;
@@ -58,6 +59,7 @@ namespace DG.Tweening
         {
             id = target = null;
             updateType = UpdateType.Default;
+            isIndependentUpdate = false;
             onStart = onPlay = onRewind = onUpdate = onStepComplete = onComplete = onKill = null;
             isRecyclable = DOTween.defaultRecyclable;
             isSpeedBased = false;
@@ -127,11 +129,21 @@ namespace DG.Tweening
             return this;
         }
 
+        /// <summary>Sets the update type to UpdateType.Default and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+        /// <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
+        public TweenParms SetUpdate(bool isIndependentUpdate)
+        {
+            this.updateType = UpdateType.Default;
+            this.isIndependentUpdate = isIndependentUpdate;
+            return this;
+        }
         /// <summary>Sets the type of update (default or independent) for the tween</summary>
         /// <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
-        public TweenParms SetUpdate(UpdateType updateType)
+        /// <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
+        public TweenParms SetUpdate(UpdateType updateType, bool isIndependentUpdate = false)
         {
             this.updateType = updateType;
+            this.isIndependentUpdate = isIndependentUpdate;
             return this;
         }
 

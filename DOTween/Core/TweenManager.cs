@@ -20,8 +20,8 @@ namespace DG.Tweening.Core
         internal static int maxActive = _DefaultMaxTweeners; // Always equal to maxTweeners
         internal static int maxTweeners = _DefaultMaxTweeners; // Always >= maxSequences
         internal static int maxSequences = _DefaultMaxSequences; // Always <= maxTweeners
-        internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveIndependentTweens;
-        internal static int totActiveTweens, totActiveDefaultTweens, totActiveIndependentTweens;
+        internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveLateTweens;
+        internal static int totActiveTweens, totActiveDefaultTweens, totActiveLateTweens;
         internal static int totActiveTweeners, totActiveSequences;
         internal static int totPooledTweeners, totPooledSequences;
         internal static int totTweeners, totSequences; // Both active and pooled
@@ -123,7 +123,7 @@ namespace DG.Tweening.Core
             return s;
         }
 
-        internal static void Update(float deltaTime, float independentTime)
+        internal static void Update(UpdateType updateType, float deltaTime, float independentTime)
         {
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
 
@@ -135,7 +135,7 @@ namespace DG.Tweening.Core
             bool willKill = false;
             for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
                 Tween t = _activeTweens[i];
-                if (t == null) continue; // Was added to a Sequence (and thus removed from active list) while inside the current updateLoop
+                if (t == null || t.updateType != updateType) continue; // Wrogn updateType or was added to a Sequence (thus removed from active list) while inside current updateLoop
                 if (!t.active) {
                     // Manually killed by another tween's callback
                     willKill = true;
@@ -144,7 +144,7 @@ namespace DG.Tweening.Core
                 }
                 if (!t.isPlaying) continue;
                 t.creationLocked = true; // Lock tween creation methods from now on
-                float tDeltaTime = (t.updateType == UpdateType.Default ? deltaTime : independentTime) * t.timeScale;
+                float tDeltaTime = (t.isIndependentUpdate ? independentTime : deltaTime) * t.timeScale;
                 if (!t.delayComplete) {
                     tDeltaTime = t.UpdateDelay(t.elapsedDelay + tDeltaTime);
                     if (tDeltaTime <= -1) {
@@ -316,23 +316,31 @@ namespace DG.Tweening.Core
 
         #endregion
 
-        internal static void SetUpdateType(Tween t, UpdateType updateType)
+        internal static void SetUpdateType(Tween t, UpdateType updateType, bool isIndependentUpdate)
         {
             if (!t.active || t.updateType == updateType) {
                 t.updateType = updateType;
+                t.isIndependentUpdate = isIndependentUpdate;
                 return;
             }
-
+            // Remove previous update type
             if (t.updateType == UpdateType.Default) {
                 totActiveDefaultTweens--;
                 hasActiveDefaultTweens = totActiveDefaultTweens > 0;
             } else {
-                totActiveIndependentTweens--;
-                hasActiveIndependentTweens = totActiveIndependentTweens > 0;
+                totActiveLateTweens--;
+                hasActiveLateTweens = totActiveLateTweens > 0;
             }
+            // Assign new one
             t.updateType = updateType;
-            if (updateType == UpdateType.Independent) hasActiveIndependentTweens = true;
-            else hasActiveDefaultTweens = true;
+            t.isIndependentUpdate = isIndependentUpdate;
+            if (updateType == UpdateType.Default) {
+                totActiveDefaultTweens++;
+                hasActiveDefaultTweens = true;
+            } else {
+                totActiveLateTweens++;
+                hasActiveLateTweens = true;
+            }
         }
 
         // Removes the given tween from the active tweens list
@@ -350,8 +358,8 @@ namespace DG.Tweening.Core
                 if (t != null) Despawn(t, false);
             }
             ClearTweenArray(_activeTweens);
-            hasActiveTweens = hasActiveDefaultTweens = hasActiveIndependentTweens = false;
-            totActiveTweens = totActiveDefaultTweens = totActiveIndependentTweens = 0;
+            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
+            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
             totActiveTweeners = totActiveSequences = 0;
             _maxActiveLookupId = _reorganizeFromId = -1;
             _requiresActiveReorganization = false;
@@ -515,8 +523,8 @@ namespace DG.Tweening.Core
             }
 
             ClearTweenArray(_activeTweens);
-            hasActiveTweens = hasActiveDefaultTweens = hasActiveIndependentTweens = false;
-            totActiveTweens = totActiveDefaultTweens = totActiveIndependentTweens = 0;
+            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
+            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
             totActiveTweeners = totActiveSequences = 0;
             _maxActiveLookupId = _reorganizeFromId = -1;
             _requiresActiveReorganization = false;
@@ -589,6 +597,7 @@ namespace DG.Tweening.Core
 
             t.active = true;
             t.updateType = UpdateType.Default;
+            t.isIndependentUpdate = false;
             t.activeId = _maxActiveLookupId = totActiveTweens;
             _activeTweens[totActiveTweens] = t;
             hasActiveDefaultTweens = true;
@@ -651,8 +660,8 @@ namespace DG.Tweening.Core
                 totActiveDefaultTweens--;
                 hasActiveDefaultTweens = totActiveDefaultTweens > 0;
             } else {
-                totActiveIndependentTweens--;
-                hasActiveIndependentTweens = totActiveIndependentTweens > 0;
+                totActiveLateTweens--;
+                hasActiveLateTweens = totActiveLateTweens > 0;
             }
             totActiveTweens--;
             hasActiveTweens = totActiveTweens > 0;

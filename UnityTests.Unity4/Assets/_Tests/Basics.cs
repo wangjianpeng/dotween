@@ -54,7 +54,7 @@ public class Basics : BrainBase
 			Transform t = targets[i];
 			switch (i) {
 			case 0:
-				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetAs(tp).SetRelative().SetUpdate(UpdateType.Independent).SetAutoKill(true);
+				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetAs(tp).SetRelative().SetUpdate(true).SetAutoKill(true);
 				break;
 			case 1:
 				// Red cube (rotation)
