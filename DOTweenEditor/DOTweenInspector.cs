@@ -53,31 +53,30 @@ namespace DG.DOTweenEditor
 
         override public void OnInspectorGUI()
         {
-            if (!_guiStylesSet) {
-                _boldLabelStyle = new GUIStyle(GUI.skin.label);
-                _boldLabelStyle.fontStyle = FontStyle.Bold;
-
-                _redLabelStyle = new GUIStyle(GUI.skin.label);
-                _redLabelStyle.normal.textColor = Color.red;
-
-                _greenLabelStyle = new GUIStyle(GUI.skin.label);
-                _greenLabelStyle.normal.textColor = Color.green;
-
-                _guiStylesSet = true;
-            }
+            SetGUIStyles();
 
             int totActiveTweens = TweenManager.totActiveTweens;
             int totPlayingTweens = TweenManager.TotPlayingTweens();
             int totPausedTweens = totActiveTweens - totPlayingTweens;
+            int totActiveDefaultTweens = TweenManager.totActiveDefaultTweens;
+            int totActiveLateTweens = TweenManager.totActiveLateTweens;
 
             GUILayout.Space(4);
             GUILayout.Label(_title, DOTween.isDebugBuild ? _redLabelStyle : _boldLabelStyle);
-            GUILayout.Label("-----------------------");
 
+            GUILayout.Space(6);
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Documentation")) Application.OpenURL("http://dotween.demigiant.com/documentation.php");
+            if (GUILayout.Button("Check Updates")) Application.OpenURL("http://dotween.demigiant.com/download.php?v=" + DOTween.Version);
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(8);
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("Active tweens: ").Append(totActiveTweens)
                     .Append(" (").Append(TweenManager.totActiveTweeners)
                     .Append("/").Append(TweenManager.totActiveSequences).Append(")")
+                .Append("\nDefault/Late tweens: ").Append(totActiveDefaultTweens)
+                    .Append("/").Append(totActiveLateTweens)
                 .Append("\nPlaying tweens: ").Append(totPlayingTweens)
                 .Append("\nPaused tweens: ").Append(totPausedTweens)
                 .Append("\nPooled tweens: ").Append(TweenManager.TotPooledTweens())
@@ -93,7 +92,8 @@ namespace DG.DOTweenEditor
 
             GUILayout.Space(8);
             _strBuilder.Remove(0, _strBuilder.Length);
-            _strBuilder.Append("Safe Mode: ").Append(DOTween.useSafeMode ? "ON" : "OFF");
+            _strBuilder.Append("SETTINGS ▼");
+            _strBuilder.Append("\nSafe Mode: ").Append(DOTween.useSafeMode ? "ON" : "OFF");
             _strBuilder.Append("\nTimeScale: ").Append(DOTween.timeScale);
             _strBuilder.Append("\nLog Behaviour: ").Append(DOTween.logBehaviour);
             _strBuilder.Append("\nShow Unity Editor Report: ").Append(DOTween.showUnityEditorReport);
@@ -109,7 +109,23 @@ namespace DG.DOTweenEditor
             _strBuilder.Append("\ndefaultLoopType: ").Append(DOTween.defaultLoopType);
             GUILayout.Label(_strBuilder.ToString());
 
-            GUILayout.Space(8);
+            GUILayout.Space(10);
+        }
+
+        void SetGUIStyles()
+        {
+            if (!_guiStylesSet) {
+                _boldLabelStyle = new GUIStyle(GUI.skin.label);
+                _boldLabelStyle.fontStyle = FontStyle.Bold;
+
+                _redLabelStyle = new GUIStyle(GUI.skin.label);
+                _redLabelStyle.normal.textColor = Color.red;
+
+                _greenLabelStyle = new GUIStyle(GUI.skin.label);
+                _greenLabelStyle.normal.textColor = Color.green;
+
+                _guiStylesSet = true;
+            }
         }
     }
 }
