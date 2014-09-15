@@ -781,6 +781,10 @@
             It is in no way needed otherwise, since you can directly apply tween settings to a tween via chaining
             </summary>
         </member>
+        <member name="F:DG.Tweening.TweenParms.tParms">
+            <summary>A variable you can eventually Clear and reuse when needed,
+            to avoid instantiating TweenParms objects</summary>
+        </member>
         <member name="M:DG.Tweening.TweenParms.#ctor">
             <summary>Creates a new TweenParms object, which you can use to store tween settings
             to pass to multiple tweens via <code>myTween.SetAs(myTweenParms)</code></summary>
