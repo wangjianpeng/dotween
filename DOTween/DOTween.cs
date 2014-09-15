@@ -23,7 +23,7 @@ namespace DG.Tweening
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
         public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.260";
+        public static readonly string Version = "0.8.265";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -289,17 +289,6 @@ namespace DG.Tweening
             TweenManager.PurgePools();
         }
 
-        /// <summary>
-        /// Returns TRUE if a tween with the given ID or target is active (either playing or paused).
-        /// <para>You can also use this to know if a shortcut tween is active for a given target.</para>
-        /// <para>Example:</para>
-        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween target</code></para>
-        /// <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
-        /// </summary>
-        public static bool IsTweening(object targetOrId)
-        {
-            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.TargetOrId, targetOrId, false, 0) > 0;
-        }
         #endregion
 
         // ===================================================================================
@@ -884,8 +873,20 @@ namespace DG.Tweening
         #region Global Info Getters
 
         /// <summary>
+        /// Returns TRUE if a tween with the given ID or target is active (regardless if it's playing or not).
+        /// <para>You can also use this to know if a shortcut tween is active for a given target.</para>
+        /// <para>Example:</para>
+        /// <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween target</code></para>
+        /// <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
+        /// </summary>
+        public static bool IsTweening(object targetOrId)
+        {
+            return TweenManager.FilteredOperation(OperationType.IsTweening, FilterType.TargetOrId, targetOrId, false, 0) > 0;
+        }
+
+        /// <summary>
         /// Returns the total number of active and playing tweens.
-        /// A tween is considered as in a play state even if delayed but not paused.
+        /// A tween is considered as playing even if its delay is actually playing
         /// </summary>
         public static int TotPlayingTweens()
         {
