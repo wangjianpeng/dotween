@@ -140,15 +140,6 @@
             Clears all cached tween pools.
             </summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.IsTweening(System.Object)">
-            <summary>
-            Returns TRUE if a tween with the given ID or target is active (either playing or paused).
-            <para>You can also use this to know if a shortcut tween is active for a given target.</para>
-            <para>Example:</para>
-            <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween target</code></para>
-            <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
-            </summary>
-        </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
@@ -519,10 +510,19 @@
             <summary>Toggles the play state of all tweens with the given ID or target and returns the number of actual tweens toggled
             (meaning the tweens that could be played or paused, depending on the toggle state)</summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.IsTweening(System.Object)">
+            <summary>
+            Returns TRUE if a tween with the given ID or target is active (regardless if it's playing or not).
+            <para>You can also use this to know if a shortcut tween is active for a given target.</para>
+            <para>Example:</para>
+            <para><code>transform.DOMoveX(45, 1); // transform is automatically added as the tween target</code></para>
+            <para><code>DOTween.IsTweening(transform); // Returns true</code></para>
+            </summary>
+        </member>
         <member name="M:DG.Tweening.DOTween.TotPlayingTweens">
             <summary>
             Returns the total number of active and playing tweens.
-            A tween is considered as in a play state even if delayed but not paused.
+            A tween is considered as playing even if its delay is actually playing
             </summary>
         </member>
         <member name="P:DG.Tweening.DOTween.logBehaviour">
@@ -1254,10 +1254,10 @@
             </summary>
         </member>
         <member name="F:DG.Tweening.UpdateType.Default">
-            <summary>Updates every frame during Update calls and uses Unity's Time.timeScale as a base</summary>
+            <summary>Updates every frame during Update calls</summary>
         </member>
         <member name="F:DG.Tweening.UpdateType.Late">
-            <summary>Updates every frame during LateUpdate calls and uses Unity's Time.timeScale as a base</summary>
+            <summary>Updates every frame during LateUpdate calls</summary>
         </member>
         <member name="T:DG.Tweening.ShortcutExtensions">
             <summary>
