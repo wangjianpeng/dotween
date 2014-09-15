@@ -48,7 +48,7 @@ public class Paths : BrainBase
 		// Linear VS curved
 		targets[2].DOPath(path, 3, PathType.CatmullRom, pathMode, pathResolution, pathsColors[0])
 			.SetOptions(closePaths, lockPosition, lockRotation)
-			.SetLookAt(Vector3.zero, forward)
+			.SetLookAt(new Vector3(3, 0, 0), forward)
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();

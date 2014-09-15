@@ -16,6 +16,10 @@ namespace DG.Tweening
     /// </summary>
     public class TweenParms
     {
+        /// <summary>A variable you can eventually Clear and reuse when needed,
+        /// to avoid instantiating TweenParms objects</summary>
+        public readonly TweenParms tParms = new TweenParms();
+
         internal object id;
         internal object target;
         internal UpdateType updateType;
