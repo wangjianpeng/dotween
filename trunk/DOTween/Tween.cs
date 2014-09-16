@@ -48,7 +48,7 @@ namespace DG.Tweening
         public TweenCallback onKill;
         
         // Fixed after creation
-        internal bool isFrom; // Used to prevent settings like isRelative from being applied
+        internal bool isFrom; // Used to prevent settings like isRelative from being applied on From tweens
         internal bool isRecyclable;
         internal bool isSpeedBased;
         internal bool autoKill;
