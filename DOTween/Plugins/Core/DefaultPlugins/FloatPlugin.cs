@@ -21,7 +21,7 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             float prevEndVal = t.endValue;
             t.endValue = t.getter();
             t.startValue = isRelative ? t.endValue + prevEndVal : prevEndVal;
-            t.setter(t.startValue);
+            t.setter(!t.plugOptions.snapping ? t.startValue : (float)Math.Round(t.startValue));
         }
 
         public override float ConvertToStartValue(TweenerCore<float, float, FloatOptions> t, float value)

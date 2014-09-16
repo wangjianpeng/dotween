@@ -21,7 +21,10 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             Color prevEndVal = t.endValue;
             t.endValue = t.getter();
             t.startValue = isRelative ? t.endValue + prevEndVal : prevEndVal;
-            t.setter(t.startValue);
+            Color to = t.endValue;
+            if (!t.plugOptions.alphaOnly) to = t.startValue;
+            else to.a = t.startValue.a;
+            t.setter(to);
         }
 
         public override Color ConvertToStartValue(TweenerCore<Color, Color, ColorOptions> t, Color value)
