@@ -94,10 +94,6 @@ namespace DG.Tweening
         // -1 if there are missing references and the tween needs to be killed
         internal static float DoUpdateDelay<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t, float elapsed) where TPlugOptions : struct
         {
-            if (t.isFrom && !t.startupDone) {
-                // Startup immediately to set the correct FROM setup
-                if (!DoStartup(t)) return -1;
-            }
             float tweenDelay = t.delay;
             if (elapsed > tweenDelay) {
                 // Delay complete
