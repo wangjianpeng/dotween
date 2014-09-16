@@ -31,15 +31,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.position, x => target.position = x, endValue, duration)
                 .SetOptions(snapping).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's position from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveFrom(this Transform target, Vector3 fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, x => target.position = x, fromValue, duration)
-                .SetOptions(snapping).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's X position to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -48,15 +39,6 @@ namespace DG.Tweening
         public static Tweener DOMoveX(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's X position from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveXFrom(this Transform target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, x => target.position = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
 
@@ -69,15 +51,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's Y position from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveYFrom(this Transform target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, x => target.position = x, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's Z position to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -86,15 +59,6 @@ namespace DG.Tweening
         public static Tweener DOMoveZ(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, x => target.position = x, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's Z position from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveZFrom(this Transform target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, x => target.position = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
 
@@ -107,15 +71,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, endValue, duration)
                 .SetOptions(snapping).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's localPosition from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOLocalMoveFrom(this Transform target, Vector3 fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.localPosition, x => target.localPosition = x, fromValue, duration)
-                .SetOptions(snapping).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's X localPosition to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -124,15 +79,6 @@ namespace DG.Tweening
         public static Tweener DOLocalMoveX(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's X localPosition from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOLocalMoveXFrom(this Transform target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
 
@@ -145,15 +91,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's Y localPosition from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOLocalMoveYFrom(this Transform target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's Z localPosition to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -162,15 +99,6 @@ namespace DG.Tweening
         public static Tweener DOLocalMoveZ(this Transform target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.localPosition, x => target.localPosition = x, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's Z localPosition from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOLocalMoveZFrom(this Transform target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.localPosition, x => target.localPosition = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
 
@@ -184,16 +112,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration)
                 .SetOptions(useShortest360Route).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's rotation from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
-        /// If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
-        public static Tweener DORotateFrom(this Transform target, Vector3 fromValue, float duration, bool useShortest360Route = true)
-        {
-            return DOTween.From(() => target.rotation, x => target.rotation = x, fromValue, duration)
-                .SetOptions(useShortest360Route).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's localRotation to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -203,16 +121,6 @@ namespace DG.Tweening
         public static Tweener DOLocalRotate(this Transform target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.To(() => target.localRotation, x => target.localRotation = x, endValue, duration)
-                .SetOptions(useShortest360Route).SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's localRotation from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
-        /// If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
-        public static Tweener DOLocalRotateFrom(this Transform target, Vector3 fromValue, float duration, bool useShortest360Route = true)
-        {
-            return DOTween.From(() => target.localRotation, x => target.localRotation = x, fromValue, duration)
                 .SetOptions(useShortest360Route).SetTarget(target);
         }
 
@@ -227,17 +135,6 @@ namespace DG.Tweening
                 .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
                 .SetOptions(false).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's rotation from the given value to its current one, using its local axis system
-        /// (like when rotating an object with the "local" switch enabled in Unity's editor).
-        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalAxisRotateFrom(this Transform target, Vector3 endValue, float duration)
-        {
-            return DOTween.From(() => Quaternion.identity, x => target.localRotation = x, endValue, duration)
-                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
-                .SetOptions(false).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's localScale to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -246,13 +143,6 @@ namespace DG.Tweening
         {
             return DOTween.To(() => target.localScale, x => target.localScale = x, endValue, duration).SetTarget(target);
         }
-        /// <summary>Tweens a Transform's localScale from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOScaleFrom(this Transform target, Vector3 fromValue, float duration)
-        {
-            return DOTween.From(() => target.localScale, x => target.localScale = x, fromValue, duration).SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's X localScale to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -260,15 +150,6 @@ namespace DG.Tweening
         public static Tweener DOScaleX(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localScale, x => target.localScale = x, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X)
-                .SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's X localScale from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOScaleXFrom(this Transform target, float fromValue, float duration)
-        {
-            return DOTween.From(() => target.localScale, x => target.localScale = x, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X)
                 .SetTarget(target);
         }
@@ -282,15 +163,6 @@ namespace DG.Tweening
                 .SetOptions(AxisConstraint.Y)
                 .SetTarget(target);
         }
-        /// <summary>Tweens a Transform's Y localScale from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOScaleYFrom(this Transform target, float fromValue, float duration)
-        {
-            return DOTween.From(() => target.localScale, x => target.localScale = x, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y)
-                .SetTarget(target);
-        }
 
         /// <summary>Tweens a Transform's Z localScale to the given value.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
@@ -298,15 +170,6 @@ namespace DG.Tweening
         public static Tweener DOScaleZ(this Transform target, float endValue, float duration)
         {
             return DOTween.To(() => target.localScale, x => target.localScale = x, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z)
-                .SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's Z localScale from the given value to its current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOScaleZFrom(this Transform target, float fromValue, float duration)
-        {
-            return DOTween.From(() => target.localScale, x => target.localScale = x, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z)
                 .SetTarget(target);
         }
@@ -320,17 +183,6 @@ namespace DG.Tweening
             Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
             Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
             return DOTween.To(() => target.rotation, x => target.rotation = x, lookAtRotation, duration)
-                .SetTarget(target);
-        }
-        /// <summary>Tweens a Transform's rotation so that it will look from the given position to the current one.
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="from">The position to look from</param><param name="duration">The duration of the tween</param>
-        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        public static Tweener DOLookFrom(this Transform target, Vector3 from, float duration, Vector3? up = null)
-        {
-            Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
-            Vector3 lookAtRotation = Quaternion.LookRotation(from - target.position, vUp).eulerAngles;
-            return DOTween.From(() => target.rotation, x => target.rotation = x, lookAtRotation, duration)
                 .SetTarget(target);
         }
 
@@ -423,15 +275,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.position, target.MovePosition, endValue, duration)
                 .SetOptions(snapping).SetTarget(target);
         }
-        /// <summary>Tweens a Rigidbody's position from the given value to its current one.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveFrom(this Rigidbody target, Vector3 fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, target.MovePosition, fromValue, duration)
-                .SetOptions(snapping).SetTarget(target);
-        }
 
         /// <summary>Tweens a Rigidbody's X position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
@@ -440,15 +283,6 @@ namespace DG.Tweening
         public static Tweener DOMoveX(this Rigidbody target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
-        }
-        /// <summary>Tweens a Rigidbody's X position from the given value to its current one.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveXFrom(this Rigidbody target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, target.MovePosition, new Vector3(fromValue, 0, 0), duration)
                 .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
         }
 
@@ -461,15 +295,6 @@ namespace DG.Tweening
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, endValue, 0), duration)
                 .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
         }
-        /// <summary>Tweens a Rigidbody's Y position from the given value to its current one.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveYFrom(this Rigidbody target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, target.MovePosition, new Vector3(0, fromValue, 0), duration)
-                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
-        }
 
         /// <summary>Tweens a Rigidbody's Z position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
@@ -478,15 +303,6 @@ namespace DG.Tweening
         public static Tweener DOMoveZ(this Rigidbody target, float endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
-        }
-        /// <summary>Tweens a Rigidbody's Z position from the given value to its current one.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveZFrom(this Rigidbody target, float fromValue, float duration, bool snapping = false)
-        {
-            return DOTween.From(() => target.position, target.MovePosition, new Vector3(0, 0, fromValue), duration)
                 .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
         }
 
@@ -498,16 +314,6 @@ namespace DG.Tweening
         public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration, bool useShortest360Route = true)
         {
             return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration)
-                .SetOptions(useShortest360Route).SetTarget(target);
-        }
-        /// <summary>Tweens a Rigidbody's rotation from the given value to its current one.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        /// <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
-        /// If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
-        public static Tweener DORotateFrom(this Rigidbody target, Vector3 fromValue, float duration, bool useShortest360Route = true)
-        {
-            return DOTween.From(() => target.rotation, target.MoveRotation, fromValue, duration)
                 .SetOptions(useShortest360Route).SetTarget(target);
         }
 
@@ -522,17 +328,6 @@ namespace DG.Tweening
                 .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
                 .SetOptions(false).SetTarget(target);
         }
-        /// <summary>Tweens a Rigidbody's rotation from the given value to its current one, using its local axis system
-        /// (like when rotating an object with the "local" switch enabled in Unity's editor).
-        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
-        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOLocalAxisRotateFrom(this Rigidbody target, Vector3 endValue, float duration)
-        {
-            return DOTween.From(() => Quaternion.identity, target.MoveRotation, endValue, duration)
-                .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
-                .SetOptions(false).SetTarget(target);
-        }
 
         /// <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
@@ -543,17 +338,6 @@ namespace DG.Tweening
             Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
             Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
             return DOTween.To(() => target.rotation, target.MoveRotation, lookAtRotation, duration)
-                .SetTarget(target);
-        }
-        /// <summary>Tweens a Rigidbody's rotation so that it will look from the given position to the current one.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="from">The position to look at</param><param name="duration">The duration of the tween</param>
-        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        public static Tweener DOLookFrom(this Rigidbody target, Vector3 from, float duration, Vector3? up = null)
-        {
-            Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
-            Vector3 lookAtRotation = Quaternion.LookRotation(from - target.position, vUp).eulerAngles;
-            return DOTween.From(() => target.rotation, target.MoveRotation, lookAtRotation, duration)
                 .SetTarget(target);
         }
 
@@ -594,13 +378,6 @@ namespace DG.Tweening
         {
             return DOTween.To(() => target.backgroundColor, x => target.backgroundColor = x, endValue, duration).SetTarget(target);
         }
-        /// <summary>Tweens a Camera's backgroundColor from the given value to its current one.
-        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColorFrom(this Camera target, Color fromValue, float duration)
-        {
-            return DOTween.From(() => target.backgroundColor, x => target.backgroundColor = x, fromValue, duration).SetTarget(target);
-        }
 
         #endregion
 
@@ -622,22 +399,6 @@ namespace DG.Tweening
         {
             return DOTween.To(() => target.GetColor(property), x => target.SetColor(property, x), endValue, duration).SetTarget(target);
         }
-        /// <summary>Tweens a Material's color from the given value to its current one.
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColorFrom(this Material target, Color fromValue, float duration)
-        {
-            return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetTarget(target);
-        }
-        /// <summary>Tweens a Material's named color property from the given value to its current one.
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param>
-        /// <param name="property">The name of the color property to tween (like _Tint or _SpecColor)</param>
-        /// <param name="duration">The duration of the tween</param>
-        public static Tweener DOColorFrom(this Material target, Color fromValue, string property, float duration)
-        {
-            return DOTween.From(() => target.GetColor(property), x => target.SetColor(property, x), fromValue, duration).SetTarget(target);
-        }
 
         /// <summary>Tweens a Material's alpha color to the given value
         /// (will have no effect unless your material supports transparency).
@@ -646,15 +407,6 @@ namespace DG.Tweening
         public static Tweener DOFade(this Material target, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
-                .SetTarget(target);
-        }
-        /// <summary>Tweens a Material's alpha color from the given value to its current one
-        /// (will have no effect unless your material supports transparency).
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOFadeFrom(this Material target, float fromValue, float duration)
-        {
-            return DOTween.FromAlpha(() => target.color, x => target.color = x, fromValue, duration)
                 .SetTarget(target);
         }
 
@@ -669,13 +421,6 @@ namespace DG.Tweening
         {
             return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
         }
-        /// <summary>Tweens a Light's color from the given value to its current one.
-        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColorFrom(this Light target, Color fromValue, float duration)
-        {
-            return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetTarget(target);
-        }
 
         /// <summary>Tweens a Light's intensity to the given value.
         /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
@@ -683,13 +428,6 @@ namespace DG.Tweening
         public static Tweener DOIntensity(this Light target, float endValue, float duration)
         {
             return DOTween.To(() => target.intensity, x => target.intensity = x, endValue, duration).SetTarget(target);
-        }
-        /// <summary>Tweens a Light's intensity from the given value to its current one.
-        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOIntensityFrom(this Light target, float fromValue, float duration)
-        {
-            return DOTween.From(() => target.intensity, x => target.intensity = x, fromValue, duration).SetTarget(target);
         }
 
         #endregion

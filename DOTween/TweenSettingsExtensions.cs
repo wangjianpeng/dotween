@@ -393,6 +393,28 @@ namespace DG.Tweening
 
         #region Tweeners-only
 
+        /// <summary>Changes a TO tween into a FROM tween: sets the current target's position as the tween's endValue
+        /// then sends the target to the previously set endValue.</summary>
+        public static T From<T>(this T t) where T : Tweener
+        {
+            if (!t.active || t.creationLocked || !t.isFromAllowed) return t;
+
+            t.isFrom = true;
+            t.SetFrom(false);
+            return t;
+        }
+        /// <summary>Changes a TO tween into a FROM tween: sets the current target's position as the tween's endValue
+        /// then sends the target to the previously set endValue.</summary>
+        /// <param name="isRelative">If TRUE the FROM value will be calculated as relative to the current one</param>
+        public static T From<T>(this T t, bool isRelative) where T : Tweener
+        {
+            if (!t.active || t.creationLocked || !t.isFromAllowed) return t;
+
+            t.isFrom = true;
+            t.SetFrom(isRelative);
+            return t;
+        }
+
         /// <summary>Sets a delayed startup for the tween.
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetDelay<T>(this T t, float delay) where T : Tween
@@ -409,7 +431,7 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetRelative<T>(this T t) where T : Tween
         {
-            if (!t.active || t.creationLocked) return t;
+            if (!t.active || t.creationLocked || t.isFrom) return t;
 
             t.isRelative = true;
             return t;
@@ -419,7 +441,7 @@ namespace DG.Tweening
         /// <para>Has no effect on Sequences or if the tween has already started</para></summary>
         public static T SetRelative<T>(this T t, bool isRelative) where T : Tween
         {
-            if (!t.active || t.creationLocked) return t;
+            if (!t.active || t.creationLocked || t.isFrom) return t;
 
             t.isRelative = isRelative;
             return t;

@@ -33,6 +33,14 @@ public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
 {
 	public override void Reset(TweenerCore<Vector3, Vector3, NoOptions> t) {}
 
+    public override void SetFrom(TweenerCore<Vector3, Vector3, NoOptions> t, bool isRelative)
+    {
+        Vector3 prevEndVal = t.endValue;
+        t.endValue = t.getter();
+        t.startValue = isRelative ? t.endValue + prevEndVal : prevEndVal;
+        t.setter(t.startValue);
+    }
+
     public override Vector3 ConvertToStartValue(TweenerCore<Vector3, Vector3, NoOptions> t, Vector3 value)
     {
         return value;

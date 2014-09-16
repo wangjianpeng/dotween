@@ -129,7 +129,7 @@ public class Basics : BrainBase
 		specularSphere.renderer.material.DOColor(Color.green, "_SpecColor", 1.5f).SetAs(tp).Pause();
 		// Rotate towards
 		targetToDoLookAt.DOLookAt(specularSphere.transform.position, 1.5f).SetAs(tp).Pause();
-		targetToDoLookFrom.DOLookFrom(specularSphere.transform.position, 1.5f).SetAs(tp).Pause();
+		targetToDoLookFrom.DOLookAt(specularSphere.transform.position, 1.5f).From().SetAs(tp).Pause();
 	}
 
 	void LateUpdate()

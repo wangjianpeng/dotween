@@ -23,13 +23,6 @@ namespace DG.Tweening
         {
             return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
         }
-        /// <summary>Tweens a SpriteRenderer's color from the given value to its current one.
-        /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColorFrom(this SpriteRenderer target, Color fromValue, float duration)
-        {
-            return DOTween.From(() => target.color, x => target.color = x, fromValue, duration).SetTarget(target);
-        }
 
         /// <summary>Tweens a Material's alpha color to the given value.
         /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
@@ -37,14 +30,6 @@ namespace DG.Tweening
         public static Tweener DOFade(this SpriteRenderer target, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
-                .SetTarget(target);
-        }
-        /// <summary>Tweens a Material's alpha color from the given value to its current one.
-        /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="fromValue">The value to tween from</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOFadeFrom(this SpriteRenderer target, float fromValue, float duration)
-        {
-            return DOTween.FromAlpha(() => target.color, x => target.color = x, fromValue, duration)
                 .SetTarget(target);
         }
 

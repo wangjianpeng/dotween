@@ -25,7 +25,8 @@ public class From : BrainBase
 	void FromTween()
 	{
 		t = ((GameObject)Instantiate(prefab)).transform;
-		t.DOMoveFrom(new Vector3(0, 2, 0), 1)
+		t.DOMove(new Vector3(0, 2, 0), 1)
+			.From()
 			.OnKill(() => Destroy(t.gameObject));
 
 		Debug.Log(t.position);
