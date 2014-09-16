@@ -30,16 +30,18 @@ public class Rotations : BrainBase
 		// FROM ////////////////////////////////
 
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
-			.Append(ts[3].DORotateFrom(new Vector3(0, -45, 0), 1))
+			.Append(ts[3].DORotate(new Vector3(0, -45, 0), 1)
+				.From())
 			.Append(ts[3].DORotate(new Vector3(0, -45, 0), 1));
 
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
-			.Append(ts[4].DORotateFrom(new Vector3(0, -45, 0), 1, false))
+			.Append(ts[4].DORotate(new Vector3(0, -45, 0), 1, false)
+				.From())
 			.Append(ts[4].DORotate(new Vector3(0, -45, 0), 1, false));
 
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
-			.Append(ts[5].DORotateFrom(new Vector3(0, -45, 0), 1)
-				.SetRelative())
+			.Append(ts[5].DORotate(new Vector3(0, -45, 0), 1)
+				.From(true))
 			.Append(ts[5].DORotate(new Vector3(0, -90, 0), 1)
 				.SetRelative());
 	}

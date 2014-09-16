@@ -23,6 +23,8 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             t.startValue = t.endValue = t.changeValue = null;
         }
 
+        public override void SetFrom(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t, bool isRelative) {}
+
         public override Vector3[] ConvertToStartValue(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t, Vector3 value)
         {
             int len = t.endValue.Length;

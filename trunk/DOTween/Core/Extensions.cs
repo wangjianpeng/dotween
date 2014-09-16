@@ -19,5 +19,13 @@ namespace DG.Tweening.Core
             t.specialStartupMode = mode;
             return t;
         }
+
+        // Prevents a tween to use a From setup even if passed
+        internal static TweenerCore<T1, T2, TPlugOptions> NoFrom<T1, T2, TPlugOptions>(this TweenerCore<T1, T2, TPlugOptions> t)
+            where TPlugOptions : struct
+        {
+            t.isFromAllowed = false;
+            return t;
+        }
     }
 }

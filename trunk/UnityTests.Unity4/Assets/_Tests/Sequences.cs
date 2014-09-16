@@ -41,7 +41,8 @@ public class Sequences : BrainBase
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Kill All")) DOTween.Kill();
-		if (GUILayout.Button("Create Sequence")) mainSequence = CreateSequence();
+		if (GUILayout.Button("Create MAIN Sequence")) mainSequence = CreateSequence();
+		if (GUILayout.Button("Create FROM Sequence")) CreateFromSequence();
 		if (GUILayout.Button("Create Tween")) CreateTween();
 		GUILayout.EndHorizontal();
 
@@ -129,6 +130,22 @@ public class Sequences : BrainBase
 		mainSeq.PrependCallback(()=> DGUtils.Log("1.75f MAINSEQUENCE prepended callback"));
 
 		return mainSeq;
+	}
+
+	void CreateFromSequence()
+	{
+		Transform target = ((GameObject)Instantiate(prefab)).transform;
+		Sequence seq = DOTween.Sequence()
+			.SetId("FROM Sequence")
+			.OnStart(()=> DGUtils.Log("FROM Sequence Start"))
+			.OnStepComplete(()=> { stepCompleteS2++; DGUtils.Log("FROM SEQUENCE Step Complete"); })
+			.OnComplete(()=> DGUtils.Log("FROM SEQUENCE Complete"));
+		seq.Append(target.DOMove(new Vector3(0, -3, 0), 1)
+			.From(true)
+		);
+		seq.Append(target.DOMove(new Vector3(0, 3, 0), 1)
+			.From(true)
+		);
 	}
 
 	void CreateTween()

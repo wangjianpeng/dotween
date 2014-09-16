@@ -16,6 +16,14 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     {
         public override void Reset(TweenerCore<uint, uint, NoOptions> t) { }
 
+        public override void SetFrom(TweenerCore<uint, uint, NoOptions> t, bool isRelative)
+        {
+            uint prevEndVal = t.endValue;
+            t.endValue = t.getter();
+            t.startValue = isRelative ? t.endValue + prevEndVal : prevEndVal;
+            t.setter(t.startValue);
+        }
+
         public override uint ConvertToStartValue(TweenerCore<uint, uint, NoOptions> t, uint value)
         {
             return value;

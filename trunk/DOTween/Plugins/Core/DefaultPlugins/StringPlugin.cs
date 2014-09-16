@@ -20,6 +20,14 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
     {
         static readonly StringBuilder _Buffer = new StringBuilder();
 
+        public override void SetFrom(TweenerCore<string, string, StringOptions> t, bool isRelative)
+        {
+            string prevEndVal = t.endValue;
+            t.endValue = t.getter();
+            t.startValue = prevEndVal;
+            t.setter(t.startValue);
+        }
+
         public override void Reset(TweenerCore<string, string, StringOptions> t)
         {
             t.startValue = t.endValue = t.changeValue = null;

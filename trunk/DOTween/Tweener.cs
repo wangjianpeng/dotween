@@ -17,10 +17,15 @@ namespace DG.Tweening
     /// </summary>
     public abstract class Tweener : Tween
     {
+        // TRUE when start value has been changed via From or ChangeStart/Values (allows DoStartup to take it into account).
+        // Reset by TweenerCore
+        internal bool hasManuallySetStartValue;
+        internal bool isFromAllowed = true; // if FALSE from tweens won't be allowed. Reset by TweenerCore
+
         internal Tweener() {}
 
         // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
+        // ABSTRACT METHODS ------------------------------------------------------------------
 
         /// <summary>Changes the start value of a tween and rewinds it (without pausing it).
         /// Has no effect with tweens that are inside Sequences</summary>
@@ -46,6 +51,8 @@ namespace DG.Tweening
         /// <param name="newEndValue">The new end value</param>
         /// <param name="newDuration">If bigger than 0 applies it as the new tween duration</param>
         public abstract Tweener ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1);
+
+        internal abstract Tweener SetFrom(bool relative);
 
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
@@ -121,23 +128,14 @@ namespace DG.Tweening
                     try {
                         t.startValue = t.tweenPlugin.ConvertToStartValue(t, t.getter());
                     } catch {
-                        // Target/field doesn't exist: kill tween
-                        return false;
+                        return false; // Target/field doesn't exist: kill tween
                     }
                 } else t.startValue = t.tweenPlugin.ConvertToStartValue(t, t.getter());
             }
 
             if (t.isRelative) t.tweenPlugin.SetRelativeEndValue(t);
 
-            if (t.isFrom) {
-                // Switch start and end value and jump immediately to new start value, regardless of delays
-                T2 prevStartValue = t.startValue;
-                t.startValue = t.endValue;
-                t.endValue = prevStartValue;
-                t.tweenPlugin.SetChangeValue(t);
-                // Jump (no need for safeMode checks since they already happened when assigning start value)
-                t.tweenPlugin.EvaluateAndApply(t.plugOptions, t, t.isRelative, t.getter, t.setter, 0, t.startValue, t.endValue, 1);
-            } else t.tweenPlugin.SetChangeValue(t);
+            t.tweenPlugin.SetChangeValue(t);
 
             // Duration based startup operations
             DOStartupDurationBased(t);
