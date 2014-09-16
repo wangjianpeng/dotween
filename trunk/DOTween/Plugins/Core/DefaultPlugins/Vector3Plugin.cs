@@ -22,7 +22,27 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
             Vector3 prevEndVal = t.endValue;
             t.endValue = t.getter();
             t.startValue = isRelative ? t.endValue + prevEndVal : prevEndVal;
-            t.setter(t.startValue);
+            Vector3 to = t.endValue;
+            switch (t.plugOptions.axisConstraint) {
+            case AxisConstraint.X:
+                to.x = t.startValue.x;
+                break;
+            case AxisConstraint.Y:
+                to.y = t.startValue.y;
+                break;
+            case AxisConstraint.Z:
+                to.z = t.startValue.z;
+                break;
+            default:
+                to = t.startValue;
+                break;
+            }
+            if (t.plugOptions.snapping) {
+                to.x = (float)Math.Round(to.x);
+                to.y = (float)Math.Round(to.y);
+                to.z = (float)Math.Round(to.z);
+            }
+            t.setter(to);
         }
 
         public override Vector3 ConvertToStartValue(TweenerCore<Vector3, Vector3, VectorOptions> t, Vector3 value)

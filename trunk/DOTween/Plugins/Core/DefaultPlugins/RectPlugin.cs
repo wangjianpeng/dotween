@@ -28,7 +28,14 @@ namespace DG.Tweening.Plugins.Core.DefaultPlugins
                 t.startValue.width += t.endValue.width;
                 t.startValue.height += t.endValue.height;
             }
-            t.setter(t.startValue);
+            Rect to = t.startValue;
+            if (t.plugOptions.snapping) {
+                to.x = (float)Math.Round(to.x);
+                to.y = (float)Math.Round(to.y);
+                to.width = (float)Math.Round(to.width);
+                to.height = (float)Math.Round(to.height);
+            }
+            t.setter(to);
         }
 
         public override Rect ConvertToStartValue(TweenerCore<Rect, Rect, RectOptions> t, Rect value)
