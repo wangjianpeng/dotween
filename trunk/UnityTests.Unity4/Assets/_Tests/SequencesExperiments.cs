@@ -55,8 +55,11 @@ public class SequencesExperiments : BrainBase
 	void OnGUI()
 	{
 		DGUtils.BeginGUI();
+		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
 		if (GUILayout.Button("Restart")) DOTween.Restart();
+		if (GUILayout.Button("Flip")) DOTween.Flip();
+		GUILayout.EndHorizontal();
 		DGUtils.EndGUI();
 	}
 }
