@@ -6,21 +6,42 @@ public class BugTests : BrainBase
 {
 	public Transform[] ts;
 
-	Vector3 dwn;
+	float someFloat0 = 0;
+	float someFloat1 = 1;
 
 	void Start ()
 	{
-		dwn = new Vector3(0f,-0.5f,0f);
+		Sequence s = DOTween.Sequence()
+			.SetAutoKill(false);
+
+		s.Append(DOTween.To(() => someFloat0, x => someFloat0 = x, 0.5f, 1)
+			.SetEase(Ease.InQuad)
+		);
+		s.AppendInterval(0.5f);
+		s.Append(DOTween.To(() => someFloat0, x => someFloat0 = x, 1, 1)
+			.SetEase(Ease.InQuad)
+		);
+		s.Pause();
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown(KeyCode.Return)) {
-			ts[0].DOPunchPosition(dwn,1f,1,1f,false); // doesn't work
-			// ts[0].DOPunchPosition(dwn,1f); // works
+		
+	}
 
-			ts[1].DOShakePosition(1f, 3f, 1);
-		}
+	void OnGUI()
+	{
+		DGUtils.BeginGUI();
+
+		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
+		if (GUILayout.Button("Rewind")) DOTween.Rewind();
+		if (GUILayout.Button("Complete")) DOTween.Complete();
+		if (GUILayout.Button("Restart")) DOTween.Restart();
+		if (GUILayout.Button("Flip")) DOTween.Flip();
+
+		GUILayout.Label("someFloat0: " + someFloat0);
+		GUILayout.Label("someFloat1: " + someFloat1);
+
+		DGUtils.EndGUI();
 	}
 }

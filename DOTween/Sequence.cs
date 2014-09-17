@@ -143,16 +143,20 @@ namespace DG.Tweening
         internal static bool DoApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
             float from, to = 0;
+            // Determine if prevPos was inverse.
+            // Used to calculate correct "from" value when applying internal cycle
+            // and also in case of multiple loops within a single update
+            bool isInverse = s.loopType == LoopType.Yoyo
+                && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
+            if (s.isBackwards) isInverse = !isInverse;
+            // Update multiple loop cycles within the same update
             if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
                 // Run all cycles elapsed since last update
                 int cycles = newCompletedSteps;
                 int cyclesDone = 0;
                 from = prevPosition;
-                bool isInverse = s.loopType == LoopType.Yoyo
-                    && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
-                if (s.isBackwards) isInverse = !isInverse; // TEST
                 while (cyclesDone < cycles) {
-//                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
+                    //                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
                     if (cyclesDone > 0) from = to;
                     else if (isInverse && !s.isBackwards) from = s.duration - from;
                     to = isInverse ? 0 : s.duration;
@@ -163,8 +167,8 @@ namespace DG.Tweening
             }
             // Run current cycle
 //            Debug.Log("::::::::::::: UPDATING");
-            if (newCompletedSteps > 0) from = useInversePosition ? s.duration : 0;
-            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
+            if (newCompletedSteps > 0) from = useInversePosition || isInverse ? s.duration : 0;
+            else from = useInversePosition || isInverse ? s.duration - prevPosition : prevPosition;
             return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
         }
 
@@ -180,7 +184,8 @@ namespace DG.Tweening
                 for (int i = len; i > -1; --i) {
                     if (!s.active) return true; // Killed by some internal callback
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos)) continue;
+//                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos)) continue;
+                    if (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
                         // Nested Tweener/Sequence
@@ -194,11 +199,13 @@ namespace DG.Tweening
                     }
                 }
             } else {
+                // Debug
                 int len = s._sequencedObjs.Count;
                 for (int i = 0; i < len; ++i) {
                     if (!s.active) return true; // Killed by some internal callback
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos)) continue;
+//                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos)) continue;
+                    if (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos) continue;
                     if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
                     else {
                         // Nested Tweener/Sequence
