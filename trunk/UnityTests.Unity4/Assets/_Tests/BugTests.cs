@@ -7,18 +7,30 @@ public class BugTests : BrainBase
 	public Transform[] ts;
 
 	float someFloat0 = 0;
-	float someFloat1 = 1;
+	float someFloat1 = 0.5f;
+
+	float startupTime;
+	float elapsed;
 
 	void Start ()
 	{
 		Sequence s = DOTween.Sequence()
+			.OnPlay(() => startupTime = Time.realtimeSinceStartup)
+			.OnUpdate(() => elapsed = Time.realtimeSinceStartup - startupTime)
 			.SetAutoKill(false);
 
 		s.Append(DOTween.To(() => someFloat0, x => someFloat0 = x, 0.5f, 1)
 			.SetEase(Ease.InQuad)
 		);
-		s.AppendInterval(0.5f);
+		// s.AppendInterval(0.5f);
 		s.Append(DOTween.To(() => someFloat0, x => someFloat0 = x, 1, 1)
+			.SetEase(Ease.InQuad)
+			.SetDelay(0.5f)
+		);
+		s.Insert(1, DOTween.To(() => someFloat1, x => someFloat1 = x, 1, 1)
+			.SetEase(Ease.InQuad)
+		);
+		s.Append(DOTween.To(() => someFloat1, x => someFloat1 = x, 2, 1)
 			.SetEase(Ease.InQuad)
 		);
 		s.Pause();
@@ -41,6 +53,7 @@ public class BugTests : BrainBase
 
 		GUILayout.Label("someFloat0: " + someFloat0);
 		GUILayout.Label("someFloat1: " + someFloat1);
+		GUILayout.Label("elapsed: " + elapsed);
 
 		DGUtils.EndGUI();
 	}

@@ -54,13 +54,13 @@ namespace DG.Tweening
 
             t.isSequenced = t.creationLocked = true;
             if (t.loops == -1) t.loops = 1;
-            float tFullTime = t.delay + (t.duration * t.loops);
+            float tFullTime = t.duration * t.loops;
             t.autoKill = false;
             t.delay = t.elapsedDelay = 0;
             t.delayComplete = true;
             t.isSpeedBased = false;
             t.sequencedPosition = atPosition;
-            t.sequencedEndPosition = t.sequencedPosition + tFullTime;
+            t.sequencedEndPosition = atPosition + tFullTime;
 
             if (t.sequencedEndPosition > inSequence.duration) inSequence.duration = t.sequencedEndPosition;
             inSequence._sequencedObjs.Add(t);
