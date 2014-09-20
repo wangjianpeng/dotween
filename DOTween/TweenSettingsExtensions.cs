@@ -394,7 +394,7 @@ namespace DG.Tweening
         #region Tweeners-only
 
         /// <summary>Changes a TO tween into a FROM tween: sets the current target's position as the tween's endValue
-        /// then sends the target to the previously set endValue.</summary>
+        /// then immediately sends the target to the previously set endValue.</summary>
         public static T From<T>(this T t) where T : Tweener
         {
             if (!t.active || t.creationLocked || !t.isFromAllowed) return t;
@@ -404,7 +404,7 @@ namespace DG.Tweening
             return t;
         }
         /// <summary>Changes a TO tween into a FROM tween: sets the current target's position as the tween's endValue
-        /// then sends the target to the previously set endValue.</summary>
+        /// then immediately sends the target to the previously set endValue.</summary>
         /// <param name="isRelative">If TRUE the FROM value will be calculated as relative to the current one</param>
         public static T From<T>(this T t, bool isRelative) where T : Tweener
         {

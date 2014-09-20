@@ -29,9 +29,6 @@
             Main DOTween class. Contains static methods to create and control tweens in a generic way
             </summary>
         </member>
-        <member name="F:DG.Tweening.DOTween.inspectorUpdater">
-            <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
-        </member>
         <member name="F:DG.Tweening.DOTween.Version">
             <summary>DOTween's version</summary>
         </member>
@@ -76,7 +73,7 @@
             Must be called once, before the first ever DOTween call/reference,
             otherwise it will be called automatically and will use default options.
             Calling it a second time won't have any effect.
-            <para>You can chain <see cref="M:DG.Tweening.DOTween.SetCapacity(System.Int32,System.Int32)"/> to this method, to directly set the max starting size of Tweeners and Sequences:</para>
+            <para>You can chain <code>SetCapacity</code> to this method, to directly set the max starting size of Tweeners and Sequences:</para>
             <code>DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);</code>
             </summary>
             <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
@@ -97,21 +94,6 @@
             <param name="logBehaviour">Type of logging to use.
             You can change this setting at any time by changing the static <see cref="P:DG.Tweening.DOTween.logBehaviour"/> property.
             <para>Default: ErrorsOnly</para></param>
-        </member>
-        <member name="M:DG.Tweening.DOTween.SetCapacity(System.Int32,System.Int32)">
-            <summary>
-            Directly sets the current max capacity of Tweeners and Sequences
-            (meaning how many Tweeners and Sequences can be running at the same time),
-            so that DOTween doesn't need to automatically increase them in case the max is reached
-            (which might lead to hiccups when that happens).
-            Sequences capacity must be less or equal to Tweeners capacity
-            (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
-            Beware: use this method only when there are no tweens running.
-            </summary>
-            <param name="tweenersCapacity">Max Tweeners capacity.
-            Default: 200</param>
-            <param name="sequencesCapacity">Max Sequences capacity.
-            Default: 50</param>
         </member>
         <member name="M:DG.Tweening.DOTween.SetTweensCapacity(System.Int32,System.Int32)">
             <summary>
@@ -558,11 +540,11 @@
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.From``1(``0)">
             <summary>Changes a TO tween into a FROM tween: sets the current target's position as the tween's endValue
-            then sends the target to the previously set endValue.</summary>
+            then immediately sends the target to the previously set endValue.</summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.From``1(``0,System.Boolean)">
             <summary>Changes a TO tween into a FROM tween: sets the current target's position as the tween's endValue
-            then sends the target to the previously set endValue.</summary>
+            then immediately sends the target to the previously set endValue.</summary>
             <param name="isRelative">If TRUE the FROM value will be calculated as relative to the current one</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetDelay``1(``0,System.Single)">
@@ -1703,6 +1685,30 @@
             <summary>
             What axis to constrain in case of Vector tweens
             </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.DOTweenComponent">
+            <summary>
+            Used to separate DOTween class from the MonoBehaviour instance (in order to use static constructors on DOTween).
+            Contains all instance-based methods
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.Core.DOTweenComponent.inspectorUpdater">
+            <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
+        </member>
+        <member name="M:DG.Tweening.Core.DOTweenComponent.SetCapacity(System.Int32,System.Int32)">
+            <summary>
+            Directly sets the current max capacity of Tweeners and Sequences
+            (meaning how many Tweeners and Sequences can be running at the same time),
+            so that DOTween doesn't need to automatically increase them in case the max is reached
+            (which might lead to hiccups when that happens).
+            Sequences capacity must be less or equal to Tweeners capacity
+            (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
+            Beware: use this method only when there are no tweens running.
+            </summary>
+            <param name="tweenersCapacity">Max Tweeners capacity.
+            Default: 200</param>
+            <param name="sequencesCapacity">Max Sequences capacity.
+            Default: 50</param>
         </member>
     </members>
 </doc>
