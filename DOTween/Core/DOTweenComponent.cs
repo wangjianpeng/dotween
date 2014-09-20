@@ -102,31 +102,31 @@ namespace DG.Tweening.Core
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be complete (or killed)
         internal IEnumerator WaitForCompletion(Tween t)
         {
-            while (t.active && !t.isComplete) yield return 0;
+            while (t.active && !t.isComplete) yield return null;
         }
 
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be killed
         internal IEnumerator WaitForKill(Tween t)
         {
-            while (t.active) yield return 0;
+            while (t.active) yield return null;
         }
 
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to reach a given amount of loops (or to be killed)
         internal IEnumerator WaitForElapsedLoops(Tween t, int elapsedLoops)
         {
-            while (t.active && t.completedLoops < elapsedLoops) yield return 0;
+            while (t.active && t.completedLoops < elapsedLoops) yield return null;
         }
 
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to reach a given time position (or to be killed)
         internal IEnumerator WaitForPosition(Tween t, float position)
         {
-            while (t.active && t.position * (t.completedLoops + 1) < position) yield return 0;
+            while (t.active && t.position * (t.completedLoops + 1) < position) yield return null;
         }
 
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be started (or killed)
         internal IEnumerator WaitForStart(Tween t)
         {
-            while (t.active && !t.playedOnce) yield return 0;
+            while (t.active && !t.playedOnce) yield return null;
         }
 
         #endregion
