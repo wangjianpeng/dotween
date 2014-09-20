@@ -4,6 +4,7 @@
 // License Copyright (c) Daniele Giardini.
 // This work is subject to the terms at http://dotween.demigiant.com/license.php
 
+using System;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
 using UnityEngine;
@@ -44,46 +45,57 @@ namespace DG.Tweening.Core
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        public override Tweener ChangeStartValue<T>(T newStartValue, float newDuration = -1)
+        // No generics because T to T2 conversion isn't compatible with AOT
+        public override Tweener ChangeStartValue(object newStartValue, float newDuration = -1)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning(_TxtCantChangeSequencedValues);
                 return this;
             }
-            if (typeof(T) != typeofT2) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newStartValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+            Type valT = newStartValue.GetType();
+            if (valT != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeStartValue: incorrect newStartValue type (is " + valT + ", should be " + typeofT2 + ")");
                 return this;
             }
-            return DoChangeStartValue(this, (T2)(object)newStartValue, newDuration);
+            return DoChangeStartValue(this, (T2)newStartValue, newDuration);
         }
 
-        public override Tweener ChangeEndValue<T>(T newEndValue, bool snapStartValue)
+        // No generics because T to T2 conversion isn't compatible with AOT
+        public override Tweener ChangeEndValue(object newEndValue, bool snapStartValue)
         { return ChangeEndValue(newEndValue, -1, snapStartValue); }
-
-        public override Tweener ChangeEndValue<T>(T newEndValue, float newDuration = -1, bool snapStartValue = false)
+        // No generics because T to T2 conversion isn't compatible with AOT
+        public override Tweener ChangeEndValue(object newEndValue, float newDuration = -1, bool snapStartValue = false)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning(_TxtCantChangeSequencedValues);
                 return this;
             }
-            if (typeof(T) != typeofT2) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+            Type valT = newEndValue.GetType();
+            if (valT != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeEndValue: incorrect newEndValue type (is " + valT + ", should be " + typeofT2 + ")");
                 return this;
             }
-            return DoChangeEndValue(this, (T2)(object)newEndValue, newDuration, snapStartValue);
+            return DoChangeEndValue(this, (T2)newEndValue, newDuration, snapStartValue);
         }
 
-        public override Tweener ChangeValues<T>(T newStartValue, T newEndValue, float newDuration = -1)
+        // No generics because T to T2 conversion isn't compatible with AOT
+        public override Tweener ChangeValues(object newStartValue, object newEndValue, float newDuration = -1)
         {
             if (isSequenced) {
                 if (Debugger.logPriority >= 1) Debugger.LogWarning(_TxtCantChangeSequencedValues);
                 return this;
             }
-            if (typeof(T) != typeofT2) {
-                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeValues: incorrect value type (is " + typeof(T) + ", should be " + typeofT2 + ")");
+            Type valT0 = newStartValue.GetType();
+            Type valT1 = newEndValue.GetType();
+            if (valT0 != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeValues: incorrect value type (is " + valT0 + ", should be " + typeofT2 + ")");
                 return this;
             }
-            return DoChangeValues(this, (T2)(object)newStartValue, (T2)(object)newEndValue, newDuration);
+            if (valT1 != typeofT2) {
+                if (Debugger.logPriority >= 1) Debugger.LogWarning("ChangeValues: incorrect value type (is " + valT1 + ", should be " + typeofT2 + ")");
+                return this;
+            }
+            return DoChangeValues(this, (T2)newStartValue, (T2)newEndValue, newDuration);
         }
 
         // ===================================================================================
