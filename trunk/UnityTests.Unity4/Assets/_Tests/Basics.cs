@@ -48,7 +48,7 @@ public class Basics : BrainBase
 		else tp.SetEase(ease);
 
 		// Transform tweens
-		tweens = new Tween[targets.Length];
+		tweens = new Tween[targets.Length - 1];
 		for (int i = 0; i < targets.Length; ++i)
 		{
 			Transform t = targets[i];
@@ -64,14 +64,14 @@ public class Basics : BrainBase
 				tweens[i] = DOTween.To(()=> t.position, x=> t.position = x, new Vector3(0, 5f, 0), 1.5f).SetAs(tp).SetOptions(true).SetRelative().SetAutoKill(true);
 				break;
 			case 3:
-				// Vector3Array
+				// Vector3Array (not stored)
 				Vector3[] path = new[] {
 					new Vector3(1,0,0), new Vector3(0,1,0), new Vector3(1,0,0), new Vector3(0,-1,0)
 				};
 				float[] durations = new[] { 0.5f, 0.5f, 0.5f, 0.5f };
-				tweens[i] = DOTween.ToArray(() => t.position, x => t.position = x, path, durations)
-					.SetAs(tp).SetRelative();
-				break;
+				DOTween.ToArray(() => t.position, x => t.position = x, path, durations)
+					.SetAs(tp).SetRelative().Pause();
+				return;
 			}
 			Tween tween = tweens[i];
 			tween.OnStart(()=> Debug.Log("OnStart: " + t.name))

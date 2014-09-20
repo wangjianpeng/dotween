@@ -14,10 +14,10 @@ using UnityEngine;
 
 namespace DG.DOTweenEditor
 {
-    [CustomEditor(typeof(DOTween))]
+    [CustomEditor(typeof(DOTweenComponent))]
     public class DOTweenInspector : Editor
     {
-        DOTween _src;
+//        DOTweenComponent _src;
         string _title;
         string _proVersion;
         string _43Version;
@@ -40,7 +40,7 @@ namespace DG.DOTweenEditor
                 // No DOTweenPro present
             }
 
-            _src = target as DOTween;
+//            _src = target as DOTweenComponent;
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("DOTween v").Append(DOTween.Version);
             if (DOTween.isDebugBuild) _strBuilder.Append(" [Debug build]");
@@ -94,9 +94,9 @@ namespace DG.DOTweenEditor
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("SETTINGS ▼");
             _strBuilder.Append("\nSafe Mode: ").Append(DOTween.useSafeMode ? "ON" : "OFF");
-            _strBuilder.Append("\nTimeScale: ").Append(DOTween.timeScale);
             _strBuilder.Append("\nLog Behaviour: ").Append(DOTween.logBehaviour);
             _strBuilder.Append("\nShow Unity Editor Report: ").Append(DOTween.showUnityEditorReport);
+            _strBuilder.Append("\nTimeScale: ").Append(DOTween.timeScale);
             GUILayout.Label(_strBuilder.ToString());
 
             GUILayout.Space(8);

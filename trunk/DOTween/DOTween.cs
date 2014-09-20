@@ -18,12 +18,10 @@ namespace DG.Tweening
     /// <summary>
     /// Main DOTween class. Contains static methods to create and control tweens in a generic way
     /// </summary>
-    public class DOTween : MonoBehaviour, IDOTweenInit
+    public class DOTween
     {
-        /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
-        public int inspectorUpdater;
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.520";
+        public static readonly string Version = "0.8.530";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -65,14 +63,12 @@ namespace DG.Tweening
         /// <para>Default: 0</para></summary>
         public static float defaultEasePeriod = 0;
 
-        internal static DOTween instance;
+        internal static DOTweenComponent instance;
         internal static bool isUnityEditor;
         internal static bool isDebugBuild;
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
         internal static readonly List<TweenCallback> GizmosDelegates = new List<TweenCallback>(); // Can be used by other classes to call internal gizmo draw methods
-        static bool _initialized;
-        float _unscaledTime;
-        float _unscaledDeltaTime;
+        internal static bool initialized; // Can be set to false by DOTweenComponent OnDestroy
 
         #region Static Constructor
 
@@ -86,97 +82,13 @@ namespace DG.Tweening
 
         #endregion
 
-        #region Unity Methods
-
-        void Awake()
-        {
-            inspectorUpdater = 0;
-            _unscaledTime = Time.realtimeSinceStartup;
-        }
-
-        void Update()
-        {
-            _unscaledDeltaTime = Time.realtimeSinceStartup - _unscaledTime;
-            if (TweenManager.hasActiveDefaultTweens) {
-                TweenManager.Update(UpdateType.Default, Time.deltaTime * timeScale, _unscaledDeltaTime * timeScale);
-            }
-            _unscaledTime = Time.realtimeSinceStartup;
-
-            if (isUnityEditor) {
-                inspectorUpdater++;
-                if (showUnityEditorReport && TweenManager.hasActiveTweens) {
-                    if (TweenManager.totActiveTweeners > maxActiveTweenersReached) maxActiveTweenersReached = TweenManager.totActiveTweeners;
-                    if (TweenManager.totActiveSequences > maxActiveSequencesReached) maxActiveSequencesReached = TweenManager.totActiveSequences;
-                }
-            }
-        }
-
-        void LateUpdate()
-        {
-            if (TweenManager.hasActiveLateTweens) {
-                TweenManager.Update(UpdateType.Late, Time.deltaTime * timeScale, _unscaledDeltaTime * timeScale);
-            }
-        }
-
-        void OnDrawGizmos()
-        {
-            int len = GizmosDelegates.Count;
-            if (len == 0) return;
-
-            for (int i = 0; i < len; ++i) GizmosDelegates[i]();
-        }
-
-        void OnDestroy()
-        {
-            if (showUnityEditorReport) {
-                string s = "REPORT > Max overall simultaneous active Tweeners/Sequences: " + maxActiveTweenersReached + "/" + maxActiveSequencesReached;
-                Debugger.LogReport(s);
-            }
-            _initialized = false;
-            instance = null;
-        }
-        #endregion
-
-        #region Yield Coroutines
-
-        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be complete (or killed)
-        internal IEnumerator WaitForCompletion(Tween t)
-        {
-            while (t.active && !t.isComplete) yield return 0;
-        }
-
-        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be killed
-        internal IEnumerator WaitForKill(Tween t)
-        {
-            while (t.active) yield return 0;
-        }
-
-        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to reach a given amount of loops (or to be killed)
-        internal IEnumerator WaitForElapsedLoops(Tween t, int elapsedLoops)
-        {
-            while (t.active && t.completedLoops < elapsedLoops) yield return 0;
-        }
-
-        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to reach a given time position (or to be killed)
-        internal IEnumerator WaitForPosition(Tween t, float position)
-        {
-            while (t.active && t.position * (t.completedLoops + 1) < position) yield return 0;
-        }
-
-        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be started (or killed)
-        internal IEnumerator WaitForStart(Tween t)
-        {
-            while (t.active && !t.playedOnce) yield return 0;
-        }
-        #endregion
-
         #region Public Methods
 
         /// <summary>
         /// Must be called once, before the first ever DOTween call/reference,
         /// otherwise it will be called automatically and will use default options.
         /// Calling it a second time won't have any effect.
-        /// <para>You can chain <see cref="SetCapacity"/> to this method, to directly set the max starting size of Tweeners and Sequences:</para>
+        /// <para>You can chain <code>SetCapacity</code> to this method, to directly set the max starting size of Tweeners and Sequences:</para>
         /// <code>DOTween.Init(false, false, LogBehaviour.Default).SetCapacity(100, 20);</code>
         /// </summary>
         /// <param name="recycleAllByDefault">If TRUE all new tweens will be set for recycling, meaning that when killed,
@@ -199,39 +111,18 @@ namespace DG.Tweening
         /// <para>Default: ErrorsOnly</para></param>
         public static IDOTweenInit Init(bool recycleAllByDefault = false, bool useSafeMode = true, LogBehaviour logBehaviour = LogBehaviour.ErrorsOnly)
         {
-            if (_initialized) return instance;
+            if (initialized) return instance;
 
-            _initialized = true;
+            initialized = true;
             // Options
             DOTween.defaultRecyclable = recycleAllByDefault;
             DOTween.useSafeMode = useSafeMode;
             DOTween.logBehaviour = logBehaviour;
             // Gameobject
-            GameObject go = new GameObject("[DOTween]");
-            DontDestroyOnLoad(go);
-            instance = go.AddComponent<DOTween>();
+            instance = DOTweenComponent.Create();
             // Log
             if (Debugger.logPriority >= 2) Debugger.Log("DOTween initialization (useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
 
-            return instance;
-        }
-
-        /// <summary>
-        /// Directly sets the current max capacity of Tweeners and Sequences
-        /// (meaning how many Tweeners and Sequences can be running at the same time),
-        /// so that DOTween doesn't need to automatically increase them in case the max is reached
-        /// (which might lead to hiccups when that happens).
-        /// Sequences capacity must be less or equal to Tweeners capacity
-        /// (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
-        /// Beware: use this method only when there are no tweens running.
-        /// </summary>
-        /// <param name="tweenersCapacity">Max Tweeners capacity.
-        /// Default: 200</param>
-        /// <param name="sequencesCapacity">Max Sequences capacity.
-        /// Default: 50</param>
-        public IDOTweenInit SetCapacity(int tweenersCapacity, int sequencesCapacity)
-        {
-            TweenManager.SetCapacities(tweenersCapacity, sequencesCapacity);
             return instance;
         }
 
@@ -264,7 +155,7 @@ namespace DG.Tweening
             PluginsManager.PurgeAll();
             if (!destroy) return;
 
-            _initialized = false;
+            initialized = false;
             useSafeMode = false;
             showUnityEditorReport = false;
             timeScale = 1;
@@ -278,7 +169,7 @@ namespace DG.Tweening
             defaultRecyclable = false;
             maxActiveTweenersReached = maxActiveSequencesReached = 0;
 
-            Destroy(instance.gameObject);
+            UnityEngine.Object.Destroy(instance.gameObject);
         }
 
         /// <summary>
@@ -776,7 +667,7 @@ namespace DG.Tweening
 
         static void InitCheck()
         {
-            if (_initialized) return;
+            if (initialized) return;
 
             Init(defaultRecyclable, useSafeMode, logBehaviour);
             Debugger.LogWarning("DOTween auto-initialized with default settings (recycleAllByDefault: " + defaultRecyclable + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
