@@ -122,7 +122,7 @@ namespace DG.Tweening
         }
 
         // CALLED BY Tween the moment the tween starts.
-        // Returns TRUE in case of success (always TRUE for Sequences)
+        // Returns TRUE in case of success
         internal override bool Startup()
         {
             return DoStartup(this);
@@ -142,8 +142,11 @@ namespace DG.Tweening
             s.loopType = DOTween.defaultLoopType;
         }
 
+        // Returns TRUE in case of success
         internal static bool DoStartup(Sequence s)
         {
+            if (s.sequencedTweens.Count == 0) return false; // Empty Sequence
+
             s.startupDone = true;
             s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
             // Order sequencedObjs by start position
