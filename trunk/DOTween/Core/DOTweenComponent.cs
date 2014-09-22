@@ -54,6 +54,11 @@ namespace DG.Tweening.Core
             }
         }
 
+        void OnLevelWasLoaded()
+        {
+            if (DOTween.useSafeMode) DOTween.Validate();
+        }
+
         void OnDrawGizmos()
         {
             int len = DOTween.GizmosDelegates.Count;

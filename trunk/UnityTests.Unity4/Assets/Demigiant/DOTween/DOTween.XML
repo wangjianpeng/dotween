@@ -124,10 +124,10 @@
         </member>
         <member name="M:DG.Tweening.DOTween.Validate">
             <summary>
-            Checks all active tweens to find and remove eventually invalid ones (usually due to their targets becoming NULL)
+            Checks all active tweens to find and remove eventually invalid ones (usually because their targets became NULL)
             and returns the total number of invalid tweens found and removed.
             <para>Automatically called when loading a new scene if <see cref="F:DG.Tweening.DOTween.useSafeMode"/> is TRUE.</para>
-            BEWARE: this is an expensive operation so use it with care
+            BEWARE: this is a slightly expensive operation so use it with care
             </summary>
         </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
