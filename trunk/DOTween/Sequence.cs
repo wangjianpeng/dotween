@@ -18,8 +18,10 @@ namespace DG.Tweening
     {
         // SETUP DATA ////////////////////////////////////////////////
 
-        internal readonly List<Tween> sequencedTweens = new List<Tween>(); // Only Tweens (used for despawning)
+        internal readonly List<Tween> sequencedTweens = new List<Tween>(); // Only Tweens (used for despawning and validation)
         readonly List<ABSSequentiable> _sequencedObjs = new List<ABSSequentiable>(); // Tweens plus SequenceCallbacks
+
+        #region Constructor
 
         internal Sequence()
         {
@@ -27,8 +29,9 @@ namespace DG.Tweening
             Reset();
         }
 
-        // ===================================================================================
-        // CREATION METHODS ------------------------------------------------------------------
+        #endregion
+
+        #region Creation Methods
 
         internal static Sequence DoPrepend(Sequence inSequence, Tween t)
         {
@@ -97,8 +100,7 @@ namespace DG.Tweening
             return inSequence;
         }
 
-        // ===================================================================================
-        // INTERNAL METHODS ------------------------------------------------------------------
+        #endregion
 
         internal override void Reset()
         {
@@ -106,6 +108,17 @@ namespace DG.Tweening
 
             sequencedTweens.Clear();
             _sequencedObjs.Clear();
+        }
+
+        // Called by TweenManager.Validate.
+        // Returns TRUE if the tween is valid
+        internal override bool Validate()
+        {
+            int len = sequencedTweens.Count;
+            for (int i = 0; i < len; i++) {
+                if (!sequencedTweens[i].Validate()) return false;
+            }
+            return true;
         }
 
         // CALLED BY Tween the moment the tween starts.

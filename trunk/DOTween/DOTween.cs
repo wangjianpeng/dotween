@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.8.530";
+        public static readonly string Version = "0.8.540";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -178,6 +178,17 @@ namespace DG.Tweening
         public static void ClearCachedTweens()
         {
             TweenManager.PurgePools();
+        }
+
+        /// <summary>
+        /// Checks all active tweens to find and remove eventually invalid ones (usually due to their targets becoming NULL)
+        /// and returns the total number of invalid tweens found and removed.
+        /// <para>Automatically called when loading a new scene if <see cref="useSafeMode"/> is TRUE.</para>
+        /// BEWARE: this is an expensive operation so use it with care
+        /// </summary>
+        public static int Validate()
+        {
+            return TweenManager.Validate();
         }
 
         #endregion

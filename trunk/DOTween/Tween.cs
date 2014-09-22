@@ -88,8 +88,7 @@ namespace DG.Tweening
         internal float elapsedDelay; // Amount of eventual delay elapsed (shared by Sequences only for compatibility reasons, otherwise not used)
         internal bool delayComplete = true; // TRUE when the delay has elapsed or isn't set, also set by Delay extension method (shared by Sequences only for compatibility reasons, otherwise not used)
 
-        // ===================================================================================
-        // INTERNAL + ABSTRACT METHODS -------------------------------------------------------
+        #region Abstracts + Overrideables
 
         // Doesn't reset active state, activeId and despawned, since those are only touched by TweenManager
         // Doesn't reset default values since those are set when Tweener.Setup is called
@@ -127,6 +126,10 @@ namespace DG.Tweening
 //            easePeriod = DOTween.defaultEasePeriod
         }
 
+        // Called by TweenManager.Validate.
+        // Returns TRUE if the tween is valid
+        internal abstract bool Validate();
+
         // Called by TweenManager in case a tween has a delay that needs to be updated.
         // Returns the eventual time in excess compared to the tween's delay time.
         // Shared also by Sequences even if they don't use it, in order to make it compatible with Tween.
@@ -143,8 +146,7 @@ namespace DG.Tweening
         // Returns TRUE if the tween needs to be killed
         internal abstract bool ApplyTween(float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode);
 
-        // ===================================================================================
-        // INTERNAL STATIC METHODS -----------------------------------------------------------
+        #endregion
 
         // Instead of advancing the tween from the previous position each time,
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
