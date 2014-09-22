@@ -18,6 +18,7 @@ public static class DGUtils
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("RELOAD SCENE")) Application.LoadLevel(Application.loadedLevel);
+		if (GUILayout.Button("VALIDATE TWEENS")) Debug.Log("Invalid tweens found: " + DOTween.Validate());
 		GUILayout.EndHorizontal();
 	}
 

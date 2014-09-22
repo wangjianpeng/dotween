@@ -44,8 +44,7 @@ namespace DG.Tweening.Core
         static public int updateLoopCount;
 #endif
 
-        // ===================================================================================
-        // INTERNAL METHODS ------------------------------------------------------------------
+        #region Main
 
         // Returns a new Tweener, from the pool if there's one available,
         // otherwise by instantiating a new one
@@ -123,6 +122,192 @@ namespace DG.Tweening.Core
             return s;
         }
 
+        internal static void SetUpdateType(Tween t, UpdateType updateType, bool isIndependentUpdate)
+        {
+            if (!t.active || t.updateType == updateType) {
+                t.updateType = updateType;
+                t.isIndependentUpdate = isIndependentUpdate;
+                return;
+            }
+            // Remove previous update type
+            if (t.updateType == UpdateType.Default) {
+                totActiveDefaultTweens--;
+                hasActiveDefaultTweens = totActiveDefaultTweens > 0;
+            } else {
+                totActiveLateTweens--;
+                hasActiveLateTweens = totActiveLateTweens > 0;
+            }
+            // Assign new one
+            t.updateType = updateType;
+            t.isIndependentUpdate = isIndependentUpdate;
+            if (updateType == UpdateType.Default) {
+                totActiveDefaultTweens++;
+                hasActiveDefaultTweens = true;
+            } else {
+                totActiveLateTweens++;
+                hasActiveLateTweens = true;
+            }
+        }
+
+        // Removes the given tween from the active tweens list
+        internal static void AddActiveTweenToSequence(Tween t)
+        {
+            RemoveActiveTween(t);
+        }
+
+        // Despawn all
+        internal static int DespawnAll()
+        {
+            int totDespawned = totActiveTweens;
+            for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
+                Tween t = _activeTweens[i];
+                if (t != null) Despawn(t, false);
+            }
+            ClearTweenArray(_activeTweens);
+            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
+            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
+            totActiveTweeners = totActiveSequences = 0;
+            _maxActiveLookupId = _reorganizeFromId = -1;
+            _requiresActiveReorganization = false;
+
+            return totDespawned;
+        }
+
+        internal static void Despawn(Tween t, bool modifyActiveLists = true)
+        {
+            // Callbacks
+            if (t.onKill != null) t.onKill();
+
+            if (modifyActiveLists) {
+                // Remove tween from active list
+                RemoveActiveTween(t);
+            }
+            if (t.isRecyclable) {
+                // Put the tween inside a pool
+                switch (t.tweenType) {
+                case TweenType.Sequence:
+                    _PooledSequences.Push(t);
+                    totPooledSequences++;
+                    // Despawn sequenced tweens
+                    Sequence s = (Sequence)t;
+                    int len = s.sequencedTweens.Count;
+                    for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
+                    break;
+                case TweenType.Tweener:
+                    if (_maxPooledTweenerId == -1) {
+                        _maxPooledTweenerId = maxTweeners - 1;
+                        _minPooledTweenerId = maxTweeners - 1;
+                    }
+                    if (_maxPooledTweenerId < maxTweeners - 1) {
+                        _pooledTweeners[_maxPooledTweenerId + 1] = t;
+                        _maxPooledTweenerId++;
+                        if (_minPooledTweenerId > _maxPooledTweenerId) _minPooledTweenerId = _maxPooledTweenerId;
+                    } else {
+                        for (int i = _maxPooledTweenerId; i > -1; --i) {
+                            if (_pooledTweeners[i] != null) continue;
+                            _pooledTweeners[i] = t;
+                            if (i < _minPooledTweenerId) _minPooledTweenerId = i;
+                            if (_maxPooledTweenerId < _minPooledTweenerId) _maxPooledTweenerId = _minPooledTweenerId;
+                            break;
+                        }
+                    }
+                    totPooledTweeners++;
+                    break;
+                }
+            } else {
+                // Remove
+                switch (t.tweenType) {
+                case TweenType.Sequence:
+                    totSequences--;
+                    // Despawn sequenced tweens
+                    Sequence s = (Sequence)t;
+                    int len = s.sequencedTweens.Count;
+                    for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
+                    break;
+                case TweenType.Tweener:
+                    totTweeners--;
+                    break;
+                }
+            }
+            t.active = false;
+            t.Reset();
+        }
+
+        // Destroys any active tween without putting them back in a pool,
+        // then purges all pools and resets capacities
+        internal static void PurgeAll()
+        {
+            // Fire eventual onKill callbacks
+            for (int i = 0; i < totActiveTweens; ++i) {
+                Tween t = _activeTweens[i];
+                if (t != null && t.onKill != null) t.onKill();
+            }
+
+            ClearTweenArray(_activeTweens);
+            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
+            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
+            totActiveTweeners = totActiveSequences = 0;
+            _maxActiveLookupId = _reorganizeFromId = -1;
+            _requiresActiveReorganization = false;
+            PurgePools();
+            ResetCapacities();
+            totTweeners = totSequences = 0;
+        }
+
+        // Removes any cached tween from the pools
+        internal static void PurgePools()
+        {
+            totTweeners -= totPooledTweeners;
+            totSequences -= totPooledSequences;
+            ClearTweenArray(_pooledTweeners);
+            _PooledSequences.Clear();
+            totPooledTweeners = totPooledSequences = 0;
+            _minPooledTweenerId = _maxPooledTweenerId = -1;
+        }
+
+        internal static void ResetCapacities()
+        {
+            SetCapacities(_DefaultMaxTweeners, _DefaultMaxSequences);
+        }
+
+        internal static void SetCapacities(int tweenersCapacity, int sequencesCapacity)
+        {
+            if (tweenersCapacity < sequencesCapacity) tweenersCapacity = sequencesCapacity;
+
+            maxActive = tweenersCapacity;
+            maxTweeners = tweenersCapacity;
+            maxSequences = sequencesCapacity;
+            Array.Resize(ref _activeTweens, maxActive);
+            Array.Resize(ref _pooledTweeners, tweenersCapacity);
+            _KillList.Capacity = maxActive;
+        }
+
+        // Looks through all active tweens and removes the ones whose getters generate errors
+        // (usually meaning their target has become NULL).
+        // Returns the total number of invalid tweens found and removed
+        // BEWARE: this is an expensive operation
+        internal static int Validate()
+        {
+            if (_requiresActiveReorganization) ReorganizeActiveTweens();
+
+            int totInvalid = 0;
+            for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
+                Tween t = _activeTweens[i];
+                if (!t.Validate()) {
+                    totInvalid++;
+                    MarkForKilling(t);
+                }
+            }
+            // Kill all eventually marked tweens
+            if (totInvalid > 0) {
+                DespawnTweens(_KillList, false);
+                int count = _KillList.Count - 1;
+                for (int i = count; i > -1; --i) RemoveActiveTween(_KillList[i]);
+                _KillList.Clear();
+            }
+            return totInvalid;
+        }
+
         internal static void Update(UpdateType updateType, float deltaTime, float independentTime)
         {
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
@@ -135,7 +320,7 @@ namespace DG.Tweening.Core
             bool willKill = false;
             for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
                 Tween t = _activeTweens[i];
-                if (t == null || t.updateType != updateType) continue; // Wrogn updateType or was added to a Sequence (thus removed from active list) while inside current updateLoop
+                if (t == null || t.updateType != updateType) continue; // Wrong updateType or was added to a Sequence (thus removed from active list) while inside current updateLoop
                 if (!t.active) {
                     // Manually killed by another tween's callback
                     willKill = true;
@@ -195,6 +380,93 @@ namespace DG.Tweening.Core
             }
             isUpdateLoop = false;
         }
+
+        internal static int FilteredOperation(OperationType operationType, FilterType filterType, object id, bool optionalBool, float optionalFloat)
+        {
+            int totInvolved = 0;
+            bool hasDespawned = false;
+            for (int i = _maxActiveLookupId; i > -1; --i) {
+                Tween t = _activeTweens[i];
+                if (t == null || !t.active) continue;
+
+                bool isFilterCompliant = false;
+                switch (filterType) {
+                case FilterType.All:
+                    isFilterCompliant = true;
+                    break;
+                case FilterType.TargetOrId:
+                    isFilterCompliant = id.Equals(t.id) || id.Equals(t.target);
+                    break;
+                }
+                if (isFilterCompliant) {
+                    switch (operationType) {
+                    case OperationType.Despawn:
+                        totInvolved++;
+                        if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+                        else {
+                            Despawn(t, false);
+                            hasDespawned = true;
+                            _KillList.Add(t);
+                        }
+                        break;
+                    case OperationType.Complete:
+                        bool hasAutoKill = t.autoKill;
+                        if (Complete(t, false)) {
+                            totInvolved++;
+                            if (hasAutoKill) {
+                                if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+                                else {
+                                    hasDespawned = true;
+                                    _KillList.Add(t);
+                                }
+                            }
+                        }
+                        break;
+                    case OperationType.Flip:
+                        if (Flip(t)) totInvolved++;
+                        break;
+                    case OperationType.Goto:
+                        Goto(t, optionalFloat, optionalBool);
+                        totInvolved++;
+                        break;
+                    case OperationType.Pause:
+                        if (Pause(t)) totInvolved++;
+                        break;
+                    case OperationType.Play:
+                        if (Play(t)) totInvolved++;
+                        break;
+                    case OperationType.PlayBackwards:
+                        if (PlayBackwards(t)) totInvolved++;
+                        break;
+                    case OperationType.PlayForward:
+                        if (PlayForward(t)) totInvolved++;
+                        break;
+                    case OperationType.Restart:
+                        if (Restart(t, optionalBool)) totInvolved++;
+                        break;
+                    case OperationType.Rewind:
+                        if (Rewind(t, optionalBool)) totInvolved++;
+                        break;
+                    case OperationType.TogglePause:
+                        if (TogglePause(t)) totInvolved++;
+                        break;
+                    case OperationType.IsTweening:
+                        totInvolved++;
+                        break;
+                    }
+                }
+            }
+            // Special additional operations in case of despawn
+            if (hasDespawned) {
+                int count = _KillList.Count - 1;
+                for (int i = count; i > -1; --i) RemoveActiveTween(_KillList[i]);
+                _KillList.Clear();
+            }
+
+            return totInvolved;
+        }
+
+        #endregion
 
         #region Play Operations
 
@@ -315,251 +587,6 @@ namespace DG.Tweening.Core
         }
 
         #endregion
-
-        internal static void SetUpdateType(Tween t, UpdateType updateType, bool isIndependentUpdate)
-        {
-            if (!t.active || t.updateType == updateType) {
-                t.updateType = updateType;
-                t.isIndependentUpdate = isIndependentUpdate;
-                return;
-            }
-            // Remove previous update type
-            if (t.updateType == UpdateType.Default) {
-                totActiveDefaultTweens--;
-                hasActiveDefaultTweens = totActiveDefaultTweens > 0;
-            } else {
-                totActiveLateTweens--;
-                hasActiveLateTweens = totActiveLateTweens > 0;
-            }
-            // Assign new one
-            t.updateType = updateType;
-            t.isIndependentUpdate = isIndependentUpdate;
-            if (updateType == UpdateType.Default) {
-                totActiveDefaultTweens++;
-                hasActiveDefaultTweens = true;
-            } else {
-                totActiveLateTweens++;
-                hasActiveLateTweens = true;
-            }
-        }
-
-        // Removes the given tween from the active tweens list
-        internal static void AddActiveTweenToSequence(Tween t)
-        {
-            RemoveActiveTween(t);
-        }
-
-        // Despawn all
-        internal static int DespawnAll()
-        {
-            int totDespawned = totActiveTweens;
-            for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
-                Tween t = _activeTweens[i];
-                if (t != null) Despawn(t, false);
-            }
-            ClearTweenArray(_activeTweens);
-            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
-            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
-            totActiveTweeners = totActiveSequences = 0;
-            _maxActiveLookupId = _reorganizeFromId = -1;
-            _requiresActiveReorganization = false;
-
-            return totDespawned;
-        }
-
-        internal static void Despawn(Tween t, bool modifyActiveLists = true)
-        {
-            // Callbacks
-            if (t.onKill != null) t.onKill();
-
-            if (modifyActiveLists) {
-                // Remove tween from active list
-                RemoveActiveTween(t);
-            }
-            if (t.isRecyclable) {
-                // Put the tween inside a pool
-                switch (t.tweenType) {
-                case TweenType.Sequence:
-                    _PooledSequences.Push(t);
-                    totPooledSequences++;
-                    // Despawn sequenced tweens
-                    Sequence s = (Sequence)t;
-                    int len = s.sequencedTweens.Count;
-                    for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
-                    break;
-                case TweenType.Tweener:
-                    if (_maxPooledTweenerId == -1) {
-                        _maxPooledTweenerId = maxTweeners - 1;
-                        _minPooledTweenerId = maxTweeners - 1;
-                    }
-                    if (_maxPooledTweenerId < maxTweeners - 1) {
-                        _pooledTweeners[_maxPooledTweenerId + 1] = t;
-                        _maxPooledTweenerId++;
-                        if (_minPooledTweenerId > _maxPooledTweenerId) _minPooledTweenerId = _maxPooledTweenerId;
-                    } else {
-                        for (int i = _maxPooledTweenerId; i > -1; --i) {
-                            if (_pooledTweeners[i] != null) continue;
-                            _pooledTweeners[i] = t;
-                            if (i < _minPooledTweenerId) _minPooledTweenerId = i;
-                            if (_maxPooledTweenerId < _minPooledTweenerId) _maxPooledTweenerId = _minPooledTweenerId;
-                            break;
-                        }
-                    }
-                    totPooledTweeners++;
-                    break;
-                }
-            } else {
-                // Remove
-                switch (t.tweenType) {
-                case TweenType.Sequence:
-                    totSequences--;
-                    // Despawn sequenced tweens
-                    Sequence s = (Sequence)t;
-                    int len = s.sequencedTweens.Count;
-                    for (int i = 0; i < len; ++i) Despawn(s.sequencedTweens[i], false);
-                    break;
-                case TweenType.Tweener:
-                    totTweeners--;
-                    break;
-                }
-            }
-            t.active = false;
-            t.Reset();
-        }
-
-        internal static int FilteredOperation(OperationType operationType, FilterType filterType, object id, bool optionalBool, float optionalFloat)
-        {
-            int totInvolved = 0;
-            bool hasDespawned = false;
-            for (int i = _maxActiveLookupId; i > -1; --i) {
-                Tween t = _activeTweens[i];
-                if (t == null || !t.active) continue;
-
-                bool isFilterCompliant = false;
-                switch (filterType) {
-                case FilterType.All:
-                    isFilterCompliant = true;
-                    break;
-                case FilterType.TargetOrId:
-                    isFilterCompliant = id.Equals(t.id) || id.Equals(t.target);
-                    break;
-                }
-                if (isFilterCompliant) {
-                    switch (operationType) {
-                    case OperationType.Despawn:
-                        totInvolved++;
-                        if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
-                        else {
-                            Despawn(t, false);
-                            hasDespawned = true;
-                            _KillList.Add(t);
-                        }
-                        break;
-                    case OperationType.Complete:
-                        bool hasAutoKill = t.autoKill;
-                        if (Complete(t, false)) {
-                            totInvolved++;
-                            if (hasAutoKill) {
-                                if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
-                                else {
-                                    hasDespawned = true;
-                                    _KillList.Add(t);
-                                }
-                            }
-                        }
-                        break;
-                    case OperationType.Flip:
-                        if (Flip(t)) totInvolved++;
-                        break;
-                    case OperationType.Goto:
-                        Goto(t, optionalFloat, optionalBool);
-                        totInvolved++;
-                        break;
-                    case OperationType.Pause:
-                        if (Pause(t)) totInvolved++;
-                        break;
-                    case OperationType.Play:
-                        if (Play(t)) totInvolved++;
-                        break;
-                    case OperationType.PlayBackwards:
-                        if (PlayBackwards(t)) totInvolved++;
-                        break;
-                    case OperationType.PlayForward:
-                        if (PlayForward(t)) totInvolved++;
-                        break;
-                    case OperationType.Restart:
-                        if (Restart(t, optionalBool)) totInvolved++;
-                        break;
-                    case OperationType.Rewind:
-                        if (Rewind(t, optionalBool)) totInvolved++;
-                        break;
-                    case OperationType.TogglePause:
-                        if (TogglePause(t)) totInvolved++;
-                        break;
-                    case OperationType.IsTweening:
-                        totInvolved++;
-                        break;
-                    }
-                }
-            }
-            // Special additional operations in case of despawn
-            if (hasDespawned) {
-                int count = _KillList.Count - 1;
-                for (int i = count; i > -1; --i) RemoveActiveTween(_KillList[i]);
-                _KillList.Clear();
-            }
-
-            return totInvolved;
-        }
-
-        // Destroys any active tween without putting them back in a pool,
-        // then purges all pools and resets capacities
-        internal static void PurgeAll()
-        {
-            // Fire eventual onKill callbacks
-            for (int i = 0; i < totActiveTweens; ++i) {
-                Tween t = _activeTweens[i];
-                if (t != null && t.onKill != null) t.onKill();
-            }
-
-            ClearTweenArray(_activeTweens);
-            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
-            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
-            totActiveTweeners = totActiveSequences = 0;
-            _maxActiveLookupId = _reorganizeFromId = -1;
-            _requiresActiveReorganization = false;
-            PurgePools();
-            ResetCapacities();
-            totTweeners = totSequences = 0;
-        }
-
-        // Removes any cached tween from the pools
-        internal static void PurgePools()
-        {
-            totTweeners -= totPooledTweeners;
-            totSequences -= totPooledSequences;
-            ClearTweenArray(_pooledTweeners);
-            _PooledSequences.Clear();
-            totPooledTweeners = totPooledSequences = 0;
-            _minPooledTweenerId = _maxPooledTweenerId = - 1;
-        }
-
-        internal static void ResetCapacities()
-        {
-            SetCapacities(_DefaultMaxTweeners, _DefaultMaxSequences);
-        }
-
-        internal static void SetCapacities(int tweenersCapacity, int sequencesCapacity)
-        {
-            if (tweenersCapacity < sequencesCapacity) tweenersCapacity = sequencesCapacity;
-
-            maxActive = tweenersCapacity;
-            maxTweeners = tweenersCapacity;
-            maxSequences = sequencesCapacity;
-            Array.Resize(ref _activeTweens, maxActive);
-            Array.Resize(ref _pooledTweeners, tweenersCapacity);
-            _KillList.Capacity = maxActive;
-        }
 
         #region Info Getters
 

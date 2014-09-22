@@ -34,6 +34,8 @@ public class BugTests : BrainBase
 			.SetEase(Ease.InQuad)
 		);
 		s.Pause();
+
+		ts[0].DOLocalMoveX(2, 1);
 	}
 	
 	void Update ()

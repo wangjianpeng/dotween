@@ -122,6 +122,14 @@
             Clears all cached tween pools.
             </summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.Validate">
+            <summary>
+            Checks all active tweens to find and remove eventually invalid ones (usually due to their targets becoming NULL)
+            and returns the total number of invalid tweens found and removed.
+            <para>Automatically called when loading a new scene if <see cref="F:DG.Tweening.DOTween.useSafeMode"/> is TRUE.</para>
+            BEWARE: this is an expensive operation so use it with care
+            </summary>
+        </member>
         <member name="M:DG.Tweening.DOTween.To(DG.Tweening.Core.DOGetter{System.Single},DG.Tweening.Core.DOSetter{System.Single},System.Single,System.Single)">
             <summary>Tweens a property or field to the given value using default plugins</summary>
             <param name="getter">A getter for the field or property to tween.
@@ -1110,6 +1118,30 @@
             Controls other tweens as a group
             </summary>
         </member>
+        <member name="T:DG.Tweening.Core.DOTweenComponent">
+            <summary>
+            Used to separate DOTween class from the MonoBehaviour instance (in order to use static constructors on DOTween).
+            Contains all instance-based methods
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.Core.DOTweenComponent.inspectorUpdater">
+            <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
+        </member>
+        <member name="M:DG.Tweening.Core.DOTweenComponent.SetCapacity(System.Int32,System.Int32)">
+            <summary>
+            Directly sets the current max capacity of Tweeners and Sequences
+            (meaning how many Tweeners and Sequences can be running at the same time),
+            so that DOTween doesn't need to automatically increase them in case the max is reached
+            (which might lead to hiccups when that happens).
+            Sequences capacity must be less or equal to Tweeners capacity
+            (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
+            Beware: use this method only when there are no tweens running.
+            </summary>
+            <param name="tweenersCapacity">Max Tweeners capacity.
+            Default: 200</param>
+            <param name="sequencesCapacity">Max Sequences capacity.
+            Default: 50</param>
+        </member>
         <member name="T:DG.Tweening.AutoPlay">
             <summary>
             Types of autoPlay behaviours
@@ -1685,30 +1717,6 @@
             <summary>
             What axis to constrain in case of Vector tweens
             </summary>
-        </member>
-        <member name="T:DG.Tweening.Core.DOTweenComponent">
-            <summary>
-            Used to separate DOTween class from the MonoBehaviour instance (in order to use static constructors on DOTween).
-            Contains all instance-based methods
-            </summary>
-        </member>
-        <member name="F:DG.Tweening.Core.DOTweenComponent.inspectorUpdater">
-            <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
-        </member>
-        <member name="M:DG.Tweening.Core.DOTweenComponent.SetCapacity(System.Int32,System.Int32)">
-            <summary>
-            Directly sets the current max capacity of Tweeners and Sequences
-            (meaning how many Tweeners and Sequences can be running at the same time),
-            so that DOTween doesn't need to automatically increase them in case the max is reached
-            (which might lead to hiccups when that happens).
-            Sequences capacity must be less or equal to Tweeners capacity
-            (if you pass a low Tweener capacity it will be automatically increased to match the Sequence's).
-            Beware: use this method only when there are no tweens running.
-            </summary>
-            <param name="tweenersCapacity">Max Tweeners capacity.
-            Default: 200</param>
-            <param name="sequencesCapacity">Max Sequences capacity.
-            Default: 50</param>
         </member>
     </members>
 </doc>

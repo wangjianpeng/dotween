@@ -29,9 +29,7 @@ namespace DG.Tweening.Core
 
         const string _TxtCantChangeSequencedValues = "You cannot change the values of a tween contained inside a Sequence";
 
-        // ***********************************************************************************
-        // CONSTRUCTOR
-        // ***********************************************************************************
+        #region Constructor
 
         internal TweenerCore()
         {
@@ -42,8 +40,9 @@ namespace DG.Tweening.Core
             Reset();
         }
 
-        // ===================================================================================
-        // PUBLIC METHODS --------------------------------------------------------------------
+        #endregion
+
+        #region Public Methods
 
         // No generics because T to T2 conversion isn't compatible with AOT
         public override Tweener ChangeStartValue(object newStartValue, float newDuration = -1)
@@ -98,8 +97,7 @@ namespace DG.Tweening.Core
             return DoChangeValues(this, (T2)newStartValue, (T2)newEndValue, newDuration);
         }
 
-        // ===================================================================================
-        // INTERNAL METHODS ------------------------------------------------------------------
+        #endregion
 
         // Sets From tweens, immediately sending the target to its endValue and assigning new start/endValues.
         // Called by TweenSettings.From.
@@ -124,6 +122,18 @@ namespace DG.Tweening.Core
             setter = null;
             hasManuallySetStartValue = false;
             isFromAllowed = true;
+        }
+
+        // Called by TweenManager.Validate.
+        // Returns TRUE if the tween is valid
+        internal override bool Validate()
+        {
+            try {
+                getter();
+            } catch {
+                return false;
+            }
+            return true;
         }
 
         // CALLED BY TweenManager at each update.
