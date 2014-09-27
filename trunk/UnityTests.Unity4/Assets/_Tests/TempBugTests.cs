@@ -49,7 +49,7 @@ public class TempBugTests : BrainBase
 
         Sequence innerS1 = DOTween.Sequence()
             .SetId("INNER INNER")
-            .SetLoops(3, loopType)
+            // .SetLoops(3, loopType)
             .OnStepComplete(()=> Debug.Log("INNER INNER Step Complete"));
 		innerS1.Append(targets[0].DOMoveX(3, 1).SetEase(Ease.Linear));
         innerS1.InsertCallback(0.25f, ()=> Callback("INNER INNER"));
@@ -58,7 +58,7 @@ public class TempBugTests : BrainBase
 
         main = DOTween.Sequence()
             .SetId("MAIN")
-            // .SetLoops(2, loopType)
+            .SetLoops(3, loopType)
             .SetAutoKill(false)
             .OnStepComplete(()=> Debug.Log("MAIN Step Complete"));
             // .Append(targets[0].DOMoveX(3, 1).SetEase(Ease.Linear));

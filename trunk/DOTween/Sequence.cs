@@ -216,15 +216,17 @@ namespace DG.Tweening
 //                        t.isBackwards = !s.isBackwards;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
 
-//                        // TEST - works with nested tweens but not with main and not with nested tweens with loops
+                        // TEST - fixes callbacks not called correctly if main sequence has loops and nested ones don't
                         if (multiCycleStep && t.tweenType == TweenType.Sequence) {
-                            bool toZero = s.completedLoops == 0 || s.isBackwards && (s.completedLoops < s.loops || s.loops == -1);
-                            if (t.isBackwards) toZero = !toZero;
-                            if (useInverse) toZero = !toZero;
-                            if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
-                            if (s.position <= 0 && s.completedLoops == 0) toZero = true;
-                            if (toZero) t.position = 0;
-                            else t.position = t.duration;
+                            if (s.position <= 0 && s.completedLoops == 0) t.position = 0;
+                            else {
+                                bool toZero = s.completedLoops == 0 || s.isBackwards && (s.completedLoops < s.loops || s.loops == -1);
+                                if (t.isBackwards) toZero = !toZero;
+                                if (useInverse) toZero = !toZero;
+                                if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
+                                if (toZero) t.position = 0;
+                                else t.position = t.duration;
+                            }
                         }
                     }
                 }
@@ -252,15 +254,17 @@ namespace DG.Tweening
 //                        t.isBackwards = s.isBackwards;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
 
-//                        // TEST - works with nested tweens but not with main and not with nested tweens with loops
+                        // TEST - fixes callbacks not called correctly if main sequence has loops and nested ones don't
                         if (multiCycleStep && t.tweenType == TweenType.Sequence) {
-                            bool toZero = s.completedLoops == 0 || !s.isBackwards && (s.completedLoops < s.loops || s.loops == -1);
-                            if (t.isBackwards) toZero = !toZero;
-                            if (useInverse) toZero = !toZero;
-                            if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
-                            if (s.position <= 0 && s.completedLoops == 0) toZero = true;
-                            if (toZero) t.position = 0;
-                            else t.position = t.duration;
+                            if (s.position <= 0 && s.completedLoops == 0) t.position = 0;
+                            else {
+                                bool toZero = s.completedLoops == 0 || !s.isBackwards && (s.completedLoops < s.loops || s.loops == -1);
+                                if (t.isBackwards) toZero = !toZero;
+                                if (useInverse) toZero = !toZero;
+                                if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
+                                if (toZero) t.position = 0;
+                                else t.position = t.duration;
+                            }
                         }
                     }
                 }
