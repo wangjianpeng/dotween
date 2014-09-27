@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class TempBugTests : BrainBase
+public class SequenceCallbacks : BrainBase
 {
 	public Transform[] targets;
 

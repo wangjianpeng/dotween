@@ -205,18 +205,16 @@ namespace DG.Tweening
 //                            Debug.Log("<color=#FFEC03>BACKWARDS Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
                             sequentiable.onStart();
                         }
-                    }
-                    else {
+                    } else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         if (gotoPos < 0) gotoPos = 0;
                         Tween t = (Tween)sequentiable;
                         if (!t.startupDone) continue; // since we're going backwards and this tween never started just ignore it
                         t.isBackwards = true;
-//                        t.isBackwards = !s.isBackwards;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
 
-                        // TEST - fixes callbacks not called correctly if main sequence has loops and nested ones don't
+                        // Fixes nested callbacks not being called correctly if main sequence has loops and nested ones don't
                         if (multiCycleStep && t.tweenType == TweenType.Sequence) {
                             if (s.position <= 0 && s.completedLoops == 0) t.position = 0;
                             else {
@@ -224,8 +222,7 @@ namespace DG.Tweening
                                 if (t.isBackwards) toZero = !toZero;
                                 if (useInverse) toZero = !toZero;
                                 if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
-                                if (toZero) t.position = 0;
-                                else t.position = t.duration;
+                                t.position = toZero ? 0 : t.duration;
                             }
                         }
                     }
@@ -244,17 +241,15 @@ namespace DG.Tweening
                                 || s.isBackwards && useInverse && !prevPosIsInverse;
                             if (fire) sequentiable.onStart();
                         }
-                    }
-                    else {
+                    } else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         if (gotoPos < 0) gotoPos = 0;
                         Tween t = (Tween)sequentiable;
                         t.isBackwards = false;
-//                        t.isBackwards = s.isBackwards;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
 
-                        // TEST - fixes callbacks not called correctly if main sequence has loops and nested ones don't
+                        // Fixes nested callbacks not being called correctly if main sequence has loops and nested ones don't
                         if (multiCycleStep && t.tweenType == TweenType.Sequence) {
                             if (s.position <= 0 && s.completedLoops == 0) t.position = 0;
                             else {
@@ -262,8 +257,7 @@ namespace DG.Tweening
                                 if (t.isBackwards) toZero = !toZero;
                                 if (useInverse) toZero = !toZero;
                                 if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
-                                if (toZero) t.position = 0;
-                                else t.position = t.duration;
+                                t.position = toZero ? 0 : t.duration;
                             }
                         }
                     }
