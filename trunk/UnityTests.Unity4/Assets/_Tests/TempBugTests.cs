@@ -41,25 +41,29 @@ public class TempBugTests : BrainBase
     	main.Kill();
 
     	Sequence innerS0 = DOTween.Sequence()
-            .SetId("INNER");
+            .SetId("INNER")
             // .SetLoops(3, loopType)
+            .OnStepComplete(()=>Debug.Log("INNER Step Complete"));
             // .Append(targets[0].DOMoveX(3, 1).SetEase(Ease.Linear));
         // innerS0.InsertCallback(0.25f, ()=> Callback("INNER"));
 
         Sequence innerS1 = DOTween.Sequence()
             .SetId("INNER INNER")
             .SetLoops(3, loopType)
-            .Append(targets[0].DOMoveX(3, 1).SetEase(Ease.Linear));
+            .OnStepComplete(()=> Debug.Log("INNER INNER Step Complete"));
+		innerS1.Append(targets[0].DOMoveX(3, 1).SetEase(Ease.Linear));
         innerS1.InsertCallback(0.25f, ()=> Callback("INNER INNER"));
-        innerS0.Append(innerS0);
+        innerS0.Append(innerS1);
+        innerS0.InsertCallback(0.25f, ()=> Callback("INNER"));
 
         main = DOTween.Sequence()
             .SetId("MAIN")
-            .SetLoops(2, loopType)
+            // .SetLoops(2, loopType)
             .SetAutoKill(false)
+            .OnStepComplete(()=> Debug.Log("MAIN Step Complete"));
             // .Append(targets[0].DOMoveX(3, 1).SetEase(Ease.Linear));
-            .Append(innerS0);
-        // main.InsertCallback(0.25f, ()=> Callback("MAIN"));
+        main.Append(innerS0);
+        main.InsertCallback(0.25f, ()=> Callback("MAIN"));
 
         if (flip) {
         	main.Complete();
@@ -70,6 +74,9 @@ public class TempBugTests : BrainBase
 
     void Callback(string id)
     {
-    	Debug.Log("<color=#92FF70>>>> " + id + " > Callback > " + main.Elapsed(true) + "</color>");
+    	string prefix = ">>>";
+    	if (id == "INNER") prefix += ">>>";
+    	if (id == "INNER INNER") prefix += ">>>>>>";
+    	Debug.Log("<color=#92FF70>" + prefix + " " + id + " > Callback > " + main.Elapsed(true) + "</color>");
     }
 }
