@@ -162,9 +162,9 @@ namespace DG.Tweening
             // Determine if prevPos was inverse.
             // Used to calculate correct "from" value when applying internal cycle
             // and also in case of multiple loops within a single update
-            bool isInverse = s.loopType == LoopType.Yoyo
+            bool prevPosIsInverse = s.loopType == LoopType.Yoyo
                 && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
-            if (s.isBackwards) isInverse = !isInverse;
+            if (s.isBackwards) prevPosIsInverse = !prevPosIsInverse;
             // Update multiple loop cycles within the same update
             if (updateMode == UpdateMode.Update && newCompletedSteps > 0) {
                 // Run all cycles elapsed since last update
@@ -172,37 +172,40 @@ namespace DG.Tweening
                 int cyclesDone = 0;
                 from = prevPosition;
                 while (cyclesDone < cycles) {
-                    //                    Debug.Log("::::::::::::: CYCLING : " + s.stringId + " : " + cyclesDone + " ::::::::::::::::::::::::::::::::::::");
                     if (cyclesDone > 0) from = to;
-                    else if (isInverse && !s.isBackwards) from = s.duration - from;
-                    to = isInverse ? 0 : s.duration;
-                    if (ApplyInternalCycle(s, from, to, updateMode)) return true;
+                    else if (prevPosIsInverse && !s.isBackwards) from = s.duration - from;
+                    to = prevPosIsInverse ? 0 : s.duration;
+                    if (ApplyInternalCycle(s, from, to, updateMode, useInversePosition, prevPosIsInverse, true)) return true;
                     cyclesDone++;
-                    if (s.loopType == LoopType.Yoyo) isInverse = !isInverse;
+                    if (s.loopType == LoopType.Yoyo) prevPosIsInverse = !prevPosIsInverse;
                 }
             }
             // Run current cycle
-//            Debug.Log("::::::::::::: UPDATING");
-            if (newCompletedSteps > 0) from = useInversePosition || isInverse ? s.duration : 0;
-            else from = useInversePosition || isInverse ? s.duration - prevPosition : prevPosition;
-            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode);
+            if (newCompletedSteps > 0 && !s.isComplete) from = useInversePosition ? s.duration : 0;
+            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
+            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode, useInversePosition, prevPosIsInverse);
         }
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
         // Returns TRUE if the tween needs to be killed
-        static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode)
+        static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode, bool useInverse, bool prevPosIsInverse, bool multiCycleStep = false)
         {
-            bool isGoingBackwards = toPos < fromPos;
-            if (isGoingBackwards) {
+            bool isBackwardsUpdate = toPos < fromPos;
+//            Debug.Log("Cycle > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
+            if (isBackwardsUpdate) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
                     if (!s.active) return true; // Killed by some internal callback
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-//                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos)) continue;
                     if (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos) continue;
-                    if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
+                    if (sequentiable.tweenType == TweenType.Callback) {
+                        if (updateMode == UpdateMode.Update && prevPosIsInverse) {
+                            Debug.Log("<color=#FFEC03>BACKWARDS Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
+                            sequentiable.onStart();
+                        }
+                    }
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
@@ -210,8 +213,19 @@ namespace DG.Tweening
                         Tween t = (Tween)sequentiable;
                         if (!t.startupDone) continue; // since we're going backwards and this tween never started just ignore it
                         t.isBackwards = true;
-//                        Debug.Log("             < " + t.stringId + " " + fromPos + "/" + toPos + " : " + gotoPos);
+//                        t.isBackwards = !s.isBackwards;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
+
+//                        // TEST - works with nested tweens but not with main and not with nested tweens with loops
+                        if (multiCycleStep && t.tweenType == TweenType.Sequence) {
+                            bool toZero = s.completedLoops == 0 || s.isBackwards && (s.completedLoops < s.loops || s.loops == -1);
+                            if (t.isBackwards) toZero = !toZero;
+                            if (useInverse) toZero = !toZero;
+                            if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
+                            if (s.position <= 0 && s.completedLoops == 0) toZero = true;
+                            if (toZero) t.position = 0;
+                            else t.position = t.duration;
+                        }
                     }
                 }
             } else {
@@ -220,17 +234,34 @@ namespace DG.Tweening
                 for (int i = 0; i < len; ++i) {
                     if (!s.active) return true; // Killed by some internal callback
                     ABSSequentiable sequentiable = s._sequencedObjs[i];
-//                    if (updateMode == UpdateMode.Update && (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos)) continue;
                     if (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos) continue;
-                    if (sequentiable.tweenType == TweenType.Callback) sequentiable.onStart();
+                    if (sequentiable.tweenType == TweenType.Callback) {
+                        if (updateMode == UpdateMode.Update) {
+                            Debug.Log("<color=#FFEC03>FORWARD Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
+                            bool fire = !s.isBackwards && !useInverse && !prevPosIsInverse
+                                || s.isBackwards && useInverse && !prevPosIsInverse;
+                            if (fire) sequentiable.onStart();
+                        }
+                    }
                     else {
                         // Nested Tweener/Sequence
                         float gotoPos = toPos - sequentiable.sequencedPosition;
                         if (gotoPos < 0) gotoPos = 0;
                         Tween t = (Tween)sequentiable;
                         t.isBackwards = false;
-//                        Debug.Log("             > " + t.stringId + " " + fromPos + "/" + toPos + " : " + gotoPos);
+//                        t.isBackwards = s.isBackwards;
                         if (TweenManager.Goto(t, gotoPos, false, updateMode)) return true;
+
+//                        // TEST - works with nested tweens but not with main and not with nested tweens with loops
+                        if (multiCycleStep && t.tweenType == TweenType.Sequence) {
+                            bool toZero = s.completedLoops == 0 || !s.isBackwards && (s.completedLoops < s.loops || s.loops == -1);
+                            if (t.isBackwards) toZero = !toZero;
+                            if (useInverse) toZero = !toZero;
+                            if (s.isBackwards && !useInverse && !prevPosIsInverse) toZero = !toZero;
+                            if (s.position <= 0 && s.completedLoops == 0) toZero = true;
+                            if (toZero) t.position = 0;
+                            else t.position = t.duration;
+                        }
                     }
                 }
             }

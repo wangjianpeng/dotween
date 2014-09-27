@@ -178,9 +178,9 @@ namespace DG.Tweening
             bool wasComplete = t.isComplete;
             // Determine if it will be complete after update
             if (t.loops != -1) t.isComplete = t.completedLoops == t.loops;
-            // Calculate newCompletedSteps only if an onStepComplete callback is present and might be called
+            // Calculate newCompletedSteps (always useful with Sequences)
             int newCompletedSteps = 0;
-            if (t.onStepComplete != null && updateMode == UpdateMode.Update) {
+            if (updateMode == UpdateMode.Update) {
                 if (t.isBackwards) {
                     newCompletedSteps = t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (toPosition <= 0 && !wasRewinded ? 1 : 0);
                     if (wasComplete) newCompletedSteps--;
@@ -212,8 +212,7 @@ namespace DG.Tweening
             if (t.position <= 0 && t.completedLoops <= 0 && !wasRewinded) {
                 if (t.onRewind != null) t.onRewind();
             }
-            if (newCompletedSteps > 0) {
-                // Already verified that onStepComplete is present
+            if (newCompletedSteps > 0 && t.onStepComplete != null) {
                 for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
             }
             if (t.isComplete && !wasComplete) {
