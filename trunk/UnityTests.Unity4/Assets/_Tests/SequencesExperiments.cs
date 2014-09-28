@@ -32,7 +32,7 @@ public class SequencesExperiments : BrainBase
 		const float duration = 1f;
 		const float delay = 1;
 		const Ease easeType = Ease.InCubic;
-		Sequence seq = DOTween.Sequence().SetLoops(-1, LoopType.Yoyo).OnStepComplete(()=> Debug.Log("MultiCube :: Step Complete"));
+		Sequence seq = DOTween.Sequence().SetId("MAIN").SetLoops(-1, LoopType.Yoyo).OnStepComplete(()=> Debug.Log("MultiCube :: Step Complete"));
 		seq.AppendInterval(delay);
 		seq.Insert(delay + (duration * 0.25f), multiCube.DORotate(new Vector3(0,450,45), (duration * 0.75f)).SetEase(easeType));
 		seq.Insert(delay + (duration * 0.25f), multiCube.DOScale(new Vector3(0.001f,2,2), (duration * 0.75f)).SetEase(easeType));
@@ -57,7 +57,14 @@ public class SequencesExperiments : BrainBase
 		DGUtils.BeginGUI();
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
-		if (GUILayout.Button("Restart")) DOTween.Restart();
+		if (GUILayout.Button("Rewind")) {
+			Debug.Log("<color=#ff0000>REWIND</color>");
+			DOTween.Rewind();
+		}
+		if (GUILayout.Button("Restart")) {
+			Debug.Log("<color=#ff0000>RESTART</color>");
+			DOTween.Restart();
+		}
 		if (GUILayout.Button("Flip")) DOTween.Flip();
 		GUILayout.EndHorizontal();
 		DGUtils.EndGUI();

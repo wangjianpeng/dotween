@@ -16,6 +16,7 @@ public class SequenceCallbacks : BrainBase
 
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Rewind")) DOTween.Rewind();
+        if (GUILayout.Button("Restart")) DOTween.Restart();
         if (GUILayout.Button("Complete")) DOTween.Complete();
         if (GUILayout.Button("Flip")) DOTween.Flip();
         if (GUILayout.Button("Goto 0.5")) DOTween.Goto(0.5f);
