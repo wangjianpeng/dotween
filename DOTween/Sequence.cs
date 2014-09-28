@@ -181,8 +181,8 @@ namespace DG.Tweening
                 }
             }
             // Run current cycle
-            if (newCompletedSteps > 0 && !s.isComplete) from = useInversePosition ? s.duration : 0;
-            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
+            if (newCompletedSteps > 0 && !s.isComplete) from = prevPosIsInverse || useInversePosition ? s.duration : 0;
+            else from = prevPosIsInverse || useInversePosition ? s.duration - prevPosition : prevPosition;
             return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode, useInversePosition, prevPosIsInverse);
         }
 
@@ -193,7 +193,7 @@ namespace DG.Tweening
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode, bool useInverse, bool prevPosIsInverse, bool multiCycleStep = false)
         {
             bool isBackwardsUpdate = toPos < fromPos;
-//            Debug.Log("Cycle > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
+//            Debug.Log("Cycle > " + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
             if (isBackwardsUpdate) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
