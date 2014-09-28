@@ -167,18 +167,26 @@ namespace DG.Tweening
             if (s.isBackwards) prevPosIsInverse = !prevPosIsInverse;
             // Update multiple loop cycles within the same update
             if (newCompletedSteps > 0) {
-                Debug.Log("<color=#0000FF>MULTICYCLE</color>");
-                // Run all cycles elapsed since last update
                 int cycles = newCompletedSteps;
                 int cyclesDone = 0;
                 from = prevPosition;
-                while (cyclesDone < cycles) {
-                    if (cyclesDone > 0) from = to;
-                    else if (prevPosIsInverse && !s.isBackwards) from = s.duration - from;
-                    to = prevPosIsInverse ? 0 : s.duration;
-                    if (ApplyInternalCycle(s, from, to, updateMode, useInversePosition, prevPosIsInverse, true)) return true;
-                    cyclesDone++;
-                    if (s.loopType == LoopType.Yoyo) prevPosIsInverse = !prevPosIsInverse;
+                if (updateMode == UpdateMode.Update) {
+                    // Run all cycles elapsed since last update
+                    while (cyclesDone < cycles) {
+                        if (cyclesDone > 0) from = to;
+                        else if (prevPosIsInverse && !s.isBackwards) from = s.duration - from;
+                        to = prevPosIsInverse ? 0 : s.duration;
+                        if (ApplyInternalCycle(s, from, to, updateMode, useInversePosition, prevPosIsInverse, true)) return true;
+                        cyclesDone++;
+                        if (s.loopType == LoopType.Yoyo) prevPosIsInverse = !prevPosIsInverse;
+                    }
+                } else {
+                    // Simply determine correct prevPosition after steps
+                    if (s.loopType == LoopType.Yoyo && newCompletedSteps % 2 != 0) {
+                        prevPosIsInverse = !prevPosIsInverse;
+                        prevPosition = s.duration - prevPosition;
+                    }
+                    newCompletedSteps = 0;
                 }
             }
             // Run current cycle
@@ -194,7 +202,7 @@ namespace DG.Tweening
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode, bool useInverse, bool prevPosIsInverse, bool multiCycleStep = false)
         {
             bool isBackwardsUpdate = toPos < fromPos;
-            Debug.Log("Cycle > " + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
+//            Debug.Log("Cycle > " + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
             if (isBackwardsUpdate) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
@@ -203,7 +211,7 @@ namespace DG.Tweening
                     if (sequentiable.sequencedEndPosition < toPos || sequentiable.sequencedPosition > fromPos) continue;
                     if (sequentiable.tweenType == TweenType.Callback) {
                         if (updateMode == UpdateMode.Update && prevPosIsInverse) {
-                            Debug.Log("<color=#FFEC03>BACKWARDS Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
+//                            Debug.Log("<color=#FFEC03>BACKWARDS Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
                             sequentiable.onStart();
                         }
                     } else {
@@ -237,7 +245,7 @@ namespace DG.Tweening
                     if (sequentiable.sequencedPosition > toPos || sequentiable.sequencedEndPosition < fromPos) continue;
                     if (sequentiable.tweenType == TweenType.Callback) {
                         if (updateMode == UpdateMode.Update) {
-                            Debug.Log("<color=#FFEC03>FORWARD Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
+//                            Debug.Log("<color=#FFEC03>FORWARD Callback > " + s.id + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + "</color>");
                             bool fire = !s.isBackwards && !useInverse && !prevPosIsInverse
                                 || s.isBackwards && useInverse && !prevPosIsInverse;
                             if (fire) sequentiable.onStart();
