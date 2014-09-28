@@ -185,6 +185,11 @@ namespace DG.Tweening
                     newCompletedSteps = t.completedLoops < prevCompletedLoops ? prevCompletedLoops - t.completedLoops : (toPosition <= 0 && !wasRewinded ? 1 : 0);
                     if (wasComplete) newCompletedSteps--;
                 } else newCompletedSteps = t.completedLoops > prevCompletedLoops ? t.completedLoops - prevCompletedLoops : 0;
+                if (newCompletedSteps != 0) Debug.Log("STEPCHECK UPDATE: " + newCompletedSteps);
+            } else if (t.tweenType == TweenType.Sequence) {
+                newCompletedSteps = prevCompletedLoops - toCompletedLoops;
+                if (newCompletedSteps < 0) newCompletedSteps = -newCompletedSteps;
+                if (newCompletedSteps != 0) Debug.Log("STEPCHECK GOTO: " + newCompletedSteps);
             }
 
             // Set position (makes position 0 equal to position "end" when looping)
