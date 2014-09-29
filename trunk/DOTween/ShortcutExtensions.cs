@@ -177,10 +177,25 @@ namespace DG.Tweening
         /// <summary>Tweens a Transform's rotation so that it will look towards the given position.
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+        /// <param name="axisConstraint">Eventual axis constraint for the rotation</param>
         /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        public static Tweener DOLookAt(this Transform target, Vector3 towards, float duration, Vector3? up = null)
+        public static Tweener DOLookAt(this Transform target, Vector3 towards, float duration, AxisConstraint axisConstraint = AxisConstraint.None, Vector3? up = null)
         {
             Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
+            switch (axisConstraint) {
+            case AxisConstraint.X:
+                towards.y = target.position.y;
+                towards.z = target.position.z;
+                break;
+            case AxisConstraint.Y:
+                towards.x = target.position.x;
+                towards.z = target.position.z;
+                break;
+            case AxisConstraint.Z:
+                towards.x = target.position.x;
+                towards.y = target.position.y;
+                break;
+            }
             Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
             return DOTween.To(() => target.rotation, x => target.rotation = x, lookAtRotation, duration)
                 .SetTarget(target);
@@ -332,10 +347,25 @@ namespace DG.Tweening
         /// <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
         /// <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+        /// <param name="axisConstraint">Eventual axis constraint for the rotation</param>
         /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        public static Tweener DOLookAt(this Rigidbody target, Vector3 towards, float duration, Vector3? up = null)
+        public static Tweener DOLookAt(this Rigidbody target, Vector3 towards, float duration, AxisConstraint axisConstraint = AxisConstraint.None, Vector3? up = null)
         {
             Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
+            switch (axisConstraint) {
+            case AxisConstraint.X:
+                towards.y = target.position.y;
+                towards.z = target.position.z;
+                break;
+            case AxisConstraint.Y:
+                towards.x = target.position.x;
+                towards.z = target.position.z;
+                break;
+            case AxisConstraint.Z:
+                towards.x = target.position.x;
+                towards.y = target.position.y;
+                break;
+            }
             Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
             return DOTween.To(() => target.rotation, target.MoveRotation, lookAtRotation, duration)
                 .SetTarget(target);

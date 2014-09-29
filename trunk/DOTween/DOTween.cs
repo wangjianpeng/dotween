@@ -21,22 +21,25 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.010";
+        public static readonly string Version = "0.9.020";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
 
         /// <summary>If TRUE (default) makes tweens slightly slower but safer, automatically taking care of a series of things
-        /// (like targets becoming null while a tween is playing)</summary>
+        /// (like targets becoming null while a tween is playing).
+        /// <para>Default: TRUE</para></summary>
         public static bool useSafeMode = true;
         /// <summary>If TRUE you will get a DOTween report when exiting play mode (only in the Editor).
         /// Useful to know how many max Tweeners and Sequences you reached and optimize your final project accordingly.
         /// Beware, this will slightly slow down your tweens while inside Unity Editor.
         /// <para>Default: FALSE</para></summary>
         public static bool showUnityEditorReport = false;
-        /// <summary>Global DOTween timeScale</summary>
+        /// <summary>Global DOTween timeScale.
+        /// <para>Default: 1</para></summary>
         public static float timeScale = 1;
-        /// <summary>DOTween's log behaviour</summary>
+        /// <summary>DOTween's log behaviour.
+        /// <para>Default: LogBehaviour.ErrorsOnly</para></summary>
         public static LogBehaviour logBehaviour {
             get { return _logBehaviour; }
             set { _logBehaviour = value; Debugger.SetLogPriority(_logBehaviour); }
@@ -46,15 +49,20 @@ namespace DG.Tweening
         ///////////////////////////////////////////////
         // Default options for Tweens /////////////////
 
-        /// <summary>Default autoPlay behaviour for new tweens</summary>
+        /// <summary>Default autoPlay behaviour for new tweens.
+        /// <para>Default: AutoPlay.All</para></summary>
         public static AutoPlay defaultAutoPlay = AutoPlay.All;
-        /// <summary>Default autoKillOnComplete behaviour for new tweens</summary>
+        /// <summary>Default autoKillOnComplete behaviour for new tweens.
+        /// <para>Default: TRUE</para></summary>
         public static bool defaultAutoKill = true;
-        /// <summary>Default loopType applied to all new tweens</summary>
+        /// <summary>Default loopType applied to all new tweens.
+        /// <para>Default: LoopType.Restart</para></summary>
         public static LoopType defaultLoopType = LoopType.Restart;
-        /// <summary>If TRUE all newly created tweens are set as recyclable, otherwise not</summary>
+        /// <summary>If TRUE all newly created tweens are set as recyclable, otherwise not.
+        /// <para>Default: FALSE</para></summary>
         public static bool defaultRecyclable;
-        /// <summary>Default ease applied to all new tweens</summary>
+        /// <summary>Default ease applied to all new tweens.
+        /// <para>Default: Ease.InOutQuad</para></summary>
         public static Ease defaultEaseType = Ease.InOutQuad;
         /// <summary>Default overshoot/amplitude used for eases
         /// <para>Default: 1.70158f</para></summary>
