@@ -34,7 +34,8 @@
         </member>
         <member name="F:DG.Tweening.DOTween.useSafeMode">
             <summary>If TRUE (default) makes tweens slightly slower but safer, automatically taking care of a series of things
-            (like targets becoming null while a tween is playing)</summary>
+            (like targets becoming null while a tween is playing).
+            <para>Default: TRUE</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.showUnityEditorReport">
             <summary>If TRUE you will get a DOTween report when exiting play mode (only in the Editor).
@@ -43,22 +44,28 @@
             <para>Default: FALSE</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.timeScale">
-            <summary>Global DOTween timeScale</summary>
+            <summary>Global DOTween timeScale.
+            <para>Default: 1</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoPlay">
-            <summary>Default autoPlay behaviour for new tweens</summary>
+            <summary>Default autoPlay behaviour for new tweens.
+            <para>Default: AutoPlay.All</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoKill">
-            <summary>Default autoKillOnComplete behaviour for new tweens</summary>
+            <summary>Default autoKillOnComplete behaviour for new tweens.
+            <para>Default: TRUE</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultLoopType">
-            <summary>Default loopType applied to all new tweens</summary>
+            <summary>Default loopType applied to all new tweens.
+            <para>Default: LoopType.Restart</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultRecyclable">
-            <summary>If TRUE all newly created tweens are set as recyclable, otherwise not</summary>
+            <summary>If TRUE all newly created tweens are set as recyclable, otherwise not.
+            <para>Default: FALSE</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultEaseType">
-            <summary>Default ease applied to all new tweens</summary>
+            <summary>Default ease applied to all new tweens.
+            <para>Default: Ease.InOutQuad</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultEaseOvershootOrAmplitude">
             <summary>Default overshoot/amplitude used for eases
@@ -400,7 +407,8 @@
             </summary>
         </member>
         <member name="P:DG.Tweening.DOTween.logBehaviour">
-            <summary>DOTween's log behaviour</summary>
+            <summary>DOTween's log behaviour.
+            <para>Default: LogBehaviour.ErrorsOnly</para></summary>
         </member>
         <member name="T:DG.Tweening.Core.Extensions">
             <summary>
@@ -1264,10 +1272,11 @@
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.AxisConstraint,System.Nullable{UnityEngine.Vector3})">
             <summary>Tweens a Transform's rotation so that it will look towards the given position.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+            <param name="axisConstraint">Eventual axis constraint for the rotation</param>
             <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOPunchPosition(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Int32,System.Single,System.Boolean)">
@@ -1364,10 +1373,11 @@
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Nullable{UnityEngine.Vector3})">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,DG.Tweening.AxisConstraint,System.Nullable{UnityEngine.Vector3})">
             <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+            <param name="axisConstraint">Eventual axis constraint for the rotation</param>
             <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOShakePosition(UnityEngine.Camera,System.Single,System.Single,System.Int32,System.Single)">
