@@ -71,7 +71,7 @@ public class Basics : BrainBase
 				float[] durations = new[] { 0.5f, 0.5f, 0.5f, 0.5f };
 				DOTween.ToArray(() => t.position, x => t.position = x, path, durations)
 					.SetAs(tp).SetRelative().Pause();
-				return;
+				continue;
 			}
 			Tween tween = tweens[i];
 			tween.OnStart(()=> Debug.Log("OnStart: " + t.name))
