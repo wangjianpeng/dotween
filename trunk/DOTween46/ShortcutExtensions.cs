@@ -17,16 +17,16 @@ namespace DG.Tweening
     {
         #region Unity UI > Image
 
-        /// <summary>Tweens a SpriteRenderer's color to the given value.
-        /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
+        /// <summary>Tweens an Image's color to the given value.
+        /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOColor(this Image target, Color endValue, float duration)
         {
             return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
         }
 
-        /// <summary>Tweens a Material's alpha color to the given value.
-        /// Also stores the spriteRenderer as the tween's target so it can be used for filtered operations</summary>
+        /// <summary>Tweens a Image's alpha color to the given value.
+        /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOFade(this Image target, float endValue, float duration)
         {
