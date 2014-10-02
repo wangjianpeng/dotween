@@ -5,7 +5,6 @@
 // This work is subject to the terms at http://dotween.demigiant.com/license.php
 
 using DG.Tweening.Core;
-using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1573

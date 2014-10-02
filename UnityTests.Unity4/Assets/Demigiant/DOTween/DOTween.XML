@@ -610,59 +610,59 @@
             <summary>Sets the ease of the tween using a custom ease function.
             <para>Has no effect on Sequences</para></summary>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single,System.Single,DG.Tweening.Plugins.Core.DefaultPlugins.Options.FloatOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single,System.Single,DG.Tweening.Plugins.Options.FloatOptions},System.Boolean)">
             <summary>Options for float tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.Options.VectorOptions},System.Boolean)">
             <summary>Options for Vector2 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector2,UnityEngine.Vector2,DG.Tweening.Plugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector2 tweens</summary>
             <param name="axisConstraint">Selecting an axis will tween the vector only on that axis, leaving the others untouched</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.Options.VectorOptions},System.Boolean)">
             <summary>Options for Vector3 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3,DG.Tweening.Plugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector3 tweens</summary>
             <param name="axisConstraint">Selecting an axis will tween the vector only on that axis, leaving the others untouched</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.Options.VectorOptions},System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.Core.DefaultPlugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector4,UnityEngine.Vector4,DG.Tweening.Plugins.Options.VectorOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="axisConstraint">Selecting an axis will tween the vector only on that axis, leaving the others untouched</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Quaternion,UnityEngine.Vector3,DG.Tweening.Plugins.Core.DefaultPlugins.Options.QuaternionOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Quaternion,UnityEngine.Vector3,DG.Tweening.Plugins.Options.QuaternionOptions},System.Boolean)">
             <summary>Options for Quaternion tweens</summary>
             <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route, and will not rotate more than 360°.
             If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Color,UnityEngine.Color,DG.Tweening.Plugins.Core.DefaultPlugins.Options.ColorOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Color,UnityEngine.Color,DG.Tweening.Plugins.Options.ColorOptions},System.Boolean)">
             <summary>Options for Color tweens</summary>
             <param name="alphaOnly">If TRUE only the alpha value of the color will be tweened</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Rect,UnityEngine.Rect,DG.Tweening.Plugins.Core.DefaultPlugins.Options.RectOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Rect,UnityEngine.Rect,DG.Tweening.Plugins.Options.RectOptions},System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String,System.String,DG.Tweening.Plugins.Core.DefaultPlugins.Options.StringOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String,System.String,DG.Tweening.Plugins.Options.StringOptions},System.Boolean)">
             <summary>Options for Vector4 tweens</summary>
             <param name="scramble">If TRUE the string will appear from a random animation of characters</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3[],DG.Tweening.Plugins.Core.DefaultPlugins.Options.Vector3ArrayOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3[],DG.Tweening.Plugins.Options.Vector3ArrayOptions},System.Boolean)">
             <summary>Options for Vector3Array tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3[],DG.Tweening.Plugins.Core.DefaultPlugins.Options.Vector3ArrayOptions},DG.Tweening.AxisConstraint,System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3[],DG.Tweening.Plugins.Options.Vector3ArrayOptions},DG.Tweening.AxisConstraint,System.Boolean)">
             <summary>Options for Vector3Array tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
@@ -980,11 +980,6 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsPlaying(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween is playing</summary>
-        </member>
-        <member name="T:DG.Tweening.Plugins.Core.DefaultPlugins.Vector3ArrayPlugin">
-            <summary>
-            This plugin generates some GC allocations at startup
-            </summary>
         </member>
         <member name="T:DG.Tweening.TweenType">
             <summary>
@@ -1334,6 +1329,28 @@
             <param name="vibrato">Indicates how much will the shake vibrate</param>
             <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
             Setting it to 0 will shake along a single direction.</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOPath(UnityEngine.Transform,UnityEngine.Vector3[],System.Single,DG.Tweening.PathType,DG.Tweening.PathMode,System.Int32,System.Nullable{UnityEngine.Color})">
+            <summary>Tweens a Transform's position through the given path waypoints, using the chosen path algorithm.
+            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+            <param name="path">The waypoint to go through</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="pathType">The type of path: Linear (straight path) or CatmullRom (curved CatmullRom path)</param>
+            <param name="pathMode">The path mode: 3D, side-scroller 2D, top-down 2D</param>
+            <param name="resolution">The resolution of the path: higher resolutions make for more detailed curved paths but are more expensive.
+            Defaults to 10, but a value of 5 is usually enough if you don't have dramatic long curves between waypoints</param>
+            <param name="gizmoColor">The color of the path (shown when gizmos are active in the Play panel and the tween is running)</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalPath(UnityEngine.Transform,UnityEngine.Vector3[],System.Single,DG.Tweening.PathType,DG.Tweening.PathMode,System.Int32,System.Nullable{UnityEngine.Color})">
+            <summary>Tweens a Transform's localPosition through the given path waypoints, using the chosen path algorithm.
+            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+            <param name="path">The waypoint to go through</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="pathType">The type of path: Linear (straight path) or CatmullRom (curved CatmullRom path)</param>
+            <param name="pathMode">The path mode: 3D, side-scroller 2D, top-down 2D</param>
+            <param name="resolution">The resolution of the path: higher resolutions make for more detailed curved paths but are more expensive.
+            Defaults to 10, but a value of 5 is usually enough if you don't have dramatic long curves between waypoints</param>
+            <param name="gizmoColor">The color of the path (shown when gizmos are active in the Play panel and the tween is running)</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOMove(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Boolean)">
             <summary>Tweens a Rigidbody's position to the given value.
@@ -1726,6 +1743,53 @@
         <member name="T:DG.Tweening.AxisConstraint">
             <summary>
             What axis to constrain in case of Vector tweens
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.PathMode">
+            <summary>
+            Path mode
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.Full3D">
+            <summary>Regular 3D path</summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.TopDown2D">
+            <summary>2D top-down path</summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.Sidescroller2D">
+            <summary>2D side-scroller path</summary>
+        </member>
+        <member name="T:DG.Tweening.PathType">
+            <summary>
+            Type of path to use with DOPath tweens
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.PathType.Linear">
+            <summary>Linear, composed of straight segments between each waypoint</summary>
+        </member>
+        <member name="F:DG.Tweening.PathType.CatmullRom">
+            <summary>Curved path (which uses Catmull-Rom curves)</summary>
+        </member>
+        <member name="T:DG.Tweening.DOTweenPath">
+            <summary>
+            Attach this to a GameObject to create and assign a path to it
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Plugins.Core.PathCore.Path.GetPoint(System.Single,System.Boolean)">
+            <summary>
+            Gets the point on the path at the given percentage (0 to 1)
+            </summary>
+            <param name="perc">The percentage (0 to 1) at which to get the point</param>
+            <param name="convertToConstantPerc">If TRUE constant speed is taken into account, otherwise not</param>
+        </member>
+        <member name="T:DG.Tweening.Plugins.Vector3ArrayPlugin">
+            <summary>
+            This plugin generates some GC allocations at startup
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Plugins.PathPlugin">
+            <summary>
+            Path plugin works exclusively with Transforms
             </summary>
         </member>
     </members>

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
 using DG.Tweening.Plugins.Core;
-using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 namespace DG.Tweening
