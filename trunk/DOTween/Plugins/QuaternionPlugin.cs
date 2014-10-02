@@ -6,11 +6,12 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
+using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.Core.DefaultPlugins
+namespace DG.Tweening.Plugins
 {
     public class QuaternionPlugin : ABSTweenPlugin<Quaternion,Vector3,QuaternionOptions>
     {

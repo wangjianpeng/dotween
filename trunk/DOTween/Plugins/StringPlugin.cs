@@ -8,12 +8,12 @@ using System;
 using System.Text;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
-using UnityEngine;
+using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Options;
 using Random = UnityEngine.Random;
 
 #pragma warning disable 1591
-namespace DG.Tweening.Plugins.Core.DefaultPlugins
+namespace DG.Tweening.Plugins
 {
     // USING THIS PLUGIN WILL GENERATE GC ALLOCATIONS
     public class StringPlugin : ABSTweenPlugin<string, string, StringOptions>

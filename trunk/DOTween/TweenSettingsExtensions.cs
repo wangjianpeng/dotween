@@ -6,7 +6,9 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
-using DG.Tweening.Plugins.Core.DefaultPlugins.Options;
+using DG.Tweening.Plugins;
+using DG.Tweening.Plugins.Core.PathCore;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1573
@@ -662,6 +664,70 @@ namespace DG.Tweening
             t.plugOptions.snapping = snapping;
             return t;
         }
+
+        #region Path Options
+
+        public static TweenerCore<Vector3, Path, PathOptions> SetOptions(
+            this TweenerCore<Vector3, Path, PathOptions> t, AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
+        )
+        {
+            return SetOptions(t, false, lockPosition, lockRotation);
+        }
+        public static TweenerCore<Vector3, Path, PathOptions> SetOptions(
+            this TweenerCore<Vector3, Path, PathOptions> t, bool closePath,
+            AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
+        )
+        {
+            t.plugOptions.isClosedPath = closePath;
+            t.plugOptions.lockPositionAxis = lockPosition;
+            t.plugOptions.lockRotationAxis = lockRotation;
+            return t;
+        }
+
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
+            this TweenerCore<Vector3, Path, PathOptions> t, Vector3 position, Vector3? forwardDirection = null, Vector3? up = null
+        )
+        {
+            t.plugOptions.orientType = OrientType.LookAtPosition;
+            t.plugOptions.lookAtPosition = position;
+            SetPathForwardDirection(t, forwardDirection, up);
+            return t;
+        }
+
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
+            this TweenerCore<Vector3, Path, PathOptions> t, Transform transform, Vector3? forwardDirection = null, Vector3? up = null
+        )
+        {
+            t.plugOptions.orientType = OrientType.LookAtTransform;
+            t.plugOptions.lookAtTransform = transform;
+            SetPathForwardDirection(t, forwardDirection, up);
+            return t;
+        }
+
+        public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
+            this TweenerCore<Vector3, Path, PathOptions> t, float lookAhead, Vector3? forwardDirection = null, Vector3? up = null
+        )
+        {
+            t.plugOptions.orientType = OrientType.ToPath;
+            if (lookAhead < PathPlugin.MinLookAhead) lookAhead = PathPlugin.MinLookAhead;
+            t.plugOptions.lookAhead = lookAhead;
+            SetPathForwardDirection(t, forwardDirection, up);
+            return t;
+        }
+
+        static void SetPathForwardDirection(this TweenerCore<Vector3, Path, PathOptions> t, Vector3? forwardDirection = null, Vector3? up = null)
+        {
+            t.plugOptions.hasCustomForwardDirection = forwardDirection != null && forwardDirection != Vector3.zero || up != null && up != Vector3.zero;
+            if (t.plugOptions.hasCustomForwardDirection) {
+                if (forwardDirection == Vector3.zero) forwardDirection = Vector3.forward;
+                t.plugOptions.forward = Quaternion.LookRotation(
+                    forwardDirection == null ? Vector3.forward : (Vector3)forwardDirection,
+                    up == null ? Vector3.up : (Vector3)up
+                );
+            }
+        }
+
+        #endregion
 
         #endregion
     }

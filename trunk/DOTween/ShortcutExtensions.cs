@@ -7,6 +7,9 @@
 using System.Collections.Generic;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
+using DG.Tweening.Plugins;
+using DG.Tweening.Plugins.Core.PathCore;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 #pragma warning disable 1573
@@ -275,6 +278,60 @@ namespace DG.Tweening
         {
             return DOTween.Shake(() => target.localScale, x => target.localScale = x, duration, strength, vibrato, randomness, false)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+
+        /// <summary>Tweens a Transform's position through the given path waypoints, using the chosen path algorithm.
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="path">The waypoint to go through</param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="pathType">The type of path: Linear (straight path) or CatmullRom (curved CatmullRom path)</param>
+        /// <param name="pathMode">The path mode: 3D, side-scroller 2D, top-down 2D</param>
+        /// <param name="resolution">The resolution of the path: higher resolutions make for more detailed curved paths but are more expensive.
+        /// Defaults to 10, but a value of 5 is usually enough if you don't have dramatic long curves between waypoints</param>
+        /// <param name="gizmoColor">The color of the path (shown when gizmos are active in the Play panel and the tween is running)</param>
+        public static TweenerCore<Vector3, Path, PathOptions> DOPath(
+            this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear,
+            PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null
+        )
+        {
+            if (resolution < 1) resolution = 1;
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, new Path(pathType, path, resolution, gizmoColor), duration)
+                .SetTarget(target);
+
+            t.plugOptions.mode = pathMode;
+            return t;
+        }
+        /// <summary>Tweens a Transform's localPosition through the given path waypoints, using the chosen path algorithm.
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="path">The waypoint to go through</param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="pathType">The type of path: Linear (straight path) or CatmullRom (curved CatmullRom path)</param>
+        /// <param name="pathMode">The path mode: 3D, side-scroller 2D, top-down 2D</param>
+        /// <param name="resolution">The resolution of the path: higher resolutions make for more detailed curved paths but are more expensive.
+        /// Defaults to 10, but a value of 5 is usually enough if you don't have dramatic long curves between waypoints</param>
+        /// <param name="gizmoColor">The color of the path (shown when gizmos are active in the Play panel and the tween is running)</param>
+        public static TweenerCore<Vector3, Path, PathOptions> DOLocalPath(
+            this Transform target, Vector3[] path, float duration, PathType pathType = PathType.Linear,
+            PathMode pathMode = PathMode.Full3D, int resolution = 10, Color? gizmoColor = null
+        )
+        {
+            if (resolution < 1) resolution = 1;
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.localPosition, x => target.localPosition = x, new Path(pathType, path, resolution, gizmoColor), duration)
+                .SetTarget(target);
+
+            t.plugOptions.mode = pathMode;
+            return t;
+        }
+        // TODO Used by path editor when creating the actual tween, but verify if it is truly needed when finished
+        internal static TweenerCore<Vector3, Path, PathOptions> DOPath(
+            this Transform target, Path path, float duration, PathMode pathMode = PathMode.Full3D
+        )
+        {
+            TweenerCore<Vector3, Path, PathOptions> t = DOTween.To(PathPlugin.Get(), () => target.position, x => target.position = x, path, duration)
+                .SetTarget(target);
+
+            t.plugOptions.mode = pathMode;
+            return t;
         }
 
         #endregion
