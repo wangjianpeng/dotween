@@ -778,6 +778,13 @@
             <summary>Sets the ease of the tween using a custom ease function.
             <para>Has no effect on Sequences</para></summary>
         </member>
+        <member name="M:DG.Tweening.Plugins.Core.PathCore.Path.GetPoint(System.Single,System.Boolean)">
+            <summary>
+            Gets the point on the path at the given percentage (0 to 1)
+            </summary>
+            <param name="perc">The percentage (0 to 1) at which to get the point</param>
+            <param name="convertToConstantPerc">If TRUE constant speed is taken into account, otherwise not</param>
+        </member>
         <member name="T:DG.Tweening.Tweener">
             <summary>
             Animates a single value
@@ -981,6 +988,11 @@
         <member name="M:DG.Tweening.TweenExtensions.IsPlaying(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween is playing</summary>
         </member>
+        <member name="T:DG.Tweening.Plugins.Vector3ArrayPlugin">
+            <summary>
+            This plugin generates some GC allocations at startup
+            </summary>
+        </member>
         <member name="T:DG.Tweening.TweenType">
             <summary>
             Used internally
@@ -999,6 +1011,11 @@
         </member>
         <member name="F:DG.Tweening.LogBehaviour.ErrorsOnly">
             <summary>Log only errors</summary>
+        </member>
+        <member name="T:DG.Tweening.Plugins.PathPlugin">
+            <summary>
+            Path plugin works exclusively with Transforms
+            </summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.EaseCurve">
             <summary>
@@ -1105,6 +1122,20 @@
             <summary>
             Don't assign this! It's assigned automatically when setting the ease to an AnimationCurve or to a custom ease function
             </summary>
+        </member>
+        <member name="T:DG.Tweening.PathMode">
+            <summary>
+            Path mode
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.Full3D">
+            <summary>Regular 3D path</summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.TopDown2D">
+            <summary>2D top-down path</summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.Sidescroller2D">
+            <summary>2D side-scroller path</summary>
         </member>
         <member name="M:DG.Tweening.Core.Utils.Vector3FromAngle(System.Single,System.Single)">
             <summary>
@@ -1740,25 +1771,6 @@
             and returns the total number of tweens involved.
             </summary>
         </member>
-        <member name="T:DG.Tweening.AxisConstraint">
-            <summary>
-            What axis to constrain in case of Vector tweens
-            </summary>
-        </member>
-        <member name="T:DG.Tweening.PathMode">
-            <summary>
-            Path mode
-            </summary>
-        </member>
-        <member name="F:DG.Tweening.PathMode.Full3D">
-            <summary>Regular 3D path</summary>
-        </member>
-        <member name="F:DG.Tweening.PathMode.TopDown2D">
-            <summary>2D top-down path</summary>
-        </member>
-        <member name="F:DG.Tweening.PathMode.Sidescroller2D">
-            <summary>2D side-scroller path</summary>
-        </member>
         <member name="T:DG.Tweening.PathType">
             <summary>
             Type of path to use with DOPath tweens
@@ -1770,26 +1782,9 @@
         <member name="F:DG.Tweening.PathType.CatmullRom">
             <summary>Curved path (which uses Catmull-Rom curves)</summary>
         </member>
-        <member name="T:DG.Tweening.DOTweenPath">
+        <member name="T:DG.Tweening.AxisConstraint">
             <summary>
-            Attach this to a GameObject to create and assign a path to it
-            </summary>
-        </member>
-        <member name="M:DG.Tweening.Plugins.Core.PathCore.Path.GetPoint(System.Single,System.Boolean)">
-            <summary>
-            Gets the point on the path at the given percentage (0 to 1)
-            </summary>
-            <param name="perc">The percentage (0 to 1) at which to get the point</param>
-            <param name="convertToConstantPerc">If TRUE constant speed is taken into account, otherwise not</param>
-        </member>
-        <member name="T:DG.Tweening.Plugins.Vector3ArrayPlugin">
-            <summary>
-            This plugin generates some GC allocations at startup
-            </summary>
-        </member>
-        <member name="T:DG.Tweening.Plugins.PathPlugin">
-            <summary>
-            Path plugin works exclusively with Transforms
+            What axis to constrain in case of Vector tweens
             </summary>
         </member>
     </members>
