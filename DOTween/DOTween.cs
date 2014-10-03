@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.030";
+        public static readonly string Version = "0.9.100";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -71,7 +71,7 @@ namespace DG.Tweening
         /// <para>Default: 0</para></summary>
         public static float defaultEasePeriod = 0;
 
-        internal static DOTweenComponent instance;
+        internal static DOTweenComponent instance; // Assigned/removed by DOTweenComponent.Create/DestroyInstance
         internal static bool isUnityEditor;
         internal static bool isDebugBuild;
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
@@ -126,8 +126,8 @@ namespace DG.Tweening
             DOTween.defaultRecyclable = recycleAllByDefault;
             DOTween.useSafeMode = useSafeMode;
             DOTween.logBehaviour = logBehaviour;
-            // Gameobject
-            instance = DOTweenComponent.Create();
+            // Gameobject - also assign instance
+            DOTweenComponent.Create();
             // Log
             if (Debugger.logPriority >= 2) Debugger.Log("DOTween initialization (useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + ")");
 
@@ -177,7 +177,7 @@ namespace DG.Tweening
             defaultRecyclable = false;
             maxActiveTweenersReached = maxActiveSequencesReached = 0;
 
-            UnityEngine.Object.Destroy(instance.gameObject);
+            DOTweenComponent.DestroyInstance();
         }
 
         /// <summary>
