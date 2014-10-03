@@ -23,7 +23,8 @@ public class TweenDuration : BrainBase
 	{
 		float startTime = Time.realtimeSinceStartup;
 		target.DOMove(target.position + new Vector3(1, 2, 1), 1)
-			.OnStart(()=> Debug.Log("START > " + (Time.realtimeSinceStartup)))
-			.OnComplete(()=> Debug.Log("COMPLETE > " + (Time.realtimeSinceStartup)));
+			.OnStart(()=> Debug.Log("START > " + (Time.realtimeSinceStartup - startTime)))
+			.OnUpdate(()=> Debug.Log("UPDATE > frameCount: " + Time.frameCount))
+			.OnComplete(()=> Debug.Log("COMPLETE > " + (Time.realtimeSinceStartup - startTime)));
 	}
 }

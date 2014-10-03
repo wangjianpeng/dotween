@@ -136,11 +136,19 @@ namespace DG.Tweening.Core
 
         #endregion
 
-        internal static DOTweenComponent Create()
+        internal static void Create()
         {
+            if (DOTween.instance != null) return;
+
             GameObject go = new GameObject("[DOTween]");
             DontDestroyOnLoad(go);
-            return go.AddComponent<DOTweenComponent>();
+            DOTween.instance = go.AddComponent<DOTweenComponent>();
+        }
+
+        internal static void DestroyInstance()
+        {
+            if (DOTween.instance != null) Destroy(DOTween.instance.gameObject);
+            DOTween.instance = null;
         }
     }
 }

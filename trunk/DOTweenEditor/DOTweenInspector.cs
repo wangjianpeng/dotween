@@ -96,7 +96,7 @@ namespace DG.DOTweenEditor
             _strBuilder.Append("\nSafe Mode: ").Append(DOTween.useSafeMode ? "ON" : "OFF");
             _strBuilder.Append("\nLog Behaviour: ").Append(DOTween.logBehaviour);
             _strBuilder.Append("\nShow Unity Editor Report: ").Append(DOTween.showUnityEditorReport);
-            _strBuilder.Append("\nTimeScale: ").Append(DOTween.timeScale);
+            _strBuilder.Append("\nTimeScale (Unity/DOTween): ").Append(Time.timeScale).Append("/").Append(DOTween.timeScale);
             GUILayout.Label(_strBuilder.ToString());
 
             GUILayout.Space(8);
