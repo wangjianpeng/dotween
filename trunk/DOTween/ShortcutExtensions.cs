@@ -407,21 +407,19 @@ namespace DG.Tweening
         public static Tweener DOLookAt(this Rigidbody target, Vector3 towards, float duration, AxisConstraint axisConstraint = AxisConstraint.None, Vector3? up = null)
         {
             Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
+            towards -= target.position;
             switch (axisConstraint) {
             case AxisConstraint.X:
-                towards.y = target.position.y;
-                towards.z = target.position.z;
+                towards.x = 0;
                 break;
             case AxisConstraint.Y:
-                towards.x = target.position.x;
-                towards.z = target.position.z;
+                towards.y = 0;
                 break;
             case AxisConstraint.Z:
-                towards.x = target.position.x;
-                towards.y = target.position.y;
+                towards.z = 0;
                 break;
             }
-            Vector3 lookAtRotation = Quaternion.LookRotation(towards - target.position, vUp).eulerAngles;
+            Vector3 lookAtRotation = Quaternion.LookRotation(towards, vUp).eulerAngles;
             return DOTween.To(() => target.rotation, target.MoveRotation, lookAtRotation, duration)
                 .SetTarget(target);
         }
