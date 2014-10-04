@@ -22,12 +22,24 @@ namespace DG.Tweening.Core
         float _unscaledTime;
         float _unscaledDeltaTime;
 
+        bool _duplicateToDestroy;
+
         #region Unity Methods
 
         void Awake()
         {
             inspectorUpdater = 0;
             _unscaledTime = Time.realtimeSinceStartup;
+        }
+
+        void Start()
+        {
+            // Check if there's a leftover persistent DOTween object
+            // (should be impossible but some weird Unity freeze caused that to happen on Seith's project
+            if (DOTween.instance != this) {
+                _duplicateToDestroy = true;
+                Destroy(this.gameObject);
+            }
         }
 
         void Update()
@@ -69,6 +81,8 @@ namespace DG.Tweening.Core
 
         void OnDestroy()
         {
+            if (_duplicateToDestroy) return;
+
             if (DOTween.showUnityEditorReport) {
                 string s = "REPORT > Max overall simultaneous active Tweeners/Sequences: " + DOTween.maxActiveTweenersReached + "/" + DOTween.maxActiveSequencesReached;
                 Debugger.LogReport(s);
