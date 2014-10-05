@@ -667,15 +667,27 @@ namespace DG.Tweening
 
         #region Path Options
 
+        /// <summary>Options for Path tweens (created via the <code>DOPath</code> shortcut)</summary>
+        /// <param name="lockPosition">The eventual movement axis to lock. You can input multiple axis if you separate them like this:
+        /// <para>AxisConstrain.X | AxisConstraint.Y</para></param>
+        /// <param name="lockRotation">The eventual rotation axis to lock. You can input multiple axis if you separate them like this:
+        /// <para>AxisConstrain.X | AxisConstraint.Y</para></param>
         public static TweenerCore<Vector3, Path, PathOptions> SetOptions(
-            this TweenerCore<Vector3, Path, PathOptions> t, AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
+            this TweenerCore<Vector3, Path, PathOptions> t,
+            AxisConstraint lockPosition, AxisConstraint lockRotation = AxisConstraint.None
         )
         {
             return SetOptions(t, false, lockPosition, lockRotation);
         }
+        /// <summary>Options for Path tweens (created via the <code>DOPath</code> shortcut)</summary>
+        /// <param name="closePath">If TRUE the path will be automatically closed</param>
+        /// <param name="lockPosition">The eventual movement axis to lock. You can input multiple axis if you separate them like this:
+        /// <para>AxisConstrain.X | AxisConstraint.Y</para></param>
+        /// <param name="lockRotation">The eventual rotation axis to lock. You can input multiple axis if you separate them like this:
+        /// <para>AxisConstrain.X | AxisConstraint.Y</para></param>
         public static TweenerCore<Vector3, Path, PathOptions> SetOptions(
-            this TweenerCore<Vector3, Path, PathOptions> t, bool closePath,
-            AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
+            this TweenerCore<Vector3, Path, PathOptions> t,
+            bool closePath, AxisConstraint lockPosition = AxisConstraint.None, AxisConstraint lockRotation = AxisConstraint.None
         )
         {
             t.plugOptions.isClosedPath = closePath;
@@ -684,26 +696,45 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Additional LookAt options for Path tweens (created via the <code>DOPath</code> shortcut).
+        /// Orients the target towards the given position.
+        /// Must be chained directly to the tween creation method or to a <code>SetOptions</code></summary>
+        /// <param name="lookAtPosition">The position to look at</param>
+        /// <param name="forwardDirection">The eventual direction to consider as "forward".
+        /// If left to NULL defaults to the regular forward side of the transform</param>
+        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
-            this TweenerCore<Vector3, Path, PathOptions> t, Vector3 position, Vector3? forwardDirection = null, Vector3? up = null
+            this TweenerCore<Vector3, Path, PathOptions> t, Vector3 lookAtPosition, Vector3? forwardDirection = null, Vector3? up = null
         )
         {
             t.plugOptions.orientType = OrientType.LookAtPosition;
-            t.plugOptions.lookAtPosition = position;
+            t.plugOptions.lookAtPosition = lookAtPosition;
             SetPathForwardDirection(t, forwardDirection, up);
             return t;
         }
-
+        /// <summary>Additional LookAt options for Path tweens (created via the <code>DOPath</code> shortcut).
+        /// Orients the target towards another transform.
+        /// Must be chained directly to the tween creation method or to a <code>SetOptions</code></summary>
+        /// <param name="lookAtTransform">The transform to look at</param>
+        /// <param name="forwardDirection">The eventual direction to consider as "forward".
+        /// If left to NULL defaults to the regular forward side of the transform</param>
+        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
-            this TweenerCore<Vector3, Path, PathOptions> t, Transform transform, Vector3? forwardDirection = null, Vector3? up = null
+            this TweenerCore<Vector3, Path, PathOptions> t, Transform lookAtTransform, Vector3? forwardDirection = null, Vector3? up = null
         )
         {
             t.plugOptions.orientType = OrientType.LookAtTransform;
-            t.plugOptions.lookAtTransform = transform;
+            t.plugOptions.lookAtTransform = lookAtTransform;
             SetPathForwardDirection(t, forwardDirection, up);
             return t;
         }
-
+        /// <summary>Additional LookAt options for Path tweens (created via the <code>DOPath</code> shortcut).
+        /// Orients the target to the path, with the given lookAhead.
+        /// Must be chained directly to the tween creation method or to a <code>SetOptions</code></summary>
+        /// <param name="lookAhead">The percentage of lookAhead to use (0 to 1)</param>
+        /// <param name="forwardDirection">The eventual direction to consider as "forward".
+        /// If left to NULL defaults to the regular forward side of the transform</param>
+        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         public static TweenerCore<Vector3, Path, PathOptions> SetLookAt(
             this TweenerCore<Vector3, Path, PathOptions> t, float lookAhead, Vector3? forwardDirection = null, Vector3? up = null
         )

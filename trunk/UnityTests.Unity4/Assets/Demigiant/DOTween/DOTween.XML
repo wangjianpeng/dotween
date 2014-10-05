@@ -666,6 +666,48 @@
             <summary>Options for Vector3Array tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,DG.Tweening.Plugins.Core.PathCore.Path,DG.Tweening.Plugins.Options.PathOptions},DG.Tweening.AxisConstraint,DG.Tweening.AxisConstraint)">
+            <summary>Options for Path tweens (created via the <code>DOPath</code> shortcut)</summary>
+            <param name="lockPosition">The eventual movement axis to lock. You can input multiple axis if you separate them like this:
+            <para>AxisConstrain.X | AxisConstraint.Y</para></param>
+            <param name="lockRotation">The eventual rotation axis to lock. You can input multiple axis if you separate them like this:
+            <para>AxisConstrain.X | AxisConstraint.Y</para></param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,DG.Tweening.Plugins.Core.PathCore.Path,DG.Tweening.Plugins.Options.PathOptions},System.Boolean,DG.Tweening.AxisConstraint,DG.Tweening.AxisConstraint)">
+            <summary>Options for Path tweens (created via the <code>DOPath</code> shortcut)</summary>
+            <param name="closePath">If TRUE the path will be automatically closed</param>
+            <param name="lockPosition">The eventual movement axis to lock. You can input multiple axis if you separate them like this:
+            <para>AxisConstrain.X | AxisConstraint.Y</para></param>
+            <param name="lockRotation">The eventual rotation axis to lock. You can input multiple axis if you separate them like this:
+            <para>AxisConstrain.X | AxisConstraint.Y</para></param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetLookAt(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,DG.Tweening.Plugins.Core.PathCore.Path,DG.Tweening.Plugins.Options.PathOptions},UnityEngine.Vector3,System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3})">
+            <summary>Additional LookAt options for Path tweens (created via the <code>DOPath</code> shortcut).
+            Orients the target towards the given position.
+            Must be chained directly to the tween creation method or to a <code>SetOptions</code></summary>
+            <param name="lookAtPosition">The position to look at</param>
+            <param name="forwardDirection">The eventual direction to consider as "forward".
+            If left to NULL defaults to the regular forward side of the transform</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetLookAt(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,DG.Tweening.Plugins.Core.PathCore.Path,DG.Tweening.Plugins.Options.PathOptions},UnityEngine.Transform,System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3})">
+            <summary>Additional LookAt options for Path tweens (created via the <code>DOPath</code> shortcut).
+            Orients the target towards another transform.
+            Must be chained directly to the tween creation method or to a <code>SetOptions</code></summary>
+            <param name="lookAtTransform">The transform to look at</param>
+            <param name="forwardDirection">The eventual direction to consider as "forward".
+            If left to NULL defaults to the regular forward side of the transform</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetLookAt(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,DG.Tweening.Plugins.Core.PathCore.Path,DG.Tweening.Plugins.Options.PathOptions},System.Single,System.Nullable{UnityEngine.Vector3},System.Nullable{UnityEngine.Vector3})">
+            <summary>Additional LookAt options for Path tweens (created via the <code>DOPath</code> shortcut).
+            Orients the target to the path, with the given lookAhead.
+            Must be chained directly to the tween creation method or to a <code>SetOptions</code></summary>
+            <param name="lookAhead">The percentage of lookAhead to use (0 to 1)</param>
+            <param name="forwardDirection">The eventual direction to consider as "forward".
+            If left to NULL defaults to the regular forward side of the transform</param>
+            <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        </member>
         <member name="T:DG.Tweening.TweenParms">
             <summary>
             This class serves only as a utility class to store tween settings to apply on multiple tweens.
@@ -1364,11 +1406,11 @@
         <member name="M:DG.Tweening.ShortcutExtensions.DOPath(UnityEngine.Transform,UnityEngine.Vector3[],System.Single,DG.Tweening.PathType,DG.Tweening.PathMode,System.Int32,System.Nullable{UnityEngine.Color})">
             <summary>Tweens a Transform's position through the given path waypoints, using the chosen path algorithm.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-            <param name="path">The waypoint to go through</param>
+            <param name="path">The waypoints to go through</param>
             <param name="duration">The duration of the tween</param>
             <param name="pathType">The type of path: Linear (straight path) or CatmullRom (curved CatmullRom path)</param>
             <param name="pathMode">The path mode: 3D, side-scroller 2D, top-down 2D</param>
-            <param name="resolution">The resolution of the path: higher resolutions make for more detailed curved paths but are more expensive.
+            <param name="resolution">The resolution of the path (useless in case of Linear paths): higher resolutions make for more detailed curved paths but are more expensive.
             Defaults to 10, but a value of 5 is usually enough if you don't have dramatic long curves between waypoints</param>
             <param name="gizmoColor">The color of the path (shown when gizmos are active in the Play panel and the tween is running)</param>
         </member>
