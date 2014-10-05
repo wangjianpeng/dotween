@@ -513,6 +513,14 @@ namespace DG.Tweening
             return DOTween.To(() => target.intensity, x => target.intensity = x, endValue, duration).SetTarget(target);
         }
 
+        /// <summary>Tweens a Light's shadowStrength to the given value.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOShadowStrength(this Light target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.shadowStrength, x => target.shadowStrength = x, endValue, duration).SetTarget(target);
+        }
+
         #endregion
 
         // ===================================================================================
