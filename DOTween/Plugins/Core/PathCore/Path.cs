@@ -22,7 +22,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal int subdivisions; // Stored by PathPlugin > total subdivisions for whole path (derived automatically from subdivisionsXSegment)
         internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value)
         internal float length; // Unit length of the path
-        internal float[] wpLengths; // Unit length of each waypoint
+        internal float[] wpLengths; // Unit length of each waypoint (CURRENTLY UNUSED)
 
         internal float[] timesTable; // Connected to lengthsTable, used for constant speed calculations
         internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
@@ -33,7 +33,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         // GIZMOS DATA ///////////////////////////////////////////////
 
         bool _changed; // Indicates that the path has changed (after an incremental loop moved on/back) and the gizmo points need to be recalculated
-        Vector3[] _drawWps; // Used to store the path gizmo points when inside Unity editor
+        Vector3[] _nonLinearDrawWps; // Used to store non-linear path gizmo points when inside Unity editor
         internal Vector3 targetPosition; // Set by PathPlugin at each update
         internal Vector3? lookAtPosition; // Set by PathPlugin in case there's a lookAt active
         Color _gizmoColor = new Color(1, 1, 1, 0.7f);
@@ -56,29 +56,11 @@ namespace DG.Tweening.Plugins.Core.PathCore
         // ===================================================================================
         // INTERNAL METHODS ------------------------------------------------------------------
 
-        // Deletes the previous waypoints and assigns the new ones
-        // (newWps length must be at least 1)
-        void AssignWaypoints(Vector3[] newWps, bool cloneWps = false)
+        // Needs to be called once waypoints and decoder are assigned, to setup path data.
+        // If path is linear subdivisions is ignored and wpLengths are stored here instead than when calling SetWaypointsLengths (CURRENTLY UNUSED)
+        internal void Setup()
         {
-            if (cloneWps) {
-                int count = newWps.Length;
-                wps = new Vector3[count];
-                for (int i = 0; i < count; ++i) wps[i] = newWps[i];
-            } else wps = newWps;
-        }
-
-        void AssignDecoder(PathType pathType)
-        {
-            switch (pathType) {
-            case PathType.Linear:
-                if (_linearDecoder == null) _linearDecoder = new LinearDecoder();
-                _decoder = _linearDecoder;
-                break;
-            default: // Catmull-Rom
-                if (_catmullRomDecoder == null) _catmullRomDecoder = new CatmullRomDecoder();
-                _decoder = _catmullRomDecoder;
-                break;
-            }
+            _decoder.SetTimeToLengthTables(this, subdivisions);
         }
 
         /// <summary>
@@ -122,11 +104,20 @@ namespace DG.Tweening.Plugins.Core.PathCore
             return perc;
         }
 
-        // If path is linear subdivisions is ignored
-        // and wpLengths are stored here instead than when calling SetWaypointsLengths
-        internal void SetTimeToLenTables()
+        // Refreshes the waypoints used to draw non-linear gizmos and the PathInspector scene view.
+        // Called by Draw method or by DOTweenPathInspector
+        internal static void RefreshNonLinearDrawWps(Path p)
         {
-            _decoder.SetTimeToLengthTables(this, subdivisions);
+            int wpsCount = p.wps.Length;
+
+            int gizmosSubdivisions = wpsCount * 5;
+            if (p._nonLinearDrawWps == null || p._nonLinearDrawWps.Length != gizmosSubdivisions + 1)
+                p._nonLinearDrawWps = new Vector3[gizmosSubdivisions + 1];
+            for (int i = 0; i <= gizmosSubdivisions; ++i) {
+                float perc = i / (float)gizmosSubdivisions;
+                Vector3 wp = p.GetPoint(perc);
+                p._nonLinearDrawWps[i] = wp;
+            }
         }
 
         // Stops drawing the path gizmo
@@ -135,13 +126,38 @@ namespace DG.Tweening.Plugins.Core.PathCore
             if (DOTween.isUnityEditor) DOTween.GizmosDelegates.Remove(Draw);
             wps = null;
             wpLengths = timesTable = lengthsTable = null;
-            _drawWps = null;
+            _nonLinearDrawWps = null;
         }
 
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
-        // If path is linear wpLengths were stored when calling SetTimeToLenTables
+        // Deletes the previous waypoints and assigns the new ones
+        // (newWps length must be at least 1)
+        void AssignWaypoints(Vector3[] newWps, bool cloneWps = false)
+        {
+            if (cloneWps) {
+                int count = newWps.Length;
+                wps = new Vector3[count];
+                for (int i = 0; i < count; ++i) wps[i] = newWps[i];
+            } else wps = newWps;
+        }
+
+        void AssignDecoder(PathType pathType)
+        {
+            switch (pathType) {
+            case PathType.Linear:
+                if (_linearDecoder == null) _linearDecoder = new LinearDecoder();
+                _decoder = _linearDecoder;
+                break;
+            default: // Catmull-Rom
+                if (_catmullRomDecoder == null) _catmullRomDecoder = new CatmullRomDecoder();
+                _decoder = _catmullRomDecoder;
+                break;
+            }
+        }
+
+        // If path is linear wpLengths were stored when calling Setup
         void StoreWaypointsLengths()
         {
             _decoder.SetWaypointsLengths(this, subdivisions);
@@ -158,22 +174,16 @@ namespace DG.Tweening.Plugins.Core.PathCore
             Gizmos.color = p._gizmoColor;
             int wpsCount = p.wps.Length;
 
-            Vector3 currPt;
-            if (p._changed || p.type != PathType.Linear && p._drawWps == null) {
+            if (p._changed || p.type != PathType.Linear && p._nonLinearDrawWps == null) {
                 p._changed = false;
                 if (p.type != PathType.Linear) {
                     // Store draw points
-                    int gizmosSubdivisions = wpsCount * 5;
-                    p._drawWps = new Vector3[gizmosSubdivisions + 1];
-                    for (int i = 0; i <= gizmosSubdivisions; ++i) {
-                        float perc = i / (float)gizmosSubdivisions;
-                        currPt = p.GetPoint(perc);
-                        p._drawWps[i] = currPt;
-                    }
+                    RefreshNonLinearDrawWps(p);
                 }
             }
 
             // Draw path
+            Vector3 currPt;
             Vector3 prevPt;
             switch (p.type) {
             case PathType.Linear:
@@ -185,10 +195,10 @@ namespace DG.Tweening.Plugins.Core.PathCore
                 }
                 break;
             default: // Curved
-                prevPt = p._drawWps[0];
-                int count = p._drawWps.Length;
+                prevPt = p._nonLinearDrawWps[0];
+                int count = p._nonLinearDrawWps.Length;
                 for (int i = 1; i < count; ++i) {
-                    currPt = p._drawWps[i];
+                    currPt = p._nonLinearDrawWps[i];
                     Gizmos.DrawLine(currPt, prevPt);
                     prevPt = currPt;
                 }

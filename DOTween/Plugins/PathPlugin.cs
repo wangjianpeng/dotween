@@ -96,11 +96,11 @@ namespace DG.Tweening.Plugins
                 }
             }
 
-            // Apply correct values to path and set needed data
+            // Apply correct values to path and call setup
             Transform trans = (Transform)t.target;
             path.wps = wps;
             path.subdivisions = wpsLen * path.subdivisionsXSegment;
-            path.SetTimeToLenTables();
+            path.Setup();
             t.plugOptions.startupZRot = trans.eulerAngles.z;
             if (t.plugOptions.orientType == OrientType.ToPath && t.plugOptions.useLocalPosition) t.plugOptions.parent = trans.parent;
 
