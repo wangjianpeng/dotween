@@ -33,7 +33,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
 
         internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p)
         {
-            int numSections = wps.Length - 1; // Consider also control points
+            int numSections = wps.Length - 1; // Considering also control points
             int tSec = (int)Math.Floor(perc * numSections);
             int currPt = numSections - 1;
             if (currPt > tSec) currPt = tSec;

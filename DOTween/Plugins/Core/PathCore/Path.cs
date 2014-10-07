@@ -56,12 +56,10 @@ namespace DG.Tweening.Plugins.Core.PathCore
             if (DOTween.isUnityEditor) DOTween.GizmosDelegates.Add(Draw);
         }
 
-        // Needs to be called once waypoints and decoder are assigned, to setup path data.
-        // If path is linear subdivisions is ignored and wpLengths are stored here instead than when calling SetWaypointsLengths (CURRENTLY UNUSED)
+        // Needs to be called once waypoints and decoder are assigned, to setup or refresh path data.
         internal void FinalizePath(bool isClosedPath)
         {
             _decoder.FinalizePath(this, wps, isClosedPath);
-//            _decoder.SetTimeToLengthTables(this, subdivisions);
         }
 
         /// <summary>
