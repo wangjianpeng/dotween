@@ -21,12 +21,14 @@ namespace DG.Tweening.Plugins.Core.PathCore
                 p.controlPoints[1] = new ControlPoint(wps[1], Vector3.zero);
             } else {
                 p.controlPoints[0] = new ControlPoint(wps[1], Vector3.zero);
-                Vector3 lastP = wps[wpsLen - 2];
-                Vector3 diffV = lastP - wps[wpsLen - 3];
+                Vector3 lastP = wps[wpsLen - 1];
+                Vector3 diffV = lastP - wps[wpsLen - 2];
                 p.controlPoints[1] = new ControlPoint(lastP + diffV, Vector3.zero);
             }
             // Store total subdivisions
             p.subdivisions = (wpsLen + 2) * p.subdivisionsXSegment;
+            // Store time to len tables
+            SetTimeToLengthTables(p, p.subdivisions);
         }
 
         internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p)
@@ -50,7 +52,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             );
         }
 
-        internal override void SetTimeToLengthTables(Path p, int subdivisions)
+        internal void SetTimeToLengthTables(Path p, int subdivisions)
         {
             float pathLen = 0;
             float incr = 1f / subdivisions;
@@ -72,7 +74,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             p.lengthsTable = lengthsTable;
         }
 
-        internal override void SetWaypointsLengths(Path p, int subdivisions)
+        internal void SetWaypointsLengths(Path p, int subdivisions)
         {
             // Create a relative path between each waypoint,
             // with its start and end control lines coinciding with the next/prev waypoints.
