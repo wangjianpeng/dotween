@@ -75,7 +75,7 @@ namespace DG.Tweening.Plugins
             path.wps = wps;
 
             // Finalize path
-            path.FinalizePath(t.plugOptions.isClosedPath);
+            path.FinalizePath(t.plugOptions.isClosedPath, t.plugOptions.lockPositionAxis, currVal);
 
             // TODO lockPositionAxis
 

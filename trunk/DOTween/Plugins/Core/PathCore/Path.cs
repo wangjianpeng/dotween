@@ -57,8 +57,23 @@ namespace DG.Tweening.Plugins.Core.PathCore
         }
 
         // Needs to be called once waypoints and decoder are assigned, to setup or refresh path data.
-        internal void FinalizePath(bool isClosedPath)
+        internal void FinalizePath(bool isClosedPath, AxisConstraint lockPositionAxes, Vector3 currTargetVal)
         {
+            // Rebuild path to lock eventual axes
+            if (lockPositionAxes != AxisConstraint.None) {
+                bool lockX = ((lockPositionAxes & AxisConstraint.X) == AxisConstraint.X);
+                bool lockY = ((lockPositionAxes & AxisConstraint.Y) == AxisConstraint.Y);
+                bool lockZ = ((lockPositionAxes & AxisConstraint.Z) == AxisConstraint.Z);
+                for (int i = 0; i < wps.Length; ++i) {
+                    Vector3 pt = wps[i];
+                    wps[i] = new Vector3(
+                        lockX ? currTargetVal.x : pt.x,
+                        lockY ? currTargetVal.y : pt.y,
+                        lockZ ? currTargetVal.z : pt.z
+                    );
+                }
+            }
+
             _decoder.FinalizePath(this, wps, isClosedPath);
         }
 
