@@ -24,14 +24,14 @@ public class Paths_HOTween : MonoBehaviour
 
 		Axis lockRotation = lockRotation0 | lockRotation1;
 
-		PlugVector3Path plugPath = new PlugVector3Path(path, true).ClosePath().OrientToPath(0.1f, lockRotation);
+		PlugVector3Path plugPath = new PlugVector3Path(path, true).ClosePath().OrientToPath(0.1f, lockRotation).LockPosition(lockPosition);
 		if (is2DPath) plugPath.Is2D(is2DSideScroller);
 		HOTween.To(targets[0], 3, new TweenParms()
 			.Prop("position", plugPath)
 			.Ease(EaseType.Linear)
 			.Loops(-1)
 		).Pause();
-		plugPath = new PlugVector3Path(path).ClosePath().LookAt(targets[2]);
+		plugPath = new PlugVector3Path(path).ClosePath().LookAt(targets[2]).LockPosition(lockPosition);
 		if (is2DPath) plugPath.Is2D(is2DSideScroller);
 		HOTween.To(targets[1], 3, new TweenParms()
 			.Prop("position", plugPath)
@@ -40,14 +40,14 @@ public class Paths_HOTween : MonoBehaviour
 		).Pause();
 
 		// Linear VS curved
-		plugPath = new PlugVector3Path(path, true, PathType.Curved).ClosePath().LookAt(Vector3.zero);
+		plugPath = new PlugVector3Path(path, true, PathType.Curved).ClosePath().LookAt(Vector3.zero).LockPosition(lockPosition);
 		if (is2DPath) plugPath.Is2D(is2DSideScroller);
 		HOTween.To(targets[2], 3, new TweenParms()
 			.Prop("position", plugPath)
 			.Ease(EaseType.Linear)
 			.Loops(-1)
 		).Pause();
-		plugPath = new PlugVector3Path(path, true, PathType.Linear).ClosePath().OrientToPath(0.1f, lockRotation);
+		plugPath = new PlugVector3Path(path, true, PathType.Linear).ClosePath().OrientToPath(0.1f, lockRotation).LockPosition(lockPosition);
 		if (is2DPath) plugPath.Is2D(is2DSideScroller);
 		HOTween.To(targets[3], 3, new TweenParms()
 			.Prop("position", plugPath)
@@ -63,14 +63,14 @@ public class Paths_HOTween : MonoBehaviour
 			new Vector3(2,0,1),
 			new Vector3(2,0,0)
 		};
-		plugPath = new PlugVector3Path(path, true, PathType.Curved).ClosePath().OrientToPath(0.1f, lockRotation);
+		plugPath = new PlugVector3Path(path, true, PathType.Curved).ClosePath().OrientToPath(0.1f, lockRotation).LockPosition(lockPosition);
 		if (is2DPath) plugPath.Is2D(is2DSideScroller);
 		HOTween.To(targets[4], 3, new TweenParms()
 			.Prop("position", plugPath)
 			.Ease(EaseType.Linear)
 			.Loops(-1)
 		).Pause();
-		plugPath = new PlugVector3Path(path, true, PathType.Linear).ClosePath().OrientToPath(0.1f, lockRotation);
+		plugPath = new PlugVector3Path(path, true, PathType.Linear).ClosePath().OrientToPath(0.1f, lockRotation).LockPosition(lockPosition);
 		if (is2DPath) plugPath.Is2D(is2DSideScroller);
 		HOTween.To(targets[5], 3, new TweenParms()
 			.Prop("position", plugPath)

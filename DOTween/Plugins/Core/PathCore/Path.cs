@@ -37,7 +37,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         Vector3[] _nonLinearDrawWps; // Used to store non-linear path gizmo points when inside Unity editor
         internal Vector3 targetPosition; // Set by PathPlugin at each update
         internal Vector3? lookAtPosition; // Set by PathPlugin in case there's a lookAt active
-        Color _gizmoColor = new Color(1, 1, 1, 0.7f);
+        internal Color gizmoColor = new Color(1, 1, 1, 0.7f);
 
         #region Main
 
@@ -49,7 +49,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         {
             this.type = type;
             this.subdivisionsXSegment = subdivisionsXSegment;
-            if (gizmoColor != null) _gizmoColor = (Color)gizmoColor;
+            if (gizmoColor != null) this.gizmoColor = (Color)gizmoColor;
             AssignWaypoints(waypoints, true);
             AssignDecoder(type);
 
@@ -184,9 +184,9 @@ namespace DG.Tweening.Plugins.Core.PathCore
         {
             if (p.timesTable == null) return;
 
-            Color gizmosFadedCol = p._gizmoColor;
+            Color gizmosFadedCol = p.gizmoColor;
             gizmosFadedCol.a *= 0.5f;
-            Gizmos.color = p._gizmoColor;
+            Gizmos.color = p.gizmoColor;
             int wpsCount = p.wps.Length;
 
             if (p._changed || p.type != PathType.Linear && p._nonLinearDrawWps == null) {

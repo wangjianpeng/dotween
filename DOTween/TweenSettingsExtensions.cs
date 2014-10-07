@@ -321,6 +321,16 @@ namespace DG.Tweening
             Sequence.DoPrepend(s, t);
             return s;
         }
+        /// <summary>Inserts the given tween at the same time position of the last tween added to the Sequence.
+        /// Has no effect if the Sequence has already started</summary>
+        public static Sequence Join(this Sequence s, Tween t)
+        {
+            if (!s.active || s.creationLocked) return s;
+            if (t == null || !t.active) return s;
+
+            Sequence.DoInsert(s, t, s.lastTweenInsertTime);
+            return s;
+        }
         /// <summary>Inserts the given tween at the given time position in the Sequence,
         /// automatically adding an interval if needed. 
         /// Has no effect if the Sequence has already started</summary>

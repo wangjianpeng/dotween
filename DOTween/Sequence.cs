@@ -20,6 +20,7 @@ namespace DG.Tweening
 
         internal readonly List<Tween> sequencedTweens = new List<Tween>(); // Only Tweens (used for despawning and validation)
         readonly List<ABSSequentiable> _sequencedObjs = new List<ABSSequentiable>(); // Tweens plus SequenceCallbacks
+        internal float lastTweenInsertTime; // Used to insert a tween at the position of the previous one
 
         #region Constructor
 
@@ -54,6 +55,7 @@ namespace DG.Tweening
 
             // If t has a delay add it as an interval
             atPosition += t.delay;
+            inSequence.lastTweenInsertTime = atPosition;
 
             t.isSequenced = t.creationLocked = true;
             if (t.loops == -1) t.loops = 1;
@@ -108,6 +110,7 @@ namespace DG.Tweening
 
             sequencedTweens.Clear();
             _sequencedObjs.Clear();
+            lastTweenInsertTime = 0;
         }
 
         // Called by TweenManager.Validate.

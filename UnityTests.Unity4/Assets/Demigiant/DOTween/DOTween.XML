@@ -520,6 +520,10 @@
             Has no effect if the Sequence has already started</summary>
             <param name="t">The tween to prepend</param>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.Join(DG.Tweening.Sequence,DG.Tweening.Tween)">
+            <summary>Inserts the given tween at the same time position of the last tween added to the Sequence.
+            Has no effect if the Sequence has already started</summary>
+        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.Insert(DG.Tweening.Sequence,System.Single,DG.Tweening.Tween)">
             <summary>Inserts the given tween at the given time position in the Sequence,
             automatically adding an interval if needed. 
