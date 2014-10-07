@@ -39,7 +39,6 @@ public class Paths : BrainBase
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
-		return;
 		targets[1].DOPath(path, 3, PathType.CatmullRom, pathMode, pathResolution, pathsColors[1])
 			.SetOptions(closePaths, lockPosition, lockRotation)
 			.SetLookAt(targets[2], forward)

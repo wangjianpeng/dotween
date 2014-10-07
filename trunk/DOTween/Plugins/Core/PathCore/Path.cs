@@ -61,7 +61,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal void FinalizePath(bool isClosedPath)
         {
             _decoder.FinalizePath(this, wps, isClosedPath);
-            _decoder.SetTimeToLengthTables(this, subdivisions);
+//            _decoder.SetTimeToLengthTables(this, subdivisions);
         }
 
         /// <summary>
@@ -159,11 +159,11 @@ namespace DG.Tweening.Plugins.Core.PathCore
             }
         }
 
-        // If path is linear wpLengths were stored when calling FinalizePath
-        void StoreWaypointsLengths()
-        {
-            _decoder.SetWaypointsLengths(this, subdivisions);
-        }
+//        // If path is linear wpLengths were stored when calling FinalizePath
+//        void StoreWaypointsLengths()
+//        {
+//            _decoder.SetWaypointsLengths(this, subdivisions);
+//        }
 
         // Used in DOTween.OnDrawGizmos if we're inside Unity Editor
         void Draw() { Draw(this); }
@@ -189,8 +189,8 @@ namespace DG.Tweening.Plugins.Core.PathCore
             Vector3 prevPt;
             switch (p.type) {
             case PathType.Linear:
-                prevPt = p.wps[1];
-                for (int i = 1; i < wpsCount - 1; ++i) {
+                prevPt = p.wps[0];
+                for (int i = 0; i < wpsCount; ++i) {
                     currPt = p.wps[i];
                     Gizmos.DrawLine(currPt, prevPt);
                     prevPt = currPt;
@@ -211,7 +211,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             const float spheresSize = 0.075f;
 
             // Draw path control points
-            for (int i = 1; i < wpsCount - 1; ++i) Gizmos.DrawSphere(p.wps[i], spheresSize);
+            for (int i = 0; i < wpsCount; ++i) Gizmos.DrawSphere(p.wps[i], spheresSize);
 
             // Draw eventual path lookAt
             if (p.lookAtPosition != null) {

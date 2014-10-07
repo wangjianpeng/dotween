@@ -16,11 +16,11 @@ namespace DG.Tweening.Plugins.Core.PathCore
         // Gets a point on the path at the given percentage (0 to 1)
         internal abstract Vector3 GetPoint(float perc, Vector3[] wps, Path p);
 
-        // If path is linear subdivisions is ignored
-        // and waypointsLength are stored here instead than when calling SetWaypointsLengths
-        internal abstract void SetTimeToLengthTables(Path p, int subdivisions);
-
-        // If path is linear waypointsLengths were already stored when calling StoreTimeToLenTables
-        internal abstract void SetWaypointsLengths(Path p, int subdivisions);
+//        // If path is linear subdivisions is ignored
+//        // and waypointsLength are stored here instead than when calling SetWaypointsLengths
+//        internal abstract void SetTimeToLengthTables(Path p, int subdivisions);
+//
+//        // If path is linear waypointsLengths were already stored when calling StoreTimeToLenTables
+//        internal abstract void SetWaypointsLengths(Path p, int subdivisions);
     }
 }

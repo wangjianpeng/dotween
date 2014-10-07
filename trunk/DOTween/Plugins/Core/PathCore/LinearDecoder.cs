@@ -12,14 +12,33 @@ namespace DG.Tweening.Plugins.Core.PathCore
     {
         internal override void FinalizePath(Path p, Vector3[] wps, bool isClosedPath)
         {
-            throw new System.NotImplementedException();
+            p.controlPoints = null;
+            // Store time to len tables
+            p.subdivisions = (wps.Length) * p.subdivisionsXSegment;
+            SetTimeToLengthTables(p, p.subdivisions);
         }
 
         internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p)
         {
+//            if (perc <= 0) {
+//                p.linearWPIndex = 1;
+//                return wps[1];
+//            }
+//
+//            int startPIndex = 0;
+//            int endPIndex = 0;
+//            int count = p.timesTable.Length;
+//            for (int i = 1; i < count; i++) {
+//                if (p.timesTable[i] >= perc) {
+//                    startPIndex = i - 1;
+//                    endPIndex = i;
+//                    break;
+//                }
+//            }
+
             if (perc <= 0) {
                 p.linearWPIndex = 1;
-                return wps[1];
+                return wps[0];
             }
 
             int startPIndex = 0;
@@ -32,6 +51,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
                     break;
                 }
             }
+
             float startPPerc = p.timesTable[startPIndex];
             float partialPerc = perc - startPPerc;
             float partialLen = p.length * partialPerc;
@@ -42,22 +62,40 @@ namespace DG.Tweening.Plugins.Core.PathCore
         }
 
         // Linear exception: also sets waypoints lengths and doesn't set lengthsTable since it's useless
-        internal override void SetTimeToLengthTables(Path p, int subdivisions)
+        internal void SetTimeToLengthTables(Path p, int subdivisions)
         {
+//            float pathLen = 0;
+//            int count = p.wps.Length;
+//            float[] wpLengths = new float[count];
+//            Vector3 prevP = p.wps[1];
+//            for (int i = 1; i < count; i++) {
+//                Vector3 currP = p.wps[i];
+//                float dist = Vector3.Distance(currP, prevP);
+//                if (i < count - 1) pathLen += dist;
+//                prevP = currP;
+//                wpLengths[i] = dist;
+//            }
+//            float[] timesTable = new float[count];
+//            float tmpLen = 0;
+//            for (int i = 2; i < count; i++) {
+//                tmpLen += wpLengths[i];
+//                timesTable[i] = tmpLen / pathLen;
+//            }
+
             float pathLen = 0;
-            int count = p.wps.Length;
-            float[] wpLengths = new float[count];
-            Vector3 prevP = p.wps[1];
-            for (int i = 1; i < count; i++) {
+            int wpsLen = p.wps.Length;
+            float[] wpLengths = new float[wpsLen];
+            Vector3 prevP = p.wps[0];
+            for (int i = 0; i < wpsLen; i++) {
                 Vector3 currP = p.wps[i];
                 float dist = Vector3.Distance(currP, prevP);
-                if (i < count - 1) pathLen += dist;
+                if (i < wpsLen - 1) pathLen += dist;
                 prevP = currP;
                 wpLengths[i] = dist;
             }
-            float[] timesTable = new float[count];
+            float[] timesTable = new float[wpsLen];
             float tmpLen = 0;
-            for (int i = 2; i < count; i++) {
+            for (int i = 1; i < wpsLen; i++) {
                 tmpLen += wpLengths[i];
                 timesTable[i] = tmpLen / pathLen;
             }
@@ -68,7 +106,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             p.timesTable = timesTable;
         }
 
-        internal override void SetWaypointsLengths(Path p, int subdivisions)
+        internal void SetWaypointsLengths(Path p, int subdivisions)
         {
             // Does nothing (waypoints lenghts were stored inside SetTimeToLengthTables)
         }
