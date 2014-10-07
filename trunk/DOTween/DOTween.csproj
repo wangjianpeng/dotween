@@ -64,6 +64,7 @@
     <Compile Include="IDOTweenInit.cs" />
     <Compile Include="PathMode.cs" />
     <Compile Include="PathType.cs" />
+    <Compile Include="Plugins\Core\PathCore\ControlPoint.cs" />
     <Compile Include="Plugins\Options\PathOptions.cs" />
     <Compile Include="Plugins\Options\QuaternionOptions.cs" />
     <Compile Include="Plugins\Options\Vector3ArrayOptions.cs" />

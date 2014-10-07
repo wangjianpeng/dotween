@@ -1834,5 +1834,10 @@
             What axis to constrain in case of Vector tweens
             </summary>
         </member>
+        <member name="T:DG.Tweening.Plugins.Core.PathCore.ControlPoint">
+            <summary>
+            Path control point
+            </summary>
+        </member>
     </members>
 </doc>
