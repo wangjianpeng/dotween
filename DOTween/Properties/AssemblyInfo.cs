@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 // Friends
 [assembly: InternalsVisibleTo("DOTweenEditor")]
 [assembly: InternalsVisibleTo("DOTweenPro")]
+[assembly: InternalsVisibleTo("DOTweenProEditor")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information

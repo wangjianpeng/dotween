@@ -20,7 +20,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal PathType type;
         internal int subdivisionsXSegment; // Subdivisions x each segment
         internal int subdivisions; // Stored by PathPlugin > total subdivisions for whole path (derived automatically from subdivisionsXSegment)
-        internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value)
+        internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value) - also modified by DOTweenPathInspector
         internal float length; // Unit length of the path
         internal float[] wpLengths; // Unit length of each waypoint (CURRENTLY UNUSED)
 
@@ -38,6 +38,8 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal Vector3? lookAtPosition; // Set by PathPlugin in case there's a lookAt active
         Color _gizmoColor = new Color(1, 1, 1, 0.7f);
 
+        #region Main
+
         // ***********************************************************************************
         // CONSTRUCTOR
         // ***********************************************************************************
@@ -52,9 +54,6 @@ namespace DG.Tweening.Plugins.Core.PathCore
 
             if (DOTween.isUnityEditor) DOTween.GizmosDelegates.Add(Draw);
         }
-
-        // ===================================================================================
-        // INTERNAL METHODS ------------------------------------------------------------------
 
         // Needs to be called once waypoints and decoder are assigned, to setup path data.
         // If path is linear subdivisions is ignored and wpLengths are stored here instead than when calling SetWaypointsLengths (CURRENTLY UNUSED)
@@ -129,12 +128,12 @@ namespace DG.Tweening.Plugins.Core.PathCore
             _nonLinearDrawWps = null;
         }
 
-        // ===================================================================================
-        // METHODS ---------------------------------------------------------------------------
+        #endregion
 
         // Deletes the previous waypoints and assigns the new ones
-        // (newWps length must be at least 1)
-        void AssignWaypoints(Vector3[] newWps, bool cloneWps = false)
+        // (newWps length must be at least 1).
+        // Internal so DOTweenPathInspector can use it
+        internal void AssignWaypoints(Vector3[] newWps, bool cloneWps = false)
         {
             if (cloneWps) {
                 int count = newWps.Length;
@@ -143,7 +142,8 @@ namespace DG.Tweening.Plugins.Core.PathCore
             } else wps = newWps;
         }
 
-        void AssignDecoder(PathType pathType)
+        // Internal so DOTweenPathInspector can use it
+        internal void AssignDecoder(PathType pathType)
         {
             switch (pathType) {
             case PathType.Linear:
