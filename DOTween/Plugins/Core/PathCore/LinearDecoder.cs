@@ -10,7 +10,12 @@ namespace DG.Tweening.Plugins.Core.PathCore
 {
     internal class LinearDecoder : ABSPathDecoder
     {
-        internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p = null)
+        internal override void FinalizePath(Path p, Vector3[] wps, bool isClosedPath)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p)
         {
             if (perc <= 0) {
                 p.linearWPIndex = 1;

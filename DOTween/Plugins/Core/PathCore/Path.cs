@@ -21,6 +21,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal int subdivisionsXSegment; // Subdivisions x each segment
         internal int subdivisions; // Stored by PathPlugin > total subdivisions for whole path (derived automatically from subdivisionsXSegment)
         internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value) - also modified by DOTweenPathInspector
+        internal ControlPoint[] controlPoints; // Control points used by non-linear paths
         internal float length; // Unit length of the path
         internal float[] wpLengths; // Unit length of each waypoint (CURRENTLY UNUSED)
 
@@ -57,8 +58,9 @@ namespace DG.Tweening.Plugins.Core.PathCore
 
         // Needs to be called once waypoints and decoder are assigned, to setup path data.
         // If path is linear subdivisions is ignored and wpLengths are stored here instead than when calling SetWaypointsLengths (CURRENTLY UNUSED)
-        internal void Setup()
+        internal void FinalizePath(bool isClosedPath)
         {
+            _decoder.FinalizePath(this, wps, isClosedPath);
             _decoder.SetTimeToLengthTables(this, subdivisions);
         }
 
@@ -157,7 +159,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             }
         }
 
-        // If path is linear wpLengths were stored when calling Setup
+        // If path is linear wpLengths were stored when calling FinalizePath
         void StoreWaypointsLengths()
         {
             _decoder.SetWaypointsLengths(this, subdivisions);

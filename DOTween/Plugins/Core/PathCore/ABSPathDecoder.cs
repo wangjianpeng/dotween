@@ -10,9 +10,11 @@ namespace DG.Tweening.Plugins.Core.PathCore
 {
     internal abstract class ABSPathDecoder
     {
-        // Gets a point on the path at the given percentage (0 to 1).
-        // Path is only used with LinearDecoder
-        internal abstract Vector3 GetPoint(float perc, Vector3[] wps, Path p = null);
+        // Finalizes the path, assigning eventual control points and storing all required data
+        internal abstract void FinalizePath(Path p, Vector3[] wps, bool isClosedPath);
+
+        // Gets a point on the path at the given percentage (0 to 1)
+        internal abstract Vector3 GetPoint(float perc, Vector3[] wps, Path p);
 
         // If path is linear subdivisions is ignored
         // and waypointsLength are stored here instead than when calling SetWaypointsLengths

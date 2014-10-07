@@ -51,14 +51,54 @@ namespace DG.Tweening.Plugins
         // then sets the final path version
         public override void SetChangeValue(TweenerCore<Vector3, Path, PathOptions> t)
         {
-            Path path = t.endValue;
             Vector3 currVal = t.getter();
-            Vector3[] wps;
-            int indMod = 1;
-            int pAdd = (t.plugOptions.isClosedPath ? 1 : 0);
-            int wpsLen = path.wps.Length;
+            Path path = t.endValue;
+            int unmodifiedWpsLen = path.wps.Length;
+            int additionalWps = 0;
+            bool hasAdditionalStartingP = false, hasAdditionalEndingP = false;
             
-            bool hasAdditionalStartingP = path.wps[0] != currVal; // Additional point in case starting waypoint doesn't coincide with current position
+            // Create final wps and add eventual starting/ending waypoints
+            if (path.wps[0] != currVal) {
+                hasAdditionalStartingP = true;
+                additionalWps += 1;
+            }
+            if (t.plugOptions.isClosedPath && path.wps[unmodifiedWpsLen - 1] != currVal) {
+                hasAdditionalEndingP = true;
+                additionalWps += 1;
+            }
+            int wpsLen = unmodifiedWpsLen + additionalWps;
+            Vector3[] wps = new Vector3[wpsLen];
+            int indMod = hasAdditionalStartingP ? 1 : 0;
+            if (hasAdditionalStartingP) wps[0] = currVal;
+            if (hasAdditionalEndingP) wps[wps.Length - 1] = wps[0];
+            for (int i = 0; i < unmodifiedWpsLen; ++i) wps[i + indMod] = path.wps[i];
+            path.wps = wps;
+
+            // Finalize path
+            path.FinalizePath(t.plugOptions.isClosedPath);
+
+            // TODO lockPositionAxis
+
+            Transform trans = (Transform)t.target;
+            t.plugOptions.startupZRot = trans.eulerAngles.z;
+            if (t.plugOptions.orientType == OrientType.ToPath && t.plugOptions.useLocalPosition) t.plugOptions.parent = trans.parent;
+
+            // Set changeValue as a reference to endValue
+            t.changeValue = t.endValue;
+            return;
+
+
+
+
+
+//            Path path = t.endValue;
+//            Vector3 currVal = t.getter();
+//            Vector3[] wps;
+//            int indMod = 1;
+            int pAdd = (t.plugOptions.isClosedPath ? 1 : 0);
+//            int wpsLen = path.wps.Length;
+            
+//            bool hasAdditionalStartingP = path.wps[0] != currVal; // Additional point in case starting waypoint doesn't coincide with current position
             if (hasAdditionalStartingP) {
                 wps = new Vector3[wpsLen + 3 + pAdd];
                 wps[1] = currVal;
@@ -97,12 +137,12 @@ namespace DG.Tweening.Plugins
             }
 
             // Apply correct values to path and call setup
-            Transform trans = (Transform)t.target;
-            path.wps = wps;
-            path.subdivisions = wpsLen * path.subdivisionsXSegment;
-            path.Setup();
-            t.plugOptions.startupZRot = trans.eulerAngles.z;
-            if (t.plugOptions.orientType == OrientType.ToPath && t.plugOptions.useLocalPosition) t.plugOptions.parent = trans.parent;
+//            Transform trans = (Transform)t.target;
+//            path.wps = wps;
+//            path.subdivisions = wpsLen * path.subdivisionsXSegment;
+//            path.FinalizePath(t.plugOptions.isClosedPath);
+//            t.plugOptions.startupZRot = trans.eulerAngles.z;
+//            if (t.plugOptions.orientType == OrientType.ToPath && t.plugOptions.useLocalPosition) t.plugOptions.parent = trans.parent;
 
             // Set changeValue as a reference to endValue
             t.changeValue = t.endValue;
