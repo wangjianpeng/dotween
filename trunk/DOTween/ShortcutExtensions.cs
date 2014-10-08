@@ -255,6 +255,18 @@ namespace DG.Tweening
             return DOTween.Shake(() => target.localPosition, x => target.localPosition = x, duration, strength, vibrato, randomness, false)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake).SetOptions(snapping);
         }
+        /// <summary>Shakes a Transform's localPosition with the given values.</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOShakePosition(this Transform target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool snapping = false)
+        {
+            return DOTween.Shake(() => target.localPosition, x => target.localPosition = x, duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake).SetOptions(snapping);
+        }
         /// <summary>Shakes a Transform's localRotation.</summary>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="strength">The shake strength</param>
@@ -266,6 +278,17 @@ namespace DG.Tweening
             return DOTween.Shake(() => target.localEulerAngles, x => target.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness, false)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
         }
+        /// <summary>Shakes a Transform's localRotation.</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakeRotation(this Transform target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.localEulerAngles, x => target.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
         /// <summary>Shakes a Transform's localScale.</summary>
         /// <param name="duration">The duration of the tween</param>
         /// <param name="strength">The shake strength</param>
@@ -275,6 +298,17 @@ namespace DG.Tweening
         public static Tweener DOShakeScale(this Transform target, float duration, float strength = 1, int vibrato = 10, float randomness = 90)
         {
             return DOTween.Shake(() => target.localScale, x => target.localScale = x, duration, strength, vibrato, randomness, false)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+        /// <summary>Shakes a Transform's localScale.</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakeScale(this Transform target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.localScale, x => target.localScale = x, duration, strength, vibrato, randomness)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
         }
 
@@ -450,6 +484,18 @@ namespace DG.Tweening
             return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
         }
+        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakePosition(this Camera target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
+        }
 
         /// <summary>Shakes a Camera's localRotation.
         /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
@@ -461,6 +507,18 @@ namespace DG.Tweening
         public static Tweener DOShakeRotation(this Camera target, float duration, float strength = 90, int vibrato = 10, float randomness = 90)
         {
             return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness, false)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+        /// <summary>Shakes a Camera's localRotation.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakeRotation(this Camera target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness)
                 .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
         }
 

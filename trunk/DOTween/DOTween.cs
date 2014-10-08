@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.150";
+        public static readonly string Version = "0.9.160";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -417,11 +417,36 @@ namespace DG.Tweening
         /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
         /// Setting it to 0 will shake along a single direction and behave like a random punch.</param>
         /// <param name="ignoreZAxis">If TRUE only shakes on the X Y axis (looks better with things like cameras).</param>
-        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration, float strength = 3, int vibrato = 10, float randomness = 90, bool ignoreZAxis = true)
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration,
+            float strength = 3, int vibrato = 10, float randomness = 90, bool ignoreZAxis = true
+        )
         {
+            return Shake(getter, setter, duration, new Vector3(strength, strength, strength), vibrato, randomness, ignoreZAxis, false);
+        }
+        /// <summary>Shakes a Vector3 with the given values.</summary>
+        /// <param name="getter">A getter for the field or property to tween.
+        /// <para>Example usage with lambda:</para><code>()=> myProperty</code></param>
+        /// <param name="setter">A setter for the field or property to tween
+        /// <para>Example usage with lambda:</para><code>x=> myProperty = x</code></param>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction and behave like a random punch.</param>
+        public static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration,
+            Vector3 strength, int vibrato = 10, float randomness = 90
+        )
+        {
+            return Shake(getter, setter, duration, strength, vibrato, randomness, false, true);
+        }
+        static TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> Shake(DOGetter<Vector3> getter, DOSetter<Vector3> setter, float duration,
+            Vector3 strength, int vibrato, float randomness, bool ignoreZAxis, bool vectorBased
+        )
+        {
+            float shakeMagnitude = vectorBased ? strength.magnitude : strength.x;
             int totIterations = (int)(vibrato * duration);
             if (totIterations < 2) totIterations = 2;
-            float decayXTween = strength / totIterations;
+            float decayXTween = shakeMagnitude / totIterations;
             // Calculate and store the duration of each tween
             float[] tDurations = new float[totIterations];
             float sum = 0;
@@ -439,13 +464,24 @@ namespace DG.Tweening
             for (int i = 0; i < totIterations; ++i) {
                 if (i < totIterations - 1) {
                     if (i > 0) ang = ang - 180 + UnityEngine.Random.Range(-randomness, randomness);
-                    if (ignoreZAxis) {
-                        tos[i] = Utils.Vector3FromAngle(ang, strength);
-                    } else {
+                    if (vectorBased) {
                         Quaternion rndQuaternion = Quaternion.AngleAxis(UnityEngine.Random.Range(-randomness, randomness), Vector3.up);
-                        tos[i] = rndQuaternion * Utils.Vector3FromAngle(ang, strength);
+                        Vector3 to = rndQuaternion * Utils.Vector3FromAngle(ang, shakeMagnitude);
+                        to.x = Vector3.ClampMagnitude(to, strength.x).x;
+                        to.y = Vector3.ClampMagnitude(to, strength.y).y;
+                        to.z = Vector3.ClampMagnitude(to, strength.z).z;
+                        tos[i] = to;
+                        shakeMagnitude -= decayXTween;
+                        strength = Vector3.ClampMagnitude(strength, shakeMagnitude);
+                    } else {
+                        if (ignoreZAxis) {
+                            tos[i] = Utils.Vector3FromAngle(ang, shakeMagnitude);
+                        } else {
+                            Quaternion rndQuaternion = Quaternion.AngleAxis(UnityEngine.Random.Range(-randomness, randomness), Vector3.up);
+                            tos[i] = rndQuaternion * Utils.Vector3FromAngle(ang, shakeMagnitude);
+                        }
+                        shakeMagnitude -= decayXTween;
                     }
-                    strength -= decayXTween;
                 } else tos[i] = Vector3.zero;
             }
             return ToArray(getter, setter, tos, tDurations)
