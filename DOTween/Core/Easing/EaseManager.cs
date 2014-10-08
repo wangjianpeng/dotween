@@ -85,8 +85,7 @@ namespace DG.Tweening.Core.Easing
                 if ((time /= duration*0.5f) < 1) return changeValue*0.5f*time*time*time*time*time + startValue;
                 return changeValue*0.5f*((time -= 2)*time*time*time*time + 2) + startValue;
             case Ease.InExpo:
-                if (time == 0) return startValue;
-                return changeValue*(float)Math.Pow(2, 10*(time/duration - 1)) + startValue - changeValue*0.001f;
+                return (time == 0) ? startValue : changeValue * (float)Math.Pow(2, 10 * (time / duration - 1)) + startValue;
             case Ease.OutExpo:
                 if (time == duration) return startValue + changeValue;
                 return changeValue*(-(float)Math.Pow(2, -10*time/duration) + 1) + startValue;

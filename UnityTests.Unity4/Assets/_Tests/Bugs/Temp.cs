@@ -4,15 +4,16 @@ using System.Collections;
 
 public class Temp : BrainBase
 {
-	public Transform target;
+	float f = 0;
 
 	void Start()
 	{
-		target.DOMoveX(45, 1).SetDelay(2).OnComplete(MyCallback);
+		DOTween.To(()=> f, x=> f = x, 9000, 2)
+			.SetEase(Ease.InExpo);
 	}
 
-	void MyCallback()
+	void OnGUI()
 	{
-		Debug.Log("COMPLETE");
+		GUILayout.Label("f: " + f);
 	}
 }
