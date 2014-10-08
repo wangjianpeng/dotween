@@ -7,8 +7,12 @@ public class ShakePunch : BrainBase
 {
 	public float duration = 1; // Shake duration
 	public float shakePosStrength = 2; // Shake position power
+	public Vector3 shakePosStrengthV3 = new Vector3(2,2,2);
 	public float shakeRotStrength = 90; // Shake rotation power
+	public Vector3 shakeRotStrengthV3 = new Vector3(90,90,90);
 	public float shakeScaleStrength = 2; // Shake scale power
+	public Vector3 shakeScaleStrengthV3 = new Vector3(2,2,2);
+	public bool useVectorStrength;
 	public int shakeVibrato = 10; // Shake iterations x seconds
 	public float shakeRandomness = 90;
 	public int punchVibrato = 10;
@@ -76,8 +80,12 @@ public class ShakePunch : BrainBase
 		shakePositionTween.Complete();
 
 		shakePositionTween = isCamera
-			? Camera.main.DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness)
-			: targets[0].DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness);
+			? useVectorStrength
+				? Camera.main.DOShakePosition(duration, shakePosStrengthV3, shakeVibrato, shakeRandomness)
+				: Camera.main.DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness)
+			: useVectorStrength
+				? targets[0].DOShakePosition(duration, shakePosStrengthV3, shakeVibrato, shakeRandomness)
+				: targets[0].DOShakePosition(duration, shakePosStrength, shakeVibrato, shakeRandomness);
 		if (isCamera && lookAt != null) {
 			shakePositionTween.OnUpdate(()=> Camera.main.transform.LookAt((Vector3)lookAt));
 		}
@@ -88,15 +96,21 @@ public class ShakePunch : BrainBase
 		shakeRotationTween.Complete();
 
 		shakeRotationTween = isCamera
-			? Camera.main.DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness)
-			: targets[0].DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness);
+			? useVectorStrength
+				? Camera.main.DOShakeRotation(duration, shakeRotStrengthV3, shakeVibrato, shakeRandomness)
+				: Camera.main.DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness)
+			: useVectorStrength
+				? targets[0].DOShakeRotation(duration, shakeRotStrengthV3, shakeVibrato, shakeRandomness)
+				: targets[0].DOShakeRotation(duration, shakeRotStrength, shakeVibrato, shakeRandomness);
 	}
 
 	void ShakeScale()
 	{
 		shakeScaleTween.Complete();
 
-		shakeScaleTween = targets[0].DOShakeScale(duration, shakeScaleStrength, shakeVibrato, shakeRandomness);
+		shakeScaleTween = useVectorStrength
+			? targets[0].DOShakeScale(duration, shakeScaleStrengthV3, shakeVibrato, shakeRandomness)
+			: targets[0].DOShakeScale(duration, shakeScaleStrength, shakeVibrato, shakeRandomness);
 	}
 
 	void PunchPosition(bool random = false)
