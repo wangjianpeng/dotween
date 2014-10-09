@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.170";
+        public static readonly string Version = "0.9.175";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -120,6 +120,7 @@ namespace DG.Tweening
         public static IDOTweenInit Init(bool recycleAllByDefault = false, bool useSafeMode = true, LogBehaviour logBehaviour = LogBehaviour.ErrorsOnly)
         {
             if (initialized) return instance;
+            if (!Application.isPlaying) return null;
 
             initialized = true;
             // Options
@@ -722,7 +723,7 @@ namespace DG.Tweening
 
         static void InitCheck()
         {
-            if (initialized) return;
+            if (initialized || !Application.isPlaying) return;
 
             Init(defaultRecyclable, useSafeMode, logBehaviour);
             Debugger.LogWarning("DOTween auto-initialized with default settings (recycleAllByDefault: " + defaultRecyclable + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");
