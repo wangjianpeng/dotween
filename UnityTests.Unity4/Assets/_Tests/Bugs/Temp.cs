@@ -2,7 +2,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class Temp : BrainBase
+[ExecuteInEditMode]
+public class Temp : MonoBehaviour
 {
 	float f = 0;
 
