@@ -18,9 +18,13 @@ namespace DG.DOTweenEditor
         static void StartSetup() { Setup(); }
 
         const string _Title = "DOTween Setup";
+
+        static string _addedLibraries;
 		
         static void Setup()
         {
+            _addedLibraries = "";
+
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);
             string addonsDir = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
@@ -42,13 +46,17 @@ namespace DG.DOTweenEditor
             string[] vs = Application.unityVersion.Split("."[0]);
             int majorVersion = Convert.ToInt32(vs[0]);
             int minorVersion = Convert.ToInt32(vs[1]);
-            if (majorVersion < 4) SetupComplete(addonsDir, totImported);
-            else if (majorVersion == 4) {
-                if (minorVersion < 3) SetupComplete(addonsDir, totImported);
-                else {
-                    totImported += ImportDll(43, addonsDir);
-                    if (minorVersion >= 6) totImported += ImportDll(46, addonsDir);
+            if (majorVersion < 4) {
+                SetupComplete(addonsDir, totImported);
+                return;
+            }
+            if (majorVersion == 4) {
+                if (minorVersion < 3) {
+                    SetupComplete(addonsDir, totImported);
+                    return;
                 }
+                totImported += ImportDll(43, addonsDir);
+                if (minorVersion >= 6) totImported += ImportDll(46, addonsDir);
             } else {
                 // 5.x
                 totImported += ImportDll(43, addonsDir);
@@ -77,7 +85,8 @@ namespace DG.DOTweenEditor
             AssetDatabase.Refresh();
 
             EditorUtility.ClearProgressBar();
-            EditorUtility.DisplayDialog(_Title, "DOTween setup is now complete.", "Ok");
+            EditorUtility.DisplayDialog(_Title, "DOTween setup is now complete." + (totImported == 0 ? "" : "\n" + (totImported / 3) + " additional libraries were imported or updated."), "Ok");
+            _addedLibraries = null;
         }
 
         // Removes relative .addon extension thus activating files
