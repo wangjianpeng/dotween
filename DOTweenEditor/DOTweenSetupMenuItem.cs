@@ -14,7 +14,7 @@ namespace DG.DOTweenEditor
 {
     class DOTweenSetupMenuItem
     {
-        [MenuItem("DOTween/" + _Title)]
+        [MenuItem("Tools/" + _Title)]
         static void StartSetup() { Setup(); }
 
         const string _Title = "DOTween Setup";
@@ -66,8 +66,14 @@ namespace DG.DOTweenEditor
                 EditorUtility.DisplayProgressBar(_Title, "Removing " + leftoverAddonFiles.Length + " unused additional files...", 0.5f);
                 foreach (string leftoverAddonFile in leftoverAddonFiles) File.Delete(leftoverAddonFile);
             }
+            // Delete all remaining addon meta files
+            leftoverAddonFiles = Directory.GetFiles(addonsDir, "*.addon.meta");
+            if (leftoverAddonFiles.Length > 0) {
+                EditorUtility.DisplayProgressBar(_Title, "Removing " + leftoverAddonFiles.Length + " unused additional meta files...", 0.75f);
+                foreach (string leftoverAddonFile in leftoverAddonFiles) File.Delete(leftoverAddonFile);
+            }
 
-            EditorUtility.DisplayProgressBar(_Title, "Refreshing...", 0.75f);
+            EditorUtility.DisplayProgressBar(_Title, "Refreshing...", 0.9f);
             AssetDatabase.Refresh();
 
             EditorUtility.ClearProgressBar();
