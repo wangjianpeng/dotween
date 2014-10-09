@@ -36,6 +36,11 @@ namespace DG.Tweening.Core
             LogWarning("This Tween has been killed and is now invalid");
         }
 
+        internal static void LogNestedTween(Tween t)
+        {
+            LogWarning("This Tween was added to a Sequence and can't be controlled directly");
+        }
+
         internal static void LogNullTween(Tween t)
         {
             LogWarning("Null Tween");
