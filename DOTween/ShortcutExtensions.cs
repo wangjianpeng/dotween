@@ -544,7 +544,7 @@ namespace DG.Tweening
         /// <summary>Tweens a Material's named color property to the given value.
         /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param>
-        /// <param name="property">The name of the color property to tween (like _Tint or _SpecColor)</param>
+        /// <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
         /// <param name="duration">The duration of the tween</param>
         public static Tweener DOColor(this Material target, Color endValue, string property, float duration)
         {
@@ -559,6 +559,26 @@ namespace DG.Tweening
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
                 .SetTarget(target);
+        }
+
+        /// <summary>Tweens a Material's named float property to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="property">The name of the material property to tween</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOFloat(this Material target, float endValue, string property, float duration)
+        {
+            return DOTween.To(() => target.GetFloat(property), x => target.SetFloat(property, x), endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Material's named Vector property to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="property">The name of the material property to tween</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOVector(this Material target, Vector4 endValue, string property, float duration)
+        {
+            return DOTween.To(() => target.GetVector(property), x => target.SetVector(property, x), endValue, duration).SetTarget(target);
         }
 
         #endregion
