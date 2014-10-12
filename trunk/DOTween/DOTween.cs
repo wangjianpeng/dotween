@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.190";
+        public static readonly string Version = "0.9.195";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -77,6 +77,7 @@ namespace DG.Tweening
         internal static int maxActiveTweenersReached, maxActiveSequencesReached; // Controlled by DOTweenInspector if showUnityEditorReport is active
         internal static readonly List<TweenCallback> GizmosDelegates = new List<TweenCallback>(); // Can be used by other classes to call internal gizmo draw methods
         internal static bool initialized; // Can be set to false by DOTweenComponent OnDestroy
+        internal static bool isQuitting; // Set by DOTweenComponent when the application is quitting
 
         #region Static Constructor
 
@@ -120,7 +121,7 @@ namespace DG.Tweening
         public static IDOTweenInit Init(bool recycleAllByDefault = false, bool useSafeMode = true, LogBehaviour logBehaviour = LogBehaviour.ErrorsOnly)
         {
             if (initialized) return instance;
-            if (!Application.isPlaying) return null;
+            if (!Application.isPlaying || isQuitting) return null;
 
             initialized = true;
             // Options
@@ -723,7 +724,7 @@ namespace DG.Tweening
 
         static void InitCheck()
         {
-            if (initialized || !Application.isPlaying) return;
+            if (initialized || !Application.isPlaying || isQuitting) return;
 
             Init(defaultRecyclable, useSafeMode, logBehaviour);
             Debugger.LogWarning("DOTween auto-initialized with default settings (recycleAllByDefault: " + defaultRecyclable + ", useSafeMode: " + useSafeMode + ", logBehaviour: " + logBehaviour + "). Call DOTween.Init before creating your first tween in order to choose the settings yourself");

@@ -91,6 +91,11 @@ namespace DG.Tweening.Core
             DOTween.instance = null;
         }
 
+        void OnApplicationQuit()
+        {
+            DOTween.isQuitting = true;
+        }
+
         #endregion
 
         #region Public Methods
