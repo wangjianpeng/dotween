@@ -242,6 +242,9 @@ namespace DG.Tweening
             case SpecialStartupMode.SetLocalAxisRotationSetter:
                 if (!SpecialPluginsUtils.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, QuaternionOptions>)) return false;
                 break;
+            case SpecialStartupMode.SetLookAt:
+                if (!SpecialPluginsUtils.SetLookAt(t as TweenerCore<Quaternion, Vector3, QuaternionOptions>)) return false;
+                break;
             case SpecialStartupMode.SetPunch:
                 if (!SpecialPluginsUtils.SetPunch(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
                 break;
