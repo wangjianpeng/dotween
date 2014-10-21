@@ -32,6 +32,28 @@ namespace DG.Tweening.Plugins.Core
         }
 
         // Returns TRUE if it's successful, FALSE otherwise
+        internal static bool SetLookAt(TweenerCore<Quaternion, Vector3, QuaternionOptions> t)
+        {
+            Transform trans = t.target as Transform;
+            Vector3 towards = t.endValue;
+            towards -= trans.position;
+            switch (t.plugOptions.axisConstraint) {
+            case AxisConstraint.X:
+                towards.x = 0;
+                break;
+            case AxisConstraint.Y:
+                towards.y = 0;
+                break;
+            case AxisConstraint.Z:
+                towards.z = 0;
+                break;
+            }
+            Vector3 lookAtRotation = Quaternion.LookRotation(towards, t.plugOptions.up).eulerAngles;
+            t.endValue = lookAtRotation;
+            return true;
+        }
+
+        // Returns TRUE if it's successful, FALSE otherwise
         internal static bool SetPunch(TweenerCore<Vector3, Vector3[], Vector3ArrayOptions> t)
         {
             Vector3 startupVal;

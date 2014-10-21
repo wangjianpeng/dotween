@@ -10,6 +10,7 @@ namespace DG.Tweening.Core.Enums
     {
         None,
         SetLocalAxisRotationSetter,
+        SetLookAt,
         SetShake,
         SetPunch,
         SetCameraShakePosition,
