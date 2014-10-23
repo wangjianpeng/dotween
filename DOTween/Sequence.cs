@@ -58,6 +58,7 @@ namespace DG.Tweening
             inSequence.lastTweenInsertTime = atPosition;
 
             t.isSequenced = t.creationLocked = true;
+            t.sequenceParent = inSequence;
             if (t.loops == -1) t.loops = 1;
             float tFullTime = t.duration * t.loops;
             t.autoKill = false;

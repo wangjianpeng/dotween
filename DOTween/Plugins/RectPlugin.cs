@@ -80,6 +80,14 @@ namespace DG.Tweening.Plugins
                 startValue.width += changeValue.width * iterations;
                 startValue.height += changeValue.height * iterations;
             }
+            if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
+                int iterations = (t.loopType == LoopType.Incremental ? t.loops : 1)
+                    * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
+                startValue.x += changeValue.x * iterations;
+                startValue.y += changeValue.y * iterations;
+                startValue.width += changeValue.width * iterations;
+                startValue.height += changeValue.height * iterations;
+            }
 
             startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);

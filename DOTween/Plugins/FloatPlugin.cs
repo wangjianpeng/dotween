@@ -50,6 +50,10 @@ namespace DG.Tweening.Plugins
         public override void EvaluateAndApply(FloatOptions options, Tween t, bool isRelative, DOGetter<float> getter, DOSetter<float> setter, float elapsed, float startValue, float changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+            if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
+                startValue += changeValue * (t.loopType == LoopType.Incremental ? t.loops : 1)
+                    * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
+            }
 
             setter(
                 !options.snapping
