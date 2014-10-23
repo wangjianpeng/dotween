@@ -87,6 +87,14 @@ namespace DG.Tweening.Plugins
                 _r.top += changeValue.top * iterations;
                 _r.bottom += changeValue.bottom * iterations;
             }
+            if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
+                int iterations = (t.loopType == LoopType.Incremental ? t.loops : 1)
+                    * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
+                _r.left += changeValue.left * iterations;
+                _r.right += changeValue.right * iterations;
+                _r.top += changeValue.top * iterations;
+                _r.bottom += changeValue.bottom * iterations;
+            }
 
             setter(
                 new RectOffset(

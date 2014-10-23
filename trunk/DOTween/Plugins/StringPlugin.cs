@@ -61,6 +61,7 @@ namespace DG.Tweening.Plugins
             _Buffer.Remove(0, _Buffer.Length);
 
             // Incremental works only with relative tweens (otherwise the tween makes no sense)
+            // Sequence with Incremental loops have no effect here (why should they?)
             if (isRelative && t.loopType == LoopType.Incremental) {
                 int iterations = t.isComplete ? t.completedLoops - 1 : t.completedLoops;
                 if (iterations > 0) {

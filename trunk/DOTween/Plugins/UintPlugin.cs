@@ -50,6 +50,10 @@ namespace DG.Tweening.Plugins
         public override void EvaluateAndApply(NoOptions options, Tween t, bool isRelative, DOGetter<uint> getter, DOSetter<uint> setter, float elapsed, uint startValue, uint changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += (uint)(changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops));
+            if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
+                startValue += (uint)(changeValue * (t.loopType == LoopType.Incremental ? t.loops : 1)
+                    * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops));
+            }
 
             setter((uint)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod)));
         }

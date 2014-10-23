@@ -75,6 +75,14 @@ namespace DG.Tweening.Plugins
                     incrementValue = (startValue[end] + changeValue[end] - startValue[0]) * iterations;
                 }
             }
+            if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
+                int iterations = (t.loopType == LoopType.Incremental ? t.loops : 1)
+                    * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
+                if (iterations > 0) {
+                    int end = startValue.Length - 1;
+                    incrementValue += (startValue[end] + changeValue[end] - startValue[0]) * iterations;
+                }
+            }
 
             // Find correct index and segmentElapsed
             int index = 0;

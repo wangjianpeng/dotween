@@ -72,6 +72,7 @@ namespace DG.Tweening
         internal Type typeofTPlugOptions; // Only used by Tweeners
         internal bool active; // FALSE when tween is (or should be) despawned - set only by TweenManager
         internal bool isSequenced; // Set by Sequence when adding a Tween to it
+        internal Sequence sequenceParent;  // Set by Sequence when adding a Tween to it
         internal int activeId = -1; // Index inside its active list (touched only by TweenManager)
         internal SpecialStartupMode specialStartupMode;
 
@@ -110,6 +111,7 @@ namespace DG.Tweening
             isRelative = false;
             customEase = null;
             isSequenced = false;
+            sequenceParent = null;
             specialStartupMode = SpecialStartupMode.None;
             creationLocked = startupDone = playedOnce = false;
             position = fullDuration = completedLoops = 0;

@@ -89,6 +89,10 @@ namespace DG.Tweening.Plugins
         public override void EvaluateAndApply(VectorOptions options, Tween t, bool isRelative, DOGetter<Vector4> getter, DOSetter<Vector4> setter, float elapsed, Vector4 startValue, Vector4 changeValue, float duration)
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+            if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
+                startValue += changeValue * (t.loopType == LoopType.Incremental ? t.loops : 1)
+                    * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
+            }
 
             switch (options.axisConstraint) {
             case AxisConstraint.X:
