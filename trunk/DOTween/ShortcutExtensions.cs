@@ -439,22 +439,11 @@ namespace DG.Tweening
         /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
         public static Tweener DOLookAt(this Rigidbody target, Vector3 towards, float duration, AxisConstraint axisConstraint = AxisConstraint.None, Vector3? up = null)
         {
-            Vector3 vUp = (up == null) ? Vector3.up : (Vector3)up;
-            towards -= target.position;
-            switch (axisConstraint) {
-            case AxisConstraint.X:
-                towards.x = 0;
-                break;
-            case AxisConstraint.Y:
-                towards.y = 0;
-                break;
-            case AxisConstraint.Z:
-                towards.z = 0;
-                break;
-            }
-            Vector3 lookAtRotation = Quaternion.LookRotation(towards, vUp).eulerAngles;
-            return DOTween.To(() => target.rotation, target.MoveRotation, lookAtRotation, duration)
-                .SetTarget(target);
+            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => target.rotation, target.MoveRotation, towards, duration)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetLookAt);
+            t.plugOptions.axisConstraint = axisConstraint;
+            t.plugOptions.up = (up == null) ? Vector3.up : (Vector3)up;
+            return t;
         }
 
         #endregion
