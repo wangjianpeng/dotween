@@ -589,6 +589,28 @@ namespace DG.Tweening
 
         #endregion
 
+        #region Audio Shortcuts
+
+        /// <summary>Tweens an AudioSource's volume to the given value.
+        /// Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach (0 to 1)</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFade(this AudioSource target, float endValue, float duration)
+        {
+            if (endValue < 0) endValue = 0;
+            else if (endValue > 1) endValue = 1;
+            return DOTween.To(() => target.volume, x => target.volume = x, endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens an AudioSource's pitch to the given value.
+        /// Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOPitch(this AudioSource target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.pitch, x => target.pitch = x, endValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
         // ===================================================================================
         // OPERATION SHORTCUTS ---------------------------------------------------------------
 
