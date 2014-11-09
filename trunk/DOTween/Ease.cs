@@ -8,6 +8,7 @@ namespace DG.Tweening
 {
     public enum Ease
     {
+        Unset, // Used to let TweenParms know that the ease was not set and apply it differently if used on Tweeners or Sequences
         Linear,
         InSine,
         OutSine,

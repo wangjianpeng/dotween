@@ -69,7 +69,7 @@
             <para>Default: FALSE</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultEaseType">
-            <summary>Default ease applied to all new tweens.
+            <summary>Default ease applied to all new Tweeners (not to Sequences which always have Ease.Linear as default).
             <para>Default: Ease.InOutQuad</para></summary>
         </member>
         <member name="F:DG.Tweening.DOTween.defaultEaseOvershootOrAmplitude">
@@ -468,6 +468,29 @@
             <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
             <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease)">
+            <summary>Sets the ease of the tween.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease,System.Single)">
+            <summary>Sets the ease of the tween.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+            <param name="overshoot">Eventual overshoot to use with Back ease (default is 1.70158)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease,System.Single,System.Single)">
+            <summary>Sets the ease of the tween.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+            <param name="amplitude">Eventual amplitude to use with Elastic easeType (default is 1.70158)</param>
+            <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,UnityEngine.AnimationCurve)">
+            <summary>Sets the ease of the tween using an AnimationCurve.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Core.EaseFunction)">
+            <summary>Sets the ease of the tween using a custom ease function.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0)">
             <summary>Allows the tween to be recycled after being killed.</summary>
         </member>
@@ -608,29 +631,6 @@
             (the duration will represent the number of units the tween moves x second).
             <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease)">
-            <summary>Sets the ease of the tween.
-            <para>Has no effect on Sequences</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease,System.Single)">
-            <summary>Sets the ease of the tween.
-            <para>Has no effect on Sequences</para></summary>
-            <param name="overshoot">Eventual overshoot to use with Back ease (default is 1.70158)</param>
-        </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Ease,System.Single,System.Single)">
-            <summary>Sets the ease of the tween.
-            <para>Has no effect on Sequences</para></summary>
-            <param name="amplitude">Eventual amplitude to use with Elastic easeType (default is 1.70158)</param>
-            <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
-        </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,UnityEngine.AnimationCurve)">
-            <summary>Sets the ease of the tween using an AnimationCurve.
-            <para>Has no effect on Sequences</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Core.EaseFunction)">
-            <summary>Sets the ease of the tween using a custom ease function.
-            <para>Has no effect on Sequences</para></summary>
-        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.Single,System.Single,DG.Tweening.Plugins.Options.FloatOptions},System.Boolean)">
             <summary>Options for float tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
@@ -769,6 +769,20 @@
             <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
             <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
         </member>
+        <member name="M:DG.Tweening.TweenParms.SetEase(DG.Tweening.Ease,System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>Sets the ease of the tween.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+            <param name="overshootOrAmplitude">Eventual overshoot or amplitude to use with Back or Elastic easeType (default is 1.70158)</param>
+            <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParms.SetEase(UnityEngine.AnimationCurve)">
+            <summary>Sets the ease of the tween using an AnimationCurve.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParms.SetEase(DG.Tweening.Core.EaseFunction)">
+            <summary>Sets the ease of the tween using a custom ease function.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
         <member name="M:DG.Tweening.TweenParms.SetRecyclable(System.Boolean)">
             <summary>Sets the recycling behaviour for the tween.</summary>
             <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
@@ -826,20 +840,6 @@
             <summary>If isSpeedBased is TRUE sets the tween as speed based
             (the duration will represent the number of units the tween moves x second).
             <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParms.SetEase(DG.Tweening.Ease,System.Nullable{System.Single},System.Nullable{System.Single})">
-            <summary>Sets the ease of the tween.
-            <para>Has no effect on Sequences</para></summary>
-            <param name="overshootOrAmplitude">Eventual overshoot or amplitude to use with Back or Elastic easeType (default is 1.70158)</param>
-            <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParms.SetEase(UnityEngine.AnimationCurve)">
-            <summary>Sets the ease of the tween using an AnimationCurve.
-            <para>Has no effect on Sequences</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParms.SetEase(DG.Tweening.Core.EaseFunction)">
-            <summary>Sets the ease of the tween using a custom ease function.
-            <para>Has no effect on Sequences</para></summary>
         </member>
         <member name="M:DG.Tweening.Plugins.Core.PathCore.Path.GetPoint(System.Single,System.Boolean)">
             <summary>

@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using DG.Tweening.Core;
+using DG.Tweening.Core.Easing;
 using DG.Tweening.Core.Enums;
 using UnityEngine;
 
@@ -144,6 +145,9 @@ namespace DG.Tweening
             s.isRecyclable = DOTween.defaultRecyclable;
             s.isPlaying = DOTween.defaultAutoPlay == AutoPlay.All || DOTween.defaultAutoPlay == AutoPlay.AutoPlaySequences;
             s.loopType = DOTween.defaultLoopType;
+            s.easeType = Ease.Linear;
+            s.easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
+            s.easePeriod = DOTween.defaultEasePeriod;
         }
 
         // Returns TRUE in case of success
@@ -162,18 +166,27 @@ namespace DG.Tweening
         // Returns TRUE if the tween needs to be killed
         internal static bool DoApplyTween(Sequence s, float prevPosition, int prevCompletedLoops, int newCompletedSteps, bool useInversePosition, UpdateMode updateMode)
         {
+            // Adapt to eventual ease position
+            float prevPos = prevPosition;
+            float newPos = s.position;
+            if (s.easeType != Ease.Linear) {
+                prevPos = EaseManager.Evaluate(s, prevPos, 0, s.duration, s.duration, s.easeOvershootOrAmplitude, s.easePeriod);
+                newPos = EaseManager.Evaluate(s, newPos, 0, s.duration, s.duration, s.easeOvershootOrAmplitude, s.easePeriod);
+            }
+
+
             float from, to = 0;
             // Determine if prevPos was inverse.
             // Used to calculate correct "from" value when applying internal cycle
             // and also in case of multiple loops within a single update
             bool prevPosIsInverse = s.loopType == LoopType.Yoyo
-                && (prevPosition < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
+                && (prevPos < s.duration ? prevCompletedLoops % 2 != 0 : prevCompletedLoops % 2 == 0);
             if (s.isBackwards) prevPosIsInverse = !prevPosIsInverse;
             // Update multiple loop cycles within the same update
             if (newCompletedSteps > 0) {
                 int cycles = newCompletedSteps;
                 int cyclesDone = 0;
-                from = prevPosition;
+                from = prevPos;
                 if (updateMode == UpdateMode.Update) {
                     // Run all cycles elapsed since last update
                     while (cyclesDone < cycles) {
@@ -188,15 +201,15 @@ namespace DG.Tweening
                     // Simply determine correct prevPosition after steps
                     if (s.loopType == LoopType.Yoyo && newCompletedSteps % 2 != 0) {
                         prevPosIsInverse = !prevPosIsInverse;
-                        prevPosition = s.duration - prevPosition;
+                        prevPos = s.duration - prevPos;
                     }
                     newCompletedSteps = 0;
                 }
             }
             // Run current cycle
             if (newCompletedSteps > 0 && !s.isComplete) from = useInversePosition ? s.duration : 0;
-            else from = useInversePosition ? s.duration - prevPosition : prevPosition;
-            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - s.position : s.position, updateMode, useInversePosition, prevPosIsInverse);
+            else from = useInversePosition ? s.duration - prevPos : prevPos;
+            return ApplyInternalCycle(s, from, useInversePosition ? s.duration - newPos : newPos, updateMode, useInversePosition, prevPosIsInverse);
         }
 
         // ===================================================================================
