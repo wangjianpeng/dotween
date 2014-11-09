@@ -4,12 +4,12 @@ using System.Collections;
 
 public class TempTests : BrainBase
 {
-	public Transform target, lookAt;
+	public GUIText textMesh;
+	public Transform target;
+	Sequence slideSeq;
 
-	void Start()
-	{
-		Tweener t = target.DOLookAt(lookAt.position, 2);
-		target.DOMoveY(5, 2).SetRelative()
-			.OnUpdate(()=> t.ChangeEndValue(lookAt.position));
-	}
+	public void Start()
+    {
+        target.DOMove(new Vector3(1, 1.5f, 1), 1).OnComplete(()=> Debug.Log(target.position));
+    }
 }

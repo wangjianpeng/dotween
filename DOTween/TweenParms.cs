@@ -72,7 +72,7 @@ namespace DG.Tweening
             loopType = DOTween.defaultLoopType;
             delay = 0;
             isRelative = false;
-            easeType = DOTween.defaultEaseType;
+            easeType = Ease.Unset;
             customEase = null;
             easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
             easePeriod = DOTween.defaultEasePeriod;
@@ -122,6 +122,35 @@ namespace DG.Tweening
             else if (loops == 0) loops = 1;
             this.loops = loops;
             if (loopType != null) this.loopType = (LoopType)loopType;
+            return this;
+        }
+
+        /// <summary>Sets the ease of the tween.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        /// <param name="overshootOrAmplitude">Eventual overshoot or amplitude to use with Back or Elastic easeType (default is 1.70158)</param>
+        /// <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
+        public TweenParms SetEase(Ease ease, float? overshootOrAmplitude = null, float? period = null)
+        {
+            this.easeType = ease;
+            this.easeOvershootOrAmplitude = overshootOrAmplitude != null ? (float)overshootOrAmplitude : DOTween.defaultEaseOvershootOrAmplitude;
+            this.easePeriod = period != null ? (float)period : DOTween.defaultEasePeriod;
+            this.customEase = null;
+            return this;
+        }
+        /// <summary>Sets the ease of the tween using an AnimationCurve.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        public TweenParms SetEase(AnimationCurve animCurve)
+        {
+            this.easeType = Ease.INTERNAL_Custom;
+            this.customEase = new EaseCurve(animCurve).Evaluate;
+            return this;
+        }
+        /// <summary>Sets the ease of the tween using a custom ease function.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        public TweenParms SetEase(EaseFunction customEase)
+        {
+            this.easeType = Ease.INTERNAL_Custom;
+            this.customEase = customEase;
             return this;
         }
 
@@ -237,35 +266,6 @@ namespace DG.Tweening
         public TweenParms SetSpeedBased(bool isSpeedBased = true)
         {
             this.isSpeedBased = isSpeedBased;
-            return this;
-        }
-
-        /// <summary>Sets the ease of the tween.
-        /// <para>Has no effect on Sequences</para></summary>
-        /// <param name="overshootOrAmplitude">Eventual overshoot or amplitude to use with Back or Elastic easeType (default is 1.70158)</param>
-        /// <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
-        public TweenParms SetEase(Ease ease, float? overshootOrAmplitude = null, float? period = null)
-        {
-            this.easeType = ease;
-            this.easeOvershootOrAmplitude = overshootOrAmplitude != null ? (float)overshootOrAmplitude : DOTween.defaultEaseOvershootOrAmplitude;
-            this.easePeriod = period != null ? (float)period : DOTween.defaultEasePeriod;
-            this.customEase = null;
-            return this;
-        }
-        /// <summary>Sets the ease of the tween using an AnimationCurve.
-        /// <para>Has no effect on Sequences</para></summary>
-        public TweenParms SetEase(AnimationCurve animCurve)
-        {
-            this.easeType = Ease.INTERNAL_Custom;
-            this.customEase = new EaseCurve(animCurve).Evaluate;
-            return this;
-        }
-        /// <summary>Sets the ease of the tween using a custom ease function.
-        /// <para>Has no effect on Sequences</para></summary>
-        public TweenParms SetEase(EaseFunction customEase)
-        {
-            this.easeType = Ease.INTERNAL_Custom;
-            this.customEase = customEase;
             return this;
         }
 

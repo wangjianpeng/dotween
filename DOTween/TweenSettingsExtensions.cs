@@ -101,6 +101,63 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets the ease of the tween.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        public static T SetEase<T>(this T t, Ease ease) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.easeType = ease;
+            t.customEase = null;
+            return t;
+        }
+        /// <summary>Sets the ease of the tween.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        /// <param name="overshoot">Eventual overshoot to use with Back ease (default is 1.70158)</param>
+        public static T SetEase<T>(this T t, Ease ease, float overshoot) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.easeType = ease;
+            t.easeOvershootOrAmplitude = overshoot;
+            t.customEase = null;
+            return t;
+        }
+        /// <summary>Sets the ease of the tween.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        /// <param name="amplitude">Eventual amplitude to use with Elastic easeType (default is 1.70158)</param>
+        /// <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
+        public static T SetEase<T>(this T t, Ease ease, float amplitude, float period) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.easeType = ease;
+            t.easeOvershootOrAmplitude = amplitude;
+            t.easePeriod = period;
+            t.customEase = null;
+            return t;
+        }
+        /// <summary>Sets the ease of the tween using an AnimationCurve.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        public static T SetEase<T>(this T t, AnimationCurve animCurve) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.easeType = Ease.INTERNAL_Custom;
+            t.customEase = new EaseCurve(animCurve).Evaluate;
+            return t;
+        }
+        /// <summary>Sets the ease of the tween using a custom ease function.
+        /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        public static T SetEase<T>(this T t, EaseFunction customEase) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.easeType = Ease.INTERNAL_Custom;
+            t.customEase = customEase;
+            return t;
+        }
+
         /// <summary>Allows the tween to be recycled after being killed.</summary>
         public static T SetRecyclable<T>(this T t) where T : Tween
         {
@@ -287,7 +344,9 @@ namespace DG.Tweening
             t.delay = tweenParms.delay;
             t.delayComplete = t.delay <= 0;
             t.isRelative = tweenParms.isRelative;
-            t.easeType = tweenParms.easeType;
+            if (tweenParms.easeType == Ease.Unset) {
+                t.easeType = t.tweenType == TweenType.Sequence ? Ease.Linear : DOTween.defaultEaseType;
+            } else t.easeType = tweenParms.easeType;
             t.customEase = tweenParms.customEase;
             t.easeOvershootOrAmplitude = tweenParms.easeOvershootOrAmplitude;
             t.easePeriod = tweenParms.easePeriod;
@@ -477,63 +536,6 @@ namespace DG.Tweening
             if (!t.active || t.creationLocked) return t;
 
             t.isSpeedBased = isSpeedBased;
-            return t;
-        }
-
-        /// <summary>Sets the ease of the tween.
-        /// <para>Has no effect on Sequences</para></summary>
-        public static T SetEase<T>(this T t, Ease ease) where T : Tween
-        {
-            if (!t.active) return t;
-
-            t.easeType = ease;
-            t.customEase = null;
-            return t;
-        }
-        /// <summary>Sets the ease of the tween.
-        /// <para>Has no effect on Sequences</para></summary>
-        /// <param name="overshoot">Eventual overshoot to use with Back ease (default is 1.70158)</param>
-        public static T SetEase<T>(this T t, Ease ease, float overshoot) where T : Tween
-        {
-            if (!t.active) return t;
-
-            t.easeType = ease;
-            t.easeOvershootOrAmplitude = overshoot;
-            t.customEase = null;
-            return t;
-        }
-        /// <summary>Sets the ease of the tween.
-        /// <para>Has no effect on Sequences</para></summary>
-        /// <param name="amplitude">Eventual amplitude to use with Elastic easeType (default is 1.70158)</param>
-        /// <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
-        public static T SetEase<T>(this T t, Ease ease, float amplitude, float period) where T : Tween
-        {
-            if (!t.active) return t;
-
-            t.easeType = ease;
-            t.easeOvershootOrAmplitude = amplitude;
-            t.easePeriod = period;
-            t.customEase = null;
-            return t;
-        }
-        /// <summary>Sets the ease of the tween using an AnimationCurve.
-        /// <para>Has no effect on Sequences</para></summary>
-        public static T SetEase<T>(this T t, AnimationCurve animCurve) where T : Tween
-        {
-            if (!t.active) return t;
-
-            t.easeType = Ease.INTERNAL_Custom;
-            t.customEase = new EaseCurve(animCurve).Evaluate;
-            return t;
-        }
-        /// <summary>Sets the ease of the tween using a custom ease function.
-        /// <para>Has no effect on Sequences</para></summary>
-        public static T SetEase<T>(this T t, EaseFunction customEase) where T : Tween
-        {
-            if (!t.active) return t;
-
-            t.easeType = Ease.INTERNAL_Custom;
-            t.customEase = customEase;
             return t;
         }
 
