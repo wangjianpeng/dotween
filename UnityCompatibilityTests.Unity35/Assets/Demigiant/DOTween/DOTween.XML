@@ -4,6 +4,35 @@
         <name>DOTween</name>
     </assembly>
     <members>
+        <member name="T:DG.Tweening.RotateMode">
+            <summary>
+            Rotation mode used with DORotate methods
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.RotateMode.Fast">
+            <summary>
+            Fastest way that never rotates beyond 360°
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.RotateMode.FastBeyond360">
+            <summary>
+            Fastest way that rotates beyond 360°
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.RotateMode.WorldAxisAdd">
+            <summary>
+            Adds the given rotation to the transform's world axis using an advanced precision mode
+            (like when rotating an object with the "world" switch enabled in Unity's editor).
+            <para>In this mode the end value is is always considered relative</para>
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.RotateMode.LocalAxisAdd">
+            <summary>
+            Adds the given rotation to the transform's local axis
+            (like when rotating an object with the "local" switch enabled in Unity's editor).
+            <para>In this mode the end value is is always considered relative</para>
+            </summary>
+        </member>
         <member name="T:DG.Tweening.Plugins.Core.PathCore.ControlPoint">
             <summary>
             Path control point
@@ -1320,35 +1349,17 @@
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.RotateMode)">
             <summary>Tweens a Transform's rotation to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
-            If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
+            <param name="mode">Rotation mode</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single,System.Boolean)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single,DG.Tweening.RotateMode)">
             <summary>Tweens a Transform's localRotation to the given value.
             Also stores the transform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
-            If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalAxisRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's rotation to the given value, using its local axis system
-            (like when rotating an object with the "local" switch enabled in Unity's editor).
-            <para>The endValue passed is considered relative to the transform's actual rotation.</para>
-            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOWorldAxisRotate(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Transform's rotation to the given value, using the world axis system
-            (like when rotating an object with the "world" switch enabled in Unity's editor).
-            <para>The endValue passed is considered relative to the transform's actual rotation.</para>
-            This is a specila rotation mode which will ignore the Quaternion irregularities which might
-            happen with some cases, and rotate exactly along the perceived axes.
-            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="mode">Rotation mode</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOScale(UnityEngine.Transform,UnityEngine.Vector3,System.Single)">
             <summary>Tweens a Transform's localScale to the given value.
@@ -1504,19 +1515,11 @@
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,System.Boolean)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DORotate(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,DG.Tweening.RotateMode)">
             <summary>Tweens a Rigidbody's rotation to the given value.
             Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-            <param name="useShortest360Route">If TRUE (default) the rotation will take the shortest route and will not rotate more than 360°.
-            If FALSE the rotation will be fully accounted. Is always FALSE if the tween is set as relative</param>
-        </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOLocalAxisRotate(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single)">
-            <summary>Tweens a Rigidbody's rotation to the given value, using its local axis system
-            (like when rotating an object with the "local" switch enabled in Unity's editor).
-            <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
-            Also stores the transform as the tween's target so it can be used for filtered operations</summary>
-            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="mode">Rotation mode</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOLookAt(UnityEngine.Rigidbody,UnityEngine.Vector3,System.Single,DG.Tweening.AxisConstraint,System.Nullable{UnityEngine.Vector3})">
             <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.

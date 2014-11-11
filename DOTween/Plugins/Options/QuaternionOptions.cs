@@ -11,9 +11,8 @@ namespace DG.Tweening.Plugins.Options
 {
     public struct QuaternionOptions
     {
-        public bool beyond360; // If FALSE uses shortest route with rotations (like Unity does), otherwise calculates them fully
+        internal RotateMode rotateMode;
         internal AxisConstraint axisConstraint; // Used by SpecialStartupMode SetLookAt
         internal Vector3 up; // Used by SpecialStartupMode SetLookAt
-        internal bool forceWorldSpaceRotation;
     }
 }

@@ -21,7 +21,19 @@ namespace DG.Tweening.Plugins
         {
             Vector3 prevEndVal = t.endValue;
             t.endValue = t.getter().eulerAngles;
-            t.startValue = isRelative || t.plugOptions.forceWorldSpaceRotation ? t.endValue + prevEndVal : prevEndVal;
+            if (t.plugOptions.rotateMode == RotateMode.Fast && !t.isRelative) {
+                t.startValue = prevEndVal;
+            } else if (t.plugOptions.rotateMode == RotateMode.FastBeyond360) {
+                t.startValue = t.endValue + prevEndVal;
+            } else {
+                Quaternion rot = t.getter();
+                if (t.plugOptions.rotateMode == RotateMode.WorldAxisAdd) {
+                    t.startValue = (rot * Quaternion.Inverse(rot) * Quaternion.Euler(prevEndVal) * rot).eulerAngles;
+                } else {
+                    t.startValue = (rot * Quaternion.Euler(prevEndVal)).eulerAngles;
+                }
+                t.endValue = -prevEndVal;
+            }
             t.setter(Quaternion.Euler(t.startValue));
         }
 
@@ -37,11 +49,7 @@ namespace DG.Tweening.Plugins
 
         public override void SetChangeValue(TweenerCore<Quaternion, Vector3, QuaternionOptions> t)
         {
-            if (t.plugOptions.forceWorldSpaceRotation) {
-                t.changeValue = t.endValue;
-            } else if (t.plugOptions.beyond360 || t.isRelative) {
-                t.changeValue = t.endValue - t.startValue;
-            } else {
+            if (t.plugOptions.rotateMode == RotateMode.Fast && !t.isRelative) {
                 // Rotation will be adapted to 360° and will take the shortest route
                 // - Adapt to 360°
                 Vector3 ev = t.endValue;
@@ -58,6 +66,10 @@ namespace DG.Tweening.Plugins
                 if (abs > 180) changeVal.z = changeVal.z > 0 ? -(360 - abs) : 360 - abs;
                 // - Assign
                 t.changeValue = changeVal;
+            } else if (t.plugOptions.rotateMode == RotateMode.FastBeyond360) {
+                t.changeValue = t.endValue - t.startValue;
+            } else {
+                t.changeValue = t.endValue;
             }
         }
 
@@ -76,19 +88,22 @@ namespace DG.Tweening.Plugins
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
             }
 
-            if (options.forceWorldSpaceRotation) {
-                // Use Transform.Rotate method (forceWorldSpaceRotation can be set only by shortcuts, so target is a Transform)
-                Transform trans = (Transform)(t.target);
-                trans.rotation = Quaternion.Euler(startValue); // Reset rotation
+            switch (options.rotateMode) {
+            case RotateMode.WorldAxisAdd:
+            case RotateMode.LocalAxisAdd:
+                Quaternion startRot = Quaternion.Euler(startValue); // Reset rotation
                 endValue.x = EaseManager.Evaluate(t, elapsed, 0, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.y = EaseManager.Evaluate(t, elapsed, 0, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.z = EaseManager.Evaluate(t, elapsed, 0, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                trans.Rotate(endValue, Space.World);
-            } else {
+                if (options.rotateMode == RotateMode.WorldAxisAdd) setter(startRot * Quaternion.Inverse(startRot) * Quaternion.Euler(endValue) * startRot);
+                else setter(startRot * Quaternion.Euler(endValue));
+                break;
+            default:
                 endValue.x = EaseManager.Evaluate(t, elapsed, endValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.y = EaseManager.Evaluate(t, elapsed, endValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.z = EaseManager.Evaluate(t, elapsed, endValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 setter(Quaternion.Euler(endValue));
+                break;
             }
         }
     }
