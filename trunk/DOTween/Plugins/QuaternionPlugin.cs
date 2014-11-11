@@ -21,7 +21,7 @@ namespace DG.Tweening.Plugins
         {
             Vector3 prevEndVal = t.endValue;
             t.endValue = t.getter().eulerAngles;
-            t.startValue = isRelative ? t.endValue + prevEndVal : prevEndVal;
+            t.startValue = isRelative || t.plugOptions.forceWorldSpaceRotation ? t.endValue + prevEndVal : prevEndVal;
             t.setter(Quaternion.Euler(t.startValue));
         }
 
@@ -37,7 +37,7 @@ namespace DG.Tweening.Plugins
 
         public override void SetChangeValue(TweenerCore<Quaternion, Vector3, QuaternionOptions> t)
         {
-            if (!t.plugOptions.beyond360 && !t.isRelative) {
+            if (!t.plugOptions.beyond360 && !t.isRelative && !t.plugOptions.forceWorldSpaceRotation) {
                 // Rotation will be adapted to 360° and will take the shortest route
                 // - Adapt to 360°
                 Vector3 ev = t.endValue;
@@ -67,16 +67,28 @@ namespace DG.Tweening.Plugins
 
         public override void EvaluateAndApply(QuaternionOptions options, Tween t, bool isRelative, DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
         {
-            if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
+            Vector3 endValue = startValue;
+
+            if (t.loopType == LoopType.Incremental) endValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
             if (t.isSequenced && t.sequenceParent.loopType == LoopType.Incremental) {
-                startValue += changeValue * (t.loopType == LoopType.Incremental ? t.loops : 1)
+                endValue += changeValue * (t.loopType == LoopType.Incremental ? t.loops : 1)
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
             }
 
-            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.z = EaseManager.Evaluate(t, elapsed, startValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            setter(Quaternion.Euler(startValue));
+            if (options.forceWorldSpaceRotation) {
+                // Use Transform.Rotate method (forceWorldSpaceRotation can be set only by shortcuts, so target is a Transform)
+                Transform trans = (Transform)(t.target);
+                trans.rotation = Quaternion.Euler(startValue); // Reset rotation
+                endValue.x = EaseManager.Evaluate(t, elapsed, 0, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                endValue.y = EaseManager.Evaluate(t, elapsed, 0, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                endValue.z = EaseManager.Evaluate(t, elapsed, 0, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                trans.Rotate(endValue);
+            } else {
+                endValue.x = EaseManager.Evaluate(t, elapsed, endValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                endValue.y = EaseManager.Evaluate(t, elapsed, endValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                endValue.z = EaseManager.Evaluate(t, elapsed, endValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                setter(Quaternion.Euler(endValue));
+            }
         }
     }
 }
