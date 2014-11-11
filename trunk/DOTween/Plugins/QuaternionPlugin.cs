@@ -83,7 +83,7 @@ namespace DG.Tweening.Plugins
                 endValue.x = EaseManager.Evaluate(t, elapsed, 0, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.y = EaseManager.Evaluate(t, elapsed, 0, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.z = EaseManager.Evaluate(t, elapsed, 0, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                trans.Rotate(endValue, Space.Self);
+                trans.Rotate(endValue, Space.World);
             } else {
                 endValue.x = EaseManager.Evaluate(t, elapsed, endValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.y = EaseManager.Evaluate(t, elapsed, endValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
