@@ -37,7 +37,11 @@ namespace DG.Tweening.Plugins
 
         public override void SetChangeValue(TweenerCore<Quaternion, Vector3, QuaternionOptions> t)
         {
-            if (!t.plugOptions.beyond360 && !t.isRelative && !t.plugOptions.forceWorldSpaceRotation) {
+            if (t.plugOptions.forceWorldSpaceRotation) {
+                t.changeValue = t.endValue;
+            } else if (t.plugOptions.beyond360 || t.isRelative) {
+                t.changeValue = t.endValue - t.startValue;
+            } else {
                 // Rotation will be adapted to 360° and will take the shortest route
                 // - Adapt to 360°
                 Vector3 ev = t.endValue;
@@ -54,9 +58,6 @@ namespace DG.Tweening.Plugins
                 if (abs > 180) changeVal.z = changeVal.z > 0 ? -(360 - abs) : 360 - abs;
                 // - Assign
                 t.changeValue = changeVal;
-            } else {
-                // Rotation will go beyond 360°
-                t.changeValue = t.endValue - t.startValue;
             }
         }
 
@@ -82,7 +83,7 @@ namespace DG.Tweening.Plugins
                 endValue.x = EaseManager.Evaluate(t, elapsed, 0, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.y = EaseManager.Evaluate(t, elapsed, 0, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.z = EaseManager.Evaluate(t, elapsed, 0, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                trans.Rotate(endValue);
+                trans.Rotate(endValue, Space.Self);
             } else {
                 endValue.x = EaseManager.Evaluate(t, elapsed, endValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
                 endValue.y = EaseManager.Evaluate(t, elapsed, endValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);

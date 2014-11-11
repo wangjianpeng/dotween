@@ -148,7 +148,7 @@ namespace DG.Tweening
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOWorldAxisRotate(this Transform target, Vector3 endValue, float duration)
         {
-            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => Quaternion.identity, x => target.localRotation = x, endValue, duration);
+            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => target.rotation, x => target.rotation = x, endValue, duration);
                 t.SetOptions(false).SetTarget(target);
             t.plugOptions.forceWorldSpaceRotation = true;
             return t;
