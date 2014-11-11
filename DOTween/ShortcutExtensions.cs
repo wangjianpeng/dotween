@@ -129,7 +129,7 @@ namespace DG.Tweening
 
         /// <summary>Tweens a Transform's rotation to the given value, using its local axis system
         /// (like when rotating an object with the "local" switch enabled in Unity's editor).
-        /// <para>The endValue passed is obviously considered relative to the transform's actual rotation.</para>
+        /// <para>The endValue passed is considered relative to the transform's actual rotation.</para>
         /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOLocalAxisRotate(this Transform target, Vector3 endValue, float duration)
@@ -137,6 +137,21 @@ namespace DG.Tweening
             return DOTween.To(() => Quaternion.identity, x => target.localRotation = x, endValue, duration)
                 .SetSpecialStartupMode(SpecialStartupMode.SetLocalAxisRotationSetter)
                 .SetOptions(false).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Transform's rotation to the given value, using the world axis system
+        /// (like when rotating an object with the "world" switch enabled in Unity's editor).
+        /// <para>The endValue passed is considered relative to the transform's actual rotation.</para>
+        /// This is a specila rotation mode which will ignore the Quaternion irregularities which might
+        /// happen with some cases, and rotate exactly along the perceived axes.
+        /// Also stores the transform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOWorldAxisRotate(this Transform target, Vector3 endValue, float duration)
+        {
+            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => Quaternion.identity, x => target.localRotation = x, endValue, duration);
+                t.SetOptions(false).SetTarget(target);
+            t.plugOptions.forceWorldSpaceRotation = true;
+            return t;
         }
 
         /// <summary>Tweens a Transform's localScale to the given value.
