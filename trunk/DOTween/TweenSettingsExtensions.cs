@@ -623,7 +623,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            t.plugOptions.beyond360 = !useShortest360Route;
+            t.plugOptions.rotateMode = useShortest360Route ? RotateMode.Fast : RotateMode.FastBeyond360;
             return t;
         }
 

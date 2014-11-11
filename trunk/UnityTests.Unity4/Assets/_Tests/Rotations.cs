@@ -17,8 +17,8 @@ public class Rotations : BrainBase
 
 		// Should take longest rotation route (because Unity will change the start Vector when the first tween ends)
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
-			.Append(ts[1].DORotate(new Vector3(0, -45, 0), 1, false))
-			.Append(ts[1].DORotate(new Vector3(0, 0, 0), 1, false));
+			.Append(ts[1].DORotate(new Vector3(0, -45, 0), 1, RotateMode.FastBeyond360))
+			.Append(ts[1].DORotate(new Vector3(0, 0, 0), 1, RotateMode.FastBeyond360));
 
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
 			.Append(ts[2].DORotate(new Vector3(0, -45, 0), 1)
@@ -35,9 +35,9 @@ public class Rotations : BrainBase
 			.Append(ts[3].DORotate(new Vector3(0, -45, 0), 1));
 
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
-			.Append(ts[4].DORotate(new Vector3(0, -45, 0), 1, false)
+			.Append(ts[4].DORotate(new Vector3(0, -45, 0), 1, RotateMode.FastBeyond360)
 				.From())
-			.Append(ts[4].DORotate(new Vector3(0, -45, 0), 1, false));
+			.Append(ts[4].DORotate(new Vector3(0, 720, 0), 1, RotateMode.FastBeyond360));
 
 		DOTween.Sequence().SetLoops(-1, LoopType.Yoyo)
 			.Append(ts[5].DORotate(new Vector3(0, -45, 0), 1)

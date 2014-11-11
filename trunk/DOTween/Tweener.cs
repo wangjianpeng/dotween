@@ -239,9 +239,6 @@ namespace DG.Tweening
         static bool DOStartupSpecials<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
         {
             switch (t.specialStartupMode) {
-            case SpecialStartupMode.SetLocalAxisRotationSetter:
-                if (!SpecialPluginsUtils.SetLocalAxisSetter(t as TweenerCore<Quaternion, Vector3, QuaternionOptions>)) return false;
-                break;
             case SpecialStartupMode.SetLookAt:
                 if (!SpecialPluginsUtils.SetLookAt(t as TweenerCore<Quaternion, Vector3, QuaternionOptions>)) return false;
                 break;
