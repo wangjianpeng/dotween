@@ -4,6 +4,9 @@
 // License Copyright (c) Daniele Giardini.
 // This work is subject to the terms at http://dotween.demigiant.com/license.php
 
+using DG.Tweening.Core;
+using DG.Tweening.Core.Enums;
+using DG.Tweening.Plugins.Options;
 using UnityEngine;
 
 namespace DG.Tweening
@@ -30,6 +33,49 @@ namespace DG.Tweening
         public static Tweener DOFade(this SpriteRenderer target, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
+                .SetTarget(target);
+        }
+
+        #endregion
+
+        #region Rigidbody2D Shortcuts
+
+        /// <summary>Tweens a Rigidbody2D's position to the given value.
+        /// Also stores the Rigidbody2D as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMove(this Rigidbody2D target, Vector2 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody2D's X position to the given value.
+        /// Also stores the Rigidbody2D as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveX(this Rigidbody2D target, float endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, new Vector2(endValue, 0), duration)
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody2D's Y position to the given value.
+        /// Also stores the Rigidbody2D as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveY(this Rigidbody2D target, float endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, new Vector2(0, endValue), duration)
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody2D's rotation to the given value.
+        /// Also stores the Rigidbody2D as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DORotate(this Rigidbody2D target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration)
                 .SetTarget(target);
         }
 
