@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 // Friends
 [assembly: InternalsVisibleTo("DOTweenEditor")]
+[assembly: InternalsVisibleTo("DOTween43")]
 [assembly: InternalsVisibleTo("DOTweenPro")]
 [assembly: InternalsVisibleTo("DOTweenProEditor")]
 
