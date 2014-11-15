@@ -149,7 +149,8 @@ namespace DG.Tweening.Plugins.Core.PathCore
 
         // Deletes the previous waypoints and assigns the new ones
         // (newWps length must be at least 1).
-        void AssignWaypoints(Vector3[] newWps, bool cloneWps = false)
+        // Internal so DOTweenPathInspector can use it
+        internal void AssignWaypoints(Vector3[] newWps, bool cloneWps = false)
         {
             if (cloneWps) {
                 int count = newWps.Length;
@@ -157,15 +158,15 @@ namespace DG.Tweening.Plugins.Core.PathCore
                 for (int i = 0; i < count; ++i) wps[i] = newWps[i];
             } else wps = newWps;
         }
-        // Deletes the previous waypoints and assigns the new ones, always cloning them
-        // (newWps length must be at least 1).
-        // Internal so DOTweenPathInspector can use it
-        internal void AssignWaypoints(List<Vector3> newWps)
-        {
-            int count = newWps.Count;
-            wps = new Vector3[count];
-            for (int i = 0; i < count; ++i) wps[i] = newWps[i];
-        }
+//        // Deletes the previous waypoints and assigns the new ones, always cloning them
+//        // (newWps length must be at least 1).
+//        // Internal so DOTweenPathInspector can use it
+//        internal void AssignWaypoints(List<Vector3> newWps)
+//        {
+//            int count = newWps.Count;
+//            wps = new Vector3[count];
+//            for (int i = 0; i < count; ++i) wps[i] = newWps[i];
+//        }
 
         // Internal so DOTweenPathInspector can use it
         internal void AssignDecoder(PathType pathType)
