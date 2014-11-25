@@ -153,7 +153,7 @@ namespace DG.Tweening
         // Returns TRUE in case of success
         internal static bool DoStartup(Sequence s)
         {
-            if (s.sequencedTweens.Count == 0) return false; // Empty Sequence
+            if (s.sequencedTweens.Count == 0 && s._sequencedObjs.Count == 0) return false; // Empty Sequence
 
             s.startupDone = true;
             s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
@@ -207,6 +207,7 @@ namespace DG.Tweening
                 }
             }
             // Run current cycle
+            if (newCompletedSteps == 1 && s.isComplete) return false; // Skip update if complete because multicycle took care of it
             if (newCompletedSteps > 0 && !s.isComplete) from = useInversePosition ? s.duration : 0;
             else from = useInversePosition ? s.duration - prevPos : prevPos;
             return ApplyInternalCycle(s, from, useInversePosition ? s.duration - newPos : newPos, updateMode, useInversePosition, prevPosIsInverse);
@@ -219,7 +220,7 @@ namespace DG.Tweening
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode, bool useInverse, bool prevPosIsInverse, bool multiCycleStep = false)
         {
             bool isBackwardsUpdate = toPos < fromPos;
-//            Debug.Log("Cycle > " + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
+//            Debug.Log((multiCycleStep ? "<color=#FFEC03>Multicycle</color> > " : "Cycle > ") + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
             if (isBackwardsUpdate) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
