@@ -40,10 +40,31 @@ namespace DG.Tweening
             return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
         }
 
-        /// <summary>Tweens a Image's alpha color to the given value.
+        /// <summary>Tweens an Image's alpha color to the given value.
         /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOFade(this Image target, float endValue, float duration)
+        {
+            return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
+                .SetTarget(target);
+        }
+
+        #endregion
+
+        #region Text
+
+        /// <summary>Tweens a Text's color to the given value.
+        /// Also stores the Text as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Text target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Text's alpha color to the given value.
+        /// Also stores the Text as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFade(this Text target, float endValue, float duration)
         {
             return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
                 .SetTarget(target);
