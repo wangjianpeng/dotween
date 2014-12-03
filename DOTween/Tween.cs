@@ -34,6 +34,9 @@ namespace DG.Tweening
         /// <summary>Called when the tween is set in a playing state, after any eventual delay.
         /// Also called each time the tween resumes playing from a paused state</summary>
         public TweenCallback onPlay;
+        /// <summary>Called when the tween state changes from playing to paused.
+        /// If the tween has autoKill set to FALSE, this is called also when the tween reaches completion.</summary>
+        public TweenCallback onPause;
         /// <summary>Called when the tween is rewinded,
         /// either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
         /// Rewinding a tween that is already rewinded will not fire this callback</summary>
@@ -200,6 +203,7 @@ namespace DG.Tweening
                 else t.position = 0;
             }
             // Set playing state after update
+            bool wasPlaying = t.isPlaying;
             if (t.isPlaying) {
                 if (!t.isBackwards) t.isPlaying = !t.isComplete; // Reached the end
                 else t.isPlaying = !(t.completedLoops == 0 && t.position <= 0); // Rewinded
@@ -222,6 +226,9 @@ namespace DG.Tweening
             }
             if (t.isComplete && !wasComplete) {
                 if (t.onComplete != null) t.onComplete();
+            }
+            if (!t.isPlaying && wasPlaying && (!t.isComplete || !t.autoKill)) {
+                if (t.onPause != null) t.onPause();
             }
 
             // Return

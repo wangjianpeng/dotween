@@ -559,6 +559,11 @@
             Called when the tween is set in a playing state, after any eventual delay.
             Also called each time the tween resumes playing from a paused state</summary>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.OnPause``1(``0,DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onPlay callback for the tween.
+            Called when the tween state changes from playing to paused.
+            If the tween has autoKill set to FALSE, this is called also when the tween reaches completion.</summary>
+        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnRewind``1(``0,DG.Tweening.Core.TweenCallback)">
             <summary>Sets the onRewind callback for the tween.
             Called when the tween is rewinded,
@@ -919,6 +924,10 @@
         <member name="F:DG.Tweening.Tween.onPlay">
             <summary>Called when the tween is set in a playing state, after any eventual delay.
             Also called each time the tween resumes playing from a paused state</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onPause">
+            <summary>Called when the tween state changes from playing to paused.
+            If the tween has autoKill set to FALSE, this is called also when the tween reaches completion.</summary>
         </member>
         <member name="F:DG.Tweening.Tween.onRewind">
             <summary>Called when the tween is rewinded,

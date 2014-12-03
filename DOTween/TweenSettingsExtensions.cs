@@ -217,6 +217,17 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets the onPlay callback for the tween.
+        /// Called when the tween state changes from playing to paused.
+        /// If the tween has autoKill set to FALSE, this is called also when the tween reaches completion.</summary>
+        public static T OnPause<T>(this T t, TweenCallback action) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.onPause = action;
+            return t;
+        }
+
         /// <summary>Sets the onRewind callback for the tween.
         /// Called when the tween is rewinded,
         /// either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
