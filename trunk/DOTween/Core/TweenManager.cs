@@ -495,6 +495,7 @@ namespace DG.Tweening.Core
         // Returns TRUE if there was an error and the tween needs to be destroyed
         internal static bool Goto(Tween t, float to, bool andPlay = false, UpdateMode updateMode = UpdateMode.Goto)
         {
+            bool wasPlaying = t.isPlaying;
             t.isPlaying = andPlay;
             t.delayComplete = true;
             t.elapsedDelay = t.delay;
@@ -504,7 +505,12 @@ namespace DG.Tweening.Core
                 toCompletedLoops = t.loops;
                 toPosition = t.duration;
             } else if (toPosition >= t.duration) toPosition = 0;
-            return Tween.DoGoto(t, toPosition, toCompletedLoops, updateMode);
+            // If andPlay is FALSE manage onPause from here because DoGoto won't detect it (since t.isPlaying was already set from here)
+            bool needsKilling = Tween.DoGoto(t, toPosition, toCompletedLoops, updateMode);
+            if (!andPlay && wasPlaying && !needsKilling) {
+                if (t.onPause != null) t.onPause();
+            }
+            return needsKilling;
         }
 
         // Returns TRUE if the given tween was not already paused
@@ -512,6 +518,7 @@ namespace DG.Tweening.Core
         {
             if (t.isPlaying) {
                 t.isPlaying = false;
+                if (t.onPause != null) t.onPause();
                 return true;
             }
             return false;
@@ -560,6 +567,7 @@ namespace DG.Tweening.Core
 
         internal static bool Rewind(Tween t, bool includeDelay = true)
         {
+            bool wasPlaying = t.isPlaying; // Manage onPause from this method becacuse DoGoto won't detect it
             t.isPlaying = false;
             bool rewinded = false;
             if (t.delay > 0) {
@@ -575,7 +583,8 @@ namespace DG.Tweening.Core
             }
             if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
                 rewinded = true;
-                Tween.DoGoto(t, 0, 0, UpdateMode.Goto);
+                bool needsKilling = Tween.DoGoto(t, 0, 0, UpdateMode.Goto);
+                if (!needsKilling && wasPlaying && t.onPause != null) t.onPause();
             }
             return rewinded;
         }
