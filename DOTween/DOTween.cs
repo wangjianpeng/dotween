@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.365";
+        public static readonly string Version = "0.9.370";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -715,6 +715,26 @@ namespace DG.Tweening
         public static int TotPlayingTweens()
         {
             return TweenManager.TotPlayingTweens();
+        }
+
+        /// <summary>
+        /// Returns a list of all active tweens in a playing state.
+        /// Returns NULL if there are no active playing tweens.
+        /// <para>Beware: each time you call this method a new list is generated, so use it for debug only</para>
+        /// </summary>
+        public static List<Tween> PlayingTweens()
+        {
+            return TweenManager.GetActiveTweens(true);
+        }
+
+        /// <summary>
+        /// Returns a list of all active tweens in a paused state.
+        /// Returns NULL if there are no active paused tweens.
+        /// <para>Beware: each time you call this method a new list is generated, so use it for debug only</para>
+        /// </summary>
+        public static List<Tween> PausedTweens()
+        {
+            return TweenManager.GetActiveTweens(false);
         }
 
         #endregion

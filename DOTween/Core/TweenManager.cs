@@ -607,6 +607,20 @@ namespace DG.Tweening.Core
             return tot;
         }
 
+        // If playing is FALSE returns active paused tweens
+        internal static List<Tween> GetActiveTweens(bool playing)
+        {
+            if (totActiveTweens <= 0) return null;
+            int len = totActiveTweens;
+            List<Tween> ts = new List<Tween>(len);
+            for (int i = 0; i < len; ++i) {
+                Tween t = _activeTweens[i];
+                if (t.isPlaying == playing) ts.Add(t);
+            }
+            if (ts.Count > 0) return ts;
+            return null;
+        }
+
         #endregion
 
         #region Private Methods

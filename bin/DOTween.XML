@@ -452,6 +452,20 @@
             A tween is considered as playing even if its delay is actually playing
             </summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.PlayingTweens">
+            <summary>
+            Returns a list of all active tweens in a playing state.
+            Returns NULL if there are no active playing tweens.
+            <para>Beware: each time you call this method a new list is generated, so use it for debug only</para>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.PausedTweens">
+            <summary>
+            Returns a list of all active tweens in a paused state.
+            Returns NULL if there are no active paused tweens.
+            <para>Beware: each time you call this method a new list is generated, so use it for debug only</para>
+            </summary>
+        </member>
         <member name="P:DG.Tweening.DOTween.logBehaviour">
             <summary>DOTween's log behaviour.
             <para>Default: LogBehaviour.ErrorsOnly</para></summary>
