@@ -51,6 +51,70 @@ namespace DG.Tweening
 
         #endregion
 
+        #region Outline
+
+        /// <summary>Tweens a Outline's effectColor to the given value.
+        /// Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Outline target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.effectColor, x => target.effectColor = x, endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Outline's effectColor alpha to the given value.
+        /// Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFade(this Outline target, float endValue, float duration)
+        {
+            return DOTween.ToAlpha(() => target.effectColor, x => target.effectColor = x, endValue, duration)
+                .SetTarget(target);
+        }
+
+        /// <summary>Tweens a Outline's effectDistance to the given value.
+        /// Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOScale(this Outline target, Vector2 endValue, float duration)
+        {
+            return DOTween.To(() => target.effectDistance, x => target.effectDistance = x, endValue, duration)
+                .SetTarget(target);
+        }
+
+        #endregion
+
+        #region RectTransform
+
+        /// <summary>Tweens a RectTransform's anchoredPosition3D to the given value.
+        /// Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOAnchor3D(this RectTransform target, Vector3 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.anchoredPosition3D, x => target.anchoredPosition3D = x, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a RectTransform's anchoredPosition to the given value.
+        /// Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOAnchor(this RectTransform target, Vector2 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.anchoredPosition, x => target.anchoredPosition = x, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a RectTransform's sizeDelta to the given value.
+        /// Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOSizeDelta(this RectTransform target, Vector2 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.sizeDelta, x => target.sizeDelta = x, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        #endregion
+
         #region Text
 
         /// <summary>Tweens a Text's color to the given value.
