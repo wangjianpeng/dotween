@@ -600,34 +600,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens killed.
         /// </summary>
-        public static int DOKill(this Transform target)
-        {
-            return DOTween.Kill(target);
-        }
-        /// <summary>
-        /// Kills all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens killed.
-        /// </summary>
-        public static int DOKill(this Rigidbody target)
-        {
-            return DOTween.Kill(target);
-        }
-        /// <summary>
-        /// Kills all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens killed.
-        /// </summary>
-        public static int DOKill(this Material target)
-        {
-            return DOTween.Kill(target);
-        }
-        /// <summary>
-        /// Kills all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens killed.
-        /// </summary>
-        public static int DOKill(this Camera target)
+        public static int DOKill(this Component target)
         {
             return DOTween.Kill(target);
         }
@@ -637,34 +610,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens flipped.
         /// </summary>
-        public static int DOFlip(this Transform target)
-        {
-            return DOTween.Flip(target);
-        }
-        /// <summary>
-        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens flipped.
-        /// </summary>
-        public static int DOFlip(this Rigidbody target)
-        {
-            return DOTween.Flip(target);
-        }
-        /// <summary>
-        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOFlip(this Material target)
-        {
-            return DOTween.Flip(target);
-        }
-        /// <summary>
-        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOFlip(this Camera target)
+        public static int DOFlip(this Component target)
         {
             return DOTween.Flip(target);
         }
@@ -677,43 +623,7 @@ namespace DG.Tweening
         /// <param name="to">Time position to reach
         /// (if higher than the whole tween duration the tween will simply reach its end)</param>
         /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
-        public static int DOGoto(this Transform target, float to, bool andPlay = false)
-        {
-            return DOTween.Goto(target, to, andPlay);
-        }
-        /// <summary>
-        /// Sends to the given position all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens involved.
-        /// </summary>
-        /// <param name="to">Time position to reach
-        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
-        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
-        public static int DOGoto(this Rigidbody target, float to, bool andPlay = false)
-        {
-            return DOTween.Goto(target, to, andPlay);
-        }
-        /// <summary>
-        /// Sends to the given position all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens involved.
-        /// </summary>
-        /// <param name="to">Time position to reach
-        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
-        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
-        public static int DOGoto(this Material target, float to, bool andPlay = false)
-        {
-            return DOTween.Goto(target, to, andPlay);
-        }
-        /// <summary>
-        /// Sends to the given position all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens involved.
-        /// </summary>
-        /// <param name="to">Time position to reach
-        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
-        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
-        public static int DOGoto(this Camera target, float to, bool andPlay = false)
+        public static int DOGoto(this Component target, float to, bool andPlay = false)
         {
             return DOTween.Goto(target, to, andPlay);
         }
@@ -723,34 +633,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens paused.
         /// </summary>
-        public static int DOPause(this Transform target)
-        {
-            return DOTween.Pause(target);
-        }
-        /// <summary>
-        /// Pauses all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens paused.
-        /// </summary>
-        public static int DOPause(this Rigidbody target)
-        {
-            return DOTween.Pause(target);
-        }
-        /// <summary>
-        /// Pauses all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens paused.
-        /// </summary>
-        public static int DOPause(this Material target)
-        {
-            return DOTween.Pause(target);
-        }
-        /// <summary>
-        /// Pauses all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens paused.
-        /// </summary>
-        public static int DOPause(this Camera target)
+        public static int DOPause(this Component target)
         {
             return DOTween.Pause(target);
         }
@@ -760,34 +643,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens played.
         /// </summary>
-        public static int DOPlay(this Transform target)
-        {
-            return DOTween.Play(target);
-        }
-        /// <summary>
-        /// Plays all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlay(this Rigidbody target)
-        {
-            return DOTween.Play(target);
-        }
-        /// <summary>
-        /// Plays all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlay(this Material target)
-        {
-            return DOTween.Play(target);
-        }
-        /// <summary>
-        /// Plays all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlay(this Camera target)
+        public static int DOPlay(this Component target)
         {
             return DOTween.Play(target);
         }
@@ -797,34 +653,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens played.
         /// </summary>
-        public static int DOPlayBackwards(this Transform target)
-        {
-            return DOTween.PlayBackwards(target);
-        }
-        /// <summary>
-        /// Plays backwards all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlayBackwards(this Rigidbody target)
-        {
-            return DOTween.PlayBackwards(target);
-        }
-        /// <summary>
-        /// Plays backwards all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlayBackwards(this Material target)
-        {
-            return DOTween.PlayBackwards(target);
-        }
-        /// <summary>
-        /// Plays backwards all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlayBackwards(this Camera target)
+        public static int DOPlayBackwards(this Component target)
         {
             return DOTween.PlayBackwards(target);
         }
@@ -834,34 +663,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens played.
         /// </summary>
-        public static int DOPlayForward(this Transform target)
-        {
-            return DOTween.PlayForward(target);
-        }
-        /// <summary>
-        /// Plays forward all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlayForward(this Rigidbody target)
-        {
-            return DOTween.PlayForward(target);
-        }
-        /// <summary>
-        /// Plays forward all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlayForward(this Material target)
-        {
-            return DOTween.PlayForward(target);
-        }
-        /// <summary>
-        /// Plays forward all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens played.
-        /// </summary>
-        public static int DOPlayForward(this Camera target)
+        public static int DOPlayForward(this Component target)
         {
             return DOTween.PlayForward(target);
         }
@@ -871,34 +673,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens restarted.
         /// </summary>
-        public static int DORestart(this Transform target)
-        {
-            return DOTween.Restart(target);
-        }
-        /// <summary>
-        /// Restarts all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens restarted.
-        /// </summary>
-        public static int DORestart(this Rigidbody target)
-        {
-            return DOTween.Restart(target);
-        }
-        /// <summary>
-        /// Restarts all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens restarted.
-        /// </summary>
-        public static int DORestart(this Material target)
-        {
-            return DOTween.Restart(target);
-        }
-        /// <summary>
-        /// Restarts all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens restarted.
-        /// </summary>
-        public static int DORestart(this Camera target)
+        public static int DORestart(this Component target)
         {
             return DOTween.Restart(target);
         }
@@ -908,34 +683,7 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens rewinded.
         /// </summary>
-        public static int DORewind(this Transform target)
-        {
-            return DOTween.Rewind(target);
-        }
-        /// <summary>
-        /// Rewinds all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens rewinded.
-        /// </summary>
-        public static int DORewind(this Rigidbody target)
-        {
-            return DOTween.Rewind(target);
-        }
-        /// <summary>
-        /// Rewinds all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens rewinded.
-        /// </summary>
-        public static int DORewind(this Material target)
-        {
-            return DOTween.Rewind(target);
-        }
-        /// <summary>
-        /// Rewinds all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens rewinded.
-        /// </summary>
-        public static int DORewind(this Camera target)
+        public static int DORewind(this Component target)
         {
             return DOTween.Rewind(target);
         }
@@ -945,37 +693,392 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens involved.
         /// </summary>
-        public static int DOTogglePause(this Transform target)
+        public static int DOTogglePause(this Component target)
         {
             return DOTween.TogglePause(target);
         }
-        /// <summary>
-        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens involved.
-        /// </summary>
-        public static int DOTogglePause(this Rigidbody target)
-        {
-            return DOTween.TogglePause(target);
-        }
-        /// <summary>
-        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens involved.
-        /// </summary>
-        public static int DOTogglePause(this Material target)
-        {
-            return DOTween.TogglePause(target);
-        }
-        /// <summary>
-        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
-        /// (meaning tweens that were started from this target, or that had this target added as an Id)
-        /// and returns the total number of tweens involved.
-        /// </summary>
-        public static int DOTogglePause(this Camera target)
-        {
-            return DOTween.TogglePause(target);
-        }
+
+//        /// <summary>
+//        /// Kills all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens killed.
+//        /// </summary>
+//        public static int DOKill(this Transform target)
+//        {
+//            return DOTween.Kill(target);
+//        }
+//        /// <summary>
+//        /// Kills all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens killed.
+//        /// </summary>
+//        public static int DOKill(this Rigidbody target)
+//        {
+//            return DOTween.Kill(target);
+//        }
+//        /// <summary>
+//        /// Kills all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens killed.
+//        /// </summary>
+//        public static int DOKill(this Material target)
+//        {
+//            return DOTween.Kill(target);
+//        }
+//        /// <summary>
+//        /// Kills all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens killed.
+//        /// </summary>
+//        public static int DOKill(this Camera target)
+//        {
+//            return DOTween.Kill(target);
+//        }
+
+//        /// <summary>
+//        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens flipped.
+//        /// </summary>
+//        public static int DOFlip(this Transform target)
+//        {
+//            return DOTween.Flip(target);
+//        }
+//        /// <summary>
+//        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens flipped.
+//        /// </summary>
+//        public static int DOFlip(this Rigidbody target)
+//        {
+//            return DOTween.Flip(target);
+//        }
+//        /// <summary>
+//        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOFlip(this Material target)
+//        {
+//            return DOTween.Flip(target);
+//        }
+//        /// <summary>
+//        /// Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOFlip(this Camera target)
+//        {
+//            return DOTween.Flip(target);
+//        }
+
+//        /// <summary>
+//        /// Sends to the given position all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        /// <param name="to">Time position to reach
+//        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
+//        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+//        public static int DOGoto(this Transform target, float to, bool andPlay = false)
+//        {
+//            return DOTween.Goto(target, to, andPlay);
+//        }
+//        /// <summary>
+//        /// Sends to the given position all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        /// <param name="to">Time position to reach
+//        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
+//        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+//        public static int DOGoto(this Rigidbody target, float to, bool andPlay = false)
+//        {
+//            return DOTween.Goto(target, to, andPlay);
+//        }
+//        /// <summary>
+//        /// Sends to the given position all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        /// <param name="to">Time position to reach
+//        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
+//        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+//        public static int DOGoto(this Material target, float to, bool andPlay = false)
+//        {
+//            return DOTween.Goto(target, to, andPlay);
+//        }
+//        /// <summary>
+//        /// Sends to the given position all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        /// <param name="to">Time position to reach
+//        /// (if higher than the whole tween duration the tween will simply reach its end)</param>
+//        /// <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
+//        public static int DOGoto(this Camera target, float to, bool andPlay = false)
+//        {
+//            return DOTween.Goto(target, to, andPlay);
+//        }
+
+//        /// <summary>
+//        /// Pauses all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens paused.
+//        /// </summary>
+//        public static int DOPause(this Transform target)
+//        {
+//            return DOTween.Pause(target);
+//        }
+//        /// <summary>
+//        /// Pauses all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens paused.
+//        /// </summary>
+//        public static int DOPause(this Rigidbody target)
+//        {
+//            return DOTween.Pause(target);
+//        }
+//        /// <summary>
+//        /// Pauses all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens paused.
+//        /// </summary>
+//        public static int DOPause(this Material target)
+//        {
+//            return DOTween.Pause(target);
+//        }
+//        /// <summary>
+//        /// Pauses all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens paused.
+//        /// </summary>
+//        public static int DOPause(this Camera target)
+//        {
+//            return DOTween.Pause(target);
+//        }
+
+//        /// <summary>
+//        /// Plays all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlay(this Transform target)
+//        {
+//            return DOTween.Play(target);
+//        }
+//        /// <summary>
+//        /// Plays all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlay(this Rigidbody target)
+//        {
+//            return DOTween.Play(target);
+//        }
+//        /// <summary>
+//        /// Plays all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlay(this Material target)
+//        {
+//            return DOTween.Play(target);
+//        }
+//        /// <summary>
+//        /// Plays all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlay(this Camera target)
+//        {
+//            return DOTween.Play(target);
+//        }
+
+//        /// <summary>
+//        /// Plays backwards all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayBackwards(this Transform target)
+//        {
+//            return DOTween.PlayBackwards(target);
+//        }
+//        /// <summary>
+//        /// Plays backwards all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayBackwards(this Rigidbody target)
+//        {
+//            return DOTween.PlayBackwards(target);
+//        }
+//        /// <summary>
+//        /// Plays backwards all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayBackwards(this Material target)
+//        {
+//            return DOTween.PlayBackwards(target);
+//        }
+//        /// <summary>
+//        /// Plays backwards all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayBackwards(this Camera target)
+//        {
+//            return DOTween.PlayBackwards(target);
+//        }
+
+//        /// <summary>
+//        /// Plays forward all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayForward(this Transform target)
+//        {
+//            return DOTween.PlayForward(target);
+//        }
+//        /// <summary>
+//        /// Plays forward all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayForward(this Rigidbody target)
+//        {
+//            return DOTween.PlayForward(target);
+//        }
+//        /// <summary>
+//        /// Plays forward all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayForward(this Material target)
+//        {
+//            return DOTween.PlayForward(target);
+//        }
+//        /// <summary>
+//        /// Plays forward all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens played.
+//        /// </summary>
+//        public static int DOPlayForward(this Camera target)
+//        {
+//            return DOTween.PlayForward(target);
+//        }
+
+//        /// <summary>
+//        /// Restarts all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens restarted.
+//        /// </summary>
+//        public static int DORestart(this Transform target)
+//        {
+//            return DOTween.Restart(target);
+//        }
+//        /// <summary>
+//        /// Restarts all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens restarted.
+//        /// </summary>
+//        public static int DORestart(this Rigidbody target)
+//        {
+//            return DOTween.Restart(target);
+//        }
+//        /// <summary>
+//        /// Restarts all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens restarted.
+//        /// </summary>
+//        public static int DORestart(this Material target)
+//        {
+//            return DOTween.Restart(target);
+//        }
+//        /// <summary>
+//        /// Restarts all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens restarted.
+//        /// </summary>
+//        public static int DORestart(this Camera target)
+//        {
+//            return DOTween.Restart(target);
+//        }
+
+//        /// <summary>
+//        /// Rewinds all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens rewinded.
+//        /// </summary>
+//        public static int DORewind(this Transform target)
+//        {
+//            return DOTween.Rewind(target);
+//        }
+//        /// <summary>
+//        /// Rewinds all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens rewinded.
+//        /// </summary>
+//        public static int DORewind(this Rigidbody target)
+//        {
+//            return DOTween.Rewind(target);
+//        }
+//        /// <summary>
+//        /// Rewinds all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens rewinded.
+//        /// </summary>
+//        public static int DORewind(this Material target)
+//        {
+//            return DOTween.Rewind(target);
+//        }
+//        /// <summary>
+//        /// Rewinds all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens rewinded.
+//        /// </summary>
+//        public static int DORewind(this Camera target)
+//        {
+//            return DOTween.Rewind(target);
+//        }
+
+//        /// <summary>
+//        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        public static int DOTogglePause(this Transform target)
+//        {
+//            return DOTween.TogglePause(target);
+//        }
+//        /// <summary>
+//        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        public static int DOTogglePause(this Rigidbody target)
+//        {
+//            return DOTween.TogglePause(target);
+//        }
+//        /// <summary>
+//        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        public static int DOTogglePause(this Material target)
+//        {
+//            return DOTween.TogglePause(target);
+//        }
+//        /// <summary>
+//        /// Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
+//        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+//        /// and returns the total number of tweens involved.
+//        /// </summary>
+//        public static int DOTogglePause(this Camera target)
+//        {
+//            return DOTween.TogglePause(target);
+//        }
 
         #endregion
     }
