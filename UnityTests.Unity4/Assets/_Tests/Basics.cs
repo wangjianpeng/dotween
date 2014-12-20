@@ -160,6 +160,7 @@ public class Basics : BrainBase
 		if (GUILayout.Button("Play All")) Debug.Log("Played tweens: " + DOTween.Play());
 		if (GUILayout.Button("Pause All")) Debug.Log("Paused tweens: " + DOTween.Pause());
 		if (GUILayout.Button("Kill All")) Debug.Log("Killed tweens: " + DOTween.Kill());
+		if (GUILayout.Button("Complete+Kill All")) Debug.Log("Killed tweens: " + DOTween.Kill(true));
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Rewind All")) Debug.Log("Rewinded tweens: " + DOTween.Rewind());
@@ -191,8 +192,19 @@ public class Basics : BrainBase
 
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Kill by Id")) Debug.Log("Killed tweens: " + DOTween.Kill(intId));
+		if (GUILayout.Button("Complete+Kill by Id")) Debug.Log("Killed tweens: " + DOTween.Kill(intId, true));
 		if (GUILayout.Button("Kill by StringId")) Debug.Log("Killed tweens: " + DOTween.Kill(stringId));
 		if (GUILayout.Button("Kill by UnityObjectId")) Debug.Log("Killed tweens: " + DOTween.Kill(this));
+		if (GUILayout.Button("Clear")) {
+			Debug.Log(":::::::::::: CLEAR");
+			DOTween.Clear();
+		}
+		if (GUILayout.Button("Clear & Reload")) {
+			Debug.Log(":::::::::::: CLEAR AND RELOAD");
+			int level = Application.loadedLevel;
+			DOTween.Clear();
+			Application.LoadLevel(level);
+		}
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
 		foreach (Tween t in tweens) {

@@ -412,7 +412,8 @@ namespace DG.Tweening.Core
                     case OperationType.Complete:
                         bool hasAutoKill = t.autoKill;
                         if (Complete(t, false)) {
-                            totInvolved++;
+                            // If optionalBool is TRUE only returns tweens killed by completion
+                            totInvolved += !optionalBool ? 1 : hasAutoKill ? 1 : 0;
                             if (hasAutoKill) {
                                 if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
                                 else {

@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.410";
+        public static readonly string Version = "0.9.420";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -558,6 +558,17 @@ namespace DG.Tweening
             if (targetOrId == null) return 0;
             return TweenManager.FilteredOperation(OperationType.Complete, FilterType.TargetOrId, targetOrId, false, 0);
         }
+        // Used internally to complete a tween and return only the number of killed tweens instead than just the completed ones
+        // (necessary for Kill(complete) operation. Sets optionalBool to TRUE
+        internal static int CompleteAndReturnKilledTot()
+        {
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, null, true, 0);
+        }
+        internal static int CompleteAndReturnKilledTot(object targetOrId)
+        {
+            if (targetOrId == null) return 0;
+            return TweenManager.FilteredOperation(OperationType.Complete, FilterType.TargetOrId, targetOrId, true, 0);
+        }
 
         /// <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
@@ -587,15 +598,19 @@ namespace DG.Tweening
         }
 
         /// <summary>Kills all tweens and returns the number of actual tweens killed</summary>
-        public static int Kill()
+        /// <param name="complete">If TRUE completes the tweens before killing them</param>
+        public static int Kill(bool complete = false)
         {
-            return TweenManager.DespawnAll();
+            int tot = complete ? CompleteAndReturnKilledTot() : 0;
+            return tot + TweenManager.DespawnAll();
         }
         /// <summary>Kills all tweens with the given ID or target and returns the number of actual tweens killed</summary>
-        public static int Kill(object targetOrId)
+        /// <param name="complete">If TRUE completes the tweens before killing them</param>
+        public static int Kill(object targetOrId, bool complete = false)
         {
             if (targetOrId == null) return 0;
-            return TweenManager.FilteredOperation(OperationType.Despawn, FilterType.TargetOrId, targetOrId, false, 0);
+            int tot = complete ? CompleteAndReturnKilledTot(targetOrId) : 0;
+            return tot + TweenManager.FilteredOperation(OperationType.Despawn, FilterType.TargetOrId, targetOrId, false, 0);
         }
 
         /// <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
