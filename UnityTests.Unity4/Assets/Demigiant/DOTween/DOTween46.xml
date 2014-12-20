@@ -15,6 +15,16 @@
             Also stores the canvasGroup as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.UI.Graphic,UnityEngine.Color,System.Single)">
+            <summary>Tweens an Graphic's color to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOFade(UnityEngine.UI.Graphic,System.Single,System.Single)">
+            <summary>Tweens an Graphic's alpha color to the given value.
+            Also stores the image as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.UI.Image,UnityEngine.Color,System.Single)">
             <summary>Tweens an Image's color to the given value.
             Also stores the image as the tween's target so it can be used for filtered operations</summary>
@@ -40,14 +50,14 @@
             Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOAnchor3D(UnityEngine.RectTransform,UnityEngine.Vector3,System.Single,System.Boolean)">
-            <summary>Tweens a RectTransform's anchoredPosition3D to the given value.
+        <member name="M:DG.Tweening.ShortcutExtensions.DOAnchor(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition to the given value.
             Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOAnchor(UnityEngine.RectTransform,UnityEngine.Vector2,System.Single,System.Boolean)">
-            <summary>Tweens a RectTransform's anchoredPosition to the given value.
+        <member name="M:DG.Tweening.ShortcutExtensions.DOAnchor3D(UnityEngine.RectTransform,UnityEngine.Vector3,System.Single,System.Boolean)">
+            <summary>Tweens a RectTransform's anchoredPosition3D to the given value.
             Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>

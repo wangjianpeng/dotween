@@ -41,7 +41,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:\Program Files\_Design\Unity 4.6\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.0\UnityEngine.UI.dll</HintPath>
+      <HintPath>C:\Program Files\_Design\Unity 4.6\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.1\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
