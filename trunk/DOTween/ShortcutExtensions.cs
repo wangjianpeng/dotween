@@ -600,9 +600,11 @@ namespace DG.Tweening
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens killed.
         /// </summary>
-        public static int DOKill(this Component target)
+        /// <param name="complete">If TRUE completes the tween before killing it</param>
+        public static int DOKill(this Component target, bool complete = false)
         {
-            return DOTween.Kill(target);
+            int tot = complete ? DOTween.CompleteAndReturnKilledTot(target) : 0;
+            return tot + DOTween.Kill(target);
         }
 
         /// <summary>

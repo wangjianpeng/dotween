@@ -67,7 +67,8 @@ namespace DG.Tweening
         }
 
         /// <summary>Kills the tween</summary>
-        public static void Kill(this Tween t)
+        /// <param name="complete">If TRUE completes the tween before killing it</param>
+        public static void Kill(this Tween t, bool complete = false)
         {
             if (t == null) {
                 if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
@@ -75,6 +76,11 @@ namespace DG.Tweening
                 if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
             } else if (t.isSequenced) {
                 if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
+            }
+
+            if (complete) {
+                TweenManager.Complete(t);
+                if (t.autoKill) return; // Already killed by Complete, so no need to go on
             }
 
             if (TweenManager.isUpdateLoop) {

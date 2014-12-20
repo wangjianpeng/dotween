@@ -378,11 +378,13 @@
             <summary>Sends all tweens with the given ID or target to the given position (calculating also eventual loop cycles)
             and returns the actual tweens involved</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Kill">
+        <member name="M:DG.Tweening.DOTween.Kill(System.Boolean)">
             <summary>Kills all tweens and returns the number of actual tweens killed</summary>
+            <param name="complete">If TRUE completes the tweens before killing them</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.Kill(System.Object)">
+        <member name="M:DG.Tweening.DOTween.Kill(System.Object,System.Boolean)">
             <summary>Kills all tweens with the given ID or target and returns the number of actual tweens killed</summary>
+            <param name="complete">If TRUE completes the tweens before killing them</param>
         </member>
         <member name="M:DG.Tweening.DOTween.Pause">
             <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
@@ -1004,8 +1006,9 @@
             (if higher than the whole tween duration the tween will simply reach its end)</param>
             <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
         </member>
-        <member name="M:DG.Tweening.TweenExtensions.Kill(DG.Tweening.Tween)">
+        <member name="M:DG.Tweening.TweenExtensions.Kill(DG.Tweening.Tween,System.Boolean)">
             <summary>Kills the tween</summary>
+            <param name="complete">If TRUE completes the tween before killing it</param>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.Pause``1(``0)">
             <summary>Pauses the tween</summary>
@@ -1649,12 +1652,13 @@
             Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
-        <member name="M:DG.Tweening.ShortcutExtensions.DOKill(UnityEngine.Component)">
+        <member name="M:DG.Tweening.ShortcutExtensions.DOKill(UnityEngine.Component,System.Boolean)">
             <summary>
             Kills all tweens that have this target as a reference
             (meaning tweens that were started from this target, or that had this target added as an Id)
             and returns the total number of tweens killed.
             </summary>
+            <param name="complete">If TRUE completes the tween before killing it</param>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOFlip(UnityEngine.Component)">
             <summary>
