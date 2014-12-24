@@ -725,9 +725,12 @@
             <summary>Options for Vector4 tweens</summary>
             <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
         </member>
-        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String,System.String,DG.Tweening.Plugins.Options.StringOptions},System.Boolean)">
+        <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{System.String,System.String,DG.Tweening.Plugins.Options.StringOptions},System.Boolean,System.String)">
             <summary>Options for Vector4 tweens</summary>
             <param name="scramble">If TRUE the string will appear from a random animation of characters</param>
+            <param name="scrambleChars">A string containing the characters to use for scrambling.
+            Use as many characters as possible (minimum 10) because DOTween uses a fast scramble mode which gives better results with more characters.
+            Leave it to NULL to use default ones</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetOptions(DG.Tweening.Core.TweenerCore{UnityEngine.Vector3,UnityEngine.Vector3[],DG.Tweening.Plugins.Options.Vector3ArrayOptions},System.Boolean)">
             <summary>Options for Vector3Array tweens</summary>
@@ -1017,6 +1020,118 @@
         </member>
         <member name="F:DG.Tweening.LogBehaviour.ErrorsOnly">
             <summary>Log only errors</summary>
+        </member>
+        <member name="T:DG.Tweening.TweenParams">
+            <summary>
+            This class serves only as a utility class to store tween settings to apply on multiple tweens.
+            It is in no way needed otherwise, since you can directly apply tween settings to a tween via chaining
+            </summary>
+        </member>
+        <member name="F:DG.Tweening.TweenParams.Params">
+            <summary>A variable you can eventually Clear and reuse when needed,
+            to avoid instantiating TweenParams objects</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.#ctor">
+            <summary>Creates a new TweenParams object, which you can use to store tween settings
+            to pass to multiple tweens via <code>myTween.SetAs(myTweenParms)</code></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.Clear">
+            <summary>Clears and resets this TweenParams instance using default values,
+            so it can be reused without instantiating another one</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetAutoKill(System.Boolean)">
+            <summary>Sets the autoKill behaviour of the tween. 
+            Has no effect if the tween has already started</summary>
+            <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetId(System.Object)">
+            <summary>Sets an ID for the tween, which can then be used as a filter with DOTween's static methods.</summary>
+            <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetTarget(System.Object)">
+            <summary>Sets the target for the tween, which can then be used as a filter with DOTween's static methods.
+            <para>IMPORTANT: use it with caution. If you just want to set an ID for the tween use <code>SetId</code> instead.</para>
+            When using shorcuts the shortcut target is already assigned as the tween's target,
+            so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
+            <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetLoops(System.Int32,System.Nullable{DG.Tweening.LoopType})">
+            <summary>Sets the looping options for the tween. 
+            Has no effect if the tween has already started</summary>
+            <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
+            <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetEase(DG.Tweening.Ease,System.Nullable{System.Single},System.Nullable{System.Single})">
+            <summary>Sets the ease of the tween.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+            <param name="overshootOrAmplitude">Eventual overshoot or amplitude to use with Back or Elastic easeType (default is 1.70158)</param>
+            <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetEase(UnityEngine.AnimationCurve)">
+            <summary>Sets the ease of the tween using an AnimationCurve.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetEase(DG.Tweening.Core.EaseFunction)">
+            <summary>Sets the ease of the tween using a custom ease function.
+            <para>If applied to Sequences eases the whole sequence animation</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetRecyclable(System.Boolean)">
+            <summary>Sets the recycling behaviour for the tween.</summary>
+            <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetUpdate(System.Boolean)">
+            <summary>Sets the update type to UpdateType.Default and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+            <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetUpdate(DG.Tweening.UpdateType,System.Boolean)">
+            <summary>Sets the type of update (default or independent) for the tween</summary>
+            <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
+            <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnStart(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onStart callback for the tween.
+            Called the first time the tween is set in a playing state, after any eventual delay</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnPlay(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onPlay callback for the tween.
+            Called when the tween is set in a playing state, after any eventual delay.
+            Also called each time the tween resumes playing from a paused state</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnRewind(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onRewind callback for the tween.
+            Called when the tween is rewinded,
+            either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
+            Rewinding a tween that is already rewinded will not fire this callback</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnUpdate(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onUpdate callback for the tween.
+            Called each time the tween updates</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnStepComplete(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onStepComplete callback for the tween.
+            Called the moment the tween completes one loop cycle, even when going backwards</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnComplete(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onComplete callback for the tween.
+            Called the moment the tween reaches its final forward position, loops included</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.OnKill(DG.Tweening.Core.TweenCallback)">
+            <summary>Sets the onKill callback for the tween.
+            Called the moment the tween is killed</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetDelay(System.Single)">
+            <summary>Sets a delayed startup for the tween.
+            <para>Has no effect on Sequences or if the tween has already started</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetRelative(System.Boolean)">
+            <summary>If isRelative is TRUE sets the tween as relative
+            (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
+            <para>Has no effect on Sequences or if the tween has already started</para></summary>
+        </member>
+        <member name="M:DG.Tweening.TweenParams.SetSpeedBased(System.Boolean)">
+            <summary>If isSpeedBased is TRUE sets the tween as speed based
+            (the duration will represent the number of units the tween moves x second).
+            <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         </member>
         <member name="T:DG.Tweening.Plugins.PathPlugin">
             <summary>
@@ -1629,118 +1744,6 @@
             <summary>
             What axis to constrain in case of Vector tweens
             </summary>
-        </member>
-        <member name="T:DG.Tweening.TweenParams">
-            <summary>
-            This class serves only as a utility class to store tween settings to apply on multiple tweens.
-            It is in no way needed otherwise, since you can directly apply tween settings to a tween via chaining
-            </summary>
-        </member>
-        <member name="F:DG.Tweening.TweenParams.Params">
-            <summary>A variable you can eventually Clear and reuse when needed,
-            to avoid instantiating TweenParams objects</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.#ctor">
-            <summary>Creates a new TweenParams object, which you can use to store tween settings
-            to pass to multiple tweens via <code>myTween.SetAs(myTweenParms)</code></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.Clear">
-            <summary>Clears and resets this TweenParams instance using default values,
-            so it can be reused without instantiating another one</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetAutoKill(System.Boolean)">
-            <summary>Sets the autoKill behaviour of the tween. 
-            Has no effect if the tween has already started</summary>
-            <param name="autoKillOnCompletion">If TRUE the tween will be automatically killed when complete</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetId(System.Object)">
-            <summary>Sets an ID for the tween, which can then be used as a filter with DOTween's static methods.</summary>
-            <param name="id">The ID to assign to this tween. Can be an int, a string, an object or anything else.</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetTarget(System.Object)">
-            <summary>Sets the target for the tween, which can then be used as a filter with DOTween's static methods.
-            <para>IMPORTANT: use it with caution. If you just want to set an ID for the tween use <code>SetId</code> instead.</para>
-            When using shorcuts the shortcut target is already assigned as the tween's target,
-            so using this method will overwrite it and prevent shortcut-operations like myTarget.DOPause from working correctly.</summary>
-            <param name="target">The target to assign to this tween. Can be an int, a string, an object or anything else.</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetLoops(System.Int32,System.Nullable{DG.Tweening.LoopType})">
-            <summary>Sets the looping options for the tween. 
-            Has no effect if the tween has already started</summary>
-            <param name="loops">Number of cycles to play (-1 for infinite - will be converted to 1 in case the tween is nested in a Sequence)</param>
-            <param name="loopType">Loop behaviour type (default: LoopType.Restart)</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetEase(DG.Tweening.Ease,System.Nullable{System.Single},System.Nullable{System.Single})">
-            <summary>Sets the ease of the tween.
-            <para>If applied to Sequences eases the whole sequence animation</para></summary>
-            <param name="overshootOrAmplitude">Eventual overshoot or amplitude to use with Back or Elastic easeType (default is 1.70158)</param>
-            <param name="period">Eventual period to use with Elastic easeType (default is 0)</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetEase(UnityEngine.AnimationCurve)">
-            <summary>Sets the ease of the tween using an AnimationCurve.
-            <para>If applied to Sequences eases the whole sequence animation</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetEase(DG.Tweening.Core.EaseFunction)">
-            <summary>Sets the ease of the tween using a custom ease function.
-            <para>If applied to Sequences eases the whole sequence animation</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetRecyclable(System.Boolean)">
-            <summary>Sets the recycling behaviour for the tween.</summary>
-            <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetUpdate(System.Boolean)">
-            <summary>Sets the update type to UpdateType.Default and lets you choose if it should be independent from Unity's Time.timeScale</summary>
-            <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetUpdate(DG.Tweening.UpdateType,System.Boolean)">
-            <summary>Sets the type of update (default or independent) for the tween</summary>
-            <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
-            <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnStart(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onStart callback for the tween.
-            Called the first time the tween is set in a playing state, after any eventual delay</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnPlay(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onPlay callback for the tween.
-            Called when the tween is set in a playing state, after any eventual delay.
-            Also called each time the tween resumes playing from a paused state</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnRewind(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onRewind callback for the tween.
-            Called when the tween is rewinded,
-            either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
-            Rewinding a tween that is already rewinded will not fire this callback</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnUpdate(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onUpdate callback for the tween.
-            Called each time the tween updates</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnStepComplete(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onStepComplete callback for the tween.
-            Called the moment the tween completes one loop cycle, even when going backwards</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnComplete(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onComplete callback for the tween.
-            Called the moment the tween reaches its final forward position, loops included</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.OnKill(DG.Tweening.Core.TweenCallback)">
-            <summary>Sets the onKill callback for the tween.
-            Called the moment the tween is killed</summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetDelay(System.Single)">
-            <summary>Sets a delayed startup for the tween.
-            <para>Has no effect on Sequences or if the tween has already started</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetRelative(System.Boolean)">
-            <summary>If isRelative is TRUE sets the tween as relative
-            (the endValue will be calculated as <code>startValue + endValue</code> instead than being used directly).
-            <para>Has no effect on Sequences or if the tween has already started</para></summary>
-        </member>
-        <member name="M:DG.Tweening.TweenParams.SetSpeedBased(System.Boolean)">
-            <summary>If isSpeedBased is TRUE sets the tween as speed based
-            (the duration will represent the number of units the tween moves x second).
-            <para>Has no effect on Sequences, nested tweens, or if the tween has already started</para></summary>
         </member>
     </members>
 </doc>

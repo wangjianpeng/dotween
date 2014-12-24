@@ -10,5 +10,6 @@ namespace DG.Tweening.Plugins.Options
     public struct StringOptions
     {
         public bool scramble;
+        public char[] scrambledChars; // If empty uses default scramble characters
     }
 }
