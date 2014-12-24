@@ -10,6 +10,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
 using DG.Tweening.Plugins.Core;
 using DG.Tweening.Plugins.Options;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 #pragma warning disable 1591
@@ -81,7 +82,7 @@ namespace DG.Tweening.Plugins
             if (isRelative) {
                 _Buffer.Append(startValue);
                 if (options.scramble) {
-                    setter(_Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                    setter(_Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len, options.scrambledChars ?? StringPluginExtensions.ScrambledChars).ToString());
                     return;
                 }
                 setter(_Buffer.Append(changeValue, 0, len).ToString());
@@ -89,7 +90,7 @@ namespace DG.Tweening.Plugins
             }
 
             if (options.scramble) {
-                setter(_Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len).ToString());
+                setter(_Buffer.Append(changeValue, 0, len).AppendScrambledChars(changeValueLen - len, options.scrambledChars ?? StringPluginExtensions.ScrambledChars).ToString());
                 return;
             }
 
@@ -112,40 +113,45 @@ namespace DG.Tweening.Plugins
 
     internal static class StringPluginExtensions
     {
-        static readonly char[] _ScrambledChars = new[] {
+        public static readonly char[] ScrambledChars = new[] {
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','X','Y','Z',
 //            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','x','y','z',
 //            '1','2','3','4','5','6','7','8','9','0'
         };
-        static readonly int _ScrambledCharsLen;
         static int _lastRndSeed;
 
         static StringPluginExtensions()
         {
-            _ScrambledCharsLen = _ScrambledChars.Length;
+            ScrambledChars.ScrambleChars();
+        }
+
+        internal static void ScrambleChars(this char[] chars)
+        {
             // Shuffle chars (uses Knuth shuggle algorithm)
-            for (int i = 0; i < _ScrambledCharsLen; i++) {
-                char tmp = _ScrambledChars[i];
-                int r = Random.Range(i, _ScrambledCharsLen);
-                _ScrambledChars[i] = _ScrambledChars[r];
-                _ScrambledChars[r] = tmp;
+            int len = chars.Length;
+            for (int i = 0; i < len; i++) {
+                char tmp = chars[i];
+                int r = Random.Range(i, len);
+                chars[i] = chars[r];
+                chars[r] = tmp;
             }
         }
 
-        internal static StringBuilder AppendScrambledChars(this StringBuilder buffer, int length)
+        internal static StringBuilder AppendScrambledChars(this StringBuilder buffer, int length, char[] chars)
         {
             if (length <= 0) return buffer;
 
             // Make sure random seed is different from previous one used
+            int len = chars.Length;
             int rndSeed = _lastRndSeed;
             while (rndSeed == _lastRndSeed) {
-                rndSeed = Random.Range(0, _ScrambledCharsLen);
+                rndSeed = Random.Range(0, len);
             }
             _lastRndSeed = rndSeed;
             // Append
             for (int i = 0; i < length; ++i) {
-                if (rndSeed >= _ScrambledCharsLen) rndSeed = 0;
-                buffer.Append(_ScrambledChars[rndSeed]);
+                if (rndSeed >= len) rndSeed = 0;
+                buffer.Append(chars[rndSeed]);
                 rndSeed += 1;
             }
             return buffer;

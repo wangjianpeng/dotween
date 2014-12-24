@@ -33,22 +33,22 @@ namespace DG.Tweening
 //        public TweenCallback onStart; // (in ABSSequentiable) When the tween is set in a PLAY state the first time, AFTER any eventual delay
         /// <summary>Called when the tween is set in a playing state, after any eventual delay.
         /// Also called each time the tween resumes playing from a paused state</summary>
-        public TweenCallback onPlay;
+        internal TweenCallback onPlay;
         /// <summary>Called when the tween state changes from playing to paused.
         /// If the tween has autoKill set to FALSE, this is called also when the tween reaches completion.</summary>
-        public TweenCallback onPause;
+        internal TweenCallback onPause;
         /// <summary>Called when the tween is rewinded,
         /// either by calling <code>Rewind</code> or by reaching the start position while playing backwards.
         /// Rewinding a tween that is already rewinded will not fire this callback</summary>
-        public TweenCallback onRewind;
+        internal TweenCallback onRewind;
         /// <summary>Called each time the tween updates</summary>
-        public TweenCallback onUpdate;
+        internal TweenCallback onUpdate;
         /// <summary>Called the moment the tween completes one loop cycle</summary>
-        public TweenCallback onStepComplete;
+        internal TweenCallback onStepComplete;
         /// <summary>Called the moment the tween reaches completion (loops included)</summary>
-        public TweenCallback onComplete;
+        internal TweenCallback onComplete;
         /// <summary>Called the moment the tween is killed</summary>
-        public TweenCallback onKill;
+        internal TweenCallback onKill;
         
         // Fixed after creation
         internal bool isFrom; // Used to prevent settings like isRelative from being applied on From tweens

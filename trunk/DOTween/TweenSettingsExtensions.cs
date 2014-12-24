@@ -660,11 +660,19 @@ namespace DG.Tweening
 
         /// <summary>Options for Vector4 tweens</summary>
         /// <param name="scramble">If TRUE the string will appear from a random animation of characters</param>
-        public static Tweener SetOptions(this TweenerCore<string, string, StringOptions> t, bool scramble)
+        /// <param name="scrambleChars">A string containing the characters to use for scrambling.
+        /// Use as many characters as possible (minimum 10) because DOTween uses a fast scramble mode which gives better results with more characters.
+        /// Leave it to NULL to use default ones</param>
+        public static Tweener SetOptions(this TweenerCore<string, string, StringOptions> t, bool scramble, string scrambleChars = null)
         {
             if (!t.active) return t;
 
             t.plugOptions.scramble = scramble;
+            if (!string.IsNullOrEmpty(scrambleChars)) {
+                if (scrambleChars.Length <= 1) scrambleChars += scrambleChars;
+                t.plugOptions.scrambledChars = scrambleChars.ToCharArray();
+                t.plugOptions.scrambledChars.ScrambleChars();
+            }
             return t;
         }
 
