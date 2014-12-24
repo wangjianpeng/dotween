@@ -356,7 +356,9 @@ namespace DG.Tweening
             t.delayComplete = t.delay <= 0;
             t.isRelative = tweenParams.isRelative;
             if (tweenParams.easeType == Ease.Unset) {
-                t.easeType = t.tweenType == TweenType.Sequence ? Ease.Linear : DOTween.defaultEaseType;
+                if (t.tweenType == TweenType.Sequence) t.easeType = Ease.Linear;
+                else t.easeType = DOTween.defaultEaseType;
+//                t.easeType = t.tweenType == TweenType.Sequence ? Ease.Linear : DOTween.defaultEaseType; // Doesn't work w webplayer (why?)
             } else t.easeType = tweenParams.easeType;
             t.customEase = tweenParams.customEase;
             t.easeOvershootOrAmplitude = tweenParams.easeOvershootOrAmplitude;
