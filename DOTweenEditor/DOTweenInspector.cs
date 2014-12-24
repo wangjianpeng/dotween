@@ -7,6 +7,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using DG.DOTweenEditor.Core;
 using DG.Tweening;
 using DG.Tweening.Core;
 using UnityEditor;
@@ -19,34 +20,22 @@ namespace DG.DOTweenEditor
     {
 //        DOTweenComponent _src;
         string _title;
-        string _proVersion;
-        string _43Version;
         readonly StringBuilder _strBuilder = new StringBuilder();
 
         bool _guiStylesSet;
-        GUIStyle _boldLabelStyle, _greenLabelStyle, _redLabelStyle;
+        GUIStyle _boldLabelStyle, _redLabelStyle;
 
         // ===================================================================================
         // MONOBEHAVIOUR METHODS -------------------------------------------------------------
 
         void OnEnable()
         {
-            // Additional DLLs versions
-            Assembly additionalAssembly;
-            try {
-                additionalAssembly = Assembly.Load("DOTweenPro, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null");
-                _proVersion = additionalAssembly.GetType("DG.Tweening.DOTweenPro").GetField("Version", BindingFlags.Static | BindingFlags.Public).GetValue(null) as string;
-            } catch {
-                // No DOTweenPro present
-            }
-
-//            _src = target as DOTweenComponent;
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("DOTween v").Append(DOTween.Version);
             if (DOTween.isDebugBuild) _strBuilder.Append(" [Debug build]");
             else _strBuilder.Append(" [Release build]");
 
-            if (_proVersion != null) _strBuilder.Append("\nDOTweenPro v").Append(_proVersion);
+            if (EditorUtils.hasPro) _strBuilder.Append("\nDOTweenPro v").Append(EditorUtils.proVersion);
             else _strBuilder.Append("\nDOTweenPro not installed");
             _title = _strBuilder.ToString();
         }
@@ -120,9 +109,6 @@ namespace DG.DOTweenEditor
 
                 _redLabelStyle = new GUIStyle(GUI.skin.label);
                 _redLabelStyle.normal.textColor = Color.red;
-
-                _greenLabelStyle = new GUIStyle(GUI.skin.label);
-                _greenLabelStyle.normal.textColor = Color.green;
 
                 _guiStylesSet = true;
             }

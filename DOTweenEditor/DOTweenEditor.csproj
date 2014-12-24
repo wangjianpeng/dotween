@@ -46,8 +46,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\EditorUtils.cs" />
     <Compile Include="DOTweenInspector.cs" />
     <Compile Include="DOTweenSetupMenuItem.cs" />
+    <Compile Include="DOTweenUtilityWindow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

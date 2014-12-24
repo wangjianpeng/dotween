@@ -12,15 +12,22 @@ using UnityEngine;
 
 namespace DG.DOTweenEditor
 {
+    /// <summary>
+    /// Not used as menu item anymore, but as a utiity function
+    /// </summary>
     class DOTweenSetupMenuItem
     {
-        [MenuItem("Tools/" + _Title)]
-        static void StartSetup() { Setup(); }
+//        [MenuItem("Tools/" + _Title)]
+//        static void StartSetup() { Setup(); }
 
         const string _Title = "DOTween Setup";
         static bool _proExists;
 
-        static void Setup()
+        /// <summary>
+        /// Setups DOTween
+        /// </summary>
+        /// <param name="partiallySilent">If TRUE, no warning window appears in case there is no need for setup</param>
+        public static void Setup(bool partiallySilent = false)
         {
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);
@@ -38,8 +45,10 @@ namespace DG.DOTweenEditor
                 string msg = "Based on your Unity version (" + Application.unityVersion + ") and eventual plugins, DOTween will now import additional tween elements, if available.";
                 if (!EditorUtility.DisplayDialog(_Title, msg, "Ok", "Cancel")) return;
             } else {
-                string msg = "This project has already been setup for your version of DOTween.\nUpdate to a new DOTween version before running the setup again.";
-                EditorUtility.DisplayDialog(_Title, msg, "Ok");
+                if (!partiallySilent) {
+                    string msg = "This project has already been setup for your version of DOTween.\nUpdate to a new DOTween version before running the setup again.";
+                    EditorUtility.DisplayDialog(_Title, msg, "Ok");
+                }
                 return;
             }
 
