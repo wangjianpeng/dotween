@@ -42,7 +42,7 @@ public class Basics : BrainBase
 		// Set RectOffset since it can't be set before
 		rectOffsetToTween = new RectOffset(0, 0, 0, 0);
 
-		TweenParms tp = new TweenParms();
+		TweenParams tp = new TweenParams();
 		tp.SetLoops(loops, loopType).SetAutoKill(false);
 		if (ease == Ease.INTERNAL_Custom) tp.SetEase(easeCurve);
 		else tp.SetEase(ease);

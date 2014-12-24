@@ -26,7 +26,7 @@ public class Paths : BrainBase
 			new Vector3(2,0,0)
 		};
 
-		TweenParms tp = new TweenParms()
+		TweenParams tp = new TweenParams()
 			.SetEase(ease)
 			.SetLoops(-1, loopType);
 

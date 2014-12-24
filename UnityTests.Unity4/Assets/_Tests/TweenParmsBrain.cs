@@ -10,7 +10,7 @@ public class TweenParmsBrain : BrainBase
 	{
 		yield return new WaitForSeconds(0.5f);
 
-		TweenParms tp = new TweenParms()
+		TweenParams tp = new TweenParams()
 			.SetRelative()
 			// .SetSpeedBased()
 			.SetEase(Ease.OutQuint)

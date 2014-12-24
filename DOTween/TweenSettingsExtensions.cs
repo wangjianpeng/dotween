@@ -325,42 +325,42 @@ namespace DG.Tweening
             return t;
         }
 
-        /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given TweenParms.
+        /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given TweenParams.
         /// <para>Has no effect if the tween has already started.</para></summary>
-        /// <param name="tweenParms">TweenParms from which to copy the parameters</param>
-        public static T SetAs<T>(this T t, TweenParms tweenParms) where T : Tween
+        /// <param name="tweenParams">TweenParams from which to copy the parameters</param>
+        public static T SetAs<T>(this T t, TweenParams tweenParams) where T : Tween
         {
             if (!t.active || t.creationLocked) return t;
 
-            TweenManager.SetUpdateType(t, tweenParms.updateType, tweenParms.isIndependentUpdate);
-            t.id = tweenParms.id;
-            t.onStart = tweenParms.onStart;
-            t.onPlay = tweenParms.onPlay;
-            t.onRewind = tweenParms.onRewind;
-            t.onUpdate = tweenParms.onUpdate;
-            t.onStepComplete = tweenParms.onStepComplete;
-            t.onComplete = tweenParms.onComplete;
-            t.onKill = tweenParms.onKill;
+            TweenManager.SetUpdateType(t, tweenParams.updateType, tweenParams.isIndependentUpdate);
+            t.id = tweenParams.id;
+            t.onStart = tweenParams.onStart;
+            t.onPlay = tweenParams.onPlay;
+            t.onRewind = tweenParams.onRewind;
+            t.onUpdate = tweenParams.onUpdate;
+            t.onStepComplete = tweenParams.onStepComplete;
+            t.onComplete = tweenParams.onComplete;
+            t.onKill = tweenParams.onKill;
 
-            t.isRecyclable = tweenParms.isRecyclable;
-            t.isSpeedBased = tweenParms.isSpeedBased;
-            t.autoKill = tweenParms.autoKill;
-            t.loops = tweenParms.loops;
-            t.loopType = tweenParms.loopType;
+            t.isRecyclable = tweenParams.isRecyclable;
+            t.isSpeedBased = tweenParams.isSpeedBased;
+            t.autoKill = tweenParams.autoKill;
+            t.loops = tweenParams.loops;
+            t.loopType = tweenParams.loopType;
             if (t.tweenType == TweenType.Tweener) {
                 if (t.loops > -1) t.fullDuration = t.duration * t.loops;
                 else t.fullDuration = Mathf.Infinity;
             }
 
-            t.delay = tweenParms.delay;
+            t.delay = tweenParams.delay;
             t.delayComplete = t.delay <= 0;
-            t.isRelative = tweenParms.isRelative;
-            if (tweenParms.easeType == Ease.Unset) {
+            t.isRelative = tweenParams.isRelative;
+            if (tweenParams.easeType == Ease.Unset) {
                 t.easeType = t.tweenType == TweenType.Sequence ? Ease.Linear : DOTween.defaultEaseType;
-            } else t.easeType = tweenParms.easeType;
-            t.customEase = tweenParms.customEase;
-            t.easeOvershootOrAmplitude = tweenParms.easeOvershootOrAmplitude;
-            t.easePeriod = tweenParms.easePeriod;
+            } else t.easeType = tweenParams.easeType;
+            t.customEase = tweenParams.customEase;
+            t.easeOvershootOrAmplitude = tweenParams.easeOvershootOrAmplitude;
+            t.easePeriod = tweenParams.easePeriod;
 
             return t;
         }
