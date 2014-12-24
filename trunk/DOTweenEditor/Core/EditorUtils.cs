@@ -14,12 +14,27 @@ namespace DG.DOTweenEditor.Core
         public static bool hasPro { get { if (!_hasCheckedForPro) CheckForPro(); return _hasPro; } }
         public static string proVersion { get { if (!_hasCheckedForPro) CheckForPro(); return _proVersion; } }
         // Editor path from Assets (not included) with final slash, in AssetDatabase format
-        public static string editorADBPath { get { if (string.IsNullOrEmpty(_editorADBPath)) StoreEditorADBPath(); return _editorADBPath; } }
+        public static string editorADBDir { get { if (string.IsNullOrEmpty(_editorADBDir)) StoreEditorADBDir(); return _editorADBDir; } }
+        // With final slash (system based)
+        public static string dotweenDir { get { if (string.IsNullOrEmpty(_dotweenDir)) StoreDOTweenDirs(); return _dotweenDir; } }
+        // With final slash (system based)
+        public static string dotweenProDir { get { if (string.IsNullOrEmpty(_dotweenProDir)) StoreDOTweenDirs(); return _dotweenProDir; } }
+        public static string pathSlash { get; private set; } // for full paths
+        public static string pathSlashToReplace { get; private set; } // for full paths
 
         static bool _hasPro;
         static string _proVersion;
         static bool _hasCheckedForPro;
-        static string _editorADBPath;
+        static string _editorADBDir;
+        static string _dotweenDir; // with final slash
+        static string _dotweenProDir; // with final slash
+
+        static EditorUtils()
+        {
+            bool useWindowsSlashes = Application.platform == RuntimePlatform.WindowsEditor;
+            pathSlash = useWindowsSlashes ? "\\" : "/";
+            pathSlashToReplace = useWindowsSlashes ? "/" : "\\";
+        }
 
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
@@ -43,6 +58,15 @@ namespace DG.DOTweenEditor.Core
             AssetDatabase.ImportAsset(path);
         }
 
+        /// <summary>
+        /// Returns TRUE if addons setup is required.
+        /// </summary>
+        public static bool DOTweenSetupRequired()
+        {
+            if (!Directory.Exists(dotweenDir)) return false; // Can happen if we were deleting DOTween
+            return Directory.GetFiles(dotweenDir, "*.addon").Length > 0 || hasPro && Directory.GetFiles(dotweenProDir, "*.addon").Length > 0;
+        }
+
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
 
@@ -61,13 +85,25 @@ namespace DG.DOTweenEditor.Core
         }
 
         // AssetDatabase formatted path to DOTween's Editor folder
-        static void StoreEditorADBPath()
+        static void StoreEditorADBDir()
         {
-            Assembly assembly = Assembly.GetAssembly(typeof(EditorUtils));
-            UriBuilder uri = new UriBuilder(assembly.CodeBase);
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
             string fullPath = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
             string adbPath = fullPath.Substring(Application.dataPath.Length + 1);
-            _editorADBPath = adbPath.Replace("\\", "/") + "/";
+            _editorADBDir = adbPath.Replace("\\", "/") + "/";
+        }
+
+        static void StoreDOTweenDirs()
+        {
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            _dotweenDir = Path.GetDirectoryName(Uri.UnescapeDataString(uri.Path));
+            string pathSeparator = _dotweenDir.IndexOf("/") != -1 ? "/" : "\\";
+            _dotweenDir = _dotweenDir.Substring(0, _dotweenDir.LastIndexOf(pathSeparator) + 1);
+
+            _dotweenProDir = _dotweenDir.Substring(0, _dotweenDir.LastIndexOf(pathSeparator));
+            _dotweenProDir = _dotweenProDir.Substring(0, _dotweenProDir.LastIndexOf(pathSeparator) + 1) + "DOTweenPro" + pathSeparator;
         }
     }
 }
