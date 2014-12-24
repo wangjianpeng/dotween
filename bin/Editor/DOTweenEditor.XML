@@ -21,5 +21,10 @@
             and applies them if they're incorrect.
             </summary>
         </member>
+        <member name="M:DG.DOTweenEditor.Core.EditorUtils.DOTweenSetupRequired">
+            <summary>
+            Returns TRUE if addons setup is required.
+            </summary>
+        </member>
     </members>
 </doc>
