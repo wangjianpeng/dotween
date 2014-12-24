@@ -14,8 +14,15 @@ public class TempTests : BrainBase
 
 	void Start()
     {
-    	DOTween.To(()=> str0, x=> str0 = x, "Some changed text after the scramble", 3).SetOptions(true).SetLoops(-1);
-    	DOTween.To(()=> str1, x=> str1 = x, "Some changed text after the scramble", 3).SetOptions(true, "0123456789").SetLoops(-1);
+    	Sequence bob = DOTween.Sequence();
+        Tween upDown = target.DOMoveY(-0.5f, 0.5f).SetRelative().SetEase(Ease.OutQuad);
+        Tween downUp = target.DOMoveY(0.5f, 1f).SetRelative();
+        Tween rest = target.DOMoveY(-0, 0.5f).SetRelative().SetEase(Ease.InQuad);
+        bob.Append(upDown).Append(downUp).Append(rest).SetLoops(3);
+
+        Sequence test = DOTween.Sequence();
+        test.Insert(1, bob);
+        test.Insert(1,target.DOMoveX(-2, 5).SetRelative());
     }
 
     void OnGUI()
