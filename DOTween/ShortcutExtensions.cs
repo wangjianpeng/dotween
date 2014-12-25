@@ -23,6 +23,280 @@ namespace DG.Tweening
         // ===================================================================================
         // CREATION SHORTCUTS ----------------------------------------------------------------
 
+        #region Audio Shortcuts
+
+        /// <summary>Tweens an AudioSource's volume to the given value.
+        /// Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach (0 to 1)</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFade(this AudioSource target, float endValue, float duration)
+        {
+            if (endValue < 0) endValue = 0;
+            else if (endValue > 1) endValue = 1;
+            return DOTween.To(() => target.volume, x => target.volume = x, endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens an AudioSource's pitch to the given value.
+        /// Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOPitch(this AudioSource target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.pitch, x => target.pitch = x, endValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
+        #region Camera Shortcuts
+
+        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakePosition(this Camera target, float duration, float strength = 3, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
+        }
+        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakePosition(this Camera target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
+        }
+
+        /// <summary>Shakes a Camera's localRotation.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakeRotation(this Camera target, float duration, float strength = 90, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness, false)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+        /// <summary>Shakes a Camera's localRotation.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="duration">The duration of the tween</param>
+        /// <param name="strength">The shake strength on each axis</param>
+        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
+        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
+        /// Setting it to 0 will shake along a single direction.</param>
+        public static Tweener DOShakeRotation(this Camera target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
+        {
+            return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
+        }
+
+        /// <summary>Tweens a Camera's backgroundColor to the given value.
+        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Camera target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.backgroundColor, x => target.backgroundColor = x, endValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
+        #region Light Shortcuts
+
+        /// <summary>Tweens a Light's color to the given value.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Light target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Light's intensity to the given value.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOIntensity(this Light target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.intensity, x => target.intensity = x, endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Light's shadowStrength to the given value.
+        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOShadowStrength(this Light target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.shadowStrength, x => target.shadowStrength = x, endValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
+        #region LineRenderer
+
+        /// <summary>Tweens a LineRenderer's color to the given value.
+        /// Also stores the LineRenderer as the tween's target so it can be used for filtered operations.
+        /// <para>Note that this method requires to also insert the start colors for the tween, 
+        /// since LineRenderers have no way to get it.</para></summary>
+        /// <param name="startValue">The start value to tween from</param>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this LineRenderer target, Color2 startValue, Color2 endValue, float duration)
+        {
+            return DOTween.To(() => startValue, x => target.SetColors(x.ca, x.cb), endValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
+        #region Material Shortcuts
+
+        /// <summary>Tweens a Material's color to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Material target, Color endValue, float duration)
+        {
+            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
+        }
+        /// <summary>Tweens a Material's named color property to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOColor(this Material target, Color endValue, string property, float duration)
+        {
+            return DOTween.To(() => target.GetColor(property), x => target.SetColor(property, x), endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Material's alpha color to the given value
+        /// (will have no effect unless your material supports transparency).
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFade(this Material target, float endValue, float duration)
+        {
+            return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
+                .SetTarget(target);
+        }
+
+        /// <summary>Tweens a Material's named float property to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="property">The name of the material property to tween</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOFloat(this Material target, float endValue, string property, float duration)
+        {
+            return DOTween.To(() => target.GetFloat(property), x => target.SetFloat(property, x), endValue, duration).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Material's named Vector property to the given value.
+        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param>
+        /// <param name="property">The name of the material property to tween</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOVector(this Material target, Vector4 endValue, string property, float duration)
+        {
+            return DOTween.To(() => target.GetVector(property), x => target.SetVector(property, x), endValue, duration).SetTarget(target);
+        }
+
+        #endregion
+
+        #region Rigidbody Shortcuts
+
+        /// <summary>Tweens a Rigidbody's position to the given value.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMove(this Rigidbody target, Vector3 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody's X position to the given value.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveX(this Rigidbody target, float endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, new Vector3(endValue, 0, 0), duration)
+                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody's Y position to the given value.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveY(this Rigidbody target, float endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, endValue, 0), duration)
+                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody's Z position to the given value.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMoveZ(this Rigidbody target, float endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, 0, endValue), duration)
+                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens a Rigidbody's rotation to the given value.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="mode">Rotation mode</param>
+        public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration, RotateMode mode = RotateMode.Fast)
+        {
+            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration);
+            t.SetTarget(target);
+            t.plugOptions.rotateMode = mode;
+            return t;
+        }
+
+        /// <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
+        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
+        /// <param name="axisConstraint">Eventual axis constraint for the rotation</param>
+        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
+        public static Tweener DOLookAt(this Rigidbody target, Vector3 towards, float duration, AxisConstraint axisConstraint = AxisConstraint.None, Vector3? up = null)
+        {
+            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => target.rotation, target.MoveRotation, towards, duration)
+                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetLookAt);
+            t.plugOptions.axisConstraint = axisConstraint;
+            t.plugOptions.up = (up == null) ? Vector3.up : (Vector3)up;
+            return t;
+        }
+
+        #endregion
+
+        #region TrailRenderer Shortcuts
+
+        /// <summary>Tweens a TrailRenderer's startWidth/endWidth to the given value.
+        /// Also stores the TrailRenderer as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="toStartWidth">The end startWidth to reach</param><param name="toEndWidth">The end endWidth to reach</param>
+        /// <param name="duration">The duration of the tween</param>
+        public static Tweener DOResize(this TrailRenderer target, float toStartWidth, float toEndWidth, float duration)
+        {
+            return DOTween.To(() => new Vector2(target.startWidth, target.endWidth), x => {
+                    target.startWidth = x.x;
+                    target.endWidth = x.y;
+                }, new Vector2(toStartWidth, toEndWidth), duration)
+                .SetTarget(target);
+        }
+
+        /// <summary>Tweens a TrailRenderer's time to the given value.
+        /// Also stores the TrailRenderer as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOTime(this TrailRenderer target, float endValue, float duration)
+        {
+            return DOTween.To(() => target.time, x => target.time = x, endValue, duration)
+                .SetTarget(target);
+        }
+
+        #endregion
+
         #region Transform Shortcuts
 
         /// <summary>Tweens a Transform's position to the given value.
@@ -353,239 +627,6 @@ namespace DG.Tweening
 
             t.plugOptions.mode = pathMode;
             return t;
-        }
-
-        #endregion
-
-        #region Rigidbody Shortcuts
-
-        /// <summary>Tweens a Rigidbody's position to the given value.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMove(this Rigidbody target, Vector3 endValue, float duration, bool snapping = false)
-        {
-            return DOTween.To(() => target.position, target.MovePosition, endValue, duration)
-                .SetOptions(snapping).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Rigidbody's X position to the given value.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveX(this Rigidbody target, float endValue, float duration, bool snapping = false)
-        {
-            return DOTween.To(() => target.position, target.MovePosition, new Vector3(endValue, 0, 0), duration)
-                .SetOptions(AxisConstraint.X, snapping).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Rigidbody's Y position to the given value.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveY(this Rigidbody target, float endValue, float duration, bool snapping = false)
-        {
-            return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, endValue, 0), duration)
-                .SetOptions(AxisConstraint.Y, snapping).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Rigidbody's Z position to the given value.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOMoveZ(this Rigidbody target, float endValue, float duration, bool snapping = false)
-        {
-            return DOTween.To(() => target.position, target.MovePosition, new Vector3(0, 0, endValue), duration)
-                .SetOptions(AxisConstraint.Z, snapping).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Rigidbody's rotation to the given value.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        /// <param name="mode">Rotation mode</param>
-        public static Tweener DORotate(this Rigidbody target, Vector3 endValue, float duration, RotateMode mode = RotateMode.Fast)
-        {
-            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => target.rotation, target.MoveRotation, endValue, duration);
-            t.SetTarget(target);
-            t.plugOptions.rotateMode = mode;
-            return t;
-        }
-
-        /// <summary>Tweens a Rigidbody's rotation so that it will look towards the given position.
-        /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="towards">The position to look at</param><param name="duration">The duration of the tween</param>
-        /// <param name="axisConstraint">Eventual axis constraint for the rotation</param>
-        /// <param name="up">The vector that defines in which direction up is (default: Vector3.up)</param>
-        public static Tweener DOLookAt(this Rigidbody target, Vector3 towards, float duration, AxisConstraint axisConstraint = AxisConstraint.None, Vector3? up = null)
-        {
-            TweenerCore<Quaternion, Vector3, QuaternionOptions> t = DOTween.To(() => target.rotation, target.MoveRotation, towards, duration)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetLookAt);
-            t.plugOptions.axisConstraint = axisConstraint;
-            t.plugOptions.up = (up == null) ? Vector3.up : (Vector3)up;
-            return t;
-        }
-
-        #endregion
-
-        #region Camera Shortcuts
-
-        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
-        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="duration">The duration of the tween</param>
-        /// <param name="strength">The shake strength</param>
-        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
-        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
-        /// Setting it to 0 will shake along a single direction.</param>
-        public static Tweener DOShakePosition(this Camera target, float duration, float strength = 3, int vibrato = 10, float randomness = 90)
-        {
-            return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
-        }
-        /// <summary>Shakes a Camera's localPosition along its relative X Y axes with the given values.
-        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="duration">The duration of the tween</param>
-        /// <param name="strength">The shake strength on each axis</param>
-        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
-        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
-        /// Setting it to 0 will shake along a single direction.</param>
-        public static Tweener DOShakePosition(this Camera target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
-        {
-            return DOTween.Shake(() => target.transform.localPosition, x => target.transform.localPosition = x, duration, strength, vibrato, randomness)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetCameraShakePosition);
-        }
-
-        /// <summary>Shakes a Camera's localRotation.
-        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="duration">The duration of the tween</param>
-        /// <param name="strength">The shake strength</param>
-        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
-        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
-        /// Setting it to 0 will shake along a single direction.</param>
-        public static Tweener DOShakeRotation(this Camera target, float duration, float strength = 90, int vibrato = 10, float randomness = 90)
-        {
-            return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness, false)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
-        }
-        /// <summary>Shakes a Camera's localRotation.
-        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="duration">The duration of the tween</param>
-        /// <param name="strength">The shake strength on each axis</param>
-        /// <param name="vibrato">Indicates how much will the shake vibrate</param>
-        /// <param name="randomness">Indicates how much the shake will be random (0 to 180 - values higher than 90 kind of suck, so beware). 
-        /// Setting it to 0 will shake along a single direction.</param>
-        public static Tweener DOShakeRotation(this Camera target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90)
-        {
-            return DOTween.Shake(() => target.transform.localEulerAngles, x => target.transform.localRotation = Quaternion.Euler(x), duration, strength, vibrato, randomness)
-                .SetTarget(target).SetSpecialStartupMode(SpecialStartupMode.SetShake);
-        }
-
-        /// <summary>Tweens a Camera's backgroundColor to the given value.
-        /// Also stores the camera as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColor(this Camera target, Color endValue, float duration)
-        {
-            return DOTween.To(() => target.backgroundColor, x => target.backgroundColor = x, endValue, duration).SetTarget(target);
-        }
-
-        #endregion
-
-        #region Material Shortcuts
-
-        /// <summary>Tweens a Material's color to the given value.
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColor(this Material target, Color endValue, float duration)
-        {
-            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
-        }
-        /// <summary>Tweens a Material's named color property to the given value.
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param>
-        /// <param name="property">The name of the material property to tween (like _Tint or _SpecColor)</param>
-        /// <param name="duration">The duration of the tween</param>
-        public static Tweener DOColor(this Material target, Color endValue, string property, float duration)
-        {
-            return DOTween.To(() => target.GetColor(property), x => target.SetColor(property, x), endValue, duration).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Material's alpha color to the given value
-        /// (will have no effect unless your material supports transparency).
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOFade(this Material target, float endValue, float duration)
-        {
-            return DOTween.ToAlpha(() => target.color, x => target.color = x, endValue, duration)
-                .SetTarget(target);
-        }
-
-        /// <summary>Tweens a Material's named float property to the given value.
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param>
-        /// <param name="property">The name of the material property to tween</param>
-        /// <param name="duration">The duration of the tween</param>
-        public static Tweener DOFloat(this Material target, float endValue, string property, float duration)
-        {
-            return DOTween.To(() => target.GetFloat(property), x => target.SetFloat(property, x), endValue, duration).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Material's named Vector property to the given value.
-        /// Also stores the material as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param>
-        /// <param name="property">The name of the material property to tween</param>
-        /// <param name="duration">The duration of the tween</param>
-        public static Tweener DOVector(this Material target, Vector4 endValue, string property, float duration)
-        {
-            return DOTween.To(() => target.GetVector(property), x => target.SetVector(property, x), endValue, duration).SetTarget(target);
-        }
-
-        #endregion
-
-        #region Light Shortcuts
-
-        /// <summary>Tweens a Light's color to the given value.
-        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOColor(this Light target, Color endValue, float duration)
-        {
-            return DOTween.To(() => target.color, x => target.color = x, endValue, duration).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Light's intensity to the given value.
-        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOIntensity(this Light target, float endValue, float duration)
-        {
-            return DOTween.To(() => target.intensity, x => target.intensity = x, endValue, duration).SetTarget(target);
-        }
-
-        /// <summary>Tweens a Light's shadowStrength to the given value.
-        /// Also stores the light as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOShadowStrength(this Light target, float endValue, float duration)
-        {
-            return DOTween.To(() => target.shadowStrength, x => target.shadowStrength = x, endValue, duration).SetTarget(target);
-        }
-
-        #endregion
-
-        #region Audio Shortcuts
-
-        /// <summary>Tweens an AudioSource's volume to the given value.
-        /// Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach (0 to 1)</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOFade(this AudioSource target, float endValue, float duration)
-        {
-            if (endValue < 0) endValue = 0;
-            else if (endValue > 1) endValue = 1;
-            return DOTween.To(() => target.volume, x => target.volume = x, endValue, duration).SetTarget(target);
-        }
-
-        /// <summary>Tweens an AudioSource's pitch to the given value.
-        /// Also stores the AudioSource as the tween's target so it can be used for filtered operations</summary>
-        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
-        public static Tweener DOPitch(this AudioSource target, float endValue, float duration)
-        {
-            return DOTween.To(() => target.pitch, x => target.pitch = x, endValue, duration).SetTarget(target);
         }
 
         #endregion

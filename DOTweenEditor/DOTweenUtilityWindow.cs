@@ -14,9 +14,16 @@ namespace DG.DOTweenEditor
         {
             string[] dotweenEntries = System.Array.FindAll(importedAssets, name => name.Contains("DOTween") && !name.EndsWith(".meta") && !name.EndsWith(".jpg") && !name.EndsWith(".png"));
             bool dotweenImported = dotweenEntries.Length > 0;
-            if (dotweenImported && EditorUtils.DOTweenSetupRequired()) {
-                EditorUtility.DisplayDialog("DOTween", "DOTween needs to be setup, so that additional elements may be imported based on your Unity version.\nSelect \"Setup DOTween...\" in the Utility Panel that will open after you press OK.", "Ok");
-                DOTweenUtilityWindow.Open();
+            if (dotweenImported) {
+                bool openSetupDialog = EditorUtils.DOTweenSetupRequired()
+                    && (EditorPrefs.GetString(Application.dataPath + DOTweenUtilityWindow.Id) != Application.dataPath + DOTween.Version
+                    || EditorPrefs.GetString(Application.dataPath + DOTweenUtilityWindow.IdPro) != Application.dataPath + EditorUtils.proVersion);
+                if (openSetupDialog) {
+                    EditorPrefs.SetString(Application.dataPath + DOTweenUtilityWindow.Id, Application.dataPath + DOTween.Version);
+                    EditorPrefs.SetString(Application.dataPath + DOTweenUtilityWindow.IdPro, Application.dataPath + EditorUtils.proVersion);
+                    EditorUtility.DisplayDialog("DOTween", "DOTween needs to be setup.\n\nSelect \"Setup DOTween...\" in the next panel.", "Ok");
+                    DOTweenUtilityWindow.Open();
+                }
             }
         }
     }
@@ -26,7 +33,7 @@ namespace DG.DOTweenEditor
         [MenuItem("Tools/" + _Title)]
         static void ShowWindow() { Open(); }
 		
-        const string _Title = "DOTween Utility";
+        const string _Title = "DOTween Utility Panel";
         static readonly Vector2 _WinSize = new Vector2(300,310);
         public const string Id = "DOTweenVersion";
         public const string IdPro = "DOTweenProVersion";

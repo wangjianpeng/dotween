@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "0.9.475";
+        public static readonly string Version = "0.9.485";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -526,6 +526,13 @@ namespace DG.Tweening
 
         #endregion
 
+        #region Special TOs (INTERNAL)
+
+        internal static TweenerCore<Color2, Color2, ColorOptions> To(DOGetter<Color2> getter, DOSetter<Color2> setter, Color2 endValue, float duration)
+        { return ApplyTo<Color2, Color2, ColorOptions>(getter, setter, endValue, duration); }
+
+        #endregion
+
         #region Tween SEQUENCE
 
         /// <summary>
@@ -727,9 +734,9 @@ namespace DG.Tweening
         /// Returns the total number of active and playing tweens.
         /// A tween is considered as playing even if its delay is actually playing
         /// </summary>
-        public static int TotPlayingTweens()
+        public static int TotalPlayingTweens()
         {
-            return TweenManager.TotPlayingTweens();
+            return TweenManager.TotalPlayingTweens();
         }
 
         /// <summary>

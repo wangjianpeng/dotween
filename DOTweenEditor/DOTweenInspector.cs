@@ -45,7 +45,7 @@ namespace DG.DOTweenEditor
             SetGUIStyles();
 
             int totActiveTweens = TweenManager.totActiveTweens;
-            int totPlayingTweens = TweenManager.TotPlayingTweens();
+            int totPlayingTweens = TweenManager.TotalPlayingTweens();
             int totPausedTweens = totActiveTweens - totPlayingTweens;
             int totActiveDefaultTweens = TweenManager.totActiveDefaultTweens;
             int totActiveLateTweens = TweenManager.totActiveLateTweens;
@@ -68,7 +68,7 @@ namespace DG.DOTweenEditor
                     .Append("/").Append(totActiveLateTweens)
                 .Append("\nPlaying tweens: ").Append(totPlayingTweens)
                 .Append("\nPaused tweens: ").Append(totPausedTweens)
-                .Append("\nPooled tweens: ").Append(TweenManager.TotPooledTweens())
+                .Append("\nPooled tweens: ").Append(TweenManager.TotalPooledTweens())
                     .Append(" (").Append(TweenManager.totPooledTweeners)
                     .Append("/").Append(TweenManager.totPooledSequences).Append(")");
             GUILayout.Label(_strBuilder.ToString());
