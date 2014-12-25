@@ -600,12 +600,12 @@ namespace DG.Tweening.Core
 
         #region Info Getters
 
-        internal static int TotPooledTweens()
+        internal static int TotalPooledTweens()
         {
             return totPooledTweeners + totPooledSequences;
         }
 
-        internal static int TotPlayingTweens()
+        internal static int TotalPlayingTweens()
         {
             if (!hasActiveTweens) return 0;
 

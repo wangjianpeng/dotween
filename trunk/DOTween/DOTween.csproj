@@ -45,6 +45,7 @@
     <Compile Include="AutoPlay.cs" />
     <Compile Include="AxisConstraint.cs" />
     <Compile Include="Core\ABSSequentiable.cs" />
+    <Compile Include="Color2.cs" />
     <Compile Include="Core\Delegates.cs" />
     <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\DOTweenComponent.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="IDOTweenInit.cs" />
     <Compile Include="PathMode.cs" />
     <Compile Include="PathType.cs" />
+    <Compile Include="Plugins\Color2Plugin.cs" />
     <Compile Include="Plugins\Core\PathCore\ControlPoint.cs" />
     <Compile Include="Plugins\Options\PathOptions.cs" />
     <Compile Include="Plugins\Options\QuaternionOptions.cs" />
