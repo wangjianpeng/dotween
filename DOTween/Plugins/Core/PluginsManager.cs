@@ -122,6 +122,8 @@ namespace DG.Tweening.Plugins.Core
             _rectPlugin = null;
             _rectOffsetPlugin = null;
             _stringPlugin = null;
+            _vector3ArrayPlugin = null;
+            _color2Plugin = null;
 
             if (_customPlugins != null) _customPlugins.Clear();
         }
