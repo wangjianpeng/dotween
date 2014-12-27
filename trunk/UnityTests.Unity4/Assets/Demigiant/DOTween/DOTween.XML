@@ -477,6 +477,11 @@
             Public only so custom shortcuts can access some of these methods
             </summary>
         </member>
+        <member name="T:DG.Tweening.Color2">
+            <summary>
+            Struct that stores two colors (used for LineRenderer tweens)
+            </summary>
+        </member>
         <member name="T:DG.Tweening.TweenSettingsExtensions">
             <summary>
             Methods that extend Tween objects and allow to set their parameters
@@ -1762,11 +1767,6 @@
         <member name="T:DG.Tweening.AxisConstraint">
             <summary>
             What axis to constrain in case of Vector tweens
-            </summary>
-        </member>
-        <member name="T:DG.Tweening.Color2">
-            <summary>
-            Struct that stores two colors (used for LineRenderer tweens)
             </summary>
         </member>
     </members>
