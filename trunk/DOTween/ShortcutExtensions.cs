@@ -140,7 +140,7 @@ namespace DG.Tweening
         /// <summary>Tweens a LineRenderer's color to the given value.
         /// Also stores the LineRenderer as the tween's target so it can be used for filtered operations.
         /// <para>Note that this method requires to also insert the start colors for the tween, 
-        /// since LineRenderers have no way to get it.</para></summary>
+        /// since LineRenderers have no way to get them.</para></summary>
         /// <param name="startValue">The start value to tween from</param>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         public static Tweener DOColor(this LineRenderer target, Color2 startValue, Color2 endValue, float duration)
