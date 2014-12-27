@@ -644,8 +644,9 @@ namespace DG.Tweening
         /// <param name="complete">If TRUE completes the tween before killing it</param>
         public static int DOKill(this Component target, bool complete = false)
         {
-            int tot = complete ? DOTween.CompleteAndReturnKilledTot(target) : 0;
-            return tot + DOTween.Kill(target);
+//            int tot = complete ? DOTween.CompleteAndReturnKilledTot(target) : 0;
+//            return tot + DOTween.Kill(target);
+            return DOTween.Kill(target, complete);
         }
 
         /// <summary>
