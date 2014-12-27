@@ -136,6 +136,20 @@ namespace DG.Tweening
 
         #endregion
 
+        #region Slider
+
+        /// <summary>Tweens a Slider's value to the given value.
+        /// Also stores the Slider as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOValue(this Slider target, float endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => target.value, x => target.value = x, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        #endregion
+
         #region Text
 
         /// <summary>Tweens a Text's color to the given value.
