@@ -108,7 +108,7 @@ namespace DG.Tweening
         /// Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOAnchor(this RectTransform target, Vector2 endValue, float duration, bool snapping = false)
+        public static Tweener DOAnchorPos(this RectTransform target, Vector2 endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.anchoredPosition, x => target.anchoredPosition = x, endValue, duration)
                 .SetOptions(snapping).SetTarget(target);
@@ -118,7 +118,7 @@ namespace DG.Tweening
         /// Also stores the RectTransform as the tween's target so it can be used for filtered operations</summary>
         /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
-        public static Tweener DOAnchor3D(this RectTransform target, Vector3 endValue, float duration, bool snapping = false)
+        public static Tweener DOAnchorPos3D(this RectTransform target, Vector3 endValue, float duration, bool snapping = false)
         {
             return DOTween.To(() => target.anchoredPosition3D, x => target.anchoredPosition3D = x, endValue, duration)
                 .SetOptions(snapping).SetTarget(target);
