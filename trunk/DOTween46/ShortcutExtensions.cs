@@ -72,6 +72,49 @@ namespace DG.Tweening
 
         #endregion
 
+        #region LayoutElement
+
+        /// <summary>Tweens an LayoutElement's flexibleWidth/Height to the given value.
+        /// Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOFlexibleSize(this LayoutElement target, Vector2 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => new Vector2(target.flexibleWidth, target.flexibleHeight), x => {
+                    target.flexibleWidth = x.x;
+                    target.flexibleHeight = x.y;
+                }, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens an LayoutElement's minWidth/Height to the given value.
+        /// Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOMinSize(this LayoutElement target, Vector2 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => new Vector2(target.minWidth, target.minHeight), x => {
+                target.minWidth = x.x;
+                target.minHeight = x.y;
+            }, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        /// <summary>Tweens an LayoutElement's preferredWidth/Height to the given value.
+        /// Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+        /// <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        public static Tweener DOPreferredSize(this LayoutElement target, Vector2 endValue, float duration, bool snapping = false)
+        {
+            return DOTween.To(() => new Vector2(target.preferredWidth, target.preferredHeight), x => {
+                target.preferredWidth = x.x;
+                target.preferredHeight = x.y;
+            }, endValue, duration)
+                .SetOptions(snapping).SetTarget(target);
+        }
+
+        #endregion
+
         #region Outline
 
         /// <summary>Tweens a Outline's effectColor to the given value.
