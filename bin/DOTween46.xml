@@ -35,6 +35,24 @@
             Also stores the image as the tween's target so it can be used for filtered operations</summary>
             <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOFlexibleSize(UnityEngine.UI.LayoutElement,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens an LayoutElement's flexibleWidth/Height to the given value.
+            Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOMinSize(UnityEngine.UI.LayoutElement,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens an LayoutElement's minWidth/Height to the given value.
+            Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOPreferredSize(UnityEngine.UI.LayoutElement,UnityEngine.Vector2,System.Single,System.Boolean)">
+            <summary>Tweens an LayoutElement's preferredWidth/Height to the given value.
+            Also stores the LayoutElement as the tween's target so it can be used for filtered operations</summary>
+            <param name="endValue">The end value to reach</param><param name="duration">The duration of the tween</param>
+            <param name="snapping">If TRUE the tween will smoothly snap all values to integers</param>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOColor(UnityEngine.UI.Outline,UnityEngine.Color,System.Single)">
             <summary>Tweens a Outline's effectColor to the given value.
             Also stores the Outline as the tween's target so it can be used for filtered operations</summary>
