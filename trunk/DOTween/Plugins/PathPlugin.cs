@@ -153,7 +153,7 @@ namespace DG.Tweening.Plugins
             return changeValue.length / unitsXSecond;
         }
 
-        public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration)
+        public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration, bool usingInversePosition)
         {
             float pathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             float constantPathPerc = changeValue.ConvertToConstantPathPerc(pathPerc);
@@ -232,6 +232,15 @@ namespace DG.Tweening.Plugins
 
                 if (options.hasCustomForwardDirection) newRot *= options.forward;
                 trans.rotation = newRot;
+            }
+
+            // Determine if current waypoint changed and eventually dispatch callback
+            bool isForward = !usingInversePosition;
+            if (t.isBackwards) isForward = !isForward;
+            int newWaypointIndex = changeValue.GetWaypointIndexFromPerc(pathPerc, isForward);
+            if (newWaypointIndex != t.miscInt) {
+                t.miscInt = newWaypointIndex;
+                if (t.onWaypointChange != null) t.onWaypointChange(newWaypointIndex);
             }
         }
     }

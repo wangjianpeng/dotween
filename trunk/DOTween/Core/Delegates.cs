@@ -20,6 +20,10 @@ namespace DG.Tweening.Core
     /// Used for tween callbacks
     /// </summary>
     public delegate void TweenCallback();
+    /// <summary>
+    /// Used for tween callbacks
+    /// </summary>
+    public delegate void TweenCallback<in T>(T value);
 
     /// <summary>
     /// Used for custom and animationCurve-based ease functions

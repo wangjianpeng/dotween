@@ -593,6 +593,10 @@
             <summary>Sets the onKill callback for the tween.
             Called the moment the tween is killed</summary>
         </member>
+        <member name="M:DG.Tweening.TweenSettingsExtensions.OnWaypointChange``1(``0,DG.Tweening.Core.TweenCallback{System.Int32})">
+            <summary>Sets the onWaypointChange callback for the tween.
+            Called when a path tween's current waypoint changes</summary>
+        </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetAs``1(``0,DG.Tweening.Tween)">
             <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
             Doesn't copy specific SetOptions settings: those will need to be applied manually each time.
@@ -843,6 +847,9 @@
         </member>
         <member name="F:DG.Tweening.Tween.onKill">
             <summary>Called the moment the tween is killed</summary>
+        </member>
+        <member name="F:DG.Tweening.Tween.onWaypointChange">
+            <summary>Called when a path tween's current waypoint changes</summary>
         </member>
         <member name="M:DG.Tweening.Tweener.ChangeStartValue(System.Object,System.Single)">
             <summary>Changes the start value of a tween and rewinds it (without pausing it).
@@ -1124,6 +1131,10 @@
             <summary>Sets the onKill callback for the tween.
             Called the moment the tween is killed</summary>
         </member>
+        <member name="M:DG.Tweening.TweenParams.OnWaypointChange(DG.Tweening.Core.TweenCallback{System.Int32})">
+            <summary>Sets the onWaypointChange callback for the tween.
+            Called when a path tween reaches a new waypoint</summary>
+        </member>
         <member name="M:DG.Tweening.TweenParams.SetDelay(System.Single)">
             <summary>Sets a delayed startup for the tween.
             <para>Has no effect on Sequences or if the tween has already started</para></summary>
@@ -1159,6 +1170,11 @@
             </summary>
         </member>
         <member name="T:DG.Tweening.Core.TweenCallback">
+            <summary>
+            Used for tween callbacks
+            </summary>
+        </member>
+        <member name="T:DG.Tweening.Core.TweenCallback`1">
             <summary>
             Used for tween callbacks
             </summary>

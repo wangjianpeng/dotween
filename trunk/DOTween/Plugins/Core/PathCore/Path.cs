@@ -87,7 +87,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal Vector3 GetPoint(float perc, bool convertToConstantPerc = false)
         {
             if (convertToConstantPerc) perc = ConvertToConstantPathPerc(perc);
-            return _decoder.GetPoint(perc, wps, this);
+            return _decoder.GetPoint(perc, wps, this, controlPoints);
         }
 
         // Converts the given raw percentage to the correct percentage considering constant speed
@@ -118,6 +118,22 @@ namespace DG.Tweening.Plugins.Core.PathCore
             else if (perc < 0) perc = 0;
 
             return perc;
+        }
+
+        // Returns the waypoint associated with the given path percentage
+        internal int GetWaypointIndexFromPerc(float perc, bool isMovingForward)
+        {
+            if (perc >= 1) return wps.Length - 1;
+            if (perc <= 0) return 0;
+            float totPercLen = length * perc;
+            float currLen = 0;
+            for (int i = 0, count = wpLengths.Length; i < count; i++) {
+                currLen += wpLengths[i];
+                if (currLen < totPercLen) continue;
+                if (currLen > totPercLen) return isMovingForward ? i - 1 : i;
+                return i;
+            }
+            return 0;
         }
 
         // Refreshes the waypoints used to draw non-linear gizmos and the PathInspector scene view.

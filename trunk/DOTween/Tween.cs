@@ -49,6 +49,8 @@ namespace DG.Tweening
         internal TweenCallback onComplete;
         /// <summary>Called the moment the tween is killed</summary>
         internal TweenCallback onKill;
+        /// <summary>Called when a path tween's current waypoint changes</summary>
+        internal TweenCallback<int> onWaypointChange;
         
         // Fixed after creation
         internal bool isFrom; // Used to prevent settings like isRelative from being applied on From tweens
@@ -91,6 +93,8 @@ namespace DG.Tweening
         internal bool isComplete;
         internal float elapsedDelay; // Amount of eventual delay elapsed (shared by Sequences only for compatibility reasons, otherwise not used)
         internal bool delayComplete = true; // TRUE when the delay has elapsed or isn't set, also set by Delay extension method (shared by Sequences only for compatibility reasons, otherwise not used)
+        
+        internal int miscInt; // Used by some plugins to store data (currently only by Paths to store current waypoint index)
 
         #region Abstracts + Overrideables
 
@@ -104,6 +108,7 @@ namespace DG.Tweening
             updateType = UpdateType.Default;
             isIndependentUpdate = false;
             onStart = onPlay = onRewind = onUpdate = onComplete = onStepComplete = onKill = null;
+            onWaypointChange = null;
 
             target = null;
             isFrom = false;
@@ -121,6 +126,8 @@ namespace DG.Tweening
             isPlaying = isComplete = false;
             elapsedDelay = 0;
             delayComplete = true;
+
+            miscInt = 0;
 
             // The following are set during a tween's Setup
 //            isRecyclable = DOTween.defaultRecyclable;

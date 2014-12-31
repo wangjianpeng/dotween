@@ -31,6 +31,7 @@ namespace DG.Tweening
         internal TweenCallback onStepComplete;
         internal TweenCallback onComplete;
         internal TweenCallback onKill;
+        internal TweenCallback<int> onWaypointChange;
 
         internal bool isRecyclable;
         internal bool isSpeedBased;
@@ -65,6 +66,7 @@ namespace DG.Tweening
             updateType = UpdateType.Default;
             isIndependentUpdate = false;
             onStart = onPlay = onRewind = onUpdate = onStepComplete = onComplete = onKill = null;
+            onWaypointChange = null;
             isRecyclable = DOTween.defaultRecyclable;
             isSpeedBased = false;
             autoKill = DOTween.defaultAutoKill;
@@ -236,6 +238,14 @@ namespace DG.Tweening
         public TweenParams OnKill(TweenCallback action)
         {
             this.onKill = action;
+            return this;
+        }
+
+        /// <summary>Sets the onWaypointChange callback for the tween.
+        /// Called when a path tween reaches a new waypoint</summary>
+        public TweenParams OnWaypointChange(TweenCallback<int> action)
+        {
+            this.onWaypointChange = action;
             return this;
         }
 
