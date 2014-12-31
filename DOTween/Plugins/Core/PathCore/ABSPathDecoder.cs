@@ -14,7 +14,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal abstract void FinalizePath(Path p, Vector3[] wps, bool isClosedPath);
 
         // Gets a point on the path at the given percentage (0 to 1)
-        internal abstract Vector3 GetPoint(float perc, Vector3[] wps, Path p);
+        internal abstract Vector3 GetPoint(float perc, Vector3[] wps, Path p, ControlPoint[] controlPoints);
 
 //        // If path is linear subdivisions is ignored
 //        // and waypointsLength are stored here instead than when calling SetWaypointsLengths

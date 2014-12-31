@@ -65,7 +65,7 @@ namespace DG.Tweening.Plugins
             return totDuration;
         }
 
-        public override void EvaluateAndApply(Vector3ArrayOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Vector3[] startValue, Vector3[] changeValue, float duration)
+        public override void EvaluateAndApply(Vector3ArrayOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Vector3[] startValue, Vector3[] changeValue, float duration, bool usingInversePosition)
         {
             Vector3 incrementValue = Vector3.zero;
             if (t.loopType == LoopType.Incremental) {

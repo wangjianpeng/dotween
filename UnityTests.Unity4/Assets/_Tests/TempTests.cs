@@ -5,41 +5,15 @@ using System.Collections.Generic;
 
 public class TempTests : BrainBase
 {
-	public List<GameObject> Objects;
+	public Transform[] targets;
 
-	// void Start()
- //    {
- //    	// yield return new WaitForSeconds(2f);
-
- //    	Sequence s = DOTween.Sequence();
- //    	for (int i = 0; i < Objects.Count; ++i) {
- //    		GameObject obj = Objects[i];
- //    		Transform t = obj.transform;
- //    		s.Append(t.DOMoveX(2f, 1).OnComplete(()=> Debug.Log("Completed > " + obj)));
- //    	}
- //    }
+	Sequence seq;
 
     IEnumerator Start()
     {
-    	yield return new WaitForSeconds(2f);
-        StartTestDoTween();
-    }
- 
-    private void StartTestDoTween()
-    {
-        Debug.LogWarning("StartTestDoTween");
- 
-        var tweenSequence = DOTween.Sequence();
-        for (int i = 0, imax = Objects.Count; i < imax; ++i)
-        {
-            var obj = Objects[i];
-            Debug.LogWarning("Object " + obj);
- 
-            var objTransform = obj.transform;
-            var tween = objTransform.DOLocalMoveY(-0.1f, 0.5f);
-            tween.OnComplete(() => Debug.LogWarning("Delegate for " + obj)); // every time last object
- 
-            tweenSequence.Append(tween);
-        }
+    	seq = DOTween.Sequence().OnComplete(()=> Debug.Log("Sequence Complete")).Pause();
+
+    	yield return new WaitForSeconds(0.5f);
+        seq.Append(targets[0].DOMoveX(1, 1).OnComplete(()=> Debug.Log("Tween Complete"))).Play();
     }
 }

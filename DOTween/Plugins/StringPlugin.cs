@@ -57,7 +57,7 @@ namespace DG.Tweening.Plugins
         }
 
         // ChangeValue is the same as endValue in this plugin
-        public override void EvaluateAndApply(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, DOSetter<string> setter, float elapsed, string startValue, string changeValue, float duration)
+        public override void EvaluateAndApply(StringOptions options, Tween t, bool isRelative, DOGetter<string> getter, DOSetter<string> setter, float elapsed, string startValue, string changeValue, float duration, bool usingInversePosition)
         {
             _Buffer.Remove(0, _Buffer.Length);
 

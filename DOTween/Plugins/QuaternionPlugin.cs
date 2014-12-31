@@ -78,7 +78,7 @@ namespace DG.Tweening.Plugins
             return changeValue.magnitude / unitsXSecond;
         }
 
-        public override void EvaluateAndApply(QuaternionOptions options, Tween t, bool isRelative, DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration)
+        public override void EvaluateAndApply(QuaternionOptions options, Tween t, bool isRelative, DOGetter<Quaternion> getter, DOSetter<Quaternion> setter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, bool usingInversePosition)
         {
             Vector3 endValue = startValue;
 

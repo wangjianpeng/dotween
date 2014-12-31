@@ -18,7 +18,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             SetTimeToLengthTables(p, p.subdivisions);
         }
 
-        internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p)
+        internal override Vector3 GetPoint(float perc, Vector3[] wps, Path p, ControlPoint[] controlPoints)
         {
             if (perc <= 0) {
                 p.linearWPIndex = 1;

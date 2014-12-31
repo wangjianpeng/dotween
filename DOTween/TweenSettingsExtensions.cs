@@ -280,6 +280,16 @@ namespace DG.Tweening
             return t;
         }
 
+        /// <summary>Sets the onWaypointChange callback for the tween.
+        /// Called when a path tween's current waypoint changes</summary>
+        public static T OnWaypointChange<T>(this T t, TweenCallback<int> action) where T : Tween
+        {
+            if (!t.active) return t;
+
+            t.onWaypointChange = action;
+            return t;
+        }
+
         /// <summary>Sets the parameters of the tween (id, ease, loops, delay, timeScale, callbacks, etc) as the parameters of the given one.
         /// Doesn't copy specific SetOptions settings: those will need to be applied manually each time.
         /// <para>Has no effect if the tween has already started.</para>
@@ -303,6 +313,7 @@ namespace DG.Tweening
             t.onStepComplete = asTween.onStepComplete;
             t.onComplete = asTween.onComplete;
             t.onKill = asTween.onKill;
+            t.onWaypointChange = asTween.onWaypointChange;
 
             t.isRecyclable = asTween.isRecyclable;
             t.isSpeedBased = asTween.isSpeedBased;
@@ -341,6 +352,7 @@ namespace DG.Tweening
             t.onStepComplete = tweenParams.onStepComplete;
             t.onComplete = tweenParams.onComplete;
             t.onKill = tweenParams.onKill;
+            t.onWaypointChange = tweenParams.onWaypointChange;
 
             t.isRecyclable = tweenParams.isRecyclable;
             t.isSpeedBased = tweenParams.isSpeedBased;
