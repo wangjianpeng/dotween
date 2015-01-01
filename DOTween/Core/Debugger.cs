@@ -46,6 +46,11 @@ namespace DG.Tweening.Core
             LogWarning("Null Tween");
         }
 
+        internal static void LogNonPathTween(Tween t)
+        {
+            LogWarning("This Tween is not a path tween");
+        }
+
         internal static void SetLogPriority(LogBehaviour logBehaviour)
         {
             switch (logBehaviour) {

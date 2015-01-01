@@ -909,6 +909,16 @@
             (if higher than the whole tween duration the tween will simply reach its end)</param>
             <param name="andPlay">If TRUE will play the tween after reaching the given position, otherwise it will pause it</param>
         </member>
+        <member name="M:DG.Tweening.TweenExtensions.GotoWaypoint(DG.Tweening.Tween,System.Int32,System.Boolean)">
+            <summary>Send a path tween to the given waypoint.
+            Has no effect if this is not a path tween.
+            <para>BEWARE, this is a special utility method:
+            the lookAt direction might be wrong after calling this and might need to be set manually
+            (because it relies on a smooth path movement and doesn't work well with jumps that encompass dramatic direction changes)</para></summary>
+            <param name="waypointIndex">Waypoint index to reach
+            (if higher than the max waypoint index the tween will simply go to the last one)</param>
+            <param name="andPlay">If TRUE will play the tween after reaching the given waypoint, otherwise it will pause it</param>
+        </member>
         <member name="M:DG.Tweening.TweenExtensions.Kill(DG.Tweening.Tween,System.Boolean)">
             <summary>Kills the tween</summary>
             <param name="complete">If TRUE completes the tween before killing it</param>

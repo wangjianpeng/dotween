@@ -5,6 +5,8 @@ using UnityEngine;
 public class PathWaypointReached : BrainBase
 {
 	public Vector3[] waypoints;
+	public float duration = 5;
+	public bool relative = true;
 	public bool closedPath;
 	public PathType pathType;
 	public LoopType loopType;
@@ -17,14 +19,14 @@ public class PathWaypointReached : BrainBase
 	{
 		pathTweens = new Tween[targets.Length];
 
-		pathTweens[0] = targets[0].DOPath(waypoints, 5, pathType)
-			.SetOptions(closedPath)
-			.SetRelative()
+		pathTweens[0] = targets[0].DOPath(waypoints, duration, pathType).SetOptions(closedPath);
+		pathTweens[0].SetRelative(relative)
 			.SetEase(Ease.Linear)
 			.SetLoops(loops, loopType)
 			.SetAutoKill(false)
+			.OnComplete(()=> Debug.Log(targets[0].name + " > complete"))
 			.OnWaypointChange(x=> {
-				Debug.Log(targets[0].name + " > waypoint reached: " + x);
+				Debug.Log(targets[0].name + " > waypoint reached: " + x + " > " + targets[0].position + " - completed loops: " + pathTweens[0].CompletedLoops());
 				pathTweens[0].Pause();
 			});
 	}
@@ -37,6 +39,13 @@ public class PathWaypointReached : BrainBase
 		GUILayout.BeginHorizontal();
 		if (GUILayout.Button("Play")) DOTween.Play();
 		if (GUILayout.Button("Flip")) DOTween.Flip();
+		GUILayout.EndHorizontal();
+		GUILayout.BeginHorizontal();
+		if (GUILayout.Button("Goto duration x 2")) DOTween.Goto(duration * 2);
+		if (GUILayout.Button("Goto duration x 0.5")) DOTween.Goto(duration * 0.5f);
+		if (GUILayout.Button("Goto WP 0")) pathTweens[0].GotoWaypoint(0);
+		if (GUILayout.Button("Goto WP 2")) pathTweens[0].GotoWaypoint(2);
+		if (GUILayout.Button("Goto WP 15")) pathTweens[0].GotoWaypoint(15);
 		GUILayout.EndHorizontal();
 
 		DGUtils.EndGUI();
