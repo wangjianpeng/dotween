@@ -25,7 +25,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value) - also modified by DOTweenPathInspector
         internal ControlPoint[] controlPoints; // Control points used by non-linear paths
         internal float length; // Unit length of the path
-        internal float[] wpLengths; // Unit length of each waypoint (CURRENTLY UNUSED)
+        internal float[] wpLengths; // Unit length of each waypoint
 
         internal float[] timesTable; // Connected to lengthsTable, used for constant speed calculations
         internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
