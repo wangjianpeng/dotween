@@ -57,23 +57,24 @@ namespace DG.Tweening.Plugins
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
             }
 
+            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             if (!options.alphaOnly) {
-                startValue.ca.r = EaseManager.Evaluate(t, elapsed, startValue.ca.r, changeValue.ca.r, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.ca.g = EaseManager.Evaluate(t, elapsed, startValue.ca.g, changeValue.ca.g, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.ca.b = EaseManager.Evaluate(t, elapsed, startValue.ca.b, changeValue.ca.b, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.ca.a = EaseManager.Evaluate(t, elapsed, startValue.ca.a, changeValue.ca.a, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.cb.r = EaseManager.Evaluate(t, elapsed, startValue.cb.r, changeValue.cb.r, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.cb.g = EaseManager.Evaluate(t, elapsed, startValue.cb.g, changeValue.cb.g, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.cb.b = EaseManager.Evaluate(t, elapsed, startValue.cb.b, changeValue.cb.b, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.cb.a = EaseManager.Evaluate(t, elapsed, startValue.cb.a, changeValue.cb.a, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.ca.r += changeValue.ca.r * easeVal;
+                startValue.ca.g += changeValue.ca.g * easeVal;
+                startValue.ca.b += changeValue.ca.b * easeVal;
+                startValue.ca.a += changeValue.ca.a * easeVal;
+                startValue.cb.r += changeValue.cb.r * easeVal;
+                startValue.cb.g += changeValue.cb.g * easeVal;
+                startValue.cb.b += changeValue.cb.b * easeVal;
+                startValue.cb.a += changeValue.cb.a * easeVal;
                 setter(startValue);
                 return;
             }
 
             // Alpha only
             Color2 res = getter();
-            res.ca.a = EaseManager.Evaluate(t, elapsed, startValue.ca.a, changeValue.ca.a, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            res.cb.a = EaseManager.Evaluate(t, elapsed, startValue.cb.a, changeValue.cb.a, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            res.ca.a = startValue.ca.a + changeValue.ca.a * easeVal;
+            res.cb.a = startValue.cb.a + changeValue.cb.a * easeVal;
             setter(res);
         }
     }

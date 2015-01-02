@@ -89,10 +89,11 @@ namespace DG.Tweening.Plugins
                 startValue.height += changeValue.height * iterations;
             }
 
-            startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.width = EaseManager.Evaluate(t, elapsed, startValue.width, changeValue.width, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-            startValue.height = EaseManager.Evaluate(t, elapsed, startValue.height, changeValue.height, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            startValue.x += changeValue.x * easeVal;
+            startValue.y += changeValue.y * easeVal;
+            startValue.width += changeValue.width * easeVal;
+            startValue.height += changeValue.height * easeVal;
             if (options.snapping) {
                 startValue.x = (float)Math.Round(startValue.x);
                 startValue.y = (float)Math.Round(startValue.y);

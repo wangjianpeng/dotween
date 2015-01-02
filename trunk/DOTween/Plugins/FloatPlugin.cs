@@ -57,8 +57,8 @@ namespace DG.Tweening.Plugins
 
             setter(
                 !options.snapping
-                ? EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod)
-                : (float)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod))
+                ? startValue + changeValue * EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod)
+                : (float)Math.Round(startValue + changeValue * EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod))
             );
         }
     }

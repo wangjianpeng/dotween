@@ -538,7 +538,7 @@
             <para>If applied to Sequences eases the whole sequence animation</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetEase``1(``0,DG.Tweening.Core.EaseFunction)">
-            <summary>Sets the ease of the tween using a custom ease function.
+            <summary>Sets the ease of the tween using a custom ease function (which must return a value between 0 and 1).
             <para>If applied to Sequences eases the whole sequence animation</para></summary>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetRecyclable``1(``0)">
@@ -1191,7 +1191,7 @@
         </member>
         <member name="T:DG.Tweening.Core.EaseFunction">
             <summary>
-            Used for custom and animationCurve-based ease functions
+            Used for custom and animationCurve-based ease functions. Must return a value between 0 and 1.
             </summary>
         </member>
         <member name="T:DG.Tweening.Core.Easing.Bounce">
@@ -1199,19 +1199,13 @@
             This class contains a C# port of the easing equations created by Robert Penner (http://robertpenner.com/easing).
             </summary>
         </member>
-        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseIn(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseIn(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in: accelerating from zero velocity.
             </summary>
             <param name="time">
             Current time (in frames or seconds).
             </param>
-            <param name="startValue">
-            Starting value.
-            </param>
-            <param name="changeValue">
-            Change needed in value.
-            </param>
             <param name="duration">
             Expected easing duration (in frames or seconds).
             </param>
@@ -1221,19 +1215,13 @@
             The eased value.
             </returns>
         </member>
-        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseOut(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Easing equation function for a bounce (exponentially decaying parabolic bounce) easing out: decelerating from zero velocity.
             </summary>
             <param name="time">
             Current time (in frames or seconds).
             </param>
-            <param name="startValue">
-            Starting value.
-            </param>
-            <param name="changeValue">
-            Change needed in value.
-            </param>
             <param name="duration">
             Expected easing duration (in frames or seconds).
             </param>
@@ -1243,18 +1231,12 @@
             The eased value.
             </returns>
         </member>
-        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseInOut(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+        <member name="M:DG.Tweening.Core.Easing.Bounce.EaseInOut(System.Single,System.Single,System.Single,System.Single)">
             <summary>
             Easing equation function for a bounce (exponentially decaying parabolic bounce) easing in/out: acceleration until halfway, then deceleration.
             </summary>
             <param name="time">
             Current time (in frames or seconds).
-            </param>
-            <param name="startValue">
-            Starting value.
-            </param>
-            <param name="changeValue">
-            Change needed in value.
             </param>
             <param name="duration">
             Expected easing duration (in frames or seconds).
@@ -1302,6 +1284,11 @@
         <member name="T:DG.Tweening.Sequence">
             <summary>
             Controls other tweens as a group
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.Core.Easing.EaseManager.Evaluate(DG.Tweening.Tween,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Returns a value between 0 and 1 (inclusive) based on the elapsed time and ease selected
             </summary>
         </member>
         <member name="T:DG.Tweening.Core.DOTweenComponent">
