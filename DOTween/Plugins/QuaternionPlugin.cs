@@ -88,20 +88,21 @@ namespace DG.Tweening.Plugins
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
             }
 
+            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             switch (options.rotateMode) {
             case RotateMode.WorldAxisAdd:
             case RotateMode.LocalAxisAdd:
                 Quaternion startRot = Quaternion.Euler(startValue); // Reset rotation
-                endValue.x = EaseManager.Evaluate(t, elapsed, 0, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                endValue.y = EaseManager.Evaluate(t, elapsed, 0, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                endValue.z = EaseManager.Evaluate(t, elapsed, 0, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                endValue.x = changeValue.x * easeVal;
+                endValue.y = changeValue.y * easeVal;
+                endValue.z = changeValue.z * easeVal;
                 if (options.rotateMode == RotateMode.WorldAxisAdd) setter(startRot * Quaternion.Inverse(startRot) * Quaternion.Euler(endValue) * startRot);
                 else setter(startRot * Quaternion.Euler(endValue));
                 break;
             default:
-                endValue.x = EaseManager.Evaluate(t, elapsed, endValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                endValue.y = EaseManager.Evaluate(t, elapsed, endValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                endValue.z = EaseManager.Evaluate(t, elapsed, endValue.z, changeValue.z, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                endValue.x += changeValue.x * easeVal;
+                endValue.y += changeValue.y * easeVal;
+                endValue.z += changeValue.z * easeVal;
                 setter(Quaternion.Euler(endValue));
                 break;
             }

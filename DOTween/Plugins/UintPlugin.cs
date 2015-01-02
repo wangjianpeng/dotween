@@ -55,7 +55,7 @@ namespace DG.Tweening.Plugins
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops));
             }
 
-            setter((uint)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod)));
+            setter((uint)Math.Round(startValue + changeValue * EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod)));
         }
     }
 }

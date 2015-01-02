@@ -155,7 +155,7 @@ namespace DG.Tweening.Plugins
 
         public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration, bool usingInversePosition)
         {
-            float pathPerc = EaseManager.Evaluate(t, elapsed, 0, 1, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float pathPerc = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             float constantPathPerc = changeValue.ConvertToConstantPathPerc(pathPerc);
             Vector3 newPos = changeValue.GetPoint(constantPathPerc);
             changeValue.targetPosition = newPos; // Used to draw editor gizmos

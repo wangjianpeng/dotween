@@ -51,7 +51,7 @@ namespace DG.Tweening.Plugins
         {
             if (t.loopType == LoopType.Incremental) startValue += changeValue * (t.isComplete ? t.completedLoops - 1 : t.completedLoops);
 
-            setter((int)Math.Round(EaseManager.Evaluate(t, elapsed, startValue, changeValue, duration, t.easeOvershootOrAmplitude, t.easePeriod)));
+            setter((int)Math.Round(startValue + changeValue * EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod)));
         }
     }
 }

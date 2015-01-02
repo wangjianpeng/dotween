@@ -147,7 +147,7 @@ namespace DG.Tweening
             t.customEase = new EaseCurve(animCurve).Evaluate;
             return t;
         }
-        /// <summary>Sets the ease of the tween using a custom ease function.
+        /// <summary>Sets the ease of the tween using a custom ease function (which must return a value between 0 and 1).
         /// <para>If applied to Sequences eases the whole sequence animation</para></summary>
         public static T SetEase<T>(this T t, EaseFunction customEase) where T : Tween
         {

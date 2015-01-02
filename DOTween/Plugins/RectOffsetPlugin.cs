@@ -96,12 +96,13 @@ namespace DG.Tweening.Plugins
                 _r.bottom += changeValue.bottom * iterations;
             }
 
+            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             setter(
                 new RectOffset(
-                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.left, changeValue.left, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.right, changeValue.right, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.top, changeValue.top, duration, t.easeOvershootOrAmplitude, t.easePeriod)),
-                    (int)Math.Round(EaseManager.Evaluate(t, elapsed, _r.bottom, changeValue.bottom, duration, t.easeOvershootOrAmplitude, t.easePeriod))
+                    (int)Math.Round(_r.left + changeValue.left * easeVal),
+                    (int)Math.Round(_r.right + changeValue.right * easeVal),
+                    (int)Math.Round(_r.top + changeValue.top * easeVal),
+                    (int)Math.Round(_r.bottom + changeValue.bottom * easeVal)
                 )
             );
         }

@@ -66,7 +66,8 @@ public class CustomPlugin : ABSTweenPlugin<Vector3,Vector3,NoOptions>
     public override void EvaluateAndApply(NoOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Vector3 startValue, Vector3 changeValue, float duration, bool usingInversePosition)
     {
         Vector3 res = getter();
-        res.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, 0, 0);
+        float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+        res.x = startValue.x + changeValue.x * easeVal;
         setter(res);
     }
 }

@@ -102,30 +102,31 @@ namespace DG.Tweening.Plugins
                 break;
             }
             // Evaluate
+            float easeVal = EaseManager.Evaluate(t, segmentElapsed, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
             Vector3 res;
             switch (options.axisConstraint) {
             case AxisConstraint.X:
                 res = getter();
-                res.x = EaseManager.Evaluate(t, segmentElapsed, startValue[index].x + incrementValue.x, changeValue[index].x, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
+                res.x = startValue[index].x + incrementValue.x + changeValue[index].x * easeVal;
                 if (options.snapping) res.x = (float)Math.Round(res.x);
                 setter(res);
                 break;
             case AxisConstraint.Y:
                 res = getter();
-                res.y = EaseManager.Evaluate(t, segmentElapsed, startValue[index].y + incrementValue.y, changeValue[index].y, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
+                res.y = startValue[index].y + incrementValue.y + changeValue[index].y * easeVal;
                 if (options.snapping) res.y = (float)Math.Round(res.y);
                 setter(res);
                 return;
             case AxisConstraint.Z:
                 res = getter();
-                res.z = EaseManager.Evaluate(t, segmentElapsed, startValue[index].z + incrementValue.z, changeValue[index].z, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
+                res.z = startValue[index].z + incrementValue.z + changeValue[index].z * easeVal;
                 if (options.snapping) res.z = (float)Math.Round(res.z);
                 setter(res);
                 break;
             default:
-                res.x = EaseManager.Evaluate(t, segmentElapsed, startValue[index].x + incrementValue.x, changeValue[index].x, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
-                res.y = EaseManager.Evaluate(t, segmentElapsed, startValue[index].y + incrementValue.y, changeValue[index].y, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
-                res.z = EaseManager.Evaluate(t, segmentElapsed, startValue[index].z + incrementValue.z, changeValue[index].z, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
+                res.x = startValue[index].x + incrementValue.x + changeValue[index].x * easeVal;
+                res.y = startValue[index].y + incrementValue.y + changeValue[index].y * easeVal;
+                res.z = startValue[index].z + incrementValue.z + changeValue[index].z * easeVal;
                 if (options.snapping) {
                     res.x = (float)Math.Round(res.x);
                     res.y = (float)Math.Round(res.y);

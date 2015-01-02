@@ -41,12 +41,6 @@ namespace DG.Tweening.Core.Easing
         /// <param name="time">
         /// Current time (in frames or seconds).
         /// </param>
-        /// <param name="startValue">
-        /// Starting value.
-        /// </param>
-        /// <param name="changeValue">
-        /// Change needed in value.
-        /// </param>
         /// <param name="duration">
         /// Expected easing duration (in frames or seconds).
         /// </param>
@@ -55,9 +49,9 @@ namespace DG.Tweening.Core.Easing
         /// <returns>
         /// The eased value.
         /// </returns>
-        public static float EaseIn(float time, float startValue, float changeValue, float duration, float unusedOvershootOrAmplitude, float unusedPeriod)
+        public static float EaseIn(float time, float duration, float unusedOvershootOrAmplitude, float unusedPeriod)
         {
-            return changeValue - EaseOut(duration - time, 0, changeValue, duration, -1, -1) + startValue;
+            return 1 - EaseOut(duration - time, duration, -1, -1);
         }
 
         /// <summary>
@@ -66,12 +60,6 @@ namespace DG.Tweening.Core.Easing
         /// <param name="time">
         /// Current time (in frames or seconds).
         /// </param>
-        /// <param name="startValue">
-        /// Starting value.
-        /// </param>
-        /// <param name="changeValue">
-        /// Change needed in value.
-        /// </param>
         /// <param name="duration">
         /// Expected easing duration (in frames or seconds).
         /// </param>
@@ -80,21 +68,18 @@ namespace DG.Tweening.Core.Easing
         /// <returns>
         /// The eased value.
         /// </returns>
-        public static float EaseOut(float time, float startValue, float changeValue, float duration, float unusedOvershootOrAmplitude, float unusedPeriod)
+        public static float EaseOut(float time, float duration, float unusedOvershootOrAmplitude, float unusedPeriod)
         {
-            if ((time /= duration) < (1/2.75f))
-            {
-                return changeValue*(7.5625f*time*time) + startValue;
+            if ((time /= duration) < (1 / 2.75f)) {
+                return (7.5625f * time * time);
             }
-            if (time < (2/2.75f))
-            {
-                return changeValue*(7.5625f*(time -= (1.5f/2.75f))*time + 0.75f) + startValue;
+            if (time < (2 / 2.75f)) {
+                return (7.5625f * (time -= (1.5f / 2.75f)) * time + 0.75f);
             }
-            if (time < (2.5f/2.75f))
-            {
-                return changeValue*(7.5625f*(time -= (2.25f/2.75f))*time + 0.9375f) + startValue;
+            if (time < (2.5f / 2.75f)) {
+                return (7.5625f * (time -= (2.25f / 2.75f)) * time + 0.9375f);
             }
-            return changeValue*(7.5625f*(time -= (2.625f/2.75f))*time + 0.984375f) + startValue;
+            return (7.5625f * (time -= (2.625f / 2.75f)) * time + 0.984375f);
         }
 
         /// <summary>
@@ -103,12 +88,6 @@ namespace DG.Tweening.Core.Easing
         /// <param name="time">
         /// Current time (in frames or seconds).
         /// </param>
-        /// <param name="startValue">
-        /// Starting value.
-        /// </param>
-        /// <param name="changeValue">
-        /// Change needed in value.
-        /// </param>
         /// <param name="duration">
         /// Expected easing duration (in frames or seconds).
         /// </param>
@@ -117,13 +96,13 @@ namespace DG.Tweening.Core.Easing
         /// <returns>
         /// The eased value.
         /// </returns>
-        public static float EaseInOut(float time, float startValue, float changeValue, float duration, float unusedOvershootOrAmplitude, float unusedPeriod)
+        public static float EaseInOut(float time, float duration, float unusedOvershootOrAmplitude, float unusedPeriod)
         {
             if (time < duration*0.5f)
             {
-                return EaseIn(time*2, 0, changeValue, duration, -1, -1)*0.5f + startValue;
+                return EaseIn(time*2, duration, -1, -1)*0.5f;
             }
-            return EaseOut(time*2 - duration, 0, changeValue, duration, -1, -1)*0.5f + changeValue*0.5f + startValue;
+            return EaseOut(time*2 - duration, duration, -1, -1)*0.5f + 0.5f;
         }
     }
 }

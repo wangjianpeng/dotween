@@ -80,22 +80,23 @@ namespace DG.Tweening.Plugins
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
             }
 
+            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             switch (options.axisConstraint) {
             case AxisConstraint.X:
                 Vector2 resX = getter();
-                resX.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                resX.x = startValue.x + changeValue.x * easeVal;
                 if (options.snapping) resX.x = (float)Math.Round(resX.x);
                 setter(resX);
                 break;
             case AxisConstraint.Y:
                 Vector2 resY = getter();
-                resY.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                resY.y = startValue.y + changeValue.y * easeVal;
                 if (options.snapping) resY.y = (float)Math.Round(resY.y);
                 setter(resY);
                 break;
             default:
-                startValue.x = EaseManager.Evaluate(t, elapsed, startValue.x, changeValue.x, duration, t.easeOvershootOrAmplitude, t.easePeriod);
-                startValue.y = EaseManager.Evaluate(t, elapsed, startValue.y, changeValue.y, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+                startValue.x += changeValue.x * easeVal;
+                startValue.y += changeValue.y * easeVal;
                 if (options.snapping) {
                     startValue.x = (float)Math.Round(startValue.x);
                     startValue.y = (float)Math.Round(startValue.y);

@@ -170,8 +170,8 @@ namespace DG.Tweening
             float prevPos = prevPosition;
             float newPos = s.position;
             if (s.easeType != Ease.Linear) {
-                prevPos = EaseManager.Evaluate(s, prevPos, 0, s.duration, s.duration, s.easeOvershootOrAmplitude, s.easePeriod);
-                newPos = EaseManager.Evaluate(s, newPos, 0, s.duration, s.duration, s.easeOvershootOrAmplitude, s.easePeriod);
+                prevPos = s.duration * EaseManager.Evaluate(s, prevPos, s.duration, s.easeOvershootOrAmplitude, s.easePeriod);
+                newPos = s.duration * EaseManager.Evaluate(s, newPos, s.duration, s.easeOvershootOrAmplitude, s.easePeriod);
             }
 
 

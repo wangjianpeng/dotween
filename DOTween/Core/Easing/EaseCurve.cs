@@ -27,12 +27,12 @@ namespace DG.Tweening.Core.Easing
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
 
-        public float Evaluate(float time, float startValue, float changeValue, float duration, float unusedOvershoot, float unusedPeriod)
+        public float Evaluate(float time, float duration, float unusedOvershoot, float unusedPeriod)
         {
             float curveLen = _animCurve[_animCurve.length - 1].time;
             float timePerc = time / duration;
             float eval = _animCurve.Evaluate(timePerc * curveLen);
-            return changeValue * eval + startValue;
+            return eval;
         }
     }
 }
