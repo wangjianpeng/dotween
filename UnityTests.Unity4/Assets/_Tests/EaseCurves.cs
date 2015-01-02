@@ -10,7 +10,9 @@ public class EaseCurves : BrainBase
     public AnimationCurve easeCurve;
     public float duration = 1;
     public int txDistance = 2;
-    Vector2 textureSize;
+
+    int txH, txW;
+    int txBorder, easeH;
 
     IEnumerator Start()
     {
@@ -22,15 +24,23 @@ public class EaseCurves : BrainBase
 	void Setup()
 	{
         RectTransform rt = image.GetComponent<RectTransform>();
-	    textureSize = rt.sizeDelta;
-        Color32[] colors = new Color32[(int)(textureSize.x * textureSize.y)];
+	    txW = (int)rt.sizeDelta.x;
+	    txH = (int)rt.sizeDelta.y;
+	    easeH = (int)(txH * 0.35f);
+        txBorder = (int)((txH - easeH) * 0.5f);
+        Color32[] colors = new Color32[txW * txH];
         for (int c = 0; c < colors.Length; ++c) colors[c] = new Color(0.1f, 0.1f, 0.1f, 1);
+	    int lineP = txBorder * txW;
+        for (int c = lineP; c < lineP + txW; ++c) {
+            colors[c] = new Color(0.25f, 0.25f, 0.25f, 1);
+            colors[c + txW * easeH] = new Color(0.25f, 0.25f, 0.25f, 1);
+        }
 
         // Create a tween for each easeType
         int totTypes = Enum.GetNames(typeof(Ease)).Length;
-        int distX = (int)textureSize.x;
-        int distY = (int)textureSize.y;
-        int totCols = (int)(Screen.width / textureSize.x) - 1;
+        int distX = txW;
+        int distY = txH;
+        int totCols = Screen.width / txW - 1;
         float startX = image.transform.position.x;
         float startY = image.transform.position.y;
         Vector2 gridCount = Vector2.zero;
@@ -45,7 +55,7 @@ public class EaseCurves : BrainBase
                 gridCount.x = 0;
             }
             // Set textures
-            Texture2D tx = new Texture2D((int)textureSize.x, (int)textureSize.y, TextureFormat.ARGB32, false);
+            Texture2D tx = new Texture2D(txW, txH, TextureFormat.ARGB32, false);
             tx.filterMode = FilterMode.Point;
             tx.SetPixels32(colors);
             tx.Apply();
@@ -54,8 +64,8 @@ public class EaseCurves : BrainBase
             // Set tween and text
             Ease easeType = (Ease)i;
             img.GetComponentInChildren<Text>().text = easeType.ToString();
-            float val = 0;
-            Tween tween = DOTween.To(() => val, x => val = x, textureSize.y - 1, duration).SetDelay(1);
+            float val = txBorder;
+            Tween tween = DOTween.To(() => val, x => val = x, txBorder + easeH, duration).SetDelay(1);
             tween.OnUpdate(() => SetTextureEase(easeType, tx, tween.Elapsed(), (int)val));
             if (easeType == Ease.INTERNAL_Custom) tween.SetEase(easeCurve);
             else tween.SetEase(easeType);
@@ -66,8 +76,8 @@ public class EaseCurves : BrainBase
 
     void SetTextureEase(Ease easeType, Texture2D tx, float elapsed, int y)
     {
-        int x = (int)((textureSize.x - 1) * (elapsed / duration));
-        if (y > textureSize.y - 1 || y < 0) return; // elastic/back eases
+        int x = (int)((txW - 1) * (elapsed / duration));
+        if (y > txH - 1 || y < 0) return; // elastic/back eases
 
         tx.SetPixel(x, y, Color.white);
         tx.Apply();
