@@ -21,8 +21,11 @@ namespace DG.DOTweenEditor
                 if (openSetupDialog) {
                     EditorPrefs.SetString(Application.dataPath + DOTweenUtilityWindow.Id, Application.dataPath + DOTween.Version);
                     EditorPrefs.SetString(Application.dataPath + DOTweenUtilityWindow.IdPro, Application.dataPath + EditorUtils.proVersion);
-                    EditorUtility.DisplayDialog("DOTween", "DOTween needs to be setup.\n\nSelect \"Setup DOTween...\" in the next panel.", "Ok");
-                    DOTweenUtilityWindow.Open();
+                    EditorUtility.DisplayDialog("DOTween", "DOTween needs to be setup.\n\nSelect \"Tools > DOTween Utility Panel\" and press \"Setup DOTween...\" in the panel that opens.", "Ok");
+                    // Opening window after a postProcess doesn't work on Unity 3 so check that
+                    string[] vs = Application.unityVersion.Split("."[0]);
+                    int majorVersion = System.Convert.ToInt32(vs[0]);
+                    if (majorVersion >= 4) DOTweenUtilityWindow.Open();
                 }
             }
         }

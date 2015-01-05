@@ -2,7 +2,7 @@ DOTween and DOTween Pro are copyright (c) 2014 Daniele Giardini - Demigiant
 
 // GET STARTED //////////////////////////////////////////////
 
-- From Unity's menu bar, select Tools > DOTween Setup to setup the correct DOTween libraries based on your Unity version. If you don't see the DOTween menu, just refresh the menu bar by clicking on any of its menus. Repeat this step each time you update DOTween.
+- After importing a new DOTween update, select DOTween's Utility Panel from the Tools menu (if it doesn't open automatically) and press the "Setup DOTween..." button to set up additional features based on your Unity version.
 - In your code, add "using DG.Tweening" to each class where you want to use DOTween.
 - You're ready to tween. Check out the links below for full documentation and license info.
 
@@ -12,3 +12,7 @@ DOTween and DOTween Pro are copyright (c) 2014 Daniele Giardini - Demigiant
 DOTween website (documentation, examples, etc): http://dotween.demigiant.com
 DOTween license: http://dotween.demigiant.com/license.php
 DOTween repository (Google Code): https://code.google.com/p/dotween/
+
+// NOTES //////////////////////////////////////////////////////
+
+- DOTween's Utility Panel can be found under "Tools > DOTween Utility Panel" and also contains other useful options, like direct links to the documentation and to check if you have the latest version.

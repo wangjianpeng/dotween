@@ -13,12 +13,13 @@ namespace DG.DOTweenEditor.Core
     {
         public static bool hasPro { get { if (!_hasCheckedForPro) CheckForPro(); return _hasPro; } }
         public static string proVersion { get { if (!_hasCheckedForPro) CheckForPro(); return _proVersion; } }
-        // Editor path from Assets (not included) with final slash, in AssetDatabase format
+        // Editor path from Assets (not included) with final slash, in AssetDatabase format (/)
         public static string editorADBDir { get { if (string.IsNullOrEmpty(_editorADBDir)) StoreEditorADBDir(); return _editorADBDir; } }
         // With final slash (system based)
         public static string dotweenDir { get { if (string.IsNullOrEmpty(_dotweenDir)) StoreDOTweenDirs(); return _dotweenDir; } }
         // With final slash (system based)
         public static string dotweenProDir { get { if (string.IsNullOrEmpty(_dotweenProDir)) StoreDOTweenDirs(); return _dotweenProDir; } }
+        public static bool isOSXEditor { get; private set; }
         public static string pathSlash { get; private set; } // for full paths
         public static string pathSlashToReplace { get; private set; } // for full paths
 
@@ -31,6 +32,7 @@ namespace DG.DOTweenEditor.Core
 
         static EditorUtils()
         {
+            isOSXEditor = Application.platform == RuntimePlatform.OSXEditor;
             bool useWindowsSlashes = Application.platform == RuntimePlatform.WindowsEditor;
             pathSlash = useWindowsSlashes ? "\\" : "/";
             pathSlashToReplace = useWindowsSlashes ? "/" : "\\";

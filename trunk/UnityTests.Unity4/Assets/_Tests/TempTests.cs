@@ -5,15 +5,20 @@ using System.Collections.Generic;
 
 public class TempTests : BrainBase
 {
-	public Transform[] targets;
+	public Transform clickTarget;
 
-	Sequence seq;
+	Sequence clickSeq;
 
-    IEnumerator Start()
+    void Start()
     {
-    	seq = DOTween.Sequence().OnComplete(()=> Debug.Log("Sequence Complete")).Pause();
+    	clickSeq = DOTween.Sequence().SetAutoKill(false).Pause()
+    		// .Append(clickTarget.DOPunchPosition(new Vector3(0, 0.4f, 0), 0.6f))
+    		.Append(clickTarget.DOShakePosition(0.6f, new Vector3(0.4f, 0.4f, 0)))
+    		.Join(clickTarget.DOPunchRotation(new Vector3(0, 0, 15), 0.6f));
+    }
 
-    	yield return new WaitForSeconds(0.5f);
-        seq.Append(targets[0].DOMoveX(1, 1).SetEase(Ease.OutQuart).OnComplete(()=> Debug.Log("Tween Complete"))).Play();
+    public void OnClick()
+    {
+    	clickSeq.Restart();
     }
 }
