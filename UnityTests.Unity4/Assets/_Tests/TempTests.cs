@@ -7,18 +7,38 @@ public class TempTests : BrainBase
 {
 	public Transform clickTarget;
 
-	Sequence clickSeq;
+	Tween clickSeq;
 
     void Start()
     {
-    	clickSeq = DOTween.Sequence().SetAutoKill(false).Pause()
-    		// .Append(clickTarget.DOPunchPosition(new Vector3(0, 0.4f, 0), 0.6f))
-    		.Append(clickTarget.DOShakePosition(0.6f, new Vector3(0.4f, 0.4f, 0)))
-    		.Join(clickTarget.DOPunchRotation(new Vector3(0, 0, 15), 0.6f));
+    	CreateTweens();
     }
 
     public void OnClick()
     {
     	clickSeq.Restart();
+    }
+
+    void CreateTweens()
+    {
+    	if (clickSeq == null) clickSeq = clickTarget.DORotate(new Vector3(0, 0, 180), 1).SetAutoKill(false);
+    }
+
+    void OnGUI()
+    {
+    	if (GUILayout.Button("Clear")) {
+    		DOTween.Clear();
+    		clickSeq = null;
+    	}
+    	if (GUILayout.Button("Clear clickTarget (shouldn't work)")) {
+    		DOTween.Clear(clickTarget);
+    		clickSeq = null;
+    	}
+    	if (GUILayout.Button("Clear FULL")) {
+    		DOTween.Clear(true);
+    		clickSeq = null;
+    	}
+    	if (GUILayout.Button("Recreate Tweens")) CreateTweens();
+    	if (GUILayout.Button("Change Scene")) Application.LoadLevel(Application.loadedLevel);
     }
 }
