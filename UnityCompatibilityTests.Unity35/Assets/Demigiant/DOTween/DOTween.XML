@@ -81,6 +81,10 @@
             <summary>Global DOTween timeScale.
             <para>Default: 1</para></summary>
         </member>
+        <member name="F:DG.Tweening.DOTween.defaultUpdateType">
+            <summary>Default updateType for new tweens.
+            <para>Default: UpdateType.Normal</para></summary>
+        </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoPlay">
             <summary>Default autoPlay behaviour for new tweens.
             <para>Default: AutoPlay.All</para></summary>
@@ -549,12 +553,12 @@
             <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetUpdate``1(``0,System.Boolean)">
-            <summary>Sets the update type to UpdateType.Default and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+            <summary>Sets the update type to UpdateType.Normal and lets you choose if it should be independent from Unity's Time.timeScale</summary>
             <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.SetUpdate``1(``0,DG.Tweening.UpdateType,System.Boolean)">
             <summary>Sets the type of update (default or independent) for the tween</summary>
-            <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
+            <param name="updateType">The type of update (defalt: UpdateType.Normal)</param>
             <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         </member>
         <member name="M:DG.Tweening.TweenSettingsExtensions.OnStart``1(``0,DG.Tweening.Core.TweenCallback)">
@@ -1102,12 +1106,12 @@
             <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.SetUpdate(System.Boolean)">
-            <summary>Sets the update type to UpdateType.Default and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+            <summary>Sets the update type to UpdateType.Normal and lets you choose if it should be independent from Unity's Time.timeScale</summary>
             <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.SetUpdate(DG.Tweening.UpdateType,System.Boolean)">
             <summary>Sets the type of update (default or independent) for the tween</summary>
-            <param name="updateType">The type of update (defalt: UpdateType.Default)</param>
+            <param name="updateType">The type of update (defalt: UpdateType.Normal)</param>
             <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.OnStart(DG.Tweening.Core.TweenCallback)">
@@ -1337,7 +1341,7 @@
             Update type
             </summary>
         </member>
-        <member name="F:DG.Tweening.UpdateType.Default">
+        <member name="F:DG.Tweening.UpdateType.Normal">
             <summary>Updates every frame during Update calls</summary>
         </member>
         <member name="F:DG.Tweening.UpdateType.Late">

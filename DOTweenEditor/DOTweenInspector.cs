@@ -92,6 +92,7 @@ namespace DG.DOTweenEditor
             _strBuilder.Remove(0, _strBuilder.Length);
             _strBuilder.Append("DEFAULTS ▼");
             _strBuilder.Append("\ndefaultRecyclable: ").Append(DOTween.defaultRecyclable);
+            _strBuilder.Append("\ndefaultUpdateType: ").Append(DOTween.defaultUpdateType);
             _strBuilder.Append("\ndefaultAutoKill: ").Append(DOTween.defaultAutoKill);
             _strBuilder.Append("\ndefaultAutoPlay: ").Append(DOTween.defaultAutoPlay);
             _strBuilder.Append("\ndefaultEaseType: ").Append(DOTween.defaultEaseType);

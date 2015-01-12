@@ -1,44 +1,49 @@
-﻿using DG.Tweening;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-
+using DG.Tweening;
+using System;
+ 
 public class TempTests : BrainBase
 {
-	public Transform clickTarget;
-
-	Tween clickSeq;
-
-    void Start()
+    public float test1 = 0f;
+    public float test2 = 0f;
+ 
+    bool running = false;
+ 
+    void Update()
     {
-    	CreateTweens();
+        if(Input.GetKeyDown("space"))
+        {
+            Test();
+        }
     }
-
-    public void OnClick()
+ 
+    void Test()
     {
-    	clickSeq.Restart();
+        running = true;
+ 
+        DOTween.To(() => test1, x => test1 = x, 1f, 1f)
+            .SetEase(Ease.OutSine)
+            .SetUpdate(UpdateType.Late, true)
+            .OnComplete(() => test1 = 0f);
+ 
+        // BUG:  this tween will stick if set to UpdateType.Default and not UpdateType.Late
+        // mixing-and-matching UpdateType will cause bugs, but not one or the other
+ 
+        DOTween.To(() => test2, x => test2 = x, 1f, 1f)
+            .SetEase(Ease.OutSine)
+            .SetUpdate(UpdateType.Normal, true)
+            .SetDelay(0.25f) // only shows up if a delay is set here
+            .OnComplete(() => test2 = 0f);
     }
-
-    void CreateTweens()
-    {
-    	if (clickSeq == null) clickSeq = clickTarget.DORotate(new Vector3(0, 0, 180), 1).SetAutoKill(false);
-    }
-
+ 
     void OnGUI()
     {
-    	if (GUILayout.Button("Clear")) {
-    		DOTween.Clear();
-    		clickSeq = null;
-    	}
-    	if (GUILayout.Button("Clear clickTarget (shouldn't work)")) {
-    		DOTween.Clear(clickTarget);
-    		clickSeq = null;
-    	}
-    	if (GUILayout.Button("Clear FULL")) {
-    		DOTween.Clear(true);
-    		clickSeq = null;
-    	}
-    	if (GUILayout.Button("Recreate Tweens")) CreateTweens();
-    	if (GUILayout.Button("Change Scene")) Application.LoadLevel(Application.loadedLevel);
+        GUILayout.BeginVertical("box");
+        GUILayout.Label("Running: " + running);
+        GUILayout.Label("Test1: " + String.Format("{0:0.00}", test1));
+        GUILayout.Label("Test2: " + String.Format("{0:0.00}", test2));
+        GUILayout.Label("Time: " + String.Format("{0:0.00}", Time.realtimeSinceStartup));
+        GUILayout.EndVertical();
     }
 }
