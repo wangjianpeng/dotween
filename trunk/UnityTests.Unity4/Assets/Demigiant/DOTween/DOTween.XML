@@ -1106,7 +1106,8 @@
             <param name="recyclable">If TRUE the tween will be recycled after being killed, otherwise it will be destroyed.</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.SetUpdate(System.Boolean)">
-            <summary>Sets the update type to UpdateType.Normal and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+            <summary>Sets the update type to the one defined in DOTween.defaultUpdateType (UpdateType.Normal unless changed)
+            and lets you choose if it should be independent from Unity's Time.timeScale</summary>
             <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.SetUpdate(DG.Tweening.UpdateType,System.Boolean)">

@@ -63,7 +63,7 @@ namespace DG.Tweening
         public TweenParams Clear()
         {
             id = target = null;
-            updateType = UpdateType.Normal;
+            updateType = DOTween.defaultUpdateType;
             isIndependentUpdate = false;
             onStart = onPlay = onRewind = onUpdate = onStepComplete = onComplete = onKill = null;
             onWaypointChange = null;
@@ -164,11 +164,12 @@ namespace DG.Tweening
             return this;
         }
 
-        /// <summary>Sets the update type to UpdateType.Normal and lets you choose if it should be independent from Unity's Time.timeScale</summary>
+        /// <summary>Sets the update type to the one defined in DOTween.defaultUpdateType (UpdateType.Normal unless changed)
+        /// and lets you choose if it should be independent from Unity's Time.timeScale</summary>
         /// <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         public TweenParams SetUpdate(bool isIndependentUpdate)
         {
-            this.updateType = UpdateType.Normal;
+            this.updateType = DOTween.defaultUpdateType;
             this.isIndependentUpdate = isIndependentUpdate;
             return this;
         }
