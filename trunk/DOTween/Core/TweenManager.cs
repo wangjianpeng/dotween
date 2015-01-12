@@ -130,7 +130,7 @@ namespace DG.Tweening.Core
                 return;
             }
             // Remove previous update type
-            if (t.updateType == UpdateType.Default) {
+            if (t.updateType == UpdateType.Normal) {
                 totActiveDefaultTweens--;
                 hasActiveDefaultTweens = totActiveDefaultTweens > 0;
             } else {
@@ -140,7 +140,7 @@ namespace DG.Tweening.Core
             // Assign new one
             t.updateType = updateType;
             t.isIndependentUpdate = isIndependentUpdate;
-            if (updateType == UpdateType.Default) {
+            if (updateType == UpdateType.Normal) {
                 totActiveDefaultTweens++;
                 hasActiveDefaultTweens = true;
             } else {
@@ -318,6 +318,7 @@ namespace DG.Tweening.Core
             VerifyActiveTweensList();
 #endif
             bool willKill = false;
+//            Debug.Log("::::::::::: " + updateType + " > " + (_maxActiveLookupId + 1));
             for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
                 Tween t = _activeTweens[i];
                 if (t == null || t.updateType != updateType) continue; // Wrong updateType or was added to a Sequence (thus removed from active list) while inside current updateLoop
@@ -641,13 +642,13 @@ namespace DG.Tweening.Core
             _KillList.Add(t);
         }
 
-        // Adds the given tween to the active tweens list (updateType is always Default, but can be changed by SetUpdateType)
+        // Adds the given tween to the active tweens list (updateType is always Normal, but can be changed by SetUpdateType)
         static void AddActiveTween(Tween t)
         {
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
 
             t.active = true;
-            t.updateType = UpdateType.Default;
+            t.updateType = DOTween.defaultUpdateType;
             t.isIndependentUpdate = false;
             t.activeId = _maxActiveLookupId = totActiveTweens;
             _activeTweens[totActiveTweens] = t;
@@ -707,7 +708,7 @@ namespace DG.Tweening.Core
             if (_reorganizeFromId == -1 || _reorganizeFromId > index) _reorganizeFromId = index;
             _activeTweens[index] = null;
 
-            if (t.updateType == UpdateType.Default) {
+            if (t.updateType == UpdateType.Normal) {
                 totActiveDefaultTweens--;
                 hasActiveDefaultTweens = totActiveDefaultTweens > 0;
             } else {

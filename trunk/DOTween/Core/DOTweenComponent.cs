@@ -46,7 +46,7 @@ namespace DG.Tweening.Core
         {
             _unscaledDeltaTime = Time.realtimeSinceStartup - _unscaledTime;
             if (TweenManager.hasActiveDefaultTweens) {
-                TweenManager.Update(UpdateType.Default, Time.deltaTime * DOTween.timeScale, _unscaledDeltaTime * DOTween.timeScale);
+                TweenManager.Update(UpdateType.Normal, Time.deltaTime * DOTween.timeScale, _unscaledDeltaTime * DOTween.timeScale);
             }
             _unscaledTime = Time.realtimeSinceStartup;
 

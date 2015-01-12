@@ -105,7 +105,6 @@ namespace DG.Tweening
             timeScale = 1;
             isBackwards = false;
             id = null;
-            updateType = UpdateType.Default;
             isIndependentUpdate = false;
             onStart = onPlay = onRewind = onUpdate = onComplete = onStepComplete = onKill = null;
             onWaypointChange = null;
@@ -136,6 +135,10 @@ namespace DG.Tweening
 //            easeType = DOTween.defaultEaseType;
 //            easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
 //            easePeriod = DOTween.defaultEasePeriod
+
+            // The follwing are set during TweenManager.AddActiveTween
+            // (so the previous updateType is still stored while removing tweens)
+//            updateType = UpdateType.Normal;
         }
 
         // Called by TweenManager.Validate.

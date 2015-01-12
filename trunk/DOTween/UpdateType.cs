@@ -12,7 +12,7 @@ namespace DG.Tweening
     public enum UpdateType
     {
         /// <summary>Updates every frame during Update calls</summary>
-        Default,
+        Normal,
         /// <summary>Updates every frame during LateUpdate calls</summary>
         Late
     }

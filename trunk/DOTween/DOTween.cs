@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "1.0.010";
+        public static readonly string Version = "1.0.020";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -49,6 +49,9 @@ namespace DG.Tweening
         ///////////////////////////////////////////////
         // Default options for Tweens /////////////////
 
+        /// <summary>Default updateType for new tweens.
+        /// <para>Default: UpdateType.Normal</para></summary>
+        public static UpdateType defaultUpdateType = UpdateType.Normal;
         /// <summary>Default autoPlay behaviour for new tweens.
         /// <para>Default: AutoPlay.All</para></summary>
         public static AutoPlay defaultAutoPlay = AutoPlay.All;
@@ -173,6 +176,7 @@ namespace DG.Tweening
             defaultEaseType = Ease.OutQuad;
             defaultEaseOvershootOrAmplitude = 1.70158f;
             defaultEasePeriod = 0;
+            defaultUpdateType = UpdateType.Normal;
             defaultAutoPlay = AutoPlay.All;
             defaultLoopType = LoopType.Restart;
             defaultAutoKill = true;
