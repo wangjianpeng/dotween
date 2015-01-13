@@ -66,6 +66,13 @@ namespace DG.Tweening.Core
             }
         }
 
+        void FixedUpdate()
+        {
+            if (TweenManager.hasActiveFixedTweens) {
+                TweenManager.Update(UpdateType.Fixed, Time.fixedDeltaTime * DOTween.timeScale, _unscaledDeltaTime * DOTween.timeScale);
+            }
+        }
+
         void OnLevelWasLoaded()
         {
             if (DOTween.useSafeMode) DOTween.Validate();

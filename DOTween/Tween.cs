@@ -136,7 +136,7 @@ namespace DG.Tweening
 //            easeOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
 //            easePeriod = DOTween.defaultEasePeriod
 
-            // The follwing are set during TweenManager.AddActiveTween
+            // The following are set during TweenManager.AddActiveTween
             // (so the previous updateType is still stored while removing tweens)
 //            updateType = UpdateType.Normal;
         }

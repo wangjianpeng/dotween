@@ -20,8 +20,8 @@ namespace DG.Tweening.Core
         internal static int maxActive = _DefaultMaxTweeners; // Always equal to maxTweeners
         internal static int maxTweeners = _DefaultMaxTweeners; // Always >= maxSequences
         internal static int maxSequences = _DefaultMaxSequences; // Always <= maxTweeners
-        internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveLateTweens;
-        internal static int totActiveTweens, totActiveDefaultTweens, totActiveLateTweens;
+        internal static bool hasActiveTweens, hasActiveDefaultTweens, hasActiveLateTweens, hasActiveFixedTweens;
+        internal static int totActiveTweens, totActiveDefaultTweens, totActiveLateTweens, totActiveFixedTweens;
         internal static int totActiveTweeners, totActiveSequences;
         internal static int totPooledTweeners, totPooledSequences;
         internal static int totTweeners, totSequences; // Both active and pooled
@@ -133,6 +133,9 @@ namespace DG.Tweening.Core
             if (t.updateType == UpdateType.Normal) {
                 totActiveDefaultTweens--;
                 hasActiveDefaultTweens = totActiveDefaultTweens > 0;
+            } else if (t.updateType == UpdateType.Fixed) {
+                totActiveFixedTweens--;
+                hasActiveFixedTweens = totActiveFixedTweens > 0;
             } else {
                 totActiveLateTweens--;
                 hasActiveLateTweens = totActiveLateTweens > 0;
@@ -143,6 +146,9 @@ namespace DG.Tweening.Core
             if (updateType == UpdateType.Normal) {
                 totActiveDefaultTweens++;
                 hasActiveDefaultTweens = true;
+            } else if (updateType == UpdateType.Fixed) {
+                totActiveFixedTweens++;
+                hasActiveFixedTweens = true;
             } else {
                 totActiveLateTweens++;
                 hasActiveLateTweens = true;
@@ -164,8 +170,8 @@ namespace DG.Tweening.Core
                 if (t != null) Despawn(t, false);
             }
             ClearTweenArray(_activeTweens);
-            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
-            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
+            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = hasActiveFixedTweens = false;
+            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = totActiveFixedTweens = 0;
             totActiveTweeners = totActiveSequences = 0;
             _maxActiveLookupId = _reorganizeFromId = -1;
             _requiresActiveReorganization = false;
@@ -244,8 +250,8 @@ namespace DG.Tweening.Core
             }
 
             ClearTweenArray(_activeTweens);
-            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = false;
-            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = 0;
+            hasActiveTweens = hasActiveDefaultTweens = hasActiveLateTweens = hasActiveFixedTweens = false;
+            totActiveTweens = totActiveDefaultTweens = totActiveLateTweens = totActiveFixedTweens = 0;
             totActiveTweeners = totActiveSequences = 0;
             _maxActiveLookupId = _reorganizeFromId = -1;
             _requiresActiveReorganization = false;
@@ -308,6 +314,7 @@ namespace DG.Tweening.Core
             return totInvalid;
         }
 
+        // deltaTime will be passed as fixedDeltaTime in case of UpdateType.Fixed
         internal static void Update(UpdateType updateType, float deltaTime, float independentTime)
         {
             if (_requiresActiveReorganization) ReorganizeActiveTweens();
@@ -711,6 +718,9 @@ namespace DG.Tweening.Core
             if (t.updateType == UpdateType.Normal) {
                 totActiveDefaultTweens--;
                 hasActiveDefaultTweens = totActiveDefaultTweens > 0;
+            } else if (t.updateType == UpdateType.Fixed) {
+                totActiveFixedTweens--;
+                hasActiveFixedTweens = totActiveFixedTweens > 0;
             } else {
                 totActiveLateTweens--;
                 hasActiveLateTweens = totActiveLateTweens > 0;
