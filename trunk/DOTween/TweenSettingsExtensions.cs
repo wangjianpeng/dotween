@@ -182,7 +182,7 @@ namespace DG.Tweening
         {
             if (!t.active) return t;
 
-            TweenManager.SetUpdateType(t, UpdateType.Normal, isIndependentUpdate);
+            TweenManager.SetUpdateType(t, DOTween.defaultUpdateType, isIndependentUpdate);
             return t;
         }
         /// <summary>Sets the type of update (default or independent) for the tween</summary>
