@@ -68,8 +68,8 @@ namespace DG.Tweening.Core
 
         void FixedUpdate()
         {
-            if (TweenManager.hasActiveFixedTweens) {
-                TweenManager.Update(UpdateType.Fixed, Time.fixedDeltaTime * DOTween.timeScale, _unscaledDeltaTime * DOTween.timeScale);
+            if (TweenManager.hasActiveFixedTweens && Time.timeScale > 0) {
+                TweenManager.Update(UpdateType.Fixed, Time.deltaTime * DOTween.timeScale, (Time.deltaTime / Time.timeScale) * DOTween.timeScale);
             }
         }
 
