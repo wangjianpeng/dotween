@@ -174,7 +174,7 @@ namespace DG.Tweening
             return this;
         }
         /// <summary>Sets the type of update (default or independent) for the tween</summary>
-        /// <param name="updateType">The type of update (defalt: UpdateType.Normal)</param>
+        /// <param name="updateType">The type of update (default: UpdateType.Normal)</param>
         /// <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         public TweenParams SetUpdate(UpdateType updateType, bool isIndependentUpdate = false)
         {

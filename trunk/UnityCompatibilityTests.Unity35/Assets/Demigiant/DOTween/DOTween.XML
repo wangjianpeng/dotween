@@ -1112,7 +1112,7 @@
         </member>
         <member name="M:DG.Tweening.TweenParams.SetUpdate(DG.Tweening.UpdateType,System.Boolean)">
             <summary>Sets the type of update (default or independent) for the tween</summary>
-            <param name="updateType">The type of update (defalt: UpdateType.Normal)</param>
+            <param name="updateType">The type of update (default: UpdateType.Normal)</param>
             <param name="isIndependentUpdate">If TRUE the tween will ignore Unity's Time.timeScale</param>
         </member>
         <member name="M:DG.Tweening.TweenParams.OnStart(DG.Tweening.Core.TweenCallback)">
@@ -1347,6 +1347,9 @@
         </member>
         <member name="F:DG.Tweening.UpdateType.Late">
             <summary>Updates every frame during LateUpdate calls</summary>
+        </member>
+        <member name="F:DG.Tweening.UpdateType.Fixed">
+            <summary>Updates using FixedUpdate calls</summary>
         </member>
         <member name="T:DG.Tweening.ShortcutExtensions">
             <summary>
