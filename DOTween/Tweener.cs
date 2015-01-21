@@ -238,21 +238,26 @@ namespace DG.Tweening
         // Returns TRUE in case of SUCCESS, FALSE if there were managed errors
         static bool DOStartupSpecials<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
         {
-            switch (t.specialStartupMode) {
-            case SpecialStartupMode.SetLookAt:
-                if (!SpecialPluginsUtils.SetLookAt(t as TweenerCore<Quaternion, Vector3, QuaternionOptions>)) return false;
-                break;
-            case SpecialStartupMode.SetPunch:
-                if (!SpecialPluginsUtils.SetPunch(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
-                break;
-            case SpecialStartupMode.SetShake:
-                if (!SpecialPluginsUtils.SetShake(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
-                break;
-            case SpecialStartupMode.SetCameraShakePosition:
-                if (!SpecialPluginsUtils.SetCameraShakePosition(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
-                break;
+            try {
+                switch (t.specialStartupMode) {
+                case SpecialStartupMode.SetLookAt:
+                    if (!SpecialPluginsUtils.SetLookAt(t as TweenerCore<Quaternion, Vector3, QuaternionOptions>)) return false;
+                    break;
+                case SpecialStartupMode.SetPunch:
+                    if (!SpecialPluginsUtils.SetPunch(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+                    break;
+                case SpecialStartupMode.SetShake:
+                    if (!SpecialPluginsUtils.SetShake(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+                    break;
+                case SpecialStartupMode.SetCameraShakePosition:
+                    if (!SpecialPluginsUtils.SetCameraShakePosition(t as TweenerCore<Vector3, Vector3[], Vector3ArrayOptions>)) return false;
+                    break;
+                }
+                return true;
+            } catch {
+                // Erro in SpecialPluginUtils (usually due to target being destroyed)
+                return false;
             }
-            return true;
         }
         static void DOStartupDurationBased<T1, T2, TPlugOptions>(TweenerCore<T1, T2, TPlugOptions> t) where TPlugOptions : struct
         {
