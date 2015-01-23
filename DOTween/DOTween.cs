@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "1.0.040";
+        public static readonly string Version = "1.0.050";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -66,7 +66,7 @@ namespace DG.Tweening
         public static bool defaultRecyclable;
         /// <summary>Default ease applied to all new Tweeners (not to Sequences which always have Ease.Linear as default).
         /// <para>Default: Ease.InOutQuad</para></summary>
-        public static Ease defaultEaseType = Ease.InOutQuad;
+        public static Ease defaultEaseType = Ease.OutQuad;
         /// <summary>Default overshoot/amplitude used for eases
         /// <para>Default: 1.70158f</para></summary>
         public static float defaultEaseOvershootOrAmplitude = 1.70158f;
