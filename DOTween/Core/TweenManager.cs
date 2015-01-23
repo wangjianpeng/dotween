@@ -326,7 +326,8 @@ namespace DG.Tweening.Core
 #endif
             bool willKill = false;
 //            Debug.Log("::::::::::: " + updateType + " > " + (_maxActiveLookupId + 1));
-            for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
+            int len = _maxActiveLookupId + 1; // Stored here so if _maxActiveLookupId changed during update loop (like if new tween is created at onComplete) new tweens are still ignored
+            for (int i = 0; i < len; ++i) {
                 Tween t = _activeTweens[i];
                 if (t == null || t.updateType != updateType) continue; // Wrong updateType or was added to a Sequence (thus removed from active list) while inside current updateLoop
                 if (!t.active) {
