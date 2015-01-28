@@ -612,7 +612,6 @@ namespace DG.Tweening
         /// <param name="complete">If TRUE completes the tweens before killing them</param>
         public static int KillAll(bool complete = false)
         {
-            Debug.Log("HERE > complete: " + complete);
             int tot = complete ? CompleteAndReturnKilledTot() : 0;
             return tot + TweenManager.DespawnAll();
         }
