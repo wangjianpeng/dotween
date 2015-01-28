@@ -502,6 +502,18 @@ namespace DG.Tweening.Core
             return true;
         }
 
+        // Forces the tween to startup and initialize all its data
+        internal static void ForceInit(Tween t)
+        {
+            if (t.startupDone) return;
+
+            if (!t.Startup()) {
+                // Startup failed: kill tween
+                if (isUpdateLoop) t.active = false; // Just mark it for killing, so the update loop will take care of it
+                else RemoveActiveTween(t);
+            }
+        }
+
         // Returns TRUE if there was an error and the tween needs to be destroyed
         internal static bool Goto(Tween t, float to, bool andPlay = false, UpdateMode updateMode = UpdateMode.Goto)
         {
@@ -577,7 +589,7 @@ namespace DG.Tweening.Core
 
         internal static bool Rewind(Tween t, bool includeDelay = true)
         {
-            bool wasPlaying = t.isPlaying; // Manage onPause from this method becacuse DoGoto won't detect it
+            bool wasPlaying = t.isPlaying; // Manage onPause from this method because DoGoto won't detect it
             t.isPlaying = false;
             bool rewinded = false;
             if (t.delay > 0) {

@@ -2,14 +2,14 @@
 using UnityEngine;
 using System.Collections;
 
-[ExecuteInEditMode]
 public class Temp : MonoBehaviour
 {
-	public Transform target;
+	public Transform[] targets;
 
 	void Start()
 	{
-		Tween rotateTween = target.DOLocalRotate(new Vector3(0f, 0f, -180f), 5f, RotateMode.Fast);
-		rotateTween.SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+		targets[0].DOMoveX(2, 2).SetRelative();
+		targets[1].DOMoveY(2, 2).SetRelative();
+		DOTween.Kill(targets[0]);
 	}
 }

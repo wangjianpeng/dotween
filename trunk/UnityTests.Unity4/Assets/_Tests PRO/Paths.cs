@@ -90,6 +90,10 @@ public class Paths : BrainBase
 			.SetAs(tp)
 			.SetRelative()
 			.Pause();
+
+		// Log lengths
+		controller.ForceInit();
+		Debug.Log("Controller path length: " + controller.PathLength());
 	}
 
 	void OnGUI()

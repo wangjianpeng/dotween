@@ -50,6 +50,20 @@ namespace DG.Tweening
             TweenManager.Flip(t);
         }
 
+        /// <summary>Forces the tween to initialize its settings immediately</summary>
+        public static void ForceInit(this Tween t)
+        {
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
+            } else if (t.isSequenced) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
+            }
+
+            TweenManager.ForceInit(t);
+        }
+
         /// <summary>Send the tween to the given position in time</summary>
         /// <param name="to">Time position to reach
         /// (if higher than the whole tween duration the tween will simply reach its end)</param>
@@ -65,43 +79,6 @@ namespace DG.Tweening
             }
 
             if (to < 0) to = 0;
-            TweenManager.Goto(t, to, andPlay);
-        }
-
-        /// <summary>Send a path tween to the given waypoint.
-        /// Has no effect if this is not a path tween.
-        /// <para>BEWARE, this is a special utility method:
-        /// the lookAt direction might be wrong after calling this and might need to be set manually
-        /// (because it relies on a smooth path movement and doesn't work well with jumps that encompass dramatic direction changes)</para></summary>
-        /// <param name="waypointIndex">Waypoint index to reach
-        /// (if higher than the max waypoint index the tween will simply go to the last one)</param>
-        /// <param name="andPlay">If TRUE will play the tween after reaching the given waypoint, otherwise it will pause it</param>
-        public static void GotoWaypoint(this Tween t, int waypointIndex, bool andPlay = false)
-        {
-            if (t == null) {
-                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
-            } else if (!t.active) {
-                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
-            } else if (t.isSequenced) {
-                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
-            }
-
-            TweenerCore<Vector3, Path, PathOptions> pathTween = t as TweenerCore<Vector3, Path, PathOptions>;
-            if (pathTween == null) {
-                if (Debugger.logPriority > 1) Debugger.LogNonPathTween(t); return;
-            }
-
-            if (waypointIndex < 0) waypointIndex = 0;
-            else if (waypointIndex > pathTween.changeValue.wps.Length - 1) waypointIndex = pathTween.changeValue.wps.Length - 1;
-            // Find path percentage relative to given waypoint
-            float wpLength = 0; // Total length from start to the given waypoint
-            for (int i = 0; i < waypointIndex + 1; i++) wpLength += pathTween.changeValue.wpLengths[i];
-            float wpPerc = wpLength / pathTween.changeValue.length;
-            // Convert to time taking eventual inverse direction into account
-            bool useInversePosition = t.loopType == LoopType.Yoyo
-                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0);
-            if (useInversePosition) wpPerc = 1 - wpPerc;
-            float to = (t.isComplete ? t.completedLoops - 1 : t.completedLoops) * t.duration + wpPerc * t.duration;
             TweenManager.Goto(t, to, andPlay);
         }
 
@@ -229,6 +206,47 @@ namespace DG.Tweening
 
             TweenManager.TogglePause(t);
         }
+
+        #region Path Tweens
+
+        /// <summary>Send a path tween to the given waypoint.
+        /// Has no effect if this is not a path tween.
+        /// <para>BEWARE, this is a special utility method:
+        /// the lookAt direction might be wrong after calling this and might need to be set manually
+        /// (because it relies on a smooth path movement and doesn't work well with jumps that encompass dramatic direction changes)</para></summary>
+        /// <param name="waypointIndex">Waypoint index to reach
+        /// (if higher than the max waypoint index the tween will simply go to the last one)</param>
+        /// <param name="andPlay">If TRUE will play the tween after reaching the given waypoint, otherwise it will pause it</param>
+        public static void GotoWaypoint(this Tween t, int waypointIndex, bool andPlay = false)
+        {
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
+            } else if (t.isSequenced) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return;
+            }
+
+            TweenerCore<Vector3, Path, PathOptions> pathTween = t as TweenerCore<Vector3, Path, PathOptions>;
+            if (pathTween == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNonPathTween(t); return;
+            }
+
+            if (waypointIndex < 0) waypointIndex = 0;
+            else if (waypointIndex > pathTween.changeValue.wps.Length - 1) waypointIndex = pathTween.changeValue.wps.Length - 1;
+            // Find path percentage relative to given waypoint
+            float wpLength = 0; // Total length from start to the given waypoint
+            for (int i = 0; i < waypointIndex + 1; i++) wpLength += pathTween.changeValue.wpLengths[i];
+            float wpPerc = wpLength / pathTween.changeValue.length;
+            // Convert to time taking eventual inverse direction into account
+            bool useInversePosition = t.loopType == LoopType.Yoyo
+                && (t.position < t.duration ? t.completedLoops % 2 != 0 : t.completedLoops % 2 == 0);
+            if (useInversePosition) wpPerc = 1 - wpPerc;
+            float to = (t.isComplete ? t.completedLoops - 1 : t.completedLoops) * t.duration + wpPerc * t.duration;
+            TweenManager.Goto(t, to, andPlay);
+        }
+
+        #endregion
 
         #endregion
 
@@ -418,6 +436,35 @@ namespace DG.Tweening
 
             return t.isPlaying;
         }
+
+        #region Path Tweens
+
+        /// <summary>
+        /// Returns the length of a path (returns -1 if this is not a path tween, if the tween is invalid, or if the path is not yet finalized).
+        /// A path is finalized after its tween starts, or immediately if the tween was created with the Path Editor (DOTween Pro feature).
+        /// You can force a path to be finalized by calling <code>myTween.ForceInit()</code>.
+        /// </summary>
+        public static float PathLength(this Tween t)
+        {
+            if (t == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNullTween(t); return -1;
+            } else if (!t.active) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return -1;
+            } else if (t.isSequenced) {
+                if (Debugger.logPriority > 1) Debugger.LogInvalidTween(t); return -1;
+            }
+
+            TweenerCore<Vector3, Path, PathOptions> pathTween = t as TweenerCore<Vector3, Path, PathOptions>;
+            if (pathTween == null) {
+                if (Debugger.logPriority > 1) Debugger.LogNonPathTween(t); return -1;
+            } else if (!pathTween.endValue.isFinalized) {
+                if (Debugger.logPriority > 1) Debugger.LogWarning("The path is not finalized yet"); return -1;
+            }
+
+            return pathTween.endValue.length;
+        }
+
+        #endregion
 
         #endregion
     }
