@@ -20,9 +20,9 @@ public class VirtualTweens : BrainBase
 		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
-		if (GUILayout.Button("Rewind")) DOTween.Rewind();
-		if (GUILayout.Button("Rewind")) DOTween.Complete();
+		if (GUILayout.Button("TogglePause")) DOTween.TogglePauseAll();
+		if (GUILayout.Button("Rewind")) DOTween.RewindAll();
+		if (GUILayout.Button("Rewind")) DOTween.CompleteAll();
 		GUILayout.EndHorizontal();
 
 		GUILayout.Label("Virtual tween result: " + propSetViaVirtualTween);

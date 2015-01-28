@@ -16,6 +16,6 @@ public class TempTests : BrainBase
 
     void OnGUI()
     {
-        if (GUILayout.Button("KILL")) DOTween.Kill();
+        if (GUILayout.Button("KILL")) DOTween.KillAll();
     }
 }

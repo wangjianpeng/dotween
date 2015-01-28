@@ -30,8 +30,8 @@ public class ShapeTweens : BrainBase
 		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
-		if (GUILayout.Button("Restart")) DOTween.Restart();
+		if (GUILayout.Button("TogglePause")) DOTween.TogglePauseAll();
+		if (GUILayout.Button("Restart")) DOTween.RestartAll();
 		GUILayout.EndHorizontal();
 
 		DGUtils.EndGUI();

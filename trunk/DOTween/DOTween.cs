@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "1.0.070";
+        public static readonly string Version = "1.0.080";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -558,7 +558,7 @@ namespace DG.Tweening
 
         /// <summary>Completes all tweens and returns the number of actual tweens completed
         /// (meaning tweens that don't have infinite loops and were not already complete)</summary>
-        public static int Complete()
+        public static int CompleteAll()
         {
             return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, null, false, 0);
         }
@@ -570,7 +570,7 @@ namespace DG.Tweening
             return TweenManager.FilteredOperation(OperationType.Complete, FilterType.TargetOrId, targetOrId, false, 0);
         }
         // Used internally to complete a tween and return only the number of killed tweens instead than just the completed ones
-        // (necessary for Kill(complete) operation. Sets optionalBool to TRUE
+        // (necessary for Kill(complete) operation. Sets optionalBool to TRUE)
         internal static int CompleteAndReturnKilledTot()
         {
             return TweenManager.FilteredOperation(OperationType.Complete, FilterType.All, null, true, 0);
@@ -583,7 +583,7 @@ namespace DG.Tweening
 
         /// <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
         /// then returns the number of actual tweens flipped</summary>
-        public static int Flip()
+        public static int FlipAll()
         {
             return TweenManager.FilteredOperation(OperationType.Flip, FilterType.All, null, false, 0);
         }
@@ -596,7 +596,7 @@ namespace DG.Tweening
         }
 
         /// <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
-        public static int Goto(float to, bool andPlay = false)
+        public static int GotoAll(float to, bool andPlay = false)
         {
             return TweenManager.FilteredOperation(OperationType.Goto, FilterType.All, null, andPlay, to);
         }
@@ -610,8 +610,9 @@ namespace DG.Tweening
 
         /// <summary>Kills all tweens and returns the number of actual tweens killed</summary>
         /// <param name="complete">If TRUE completes the tweens before killing them</param>
-        public static int Kill(bool complete = false)
+        public static int KillAll(bool complete = false)
         {
+            Debug.Log("HERE > complete: " + complete);
             int tot = complete ? CompleteAndReturnKilledTot() : 0;
             return tot + TweenManager.DespawnAll();
         }
@@ -625,7 +626,7 @@ namespace DG.Tweening
         }
 
         /// <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
-        public static int Pause()
+        public static int PauseAll()
         {
             return TweenManager.FilteredOperation(OperationType.Pause, FilterType.All, null, false, 0);
         }
@@ -639,7 +640,7 @@ namespace DG.Tweening
 
         /// <summary>Plays all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already playing or complete)</summary>
-        public static int Play()
+        public static int PlayAll()
         {
             return TweenManager.FilteredOperation(OperationType.Play, FilterType.All, null, false, 0);
         }
@@ -653,7 +654,7 @@ namespace DG.Tweening
 
         /// <summary>Plays backwards all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already started, playing backwards or rewinded)</summary>
-        public static int PlayBackwards()
+        public static int PlayBackwardsAll()
         {
             return TweenManager.FilteredOperation(OperationType.PlayBackwards, FilterType.All, null, false, 0);
         }
@@ -667,7 +668,7 @@ namespace DG.Tweening
 
         /// <summary>Plays forward all tweens and returns the number of actual tweens played
         /// (meaning tweens that were not already playing forward or complete)</summary>
-        public static int PlayForward()
+        public static int PlayForwardAll()
         {
             return TweenManager.FilteredOperation(OperationType.PlayForward, FilterType.All, null, false, 0);
         }
@@ -680,7 +681,7 @@ namespace DG.Tweening
         }
 
         /// <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
-        public static int Restart(bool includeDelay = true)
+        public static int RestartAll(bool includeDelay = true)
         {
             return TweenManager.FilteredOperation(OperationType.Restart, FilterType.All, null, includeDelay, 0);
         }
@@ -693,7 +694,7 @@ namespace DG.Tweening
 
         /// <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
         /// (meaning tweens that were not already rewinded)</summary>
-        public static int Rewind(bool includeDelay = true)
+        public static int RewindAll(bool includeDelay = true)
         {
             return TweenManager.FilteredOperation(OperationType.Rewind, FilterType.All, null, includeDelay, 0);
         }
@@ -707,7 +708,7 @@ namespace DG.Tweening
 
         /// <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
         /// (meaning tweens that could be played or paused, depending on the toggle state)</summary>
-        public static int TogglePause()
+        public static int TogglePauseAll()
         {
             return TweenManager.FilteredOperation(OperationType.TogglePause, FilterType.All, null, false, 0);
         }

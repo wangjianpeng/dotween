@@ -18,6 +18,6 @@ public class CustomPluginExampleBrain : BrainBase
 
 	void OnGUI()
 	{
-		if (GUILayout.Button("Flip")) DOTween.Flip();
+		if (GUILayout.Button("Flip")) DOTween.FlipAll();
 	}
 }

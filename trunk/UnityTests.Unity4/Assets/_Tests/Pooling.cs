@@ -77,8 +77,8 @@ public class Pooling : BrainBase
 	    GUILayout.Space(5);
 
 	    GUILayout.BeginHorizontal();
-	    if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
-	    if (GUILayout.Button("Kill")) DOTween.Kill();
+	    if (GUILayout.Button("Toggle Pause")) DOTween.TogglePauseAll();
+	    if (GUILayout.Button("Kill")) DOTween.KillAll();
 	    if (GUILayout.Button("Clear")) Clear();
 	    if (GUILayout.Button("Clear FULL")) Clear(true);
 	    GUILayout.EndHorizontal();

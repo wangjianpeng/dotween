@@ -12,16 +12,16 @@ public class SequenceCallbacks : BrainBase
     {
         DGUtils.BeginGUI();
 
-        if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
+        if (GUILayout.Button("TogglePause")) DOTween.TogglePauseAll();
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Rewind")) DOTween.Rewind();
-        if (GUILayout.Button("Restart")) DOTween.Restart();
-        if (GUILayout.Button("Complete")) DOTween.Complete();
-        if (GUILayout.Button("Flip")) DOTween.Flip();
-        if (GUILayout.Button("Goto 0.5")) DOTween.Goto(0.5f);
-        if (GUILayout.Button("Goto 1")) DOTween.Goto(1);
-        if (GUILayout.Button("Goto 1.5")) DOTween.Goto(1.5f);
+        if (GUILayout.Button("Rewind")) DOTween.RewindAll();
+        if (GUILayout.Button("Restart")) DOTween.RestartAll();
+        if (GUILayout.Button("Complete")) DOTween.CompleteAll();
+        if (GUILayout.Button("Flip")) DOTween.FlipAll();
+        if (GUILayout.Button("Goto 0.5")) DOTween.GotoAll(0.5f);
+        if (GUILayout.Button("Goto 1")) DOTween.GotoAll(1);
+        if (GUILayout.Button("Goto 1.5")) DOTween.GotoAll(1.5f);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();

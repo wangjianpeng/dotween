@@ -24,15 +24,15 @@ public class Vector3Array : BrainBase
 		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
-		if (GUILayout.Button("Complete")) DOTween.Complete();
-		if (GUILayout.Button("Restart")) DOTween.Restart();
-		if (GUILayout.Button("Rewind")) DOTween.Rewind();
+		if (GUILayout.Button("TogglePause")) DOTween.TogglePauseAll();
+		if (GUILayout.Button("Complete")) DOTween.CompleteAll();
+		if (GUILayout.Button("Restart")) DOTween.RestartAll();
+		if (GUILayout.Button("Rewind")) DOTween.RewindAll();
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Goto 1")) DOTween.Goto(1);
-		if (GUILayout.Button("Goto 2")) DOTween.Goto(2);
-		if (GUILayout.Button("Goto 3")) DOTween.Goto(3);
+		if (GUILayout.Button("Goto 1")) DOTween.GotoAll(1);
+		if (GUILayout.Button("Goto 2")) DOTween.GotoAll(2);
+		if (GUILayout.Button("Goto 3")) DOTween.GotoAll(3);
 		GUILayout.EndHorizontal();
 
 		DGUtils.EndGUI();

@@ -103,9 +103,9 @@ public class Paths : BrainBase
 		DGUtils.GUIScrubber(controller);
 
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("TogglePause")) DOTween.TogglePause();
-		if (GUILayout.Button("Goto 1.5")) DOTween.Goto(1.5f);
-		if (GUILayout.Button("Kill")) DOTween.Kill();
+		if (GUILayout.Button("TogglePause")) DOTween.TogglePauseAll();
+		if (GUILayout.Button("Goto 1.5")) DOTween.GotoAll(1.5f);
+		if (GUILayout.Button("Kill")) DOTween.KillAll();
 		GUILayout.EndHorizontal();
 
 		DGUtils.EndGUI();
