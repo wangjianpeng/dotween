@@ -26,6 +26,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         internal ControlPoint[] controlPoints; // Control points used by non-linear paths
         internal float length; // Unit length of the path
         internal float[] wpLengths; // Unit length of each waypoint
+        internal bool isFinalized; // TRUE when the path has been finalized (either by starting the tween or if the path was created by the Path Editor)
 
         internal float[] timesTable; // Connected to lengthsTable, used for constant speed calculations
         internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
@@ -77,6 +78,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             }
 
             _decoder.FinalizePath(this, wps, isClosedPath);
+            isFinalized = true;
         }
 
         /// <summary>
@@ -159,6 +161,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
             wps = null;
             wpLengths = timesTable = lengthsTable = null;
             nonLinearDrawWps = null;
+            isFinalized = false;
         }
 
         #endregion
