@@ -2,16 +2,10 @@
 using UnityEngine;
 using System.Collections;
 
-public class Temp : MonoBehaviour
+public class Temp : BrainBase
 {
-	public Transform[] targets;
-
-	void Start()
+	public void ClickButton(Transform target)
 	{
-		targets[0].DOMoveX(2, 2).SetRelative().SetId(1);
-		targets[1].DOMoveY(2, 2).SetRelative();
-		DOTween.Kill(targets[0]);
-		// DOTween.Kill(1);
-		// DOTween.Kill(null);
+		target.DOMoveY(1, 1).SetRelative();
 	}
 }
