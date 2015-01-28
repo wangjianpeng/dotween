@@ -40,7 +40,7 @@ public class Sequences : BrainBase
 		if (GUILayout.Button("PlayBackwards")) mainSequence.PlayBackwards();
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Kill All")) DOTween.Kill();
+		if (GUILayout.Button("Kill All")) DOTween.KillAll();
 		if (GUILayout.Button("Create MAIN Sequence")) mainSequence = CreateSequence();
 		if (GUILayout.Button("Create FROM Sequence")) CreateFromSequence();
 		if (GUILayout.Button("Create Tween")) CreateTween();

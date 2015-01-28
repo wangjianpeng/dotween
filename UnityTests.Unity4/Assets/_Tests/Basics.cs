@@ -157,25 +157,25 @@ public class Basics : BrainBase
 		DGUtils.BeginGUI();
 
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Play All")) Debug.Log("Played tweens: " + DOTween.Play());
-		if (GUILayout.Button("Pause All")) Debug.Log("Paused tweens: " + DOTween.Pause());
-		if (GUILayout.Button("Kill All")) Debug.Log("Killed tweens: " + DOTween.Kill());
-		if (GUILayout.Button("Complete+Kill All")) Debug.Log("Killed tweens: " + DOTween.Kill(true));
+		if (GUILayout.Button("Play All")) Debug.Log("Played tweens: " + DOTween.PlayAll());
+		if (GUILayout.Button("Pause All")) Debug.Log("Paused tweens: " + DOTween.PauseAll());
+		if (GUILayout.Button("Kill All")) Debug.Log("Killed tweens: " + DOTween.KillAll());
+		if (GUILayout.Button("Complete+Kill All")) Debug.Log("Killed tweens: " + DOTween.KillAll(true));
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Rewind All")) Debug.Log("Rewinded tweens: " + DOTween.Rewind());
-		if (GUILayout.Button("Restart All")) Debug.Log("Restarted tweens: " + DOTween.Restart());
-		if (GUILayout.Button("Complete All")) Debug.Log("Completed tweens: " + DOTween.Complete());
+		if (GUILayout.Button("Rewind All")) Debug.Log("Rewinded tweens: " + DOTween.RewindAll());
+		if (GUILayout.Button("Restart All")) Debug.Log("Restarted tweens: " + DOTween.RestartAll());
+		if (GUILayout.Button("Complete All")) Debug.Log("Completed tweens: " + DOTween.CompleteAll());
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("PlayForward All")) Debug.Log("PlayForwarded tweens: " + DOTween.PlayForward());
-		if (GUILayout.Button("PlayBackwards All")) Debug.Log("PlayBackwarded tweens: " + DOTween.PlayBackwards());
-		if (GUILayout.Button("Flip All")) Debug.Log("Flipped tweens: " + DOTween.Flip());
+		if (GUILayout.Button("PlayForward All")) Debug.Log("PlayForwarded tweens: " + DOTween.PlayForwardAll());
+		if (GUILayout.Button("PlayBackwards All")) Debug.Log("PlayBackwarded tweens: " + DOTween.PlayBackwardsAll());
+		if (GUILayout.Button("Flip All")) Debug.Log("Flipped tweens: " + DOTween.FlipAll());
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Goto 1.5 All")) Debug.Log("Goto-ed tweens: " + DOTween.Goto(1.5f));
-		if (GUILayout.Button("Goto 3 All")) Debug.Log("Goto-ed tweens: " + DOTween.Goto(3));
-		if (GUILayout.Button("Goto 4.5 All")) Debug.Log("Goto-ed tweens: " + DOTween.Goto(4.5f));
+		if (GUILayout.Button("Goto 1.5 All")) Debug.Log("Goto-ed tweens: " + DOTween.GotoAll(1.5f));
+		if (GUILayout.Button("Goto 3 All")) Debug.Log("Goto-ed tweens: " + DOTween.GotoAll(3));
+		if (GUILayout.Button("Goto 4.5 All")) Debug.Log("Goto-ed tweens: " + DOTween.GotoAll(4.5f));
 		GUILayout.EndHorizontal();
 
 		GUILayout.BeginHorizontal();

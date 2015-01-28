@@ -62,7 +62,7 @@ public class StartupSpeed : BrainBase
 
 	IEnumerator StartupPos(int tot)
 	{
-		DOTween.Kill();
+		DOTween.KillAll();
 		yield return null;
 
 		float time = Time.realtimeSinceStartup;
@@ -72,7 +72,7 @@ public class StartupSpeed : BrainBase
 
 	IEnumerator StartupFloats(int tot)
 	{
-		DOTween.Kill();
+		DOTween.KillAll();
 		yield return null;
 
 		float time = Time.realtimeSinceStartup;

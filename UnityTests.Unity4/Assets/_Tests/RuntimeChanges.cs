@@ -41,7 +41,7 @@ public class RuntimeChanges : BrainBase
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P)) DOTween.TogglePause();
+		if (Input.GetKeyDown(KeyCode.P)) DOTween.TogglePauseAll();
 		else if (Input.GetKeyDown(KeyCode.KeypadMinus)) {
 			durationToApply -= 0.25f;
 			if (durationToApply < 0.25f) durationToApply = 0.25f;

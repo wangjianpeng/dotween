@@ -9,16 +9,16 @@ public class MultipleAxisRotation : MonoBehaviour
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-			DOTween.Complete();
+			DOTween.CompleteAll();
 			target.DORotate(new Vector3(0, 90, 0), 1, RotateMode.LocalAxisAdd);
 		} else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-			DOTween.Complete();
+			DOTween.CompleteAll();
 			target.DORotate(new Vector3(0, -90, 0), 1, RotateMode.LocalAxisAdd);
 		} else if (Input.GetKeyDown(KeyCode.UpArrow)) {
-			DOTween.Complete();
+			DOTween.CompleteAll();
 			target.DORotate(new Vector3(90, 0, 0), 1, RotateMode.LocalAxisAdd);
 		} else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-			DOTween.Complete();
+			DOTween.CompleteAll();
 			target.DORotate(new Vector3(-90, 0, 0), 1, RotateMode.LocalAxisAdd);
 		}
 	}

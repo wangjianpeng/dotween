@@ -57,7 +57,7 @@ public class Coroutines : BrainBase
 	{
 		DGUtils.BeginGUI();
 
-		if (GUILayout.Button("Kill")) DOTween.Kill();
+		if (GUILayout.Button("Kill")) DOTween.KillAll();
 
 		DGUtils.EndGUI();
 	}

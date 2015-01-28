@@ -359,7 +359,7 @@
             Returns a new <see cref="M:DG.Tweening.DOTween.Sequence"/> to be used for tween groups
             </summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Complete">
+        <member name="M:DG.Tweening.DOTween.CompleteAll">
             <summary>Completes all tweens and returns the number of actual tweens completed
             (meaning tweens that don't have infinite loops and were not already complete)</summary>
         </member>
@@ -367,7 +367,7 @@
             <summary>Completes all tweens with the given ID or target and returns the number of actual tweens completed
             (meaning the tweens that don't have infinite loops and were not already complete)</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Flip">
+        <member name="M:DG.Tweening.DOTween.FlipAll">
             <summary>Flips all tweens (changing their direction to forward if it was backwards and viceversa),
             then returns the number of actual tweens flipped</summary>
         </member>
@@ -375,14 +375,14 @@
             <summary>Flips the tweens with the given ID or target (changing their direction to forward if it was backwards and viceversa),
             then returns the number of actual tweens flipped</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Goto(System.Single,System.Boolean)">
+        <member name="M:DG.Tweening.DOTween.GotoAll(System.Single,System.Boolean)">
             <summary>Sends all tweens to the given position (calculating also eventual loop cycles) and returns the actual tweens involved</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.Goto(System.Object,System.Single,System.Boolean)">
             <summary>Sends all tweens with the given ID or target to the given position (calculating also eventual loop cycles)
             and returns the actual tweens involved</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Kill(System.Boolean)">
+        <member name="M:DG.Tweening.DOTween.KillAll(System.Boolean)">
             <summary>Kills all tweens and returns the number of actual tweens killed</summary>
             <param name="complete">If TRUE completes the tweens before killing them</param>
         </member>
@@ -390,14 +390,14 @@
             <summary>Kills all tweens with the given ID or target and returns the number of actual tweens killed</summary>
             <param name="complete">If TRUE completes the tweens before killing them</param>
         </member>
-        <member name="M:DG.Tweening.DOTween.Pause">
+        <member name="M:DG.Tweening.DOTween.PauseAll">
             <summary>Pauses all tweens and returns the number of actual tweens paused</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.Pause(System.Object)">
             <summary>Pauses all tweens with the given ID or target and returns the number of actual tweens paused
             (meaning the tweens that were actually playing and have been paused)</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Play">
+        <member name="M:DG.Tweening.DOTween.PlayAll">
             <summary>Plays all tweens and returns the number of actual tweens played
             (meaning tweens that were not already playing or complete)</summary>
         </member>
@@ -405,7 +405,7 @@
             <summary>Plays all tweens with the given ID or target and returns the number of actual tweens played
             (meaning the tweens that were not already playing or complete)</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.PlayBackwards">
+        <member name="M:DG.Tweening.DOTween.PlayBackwardsAll">
             <summary>Plays backwards all tweens and returns the number of actual tweens played
             (meaning tweens that were not already started, playing backwards or rewinded)</summary>
         </member>
@@ -413,7 +413,7 @@
             <summary>Plays backwards all tweens with the given ID or target and returns the number of actual tweens played
             (meaning the tweens that were not already started, playing backwards or rewinded)</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.PlayForward">
+        <member name="M:DG.Tweening.DOTween.PlayForwardAll">
             <summary>Plays forward all tweens and returns the number of actual tweens played
             (meaning tweens that were not already playing forward or complete)</summary>
         </member>
@@ -421,13 +421,13 @@
             <summary>Plays forward all tweens with the given ID or target and returns the number of actual tweens played
             (meaning the tweens that were not already playing forward or complete)</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Restart(System.Boolean)">
+        <member name="M:DG.Tweening.DOTween.RestartAll(System.Boolean)">
             <summary>Restarts all tweens, then returns the number of actual tweens restarted</summary>
         </member>
         <member name="M:DG.Tweening.DOTween.Restart(System.Object,System.Boolean)">
             <summary>Restarts all tweens with the given ID or target, then returns the number of actual tweens restarted</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.Rewind(System.Boolean)">
+        <member name="M:DG.Tweening.DOTween.RewindAll(System.Boolean)">
             <summary>Rewinds and pauses all tweens, then returns the number of actual tweens rewinded
             (meaning tweens that were not already rewinded)</summary>
         </member>
@@ -435,7 +435,7 @@
             <summary>Rewinds and pauses all tweens with the given ID or target, then returns the number of actual tweens rewinded
             (meaning the tweens that were not already rewinded)</summary>
         </member>
-        <member name="M:DG.Tweening.DOTween.TogglePause">
+        <member name="M:DG.Tweening.DOTween.TogglePauseAll">
             <summary>Toggles the play state of all tweens and returns the number of actual tweens toggled
             (meaning tweens that could be played or paused, depending on the toggle state)</summary>
         </member>

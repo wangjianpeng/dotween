@@ -56,16 +56,16 @@ public class SequencesExperiments : BrainBase
 	{
 		DGUtils.BeginGUI();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Toggle Pause")) DOTween.TogglePause();
+		if (GUILayout.Button("Toggle Pause")) DOTween.TogglePauseAll();
 		if (GUILayout.Button("Rewind")) {
 			Debug.Log("<color=#ff0000>REWIND</color>");
-			DOTween.Rewind();
+			DOTween.RewindAll();
 		}
 		if (GUILayout.Button("Restart")) {
 			Debug.Log("<color=#ff0000>RESTART</color>");
-			DOTween.Restart();
+			DOTween.RestartAll();
 		}
-		if (GUILayout.Button("Flip")) DOTween.Flip();
+		if (GUILayout.Button("Flip")) DOTween.FlipAll();
 		GUILayout.EndHorizontal();
 		DGUtils.EndGUI();
 	}

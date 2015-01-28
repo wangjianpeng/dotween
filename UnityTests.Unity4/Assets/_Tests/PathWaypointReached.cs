@@ -37,12 +37,12 @@ public class PathWaypointReached : BrainBase
 
 		GUILayout.Label("Is backwards: " + pathTweens[0].isBackwards);
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Play")) DOTween.Play();
-		if (GUILayout.Button("Flip")) DOTween.Flip();
+		if (GUILayout.Button("Play")) DOTween.PlayAll();
+		if (GUILayout.Button("Flip")) DOTween.FlipAll();
 		GUILayout.EndHorizontal();
 		GUILayout.BeginHorizontal();
-		if (GUILayout.Button("Goto duration x 2")) DOTween.Goto(duration * 2);
-		if (GUILayout.Button("Goto duration x 0.5")) DOTween.Goto(duration * 0.5f);
+		if (GUILayout.Button("Goto duration x 2")) DOTween.GotoAll(duration * 2);
+		if (GUILayout.Button("Goto duration x 0.5")) DOTween.GotoAll(duration * 0.5f);
 		if (GUILayout.Button("Goto WP 0")) pathTweens[0].GotoWaypoint(0);
 		if (GUILayout.Button("Goto WP 2")) pathTweens[0].GotoWaypoint(2);
 		if (GUILayout.Button("Goto WP 15")) pathTweens[0].GotoWaypoint(15);
