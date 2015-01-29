@@ -137,6 +137,12 @@ namespace DG.Tweening.Core
             while (t.active && !t.isComplete) yield return null;
         }
 
+        // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be rewinded (or killed)
+        internal IEnumerator WaitForRewind(Tween t)
+        {
+            while (t.active && (!t.playedOnce || t.position * (t.completedLoops + 1) > 0)) yield return null;
+        }
+
         // CALLED BY TweenExtensions, creates a coroutine that waits for the tween to be killed
         internal IEnumerator WaitForKill(Tween t)
         {

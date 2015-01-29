@@ -5,17 +5,15 @@ using System;
  
 public class TempTests : BrainBase
 {
-    public Transform[] targets;
+    public Rigidbody target;
+
+    Tween tween;
  
     void Start()
     {
-        targets[0].DOMoveX(3, 1).SetLoops(-1).SetAutoKill(false).OnKill(()=> Debug.Log("Tween Killed"));
+        tween = target.DOMoveX(5, 10).SetLoops(2, LoopType.Yoyo);
+        tween.Pause();
 
-        DOTween.Sequence().Append(targets[1].DOMoveX(3, 1)).SetLoops(-1).SetAutoKill(false).OnKill(()=> Debug.Log("Sequence Killed"));
-    }
-
-    void OnGUI()
-    {
-        if (GUILayout.Button("KILL")) DOTween.KillAll();
+        DOTween.To(()=> tween.fullPosition, x=> tween.fullPosition = x, 20, 4);
     }
 }
