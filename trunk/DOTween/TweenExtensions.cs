@@ -268,6 +268,21 @@ namespace DG.Tweening
         }
 
         /// <summary>
+        /// Creates a yield instruction that waits until the tween is killed or rewinded.
+        /// It can be used inside a coroutine as a yield.
+        /// <para>Example usage:</para><code>yield return myTween.WaitForRewind();</code>
+        /// </summary>
+        public static YieldInstruction WaitForRewind(this Tween t)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return null;
+            }
+
+            return DOTween.instance.StartCoroutine(DOTween.instance.WaitForRewind(t));
+        }
+
+        /// <summary>
         /// Creates a yield instruction that waits until the tween is killed.
         /// It can be used inside a coroutine as a yield.
         /// <para>Example usage:</para><code>yield return myTween.WaitForKill();</code>
@@ -440,9 +455,9 @@ namespace DG.Tweening
         #region Path Tweens
 
         /// <summary>
-        /// Returns the length of a path (returns -1 if this is not a path tween, if the tween is invalid, or if the path is not yet finalized).
-        /// A path is finalized after its tween starts, or immediately if the tween was created with the Path Editor (DOTween Pro feature).
-        /// You can force a path to be finalized by calling <code>myTween.ForceInit()</code>.
+        /// Returns the length of a path (returns -1 if this is not a path tween, if the tween is invalid, or if the path is not yet initialized).
+        /// A path is initialized after its tween starts, or immediately if the tween was created with the Path Editor (DOTween Pro feature).
+        /// You can force a path to be initialized by calling <code>myTween.ForceInit()</code>.
         /// </summary>
         public static float PathLength(this Tween t)
         {

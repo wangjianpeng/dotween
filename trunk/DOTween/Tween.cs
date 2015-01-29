@@ -83,6 +83,9 @@ namespace DG.Tweening
 
         // PLAY DATA /////////////////////////////////////////////////
 
+        /// <summary>Gets and sets the time position (loops included, delays excluded) of the tween</summary>
+        public float fullPosition { get { return this.Elapsed(true); } set { this.Goto(value, this.isPlaying); } }
+
         internal bool creationLocked; // TRUE after the tween was updated the first time (even if it was delayed), or when added to a Sequence
         internal bool startupDone; // TRUE the first time the actual tween starts, AFTER any delay has elapsed (unless it's a FROM tween)
         internal bool playedOnce; // TRUE after the tween was set in a play state at least once, AFTER any delay is elapsed

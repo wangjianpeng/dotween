@@ -9,8 +9,9 @@ public class Coroutines : BrainBase
 	void Start()
 	{
 		foreach (Transform t in targets) {
-			Tween tween = t.DOMove(new Vector3(Random.Range(10f, 10f), Random.Range(10f, 10f), 0), 2f).SetLoops(3);
+			Tween tween = t.DOMove(new Vector3(Random.Range(10f, 10f), Random.Range(10f, 10f), 0), 2f).SetLoops(3).Pause();
 			StartCoroutine(WaitForCompletion(t, tween));
+			StartCoroutine(WaitForRewind(t, tween));
 			StartCoroutine(WaitForKill(t, tween));
 			StartCoroutine(WaitForStart(t, tween));
 			StartCoroutine(WaitForElapsedLoops(t, tween));
@@ -23,6 +24,13 @@ public class Coroutines : BrainBase
 		yield return tween.WaitForCompletion();
 
 		Debug.Log(t + " complete");
+	}
+
+	IEnumerator WaitForRewind(Transform t, Tween tween)
+	{
+		yield return tween.WaitForRewind();
+
+		Debug.Log(t + " rewinded");
 	}
 
 	IEnumerator WaitForKill(Transform t, Tween tween)
@@ -57,7 +65,9 @@ public class Coroutines : BrainBase
 	{
 		DGUtils.BeginGUI();
 
+		if (GUILayout.Button("Play")) DOTween.PlayAll();
 		if (GUILayout.Button("Kill")) DOTween.KillAll();
+		if (GUILayout.Button("Rewind")) DOTween.RewindAll();
 
 		DGUtils.EndGUI();
 	}

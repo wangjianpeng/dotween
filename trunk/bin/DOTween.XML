@@ -855,6 +855,9 @@
         <member name="F:DG.Tweening.Tween.onWaypointChange">
             <summary>Called when a path tween's current waypoint changes</summary>
         </member>
+        <member name="P:DG.Tweening.Tween.fullPosition">
+            <summary>Gets and sets the time position (loops included, delays excluded) of the tween</summary>
+        </member>
         <member name="M:DG.Tweening.Tweener.ChangeStartValue(System.Object,System.Single)">
             <summary>Changes the start value of a tween and rewinds it (without pausing it).
             Has no effect with tweens that are inside Sequences</summary>
@@ -960,6 +963,13 @@
             <para>Example usage:</para><code>yield return myTween.WaitForCompletion();</code>
             </summary>
         </member>
+        <member name="M:DG.Tweening.TweenExtensions.WaitForRewind(DG.Tweening.Tween)">
+            <summary>
+            Creates a yield instruction that waits until the tween is killed or rewinded.
+            It can be used inside a coroutine as a yield.
+            <para>Example usage:</para><code>yield return myTween.WaitForRewind();</code>
+            </summary>
+        </member>
         <member name="M:DG.Tweening.TweenExtensions.WaitForKill(DG.Tweening.Tween)">
             <summary>
             Creates a yield instruction that waits until the tween is killed.
@@ -1028,9 +1038,9 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.PathLength(DG.Tweening.Tween)">
             <summary>
-            Returns the length of a path (returns -1 if this is not a path tween, if the tween is invalid, or if the path is not yet finalized).
-            A path is finalized after its tween starts, or immediately if the tween was created with the Path Editor (DOTween Pro feature).
-            You can force a path to be finalized by calling <code>myTween.ForceInit()</code>.
+            Returns the length of a path (returns -1 if this is not a path tween, if the tween is invalid, or if the path is not yet initialized).
+            A path is initialized after its tween starts, or immediately if the tween was created with the Path Editor (DOTween Pro feature).
+            You can force a path to be initialized by calling <code>myTween.ForceInit()</code>.
             </summary>
         </member>
         <member name="T:DG.Tweening.Plugins.Vector3ArrayPlugin">
@@ -1799,6 +1809,23 @@
             <summary>
             What axis to constrain in case of Vector tweens
             </summary>
+        </member>
+        <member name="T:DG.Tweening.DOVirtual">
+            <summary>
+            Creates virtual tweens that can be used to change other elements via their OnUpdate calls
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOVirtual.Float(System.Single,System.Single,System.Single,DG.Tweening.Core.TweenCallback{System.Single})">
+            <summary>
+            Tweens a virtual float.
+            You can add regular setting to the generated tween,
+            but do not use <code>SetUpdate</code> or you will overwrite the onVirtualUpdate parameter
+            </summary>
+            <param name="from">The value to start from</param>
+            <param name="to">The value to tween to</param>
+            <param name="duration">The duration of the tween</param>
+            <param name="onVirtualUpdate">A callback which must accept a parameter of type float, called at each update</param>
+            <returns></returns>
         </member>
     </members>
 </doc>
