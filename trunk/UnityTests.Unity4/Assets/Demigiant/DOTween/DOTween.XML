@@ -1810,11 +1810,6 @@
         <member name="F:DG.Tweening.PathType.CatmullRom">
             <summary>Curved path (which uses Catmull-Rom curves)</summary>
         </member>
-        <member name="T:DG.Tweening.AxisConstraint">
-            <summary>
-            What axis to constrain in case of Vector tweens
-            </summary>
-        </member>
         <member name="T:DG.Tweening.DOVirtual">
             <summary>
             Creates virtual tweens that can be used to change other elements via their OnUpdate calls
@@ -1862,6 +1857,11 @@
             <param name="to">The value to reach when lifetimePercentage is 1</param>
             <param name="lifetimePercentage">The time percentage (0 to 1) at which the value should be taken</param>
             <param name="easeCurve">The AnimationCurve to use for ease</param>
+        </member>
+        <member name="T:DG.Tweening.AxisConstraint">
+            <summary>
+            What axis to constrain in case of Vector tweens
+            </summary>
         </member>
     </members>
 </doc>
