@@ -153,7 +153,10 @@ namespace DG.Tweening
         // Returns TRUE in case of success
         internal static bool DoStartup(Sequence s)
         {
-            if (s.sequencedTweens.Count == 0 && s._sequencedObjs.Count == 0) return false; // Empty Sequence
+            if (s.sequencedTweens.Count == 0 && s._sequencedObjs.Count == 0
+                && s.onComplete == null && s.onKill == null && s.onPause == null && s.onPlay == null && s.onRewind == null
+                && s.onStart == null && s.onStepComplete == null && s.onUpdate == null
+            ) return false; // Empty Sequence without any callback set
 
             s.startupDone = true;
             s.fullDuration = s.loops > -1 ? s.duration * s.loops : Mathf.Infinity;
