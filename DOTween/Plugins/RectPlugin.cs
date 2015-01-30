@@ -89,7 +89,7 @@ namespace DG.Tweening.Plugins
                 startValue.height += changeValue.height * iterations;
             }
 
-            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float easeVal = EaseManager.Evaluate(t.easeType, t.customEase, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             startValue.x += changeValue.x * easeVal;
             startValue.y += changeValue.y * easeVal;
             startValue.width += changeValue.width * easeVal;

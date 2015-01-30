@@ -96,7 +96,7 @@ namespace DG.Tweening.Plugins
                 _r.bottom += changeValue.bottom * iterations;
             }
 
-            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float easeVal = EaseManager.Evaluate(t.easeType, t.customEase, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             setter(
                 new RectOffset(
                     (int)Math.Round(_r.left + changeValue.left * easeVal),

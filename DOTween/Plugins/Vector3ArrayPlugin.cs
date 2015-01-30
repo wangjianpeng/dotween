@@ -102,7 +102,7 @@ namespace DG.Tweening.Plugins
                 break;
             }
             // Evaluate
-            float easeVal = EaseManager.Evaluate(t, segmentElapsed, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float easeVal = EaseManager.Evaluate(t.easeType, t.customEase, segmentElapsed, segmentDuration, t.easeOvershootOrAmplitude, t.easePeriod);
             Vector3 res;
             switch (options.axisConstraint) {
             case AxisConstraint.X:
