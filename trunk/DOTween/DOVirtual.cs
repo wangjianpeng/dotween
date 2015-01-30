@@ -3,6 +3,7 @@
 
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
+using UnityEngine;
 
 namespace DG.Tweening
 {
@@ -31,13 +32,48 @@ namespace DG.Tweening
 
         #endregion
 
-//        #region Virtual Functions
-//
-//        public static float EaseValueAtTime(float time, float duration, Ease easeType)
-//        {
-//            return EaseManager.
-//        }
-//
-//        #endregion
+        #region Virtual Functions
+
+        /// <summary>Returns a value based on the given ease and lifetime percentage (0 to 1)</summary>
+        /// <param name="from">The value to start from when lifetimePercentage is 0</param>
+        /// <param name="to">The value to reach when lifetimePercentage is 1</param>
+        /// <param name="lifetimePercentage">The time percentage (0 to 1) at which the value should be taken</param>
+        /// <param name="easeType">The type of ease</param>
+        public static float EasedValue(float from, float to, float lifetimePercentage, Ease easeType)
+        {
+            return from + (to - from) * EaseManager.Evaluate(easeType, null, lifetimePercentage, 1, DOTween.defaultEaseOvershootOrAmplitude, DOTween.defaultEasePeriod);
+        }
+        /// <summary>Returns a value based on the given ease and lifetime percentage (0 to 1)</summary>
+        /// <param name="from">The value to start from when lifetimePercentage is 0</param>
+        /// <param name="to">The value to reach when lifetimePercentage is 1</param>
+        /// <param name="lifetimePercentage">The time percentage (0 to 1) at which the value should be taken</param>
+        /// <param name="easeType">The type of ease</param>
+        /// <param name="overshoot">Eventual overshoot to use with Back ease</param>
+        public static float EasedValue(float from, float to, float lifetimePercentage, Ease easeType, float overshoot)
+        {
+            return from + (to - from) * EaseManager.Evaluate(easeType, null, lifetimePercentage, 1, overshoot, DOTween.defaultEasePeriod);
+        }
+        /// <summary>Returns a value based on the given ease and lifetime percentage (0 to 1)</summary>
+        /// <param name="from">The value to start from when lifetimePercentage is 0</param>
+        /// <param name="to">The value to reach when lifetimePercentage is 1</param>
+        /// <param name="lifetimePercentage">The time percentage (0 to 1) at which the value should be taken</param>
+        /// <param name="easeType">The type of ease</param>
+        /// <param name="amplitude">Eventual amplitude to use with Elastic easeType</param>
+        /// <param name="period">Eventual period to use with Elastic easeType</param>
+        public static float EasedValue(float from, float to, float lifetimePercentage, Ease easeType, float amplitude, float period)
+        {
+            return from + (to - from) * EaseManager.Evaluate(easeType, null, lifetimePercentage, 1, amplitude, period);
+        }
+        /// <summary>Returns a value based on the given ease and lifetime percentage (0 to 1)</summary>
+        /// <param name="from">The value to start from when lifetimePercentage is 0</param>
+        /// <param name="to">The value to reach when lifetimePercentage is 1</param>
+        /// <param name="lifetimePercentage">The time percentage (0 to 1) at which the value should be taken</param>
+        /// <param name="easeCurve">The AnimationCurve to use for ease</param>
+        public static float EasedValue(float from, float to, float lifetimePercentage, AnimationCurve easeCurve)
+        {
+            return from + (to - from) * EaseManager.Evaluate(Ease.INTERNAL_Custom, new EaseCurve(easeCurve).Evaluate, lifetimePercentage, 1, DOTween.defaultEaseOvershootOrAmplitude, DOTween.defaultEasePeriod);
+        }
+
+        #endregion
     }
 }

@@ -50,7 +50,16 @@ namespace DG.Tweening.Core.Easing
         /// </summary>
         public static float Evaluate(Tween t, float time, float duration, float overshootOrAmplitude, float period)
         {
-            switch (t.easeType) {
+            // Overload used only to allow custom user plugins to avoid calling t.easeType and t.customEase since they're internal
+            return Evaluate(t.easeType, t.customEase, time, duration, overshootOrAmplitude, period);
+        }
+
+        /// <summary>
+        /// Returns a value between 0 and 1 (inclusive) based on the elapsed time and ease selected
+        /// </summary>
+        public static float Evaluate(Ease easeType, EaseFunction customEase, float time, float duration, float overshootOrAmplitude, float period)
+        {
+            switch (easeType) {
             case Ease.Linear:
                 return time / duration;
             case Ease.InSine:
@@ -149,7 +158,7 @@ namespace DG.Tweening.Core.Easing
             case Ease.InOutBounce:
                 return Bounce.EaseInOut(time, duration, overshootOrAmplitude, period);
             case Ease.INTERNAL_Custom:
-                return t.customEase(time, duration, overshootOrAmplitude, period);
+                return customEase(time, duration, overshootOrAmplitude, period);
             case Ease.INTERNAL_Zero:
                 // 0 duration tween
                 return 1;

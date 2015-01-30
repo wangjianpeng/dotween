@@ -4,8 +4,9 @@ using System.Collections;
 
 public class Temp : BrainBase
 {
-	public void ClickButton(Transform target)
+	void Start()
 	{
-		target.DOMoveY(1, 1).SetRelative();
+		// DOTween.Sequence().AppendInterval(2).AppendCallback(()=> Debug.Log("HERE"));
+		DOTween.Sequence().AppendInterval(2).OnComplete(()=> Debug.Log("HERE"));
 	}
 }

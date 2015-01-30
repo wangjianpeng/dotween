@@ -77,72 +77,9 @@ namespace DG.Tweening.Plugins
             // Finalize path
             path.FinalizePath(t.plugOptions.isClosedPath, t.plugOptions.lockPositionAxis, currVal);
 
-            // TODO lockPositionAxis
-
             Transform trans = (Transform)t.target;
             t.plugOptions.startupZRot = trans.eulerAngles.z;
             if (t.plugOptions.orientType == OrientType.ToPath && t.plugOptions.useLocalPosition) t.plugOptions.parent = trans.parent;
-
-            // Set changeValue as a reference to endValue
-            t.changeValue = t.endValue;
-            return;
-
-
-
-
-
-//            Path path = t.endValue;
-//            Vector3 currVal = t.getter();
-//            Vector3[] wps;
-//            int indMod = 1;
-            int pAdd = (t.plugOptions.isClosedPath ? 1 : 0);
-//            int wpsLen = path.wps.Length;
-            
-//            bool hasAdditionalStartingP = path.wps[0] != currVal; // Additional point in case starting waypoint doesn't coincide with current position
-            if (hasAdditionalStartingP) {
-                wps = new Vector3[wpsLen + 3 + pAdd];
-                wps[1] = currVal;
-                indMod = 2;
-            } else {
-                wps = new Vector3[wpsLen + 2 + pAdd];
-            }
-            for (int i = 0; i < wpsLen; ++i) wps[i + indMod] = path.wps[i];
-
-            // Add control points and eventually close path
-            wpsLen = wps.Length;
-            if (t.plugOptions.isClosedPath) {
-                wps[wpsLen - 2] = wps[1];
-                wps[0] = wps[wpsLen - 3];
-                wps[wpsLen - 1] = wps[2];
-            } else {
-                wps[0] = wps[1];
-                Vector3 lastP = wps[wpsLen - 2];
-                Vector3 diffV = lastP - wps[wpsLen - 3];
-                wps[wpsLen - 1] = lastP + diffV;
-            }
-
-            // Manage eventual lockPositionAxis
-            if (t.plugOptions.lockPositionAxis != AxisConstraint.None) {
-                bool lockX = ((t.plugOptions.lockPositionAxis & AxisConstraint.X) == AxisConstraint.X);
-                bool lockY = ((t.plugOptions.lockPositionAxis & AxisConstraint.Y) == AxisConstraint.Y);
-                bool lockZ = ((t.plugOptions.lockPositionAxis & AxisConstraint.Z) == AxisConstraint.Z);
-                for (int i = 0; i < wpsLen; ++i) {
-                    Vector3 pt = wps[i];
-                    wps[i] = new Vector3(
-                        lockX ? currVal.x : pt.x,
-                        lockY ? currVal.y : pt.y,
-                        lockZ ? currVal.z : pt.z
-                    );
-                }
-            }
-
-            // Apply correct values to path and call setup
-//            Transform trans = (Transform)t.target;
-//            path.wps = wps;
-//            path.subdivisions = wpsLen * path.subdivisionsXSegment;
-//            path.FinalizePath(t.plugOptions.isClosedPath);
-//            t.plugOptions.startupZRot = trans.eulerAngles.z;
-//            if (t.plugOptions.orientType == OrientType.ToPath && t.plugOptions.useLocalPosition) t.plugOptions.parent = trans.parent;
 
             // Set changeValue as a reference to endValue
             t.changeValue = t.endValue;
@@ -155,7 +92,7 @@ namespace DG.Tweening.Plugins
 
         public override void EvaluateAndApply(PathOptions options, Tween t, bool isRelative, DOGetter<Vector3> getter, DOSetter<Vector3> setter, float elapsed, Path startValue, Path changeValue, float duration, bool usingInversePosition)
         {
-            float pathPerc = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float pathPerc = EaseManager.Evaluate(t.easeType, t.customEase, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             float constantPathPerc = changeValue.ConvertToConstantPathPerc(pathPerc);
             Vector3 newPos = changeValue.GetPoint(constantPathPerc);
             changeValue.targetPosition = newPos; // Used to draw editor gizmos

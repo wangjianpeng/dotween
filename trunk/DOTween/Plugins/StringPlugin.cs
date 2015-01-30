@@ -75,7 +75,7 @@ namespace DG.Tweening.Plugins
 
             int startValueLen = startValue.Length;
             int changeValueLen = changeValue.Length;
-            int len = (int)Math.Round(changeValueLen * EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod));
+            int len = (int)Math.Round(changeValueLen * EaseManager.Evaluate(t.easeType, t.customEase, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod));
             if (len > changeValueLen) len = changeValueLen;
             else if (len < 0) len = 0;
 

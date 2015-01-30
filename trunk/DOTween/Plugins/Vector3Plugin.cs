@@ -87,7 +87,7 @@ namespace DG.Tweening.Plugins
                     * (t.sequenceParent.isComplete ? t.sequenceParent.completedLoops - 1 : t.sequenceParent.completedLoops);
             }
 
-            float easeVal = EaseManager.Evaluate(t, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
+            float easeVal = EaseManager.Evaluate(t.easeType, t.customEase, elapsed, duration, t.easeOvershootOrAmplitude, t.easePeriod);
             switch (options.axisConstraint) {
             case AxisConstraint.X:
                 Vector3 resX = getter();

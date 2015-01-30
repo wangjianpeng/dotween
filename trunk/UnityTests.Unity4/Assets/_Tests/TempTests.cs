@@ -5,15 +5,9 @@ using System;
  
 public class TempTests : BrainBase
 {
-    public Rigidbody target;
-
-    Tween tween;
- 
-    void Start()
+    public void OnClick(Transform t)
     {
-        tween = target.DOMoveX(5, 10).SetLoops(2, LoopType.Yoyo);
-        tween.Pause();
-
-        DOTween.To(()=> tween.fullPosition, x=> tween.fullPosition = x, 20, 4);
+    	t = null;
+    	t.DOMoveX(2, 1);
     }
 }
