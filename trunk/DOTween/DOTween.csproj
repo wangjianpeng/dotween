@@ -49,6 +49,7 @@
     <Compile Include="Core\Delegates.cs" />
     <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\DOTweenComponent.cs" />
+    <Compile Include="Core\DOTweenSettings.cs" />
     <Compile Include="Core\Easing\Bounce.cs" />
     <Compile Include="Core\Easing\EaseManager.cs" />
     <Compile Include="Core\Easing\EaseCurve.cs" />
