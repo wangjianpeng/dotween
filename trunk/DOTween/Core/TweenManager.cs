@@ -349,6 +349,15 @@ namespace DG.Tweening.Core
                     }
                     if (tDeltaTime <= 0) continue;
                 }
+                // Startup (needs to be here other than in Tween.DoGoto in case of speed-based tweens, to calculate duration correctly)
+                if (!t.startupDone) {
+                    if (!t.Startup()) {
+                        // Startup failure: mark for killing
+                        willKill = true;
+                        MarkForKilling(t);
+                        continue;
+                    }
+                }
                 // Find update data
                 float toPosition = t.position;
                 bool wasEndPosition = toPosition >= t.duration;
@@ -365,7 +374,7 @@ namespace DG.Tweening.Core
                         }
                     } else {
                         toPosition += tDeltaTime;
-                        while (toPosition > t.duration && (t.loops == -1 || toCompletedLoops < t.loops)) {
+                        while (toPosition >= t.duration && (t.loops == -1 || toCompletedLoops < t.loops)) {
                             toPosition -= t.duration;
                             toCompletedLoops++;
                         }
