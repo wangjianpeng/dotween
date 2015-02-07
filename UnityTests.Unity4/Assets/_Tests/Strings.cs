@@ -50,7 +50,9 @@ public class Strings : BrainBase
 		GUILayout.BeginVertical();
 		GUILayout.Space(100);
 
-		if (GUILayout.Button("Toggle Pause")) DOTween.TogglePauseAll();
+		if (GUILayout.Button("Toggle Pause")) {
+			DOTween.TogglePauseAll();
+		}
 
 		GUILayout.EndVertical();
 		GUILayout.FlexibleSpace();

@@ -6,9 +6,9 @@ public class BrainBase : MonoBehaviour
 {
 	public bool forceFrameRate;
 	public int forcedFrameRate = 10;
-	public bool recycleTweens = true;
-	public bool safeMode = false;
-	public LogBehaviour logBehaviour = LogBehaviour.Default;
+	// public bool recycleTweens = true;
+	// public bool safeMode = false;
+	// public LogBehaviour logBehaviour = LogBehaviour.Default;
 
 	public static HOFpsGadget fpsGadget;
 
@@ -22,9 +22,9 @@ public class BrainBase : MonoBehaviour
 			fpsGadget.showMemory = true;
 		}
 
-		DOTween.showUnityEditorReport = true;
-		DOTween.useSafeMode = safeMode;
-		DOTween.defaultRecyclable = recycleTweens;
-		DOTween.logBehaviour = logBehaviour;
+		// DOTween.showUnityEditorReport = true;
+		// DOTween.useSafeMode = safeMode;
+		// DOTween.defaultRecyclable = recycleTweens;
+		// DOTween.logBehaviour = logBehaviour;
 	}
 }

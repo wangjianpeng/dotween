@@ -1,8 +1,10 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2014/12/24 13:37
 
+using System.IO;
 using DG.DOTweenEditor.Core;
 using DG.Tweening;
+using DG.Tweening.Core;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,16 +39,20 @@ namespace DG.DOTweenEditor
         static void ShowWindow() { Open(); }
 		
         const string _Title = "DOTween Utility Panel";
-        static readonly Vector2 _WinSize = new Vector2(300,310);
+        const string _SrcFile = "DOTweenSettings.asset";
+        static readonly Vector2 _WinSize = new Vector2(300,350);
         public const string Id = "DOTweenVersion";
         public const string IdPro = "DOTweenProVersion";
         static readonly float _HalfBtSize = _WinSize.x * 0.5f - 6;
 
+        DOTweenSettings _src;
         Texture2D _headerImg, _footerImg;
         Vector2 _headerSize, _footerSize;
         string _innerTitle;
         bool _setupRequired;
 
+        int _selectedTab;
+        string[] _tabLabels = new[] { "Setup", "Preferences" };
         bool _guiStylesSet;
         GUIStyle _boldLabelStyle, _setupLabelStyle, _redLabelStyle, _btStyle, _btImgStyle;
 
@@ -90,11 +96,30 @@ namespace DG.DOTweenEditor
 
         void OnGUI()
         {
+            Connect();
             SetGUIStyles();
 
-            Rect headerRect = new Rect(0, 0, _headerSize.x, _headerSize.y);
-            GUI.DrawTexture(headerRect, _headerImg, ScaleMode.StretchToFill, false);
-            GUILayout.Space(_headerSize.y + 2);
+            Rect areaRect = new Rect(0, 0, _headerSize.x, 30);
+            _selectedTab = GUI.Toolbar(areaRect, _selectedTab, _tabLabels);
+
+            switch (_selectedTab) {
+            case 1:
+                DrawPreferencesGUI();
+                break;
+            default:
+                DrawSetupGUI();
+                break;
+            }
+        }
+
+        // ===================================================================================
+        // GUI METHODS -----------------------------------------------------------------------
+
+        void DrawSetupGUI()
+        {
+            Rect areaRect = new Rect(0, 30, _headerSize.x, _headerSize.y);
+            GUI.DrawTexture(areaRect, _headerImg, ScaleMode.StretchToFill, false);
+            GUILayout.Space(areaRect.y + _headerSize.y + 2);
             GUILayout.Label(_innerTitle, DOTween.isDebugBuild ? _redLabelStyle : _boldLabelStyle);
 
             if (_setupRequired) {
@@ -121,8 +146,54 @@ namespace DG.DOTweenEditor
             if (GUILayout.Button(_footerImg, _btImgStyle)) Application.OpenURL("http://www.demigiant.com/");
         }
 
+        void DrawPreferencesGUI()
+        {
+            GUILayout.Space(40);
+            if (GUILayout.Button("Reset", _btStyle)) {
+                // Reset to original defaults
+                _src.useSafeMode = DOTween.useSafeMode;
+                _src.showUnityEditorReport = DOTween.showUnityEditorReport;
+                _src.logBehaviour = DOTween.logBehaviour;
+                _src.defaultRecyclable = DOTween.defaultRecyclable;
+                _src.defaultAutoPlay = DOTween.defaultAutoPlay;
+                _src.defaultUpdateType = DOTween.defaultUpdateType;
+                _src.defaultEaseType = DOTween.defaultEaseType;
+                _src.defaultEaseOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
+                _src.defaultEasePeriod = DOTween.defaultEasePeriod;
+                _src.defaultAutoKill = DOTween.defaultAutoKill;
+                _src.defaultLoopType = DOTween.defaultLoopType;
+                EditorUtility.SetDirty(_src);
+            }
+            GUILayout.Space(8);
+            _src.useSafeMode = EditorGUILayout.Toggle("Safe Mode", _src.useSafeMode);
+            _src.showUnityEditorReport = EditorGUILayout.Toggle("Editor Report", _src.showUnityEditorReport);
+            _src.logBehaviour = (LogBehaviour)EditorGUILayout.EnumPopup("Log Behaviour", _src.logBehaviour);
+            GUILayout.Space(8);
+            GUILayout.Label("DEFAULTS ▼");
+            _src.defaultRecyclable = EditorGUILayout.Toggle("Recycle Tweens", _src.defaultRecyclable);
+            _src.defaultAutoPlay = (AutoPlay)EditorGUILayout.EnumPopup("AutoPlay", _src.defaultAutoPlay);
+            _src.defaultUpdateType = (UpdateType)EditorGUILayout.EnumPopup("Update Type", _src.defaultUpdateType);
+            _src.defaultEaseType = (Ease)EditorGUILayout.EnumPopup("Ease", _src.defaultEaseType);
+            _src.defaultEaseOvershootOrAmplitude = EditorGUILayout.FloatField("Ease Overshoot", _src.defaultEaseOvershootOrAmplitude);
+            _src.defaultEasePeriod = EditorGUILayout.FloatField("Ease Period", _src.defaultEasePeriod);
+            _src.defaultAutoKill = EditorGUILayout.Toggle("AutoKill", _src.defaultAutoKill);
+            _src.defaultLoopType = (LoopType)EditorGUILayout.EnumPopup("Loop Type", _src.defaultLoopType);
+
+            if (GUI.changed) EditorUtility.SetDirty(_src);
+        }
+
         // ===================================================================================
         // METHODS ---------------------------------------------------------------------------
+
+        void Connect()
+        {
+            if (_src == null) {
+                string srcDir = EditorUtils.dotweenDir.Substring(0, EditorUtils.dotweenDir.Length - 1); // Remove final slash
+                if (!Directory.Exists(srcDir + EditorUtils.pathSlash + "Resources")) AssetDatabase.CreateFolder(EditorUtils.FullPathToADBPath(srcDir), "Resources");
+                srcDir = EditorUtils.FullPathToADBPath(srcDir) + "/Resources/";
+                _src = EditorUtils.ConnectToSourceAsset<DOTweenSettings>(srcDir + DOTweenSettings.AssetName + ".asset", true);
+            }
+        }
 
         void SetGUIStyles()
         {
