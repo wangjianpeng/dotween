@@ -106,7 +106,7 @@ namespace DG.Tweening.Plugins
             int newWaypointIndex = changeValue.GetWaypointIndexFromPerc(pathPerc, isForward);
             if (newWaypointIndex != t.miscInt) {
                 t.miscInt = newWaypointIndex;
-                if (t.onWaypointChange != null) t.onWaypointChange(newWaypointIndex);
+                if (t.onWaypointChange != null) Tween.OnTweenCallback(t.onWaypointChange, newWaypointIndex);
             }
         }
 
