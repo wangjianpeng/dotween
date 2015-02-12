@@ -182,7 +182,7 @@ namespace DG.Tweening.Core
         internal static void Despawn(Tween t, bool modifyActiveLists = true)
         {
             // Callbacks
-            if (t.onKill != null) t.onKill();
+            if (t.onKill != null) Tween.OnTweenCallback(t.onKill);
 
             if (modifyActiveLists) {
                 // Remove tween from active list
@@ -246,7 +246,7 @@ namespace DG.Tweening.Core
             // Fire eventual onKill callbacks
             for (int i = 0; i < totActiveTweens; ++i) {
                 Tween t = _activeTweens[i];
-                if (t != null && t.onKill != null) t.onKill();
+                if (t != null && t.onKill != null) Tween.OnTweenCallback(t.onKill);
             }
 
             ClearTweenArray(_activeTweens);
@@ -538,9 +538,7 @@ namespace DG.Tweening.Core
             } else if (toPosition >= t.duration) toPosition = 0;
             // If andPlay is FALSE manage onPause from here because DoGoto won't detect it (since t.isPlaying was already set from here)
             bool needsKilling = Tween.DoGoto(t, toPosition, toCompletedLoops, updateMode);
-            if (!andPlay && wasPlaying && !needsKilling) {
-                if (t.onPause != null) t.onPause();
-            }
+            if (!andPlay && wasPlaying && !needsKilling && t.onPause != null) Tween.OnTweenCallback(t.onPause);
             return needsKilling;
         }
 
@@ -549,7 +547,7 @@ namespace DG.Tweening.Core
         {
             if (t.isPlaying) {
                 t.isPlaying = false;
-                if (t.onPause != null) t.onPause();
+                if (t.onPause != null) Tween.OnTweenCallback(t.onPause);
                 return true;
             }
             return false;
@@ -560,7 +558,10 @@ namespace DG.Tweening.Core
         {
             if (!t.isPlaying && (!t.isBackwards && !t.isComplete || t.isBackwards && (t.completedLoops > 0 || t.position > 0))) {
                 t.isPlaying = true;
-                if (t.playedOnce && t.onPlay != null) t.onPlay(); // Don't call in case it hasn't started because onStart routine will call it
+                if (t.playedOnce && t.onPlay != null) {
+                    // Don't call in case it hasn't started because onStart routine will call it
+                    Tween.OnTweenCallback(t.onPlay);
+                }
                 return true;
             }
             return false;
@@ -592,7 +593,10 @@ namespace DG.Tweening.Core
             t.isBackwards = false;
             Rewind(t, includeDelay);
             t.isPlaying = true;
-            if (wasPaused && t.playedOnce && t.onPlay != null) t.onPlay(); // Don't call in case it hasn't started because onStart routine will call it
+            if (wasPaused && t.playedOnce && t.onPlay != null) {
+                // Don't call in case it hasn't started because onStart routine will call it
+                Tween.OnTweenCallback(t.onPlay);
+            }
             return true;
         }
 
@@ -615,7 +619,7 @@ namespace DG.Tweening.Core
             if (t.position > 0 || t.completedLoops > 0 || !t.startupDone) {
                 rewinded = true;
                 bool needsKilling = Tween.DoGoto(t, 0, 0, UpdateMode.Goto);
-                if (!needsKilling && wasPlaying && t.onPause != null) t.onPause();
+                if (!needsKilling && wasPlaying && t.onPause != null) Tween.OnTweenCallback(t.onPause);
             }
             return rewinded;
         }

@@ -166,6 +166,8 @@ namespace DG.Tweening
 
         #endregion
 
+        #region Goto and Callbacks
+
         // Instead of advancing the tween from the previous position each time,
         // uses the given position to calculate running time since startup, and places the tween there like a Goto.
         // Executes regardless of whether the tween is playing.
@@ -180,11 +182,11 @@ namespace DG.Tweening
             if (!t.playedOnce && updateMode == UpdateMode.Update) {
                 t.playedOnce = true;
                 if (t.onStart != null) {
-                    t.onStart();
+                    OnTweenCallback(t.onStart);
                     if (!t.active) return true; // Tween might have been killed by onStart callback
                 }
                 if (t.onPlay != null) {
-                    t.onPlay();
+                    OnTweenCallback(t.onPlay);
                     if (!t.active) return true; // Tween might have been killed by onPlay callback
                 }
             }
@@ -230,22 +232,53 @@ namespace DG.Tweening
             if (t.ApplyTween(prevPosition, prevCompletedLoops, newCompletedSteps, useInversePosition, updateMode)) return true;
 
             // Additional callbacks
-            if (t.onUpdate != null) t.onUpdate();
-            if (t.position <= 0 && t.completedLoops <= 0 && !wasRewinded) {
-                if (t.onRewind != null) t.onRewind();
+            if (t.onUpdate != null) {
+                OnTweenCallback(t.onUpdate);
+            }
+            if (t.position <= 0 && t.completedLoops <= 0 && !wasRewinded && t.onRewind != null) {
+                OnTweenCallback(t.onRewind);
             }
             if (newCompletedSteps > 0 && updateMode == UpdateMode.Update && t.onStepComplete != null) {
-                for (int i = 0; i < newCompletedSteps; ++i) t.onStepComplete();
+                for (int i = 0; i < newCompletedSteps; ++i) OnTweenCallback(t.onStepComplete);
             }
-            if (t.isComplete && !wasComplete) {
-                if (t.onComplete != null) t.onComplete();
+            if (t.isComplete && !wasComplete && t.onComplete != null) {
+                OnTweenCallback(t.onComplete);
             }
-            if (!t.isPlaying && wasPlaying && (!t.isComplete || !t.autoKill)) {
-                if (t.onPause != null) t.onPause();
+            if (!t.isPlaying && wasPlaying && (!t.isComplete || !t.autoKill) && t.onPause != null) {
+                OnTweenCallback(t.onPause);
             }
 
             // Return
             return t.autoKill && t.isComplete;
         }
+
+        // Assumes that the callback exists (because it was previously checked).
+        // Returns TRUE in case of success, FALSE in case of error (if safeMode is on)
+        internal static bool OnTweenCallback(TweenCallback callback)
+        {
+            if (DOTween.useSafeMode) {
+                try {
+                    callback();
+                } catch {
+                    if (Debugger.logPriority > 1) Debug.Log("An error inside a tween callback was silently taken care of");
+                    return false; // Callback error
+                }
+            } else callback();
+            return true;
+        }
+        internal static bool OnTweenCallback<T>(TweenCallback<T> callback, T param)
+        {
+            if (DOTween.useSafeMode) {
+                try {
+                    callback(param);
+                } catch {
+                    if (Debugger.logPriority > 1) Debug.Log("An error inside a tween callback was silently taken care of");
+                    return false; // Callback error
+                }
+            } else callback(param);
+            return true;
+        }
+
+        #endregion
     }
 }
