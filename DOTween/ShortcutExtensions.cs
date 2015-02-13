@@ -637,6 +637,17 @@ namespace DG.Tweening
         #region Operation Shortcuts
 
         /// <summary>
+        /// Completes all tweens that have this target as a reference
+        /// (meaning tweens that were started from this target, or that had this target added as an Id)
+        /// and returns the total number of tweens completed
+        /// (meaning the tweens that don't have infinite loops and were not already complete)
+        /// </summary>
+        public static int DOComplete(this Component target)
+        {
+            return DOTween.Complete(target);
+        }
+
+        /// <summary>
         /// Kills all tweens that have this target as a reference
         /// (meaning tweens that were started from this target, or that had this target added as an Id)
         /// and returns the total number of tweens killed.

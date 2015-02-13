@@ -1,23 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 using System;
  
 public class TempTests : BrainBase
 {
-	public Transform target;
-	public AnimationCurve easeCurve;
+	public Image img;
+	public Vector3[] wps;
 
 	void Start()
 	{
-		DOTween.Sequence()
-			.Append(target.DOMoveX(3, 2).SetEase(Ease.Linear))
-			.Insert(0, target.DOMoveY(5, 1).SetEase(Ease.OutQuad))
-			.Insert(1, target.DOMoveY(0, 1).SetEase(Ease.InQuad));
-
-		DOTween.Sequence()
-			.Append(target.DOMoveX(3, 2).SetEase(Ease.Linear))
-			.Join(target.DOMoveY(5, 2).SetEase(easeCurve));
+		img.transform.DOPath(wps, 2).SetRelative();
 	}
 
 	// float[] fs = new[]

@@ -1725,6 +1725,14 @@
             Defaults to 10, but a value of 5 is usually enough if you don't have dramatic long curves between waypoints</param>
             <param name="gizmoColor">The color of the path (shown when gizmos are active in the Play panel and the tween is running)</param>
         </member>
+        <member name="M:DG.Tweening.ShortcutExtensions.DOComplete(UnityEngine.Component)">
+            <summary>
+            Completes all tweens that have this target as a reference
+            (meaning tweens that were started from this target, or that had this target added as an Id)
+            and returns the total number of tweens completed
+            (meaning the tweens that don't have infinite loops and were not already complete)
+            </summary>
+        </member>
         <member name="M:DG.Tweening.ShortcutExtensions.DOKill(UnityEngine.Component,System.Boolean)">
             <summary>
             Kills all tweens that have this target as a reference
