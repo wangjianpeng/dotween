@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "1.0.175";
+        public static readonly string Version = "1.0.200";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -52,6 +52,9 @@ namespace DG.Tweening
         /// <summary>Default updateType for new tweens.
         /// <para>Default: UpdateType.Normal</para></summary>
         public static UpdateType defaultUpdateType = UpdateType.Normal;
+        /// <summary>Sets whether Unity's timeScale should be taken into account by default or not.
+        /// <para>Default: false</para></summary>
+        public static bool defaultTimeScaleIndependent = false;
         /// <summary>Default autoPlay behaviour for new tweens.
         /// <para>Default: AutoPlay.All</para></summary>
         public static AutoPlay defaultAutoPlay = AutoPlay.All;
@@ -157,6 +160,7 @@ namespace DG.Tweening
                 DOTween.showUnityEditorReport = settings.showUnityEditorReport;
                 DOTween.defaultAutoPlay = settings.defaultAutoPlay;
                 DOTween.defaultUpdateType = settings.defaultUpdateType;
+                DOTween.defaultTimeScaleIndependent = settings.defaultTimeScaleIndependent;
                 DOTween.defaultEaseType = settings.defaultEaseType;
                 DOTween.defaultEaseOvershootOrAmplitude = settings.defaultEaseOvershootOrAmplitude;
                 DOTween.defaultEasePeriod = settings.defaultEasePeriod;
@@ -207,6 +211,7 @@ namespace DG.Tweening
             defaultEaseOvershootOrAmplitude = 1.70158f;
             defaultEasePeriod = 0;
             defaultUpdateType = UpdateType.Normal;
+            defaultTimeScaleIndependent = false;
             defaultAutoPlay = AutoPlay.All;
             defaultLoopType = LoopType.Restart;
             defaultAutoKill = true;
@@ -791,6 +796,16 @@ namespace DG.Tweening
         public static List<Tween> PausedTweens()
         {
             return TweenManager.GetActiveTweens(false);
+        }
+
+        /// <summary>
+        /// Returns a list of all active tweens with the given id.
+        /// Returns NULL if there are no active tweens with the given id.
+        /// <para>Beware: each time you call this method a new list is generated</para>
+        /// </summary>
+        public static List<Tween> TweensById(object id)
+        {
+            return TweenManager.GetTweensById(id);
         }
 
         #endregion

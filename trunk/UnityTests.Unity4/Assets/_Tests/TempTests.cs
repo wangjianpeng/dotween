@@ -1,41 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using System;
  
 public class TempTests : BrainBase
 {
-	public Image img;
-	public Vector3[] wps;
+	public Transform[] ts;
 
 	void Start()
 	{
-		img.transform.DOPath(wps, 2).SetRelative();
+		ts[0].DOMoveY(2, 1).SetId("a");
+		ts[1].DOMoveY(2, 1).SetId("a");
+		ts[2].DOMoveY(2, 1).SetId("c");
+
+		List<Tween> tweens = DOTween.TweensById("a");
+		foreach (Tween tween in tweens) tween.Complete();
 	}
-
-	// float[] fs = new[]
-	// {
-	// 	13f, 144f
-	// };
-
-	// void Start()
-	// {
-	// 	DOTween.To(()=> GetF(0), x=> SetF(0, x), 140, 2);
-	// }
-
-	// float GetF(int index)
-	// {
-	// 	return fs[index];
-	// }
-
-	// void SetF(int index, float val)
-	// {
-	// 	fs[index] = val;
-	// }
-
-	// void OnGUI()
-	// {
-	// 	GUILayout.Label("F: " + fs[0]);
-	// }
 }

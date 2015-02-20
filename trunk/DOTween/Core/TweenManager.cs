@@ -665,6 +665,20 @@ namespace DG.Tweening.Core
             return null;
         }
 
+        // Returns all active tweens with the given id
+        internal static List<Tween> GetTweensById(object id)
+        {
+            if (totActiveTweens <= 0) return null;
+            int len = totActiveTweens;
+            List<Tween> ts = new List<Tween>(len);
+            for (int i = 0; i < len; ++i) {
+                Tween t = _activeTweens[i];
+                if (t.id == id) ts.Add(t);
+            }
+            if (ts.Count > 0) return ts;
+            return null;
+        }
+
         #endregion
 
         #region Private Methods
@@ -682,7 +696,7 @@ namespace DG.Tweening.Core
 
             t.active = true;
             t.updateType = DOTween.defaultUpdateType;
-            t.isIndependentUpdate = false;
+            t.isIndependentUpdate = DOTween.defaultTimeScaleIndependent;
             t.activeId = _maxActiveLookupId = totActiveTweens;
             _activeTweens[totActiveTweens] = t;
             hasActiveDefaultTweens = true;
