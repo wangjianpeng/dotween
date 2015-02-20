@@ -679,6 +679,20 @@ namespace DG.Tweening.Core
             return null;
         }
 
+        // Returns all active tweens with the given target
+        internal static List<Tween> GetTweensByTarget(object target)
+        {
+            if (totActiveTweens <= 0) return null;
+            int len = totActiveTweens;
+            List<Tween> ts = new List<Tween>(len);
+            for (int i = 0; i < len; ++i) {
+                Tween t = _activeTweens[i];
+                if (t.target == target) ts.Add(t);
+            }
+            if (ts.Count > 0) return ts;
+            return null;
+        }
+
         #endregion
 
         #region Private Methods

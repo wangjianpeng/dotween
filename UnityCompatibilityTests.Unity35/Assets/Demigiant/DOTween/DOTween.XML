@@ -483,6 +483,13 @@
             <para>Beware: each time you call this method a new list is generated</para>
             </summary>
         </member>
+        <member name="M:DG.Tweening.DOTween.TweensByTarget(System.Object)">
+            <summary>
+            Returns a list of all active tweens with the given target.
+            Returns NULL if there are no active tweens with the given target.
+            <para>Beware: each time you call this method a new list is generated</para>
+            </summary>
+        </member>
         <member name="P:DG.Tweening.DOTween.logBehaviour">
             <summary>DOTween's log behaviour.
             <para>Default: LogBehaviour.ErrorsOnly</para></summary>
