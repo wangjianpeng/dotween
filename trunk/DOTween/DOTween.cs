@@ -21,7 +21,7 @@ namespace DG.Tweening
     public class DOTween
     {
         /// <summary>DOTween's version</summary>
-        public static readonly string Version = "1.0.200";
+        public static readonly string Version = "1.0.210";
 
         ///////////////////////////////////////////////
         // Options ////////////////////////////////////
@@ -806,6 +806,16 @@ namespace DG.Tweening
         public static List<Tween> TweensById(object id)
         {
             return TweenManager.GetTweensById(id);
+        }
+
+        /// <summary>
+        /// Returns a list of all active tweens with the given target.
+        /// Returns NULL if there are no active tweens with the given target.
+        /// <para>Beware: each time you call this method a new list is generated</para>
+        /// </summary>
+        public static List<Tween> TweensByTarget(object target)
+        {
+            return TweenManager.GetTweensByTarget(target);
         }
 
         #endregion

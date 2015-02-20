@@ -16,7 +16,7 @@ namespace DG.Tweening
 
         /// <summary>
         /// Tweens a virtual float.
-        /// You can add regular setting to the generated tween,
+        /// You can add regular settings to the generated tween,
         /// but do not use <code>SetUpdate</code> or you will overwrite the onVirtualUpdate parameter
         /// </summary>
         /// <param name="from">The value to start from</param>
