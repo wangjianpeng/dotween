@@ -441,6 +441,18 @@ namespace DG.Tweening
             return t.isBackwards;
         }
 
+        /// <summary>Returns TRUE if the tween is complete
+        /// (silently fails and returns FALSE if the tween has been killed)</summary>
+        public static bool IsComplete(this Tween t)
+        {
+            if (!t.active) {
+                if (Debugger.logPriority > 0) Debugger.LogInvalidTween(t);
+                return false;
+            }
+
+            return t.isComplete;
+        }
+
         /// <summary>Returns TRUE if this tween is playing</summary>
         public static bool IsPlaying(this Tween t)
         {

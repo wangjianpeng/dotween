@@ -64,7 +64,7 @@ namespace DG.Tweening
         {
             id = target = null;
             updateType = DOTween.defaultUpdateType;
-            isIndependentUpdate = false;
+            isIndependentUpdate = DOTween.defaultTimeScaleIndependent;
             onStart = onPlay = onRewind = onUpdate = onStepComplete = onComplete = onKill = null;
             onWaypointChange = null;
             isRecyclable = DOTween.defaultRecyclable;

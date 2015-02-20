@@ -85,6 +85,10 @@
             <summary>Default updateType for new tweens.
             <para>Default: UpdateType.Normal</para></summary>
         </member>
+        <member name="F:DG.Tweening.DOTween.defaultTimeScaleIndependent">
+            <summary>Sets whether Unity's timeScale should be taken into account by default or not.
+            <para>Default: false</para></summary>
+        </member>
         <member name="F:DG.Tweening.DOTween.defaultAutoPlay">
             <summary>Default autoPlay behaviour for new tweens.
             <para>Default: AutoPlay.All</para></summary>
@@ -470,6 +474,13 @@
             Returns a list of all active tweens in a paused state.
             Returns NULL if there are no active paused tweens.
             <para>Beware: each time you call this method a new list is generated, so use it for debug only</para>
+            </summary>
+        </member>
+        <member name="M:DG.Tweening.DOTween.TweensById(System.Object)">
+            <summary>
+            Returns a list of all active tweens with the given id.
+            Returns NULL if there are no active tweens with the given id.
+            <para>Beware: each time you call this method a new list is generated</para>
             </summary>
         </member>
         <member name="P:DG.Tweening.DOTween.logBehaviour">
@@ -1032,6 +1043,10 @@
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsBackwards(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween was reversed and is set to go backwards</summary>
+        </member>
+        <member name="M:DG.Tweening.TweenExtensions.IsComplete(DG.Tweening.Tween)">
+            <summary>Returns TRUE if the tween is complete
+            (silently fails and returns FALSE if the tween has been killed)</summary>
         </member>
         <member name="M:DG.Tweening.TweenExtensions.IsPlaying(DG.Tweening.Tween)">
             <summary>Returns TRUE if this tween is playing</summary>

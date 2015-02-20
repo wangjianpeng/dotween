@@ -16,6 +16,7 @@ namespace DG.Tweening.Core
         public bool defaultRecyclable;
         public AutoPlay defaultAutoPlay = AutoPlay.All;
         public UpdateType defaultUpdateType;
+        public bool defaultTimeScaleIndependent;
         public Ease defaultEaseType = Ease.OutQuad;
         public float defaultEaseOvershootOrAmplitude = 1.70158f;
         public float defaultEasePeriod = 0;

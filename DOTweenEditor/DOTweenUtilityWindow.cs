@@ -54,7 +54,7 @@ namespace DG.DOTweenEditor
         int _selectedTab;
         string[] _tabLabels = new[] { "Setup", "Preferences" };
         bool _guiStylesSet;
-        GUIStyle _boldLabelStyle, _setupLabelStyle, _redLabelStyle, _btStyle, _btImgStyle;
+        GUIStyle _boldLabelStyle, _setupLabelStyle, _redLabelStyle, _btStyle, _btImgStyle, _wrapCenterLabelStyle;
 
         // If force is FALSE opens the window only if DOTween's version has changed
         // (set to FALSE by OnPostprocessAllAssets)
@@ -99,16 +99,25 @@ namespace DG.DOTweenEditor
             Connect();
             SetGUIStyles();
 
-            Rect areaRect = new Rect(0, 0, _headerSize.x, 30);
-            _selectedTab = GUI.Toolbar(areaRect, _selectedTab, _tabLabels);
+            if (Application.isPlaying) {
+                GUILayout.Space(40);
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(40);
+                GUILayout.Label("DOTween Utility Panel\nis disabled while in Play Mode", _wrapCenterLabelStyle, GUILayout.ExpandWidth(true));
+                GUILayout.Space(40);
+                GUILayout.EndHorizontal();
+            } else {
+                Rect areaRect = new Rect(0, 0, _headerSize.x, 30);
+                _selectedTab = GUI.Toolbar(areaRect, _selectedTab, _tabLabels);
 
-            switch (_selectedTab) {
-            case 1:
-                DrawPreferencesGUI();
-                break;
-            default:
-                DrawSetupGUI();
-                break;
+                switch (_selectedTab) {
+                case 1:
+                    DrawPreferencesGUI();
+                    break;
+                default:
+                    DrawSetupGUI();
+                    break;
+                }
             }
         }
 
@@ -151,17 +160,18 @@ namespace DG.DOTweenEditor
             GUILayout.Space(40);
             if (GUILayout.Button("Reset", _btStyle)) {
                 // Reset to original defaults
-                _src.useSafeMode = DOTween.useSafeMode;
-                _src.showUnityEditorReport = DOTween.showUnityEditorReport;
-                _src.logBehaviour = DOTween.logBehaviour;
-                _src.defaultRecyclable = DOTween.defaultRecyclable;
-                _src.defaultAutoPlay = DOTween.defaultAutoPlay;
-                _src.defaultUpdateType = DOTween.defaultUpdateType;
-                _src.defaultEaseType = DOTween.defaultEaseType;
-                _src.defaultEaseOvershootOrAmplitude = DOTween.defaultEaseOvershootOrAmplitude;
-                _src.defaultEasePeriod = DOTween.defaultEasePeriod;
-                _src.defaultAutoKill = DOTween.defaultAutoKill;
-                _src.defaultLoopType = DOTween.defaultLoopType;
+                _src.useSafeMode = true;
+                _src.showUnityEditorReport = false;
+                _src.logBehaviour = LogBehaviour.ErrorsOnly;
+                _src.defaultRecyclable = false;
+                _src.defaultAutoPlay = AutoPlay.All;
+                _src.defaultUpdateType = UpdateType.Normal;
+                _src.defaultTimeScaleIndependent = false;
+                _src.defaultEaseType = Ease.OutQuad;
+                _src.defaultEaseOvershootOrAmplitude = 1.70158f;
+                _src.defaultEasePeriod = 0;
+                _src.defaultAutoKill = true;
+                _src.defaultLoopType = LoopType.Restart;
                 EditorUtility.SetDirty(_src);
             }
             GUILayout.Space(8);
@@ -173,6 +183,7 @@ namespace DG.DOTweenEditor
             _src.defaultRecyclable = EditorGUILayout.Toggle("Recycle Tweens", _src.defaultRecyclable);
             _src.defaultAutoPlay = (AutoPlay)EditorGUILayout.EnumPopup("AutoPlay", _src.defaultAutoPlay);
             _src.defaultUpdateType = (UpdateType)EditorGUILayout.EnumPopup("Update Type", _src.defaultUpdateType);
+            _src.defaultTimeScaleIndependent = EditorGUILayout.Toggle("TimeScale Independent", _src.defaultTimeScaleIndependent);
             _src.defaultEaseType = (Ease)EditorGUILayout.EnumPopup("Ease", _src.defaultEaseType);
             _src.defaultEaseOvershootOrAmplitude = EditorGUILayout.FloatField("Ease Overshoot", _src.defaultEaseOvershootOrAmplitude);
             _src.defaultEasePeriod = EditorGUILayout.FloatField("Ease Period", _src.defaultEasePeriod);
@@ -204,6 +215,10 @@ namespace DG.DOTweenEditor
                 _redLabelStyle.normal.textColor = Color.red;
                 _setupLabelStyle = new GUIStyle(_boldLabelStyle);
                 _setupLabelStyle.alignment = TextAnchor.MiddleCenter;
+
+                _wrapCenterLabelStyle = new GUIStyle(GUI.skin.label);
+                _wrapCenterLabelStyle.wordWrap = true;
+                _wrapCenterLabelStyle.alignment = TextAnchor.MiddleCenter;
 
                 _btStyle = new GUIStyle(GUI.skin.button);
                 _btStyle.padding = new RectOffset(0, 0, 10, 10);
