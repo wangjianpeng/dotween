@@ -70,8 +70,8 @@ namespace DG.Tweening.Plugins
             Vector3[] wps = new Vector3[wpsLen];
             int indMod = hasAdditionalStartingP ? 1 : 0;
             if (hasAdditionalStartingP) wps[0] = currVal;
-            if (hasAdditionalEndingP) wps[wps.Length - 1] = wps[0];
             for (int i = 0; i < unmodifiedWpsLen; ++i) wps[i + indMod] = path.wps[i];
+            if (hasAdditionalEndingP) wps[wps.Length - 1] = wps[0];
             path.wps = wps;
 
             // Finalize path
