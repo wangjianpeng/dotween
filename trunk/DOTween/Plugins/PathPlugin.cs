@@ -98,7 +98,7 @@ namespace DG.Tweening.Plugins
             changeValue.targetPosition = newPos; // Used to draw editor gizmos
             setter(newPos);
 
-            if (options.orientType != OrientType.None) SetOrientation(options, t, changeValue, constantPathPerc, newPos);
+            if (options.mode != PathMode.Ignore && options.orientType != OrientType.None) SetOrientation(options, t, changeValue, constantPathPerc, newPos);
 
             // Determine if current waypoint changed and eventually dispatch callback
             bool isForward = !usingInversePosition;

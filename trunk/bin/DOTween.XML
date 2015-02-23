@@ -1306,8 +1306,11 @@
         </member>
         <member name="T:DG.Tweening.PathMode">
             <summary>
-            Path mode
+            Path mode (used to determine correct LookAt orientation)
             </summary>
+        </member>
+        <member name="F:DG.Tweening.PathMode.Ignore">
+            <summary>Ignores the path mode (and thus LookAt behaviour)</summary>
         </member>
         <member name="F:DG.Tweening.PathMode.Full3D">
             <summary>Regular 3D path</summary>

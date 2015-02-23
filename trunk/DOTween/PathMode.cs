@@ -6,10 +6,12 @@
 namespace DG.Tweening
 {
     /// <summary>
-    /// Path mode
+    /// Path mode (used to determine correct LookAt orientation)
     /// </summary>
     public enum PathMode
     {
+        /// <summary>Ignores the path mode (and thus LookAt behaviour)</summary>
+        Ignore,
         /// <summary>Regular 3D path</summary>
         Full3D,
         /// <summary>2D top-down path</summary>
