@@ -97,7 +97,7 @@ namespace DG.Tweening
         internal float elapsedDelay; // Amount of eventual delay elapsed (shared by Sequences only for compatibility reasons, otherwise not used)
         internal bool delayComplete = true; // TRUE when the delay has elapsed or isn't set, also set by Delay extension method (shared by Sequences only for compatibility reasons, otherwise not used)
         
-        internal int miscInt; // Used by some plugins to store data (currently only by Paths to store current waypoint index)
+        internal int miscInt = -1; // Used by some plugins to store data (currently only by Paths to store current waypoint index)
 
         #region Abstracts + Overrideables
 
@@ -129,7 +129,7 @@ namespace DG.Tweening
             elapsedDelay = 0;
             delayComplete = true;
 
-            miscInt = 0;
+            miscInt = -1;
 
             // The following are set during a tween's Setup
 //            isRecyclable = DOTween.defaultRecyclable;
