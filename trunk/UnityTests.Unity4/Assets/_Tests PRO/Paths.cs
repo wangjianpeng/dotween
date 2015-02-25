@@ -19,6 +19,8 @@ public class Paths : BrainBase
 
 	void Start()
 	{
+		return;
+
 		Vector3[] path = new[] {
 			new Vector3(0,1,0),
 			new Vector3(1,2,0),

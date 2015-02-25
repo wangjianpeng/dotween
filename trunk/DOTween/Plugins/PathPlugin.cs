@@ -23,6 +23,7 @@ namespace DG.Tweening.Plugins
 
         public override void Reset(TweenerCore<Vector3, Path, PathOptions> t)
         {
+            Debug.Log("PATH RESET");
             t.endValue.Destroy(); // Clear path
             t.startValue = t.endValue = t.changeValue = null;
         }
@@ -42,6 +43,8 @@ namespace DG.Tweening.Plugins
 
         public override void SetRelativeEndValue(TweenerCore<Vector3, Path, PathOptions> t)
         {
+            if (t.endValue.isFinalized) return;
+
             Vector3 startP = t.getter();
             int count = t.endValue.wps.Length;
             for (int i = 0; i < count; ++i) t.endValue.wps[i] += startP;
@@ -51,6 +54,11 @@ namespace DG.Tweening.Plugins
         // then sets the final path version
         public override void SetChangeValue(TweenerCore<Vector3, Path, PathOptions> t)
         {
+            if (t.endValue.isFinalized) {
+                t.changeValue = t.endValue;
+                return;
+            }
+
             Vector3 currVal = t.getter();
             Path path = t.endValue;
             int unmodifiedWpsLen = path.wps.Length;
