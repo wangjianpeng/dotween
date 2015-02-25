@@ -1,15 +1,16 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Temp : BrainBase
 {
-	public Transform[] targets;
+	public RectTransform target;
 
-	void Start()
+	IEnumerator Start()
 	{
-		DOTween.Sequence()
-			.Append(targets[0].DOMoveY(2, 0.2f))
-			.Append(targets[1].DOMoveY(2, 0.2f).OnComplete(()=> Debug.Log("Complete 2")));
+		yield return new WaitForSeconds(0.5f);
+		
+		target.DOSizeDelta(new Vector2(4, 4), 1);
 	}
 }
