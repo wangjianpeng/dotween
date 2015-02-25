@@ -19,17 +19,17 @@ namespace DG.Tweening.Plugins.Core.PathCore
         static CatmullRomDecoder _catmullRomDecoder;
         static LinearDecoder _linearDecoder;
 
-        internal PathType type;
-        internal int subdivisionsXSegment; // Subdivisions x each segment
-        internal int subdivisions; // Stored by PathPlugin > total subdivisions for whole path (derived automatically from subdivisionsXSegment)
-        internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value) - also modified by DOTweenPathInspector
-        internal ControlPoint[] controlPoints; // Control points used by non-linear paths
-        internal float length; // Unit length of the path
-        internal float[] wpLengths; // Unit length of each waypoint
-        internal bool isFinalized; // TRUE when the path has been finalized (either by starting the tween or if the path was created by the Path Editor)
+        [SerializeField] internal PathType type;
+        [SerializeField] internal int subdivisionsXSegment; // Subdivisions x each segment
+        [SerializeField] internal int subdivisions; // Stored by PathPlugin > total subdivisions for whole path (derived automatically from subdivisionsXSegment)
+        [SerializeField] internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value) - also modified by DOTweenPathInspector
+        [SerializeField] internal ControlPoint[] controlPoints; // Control points used by non-linear paths
+        [SerializeField] internal float length; // Unit length of the path
+        [SerializeField] internal float[] wpLengths; // Unit length of each waypoint
+        [SerializeField] internal bool isFinalized; // TRUE when the path has been finalized (either by starting the tween or if the path was created by the Path Editor)
 
-        internal float[] timesTable; // Connected to lengthsTable, used for constant speed calculations
-        internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
+        [SerializeField] internal float[] timesTable; // Connected to lengthsTable, used for constant speed calculations
+        [SerializeField] internal float[] lengthsTable; // Connected to timesTable, used for constant speed calculations
         internal int linearWPIndex = -1; // Waypoint towards which we're moving (only stored for linear paths, when calling GetPoint)
 
         ABSPathDecoder _decoder;
@@ -52,6 +52,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         {
             this.type = type;
             this.subdivisionsXSegment = subdivisionsXSegment;
+            Debug.Log(subdivisionsXSegment);
             if (gizmoColor != null) this.gizmoColor = (Color)gizmoColor;
             AssignWaypoints(waypoints, true);
             AssignDecoder(type);
@@ -187,7 +188,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
 //            for (int i = 0; i < count; ++i) wps[i] = newWps[i];
 //        }
 
-        // Internal so DOTweenPathInspector can use it
+        // Internal so DOTweenPathInspector and DOTweenPath can use it
         internal void AssignDecoder(PathType pathType)
         {
             type = pathType;
@@ -210,7 +211,8 @@ namespace DG.Tweening.Plugins.Core.PathCore
 //        }
 
         // Used in DOTween.OnDrawGizmos if we're inside Unity Editor
-        void Draw() { Draw(this); }
+        // and in DOTweenPath when setting up the pre-compiled path
+        internal void Draw() { Draw(this); }
         static void Draw(Path p)
         {
             if (p.timesTable == null) return;

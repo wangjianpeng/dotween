@@ -607,7 +607,7 @@ namespace DG.Tweening
             t.plugOptions.mode = pathMode;
             return t;
         }
-        // TODO Used by path editor when creating the actual tween, but verify if it is truly needed when finished
+        // Used by path editor when creating the actual tween, so it can pass a pre-compiled path
         internal static TweenerCore<Vector3, Path, PathOptions> DOPath(
             this Transform target, Path path, float duration, PathMode pathMode = PathMode.Full3D
         )
