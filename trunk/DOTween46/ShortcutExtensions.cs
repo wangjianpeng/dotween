@@ -70,6 +70,17 @@ namespace DG.Tweening
                 .SetTarget(target);
         }
 
+        /// <summary>Tweens an Image's fillAmount to the given value.
+        /// Also stores the image as the tween's target so it can be used for filtered operations</summary>
+        /// <param name="endValue">The end value to reach (0 to 1)</param><param name="duration">The duration of the tween</param>
+        public static Tweener DOFillAmount(this Image target, float endValue, float duration)
+        {
+            if (endValue > 1) endValue = 1;
+            else if (endValue < 0) endValue = 0;
+            return DOTween.To(() => target.fillAmount, x => target.fillAmount = x, endValue, duration)
+                .SetTarget(target);
+        }
+
         #endregion
 
         #region LayoutElement
