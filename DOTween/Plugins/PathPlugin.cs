@@ -23,7 +23,6 @@ namespace DG.Tweening.Plugins
 
         public override void Reset(TweenerCore<Vector3, Path, PathOptions> t)
         {
-            Debug.Log("PATH RESET");
             t.endValue.Destroy(); // Clear path
             t.startValue = t.endValue = t.changeValue = null;
         }

@@ -11,6 +11,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
     /// <summary>
     /// Path control point
     /// </summary>
+    [System.Serializable]
     internal struct ControlPoint
     {
         internal Vector3 a, b;
