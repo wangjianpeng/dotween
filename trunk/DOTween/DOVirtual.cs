@@ -74,6 +74,15 @@ namespace DG.Tweening
             return from + (to - from) * EaseManager.Evaluate(Ease.INTERNAL_Custom, new EaseCurve(easeCurve).Evaluate, lifetimePercentage, 1, DOTween.defaultEaseOvershootOrAmplitude, DOTween.defaultEasePeriod);
         }
 
+        /// <summary>Fires the given callback after the given time.</summary>
+        /// <param name="delay">Callback delay</param>
+        /// <param name="callback">Callback to fire when the delay has expired</param>
+        /// <param name="ignoreTimeScale">If TRUE (default) ignores Unity's timeScale</param>
+        public static void DelayedCall(float delay, TweenCallback callback, bool ignoreTimeScale = false)
+        {
+            DOTween.Sequence().AppendInterval(delay).OnComplete(callback).SetUpdate(UpdateType.Normal, ignoreTimeScale).SetAutoKill(true);
+        }
+
         #endregion
     }
 }

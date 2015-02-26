@@ -9,6 +9,8 @@ public class VirtualTweens : BrainBase
 	void Start()
 	{
 		DOVirtual.Float(0, 1, 3, UpdateCallback);
+
+		DOVirtual.DelayedCall(2, ()=> Debug.Log("<color=#00ff00>" + Time.realtimeSinceStartup + " > Wait call complete</color>"));
 	}
 
 	void UpdateCallback(float val)
