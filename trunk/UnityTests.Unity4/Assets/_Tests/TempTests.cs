@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DG.Tweening.Plugins;
+using DG.Tweening.Plugins.Core;
+using DG.Tweening.Plugins.Options;
 using System;
  
 public class TempTests : BrainBase
@@ -17,5 +20,11 @@ public class TempTests : BrainBase
 
 		List<Tween> tweens = DOTween.TweensById("a");
 		foreach (Tween tween in tweens) tween.Complete();
+
+		Debug.Log(">>>>>>");
+
+		ITweenPlugin plug = new Vector3Plugin();
+		Debug.Log(plug);
+		if (plug as ABSTweenPlugin<Vector3, Vector3, VectorOptions> != null) Debug.Log("OK");
 	}
 }
