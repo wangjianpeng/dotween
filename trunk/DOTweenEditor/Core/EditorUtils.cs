@@ -11,6 +11,8 @@ namespace DG.DOTweenEditor.Core
 {
     public static class EditorUtils
     {
+        public static string projectPath { get; private set; } // Without final slash
+        public static string assetsPath { get; private set; } // Without final slash
         public static bool hasPro { get { if (!_hasCheckedForPro) CheckForPro(); return _hasPro; } }
         public static string proVersion { get { if (!_hasCheckedForPro) CheckForPro(); return _proVersion; } }
         // Editor path from Assets (not included) with final slash, in AssetDatabase format (/)
@@ -26,7 +28,6 @@ namespace DG.DOTweenEditor.Core
         static bool _hasPro;
         static string _proVersion;
         static bool _hasCheckedForPro;
-        static string _projectPath;
         static string _editorADBDir;
         static string _dotweenDir; // with final slash
         static string _dotweenProDir; // with final slash
@@ -38,9 +39,11 @@ namespace DG.DOTweenEditor.Core
             pathSlash = useWindowsSlashes ? "\\" : "/";
             pathSlashToReplace = useWindowsSlashes ? "/" : "\\";
 
-            _projectPath = Application.dataPath;
-            _projectPath = _projectPath.Substring(0, _projectPath.LastIndexOf("/"));
-            _projectPath = _projectPath.Replace(pathSlashToReplace, pathSlash);
+            projectPath = Application.dataPath;
+            projectPath = projectPath.Substring(0, projectPath.LastIndexOf("/"));
+            projectPath = projectPath.Replace(pathSlashToReplace, pathSlash);
+
+            assetsPath = projectPath + pathSlash + "Assets";
         }
 
         // ===================================================================================
@@ -92,7 +95,7 @@ namespace DG.DOTweenEditor.Core
         public static string ADBPathToFullPath(string adbPath)
         {
             adbPath = adbPath.Replace(pathSlashToReplace, pathSlash);
-            return _projectPath + pathSlash + adbPath;
+            return projectPath + pathSlash + adbPath;
         }
 
         /// <summary>
@@ -101,7 +104,7 @@ namespace DG.DOTweenEditor.Core
         /// </summary>
         public static string FullPathToADBPath(string fullPath)
         {
-            string adbPath = fullPath.Substring(_projectPath.Length + 1);
+            string adbPath = fullPath.Substring(projectPath.Length + 1);
             return adbPath.Replace("\\", "/");
         }
 

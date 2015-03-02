@@ -259,8 +259,8 @@ namespace DG.Tweening
             if (DOTween.useSafeMode) {
                 try {
                     callback();
-                } catch {
-                    if (Debugger.logPriority > 1) Debug.Log("An error inside a tween callback was silently taken care of");
+                } catch (Exception e) {
+                    Debugger.LogWarning("An error inside a tween callback was silently taken care of > " + e.Message);
                     return false; // Callback error
                 }
             } else callback();
@@ -271,8 +271,8 @@ namespace DG.Tweening
             if (DOTween.useSafeMode) {
                 try {
                     callback(param);
-                } catch {
-                    if (Debugger.logPriority > 1) Debug.Log("An error inside a tween callback was silently taken care of");
+                } catch (Exception e) {
+                    Debugger.LogWarning("An error inside a tween callback was silently taken care of > " + e.Message);
                     return false; // Callback error
                 }
             } else callback(param);
