@@ -199,10 +199,21 @@ namespace DG.DOTweenEditor
         void Connect()
         {
             if (_src == null) {
-                string srcDir = EditorUtils.dotweenDir.Substring(0, EditorUtils.dotweenDir.Length - 1); // Remove final slash
-                if (!Directory.Exists(srcDir + EditorUtils.pathSlash + "Resources")) AssetDatabase.CreateFolder(EditorUtils.FullPathToADBPath(srcDir), "Resources");
-                srcDir = EditorUtils.FullPathToADBPath(srcDir) + "/Resources/";
-                _src = EditorUtils.ConnectToSourceAsset<DOTweenSettings>(srcDir + DOTweenSettings.AssetName + ".asset", true);
+                string srcDir = EditorUtils.assetsPath + EditorUtils.pathSlash + "Resources";
+                if (!Directory.Exists(srcDir)) AssetDatabase.CreateFolder("Assets", "Resources");
+                string adbSrcFilePath = EditorUtils.FullPathToADBPath(srcDir + EditorUtils.pathSlash + DOTweenSettings.AssetName + ".asset");
+
+                // Legacy: check if there are settings saved in old mode (inside DOTween/Resources folder) and eventually move them
+                string legacySrcDir = EditorUtils.dotweenDir + "Resources";
+                string legacySrcFilePath = legacySrcDir + EditorUtils.pathSlash + DOTweenSettings.AssetName + ".asset";
+                if (File.Exists(legacySrcFilePath)) {
+                    // Move legacy src file to correct folder
+                    AssetDatabase.MoveAsset(EditorUtils.FullPathToADBPath(legacySrcFilePath), adbSrcFilePath);
+                    // Delete legacy Resources folder
+                    AssetDatabase.DeleteAsset(EditorUtils.FullPathToADBPath(legacySrcDir));
+                }
+
+                _src = EditorUtils.ConnectToSourceAsset<DOTweenSettings>(adbSrcFilePath, true);
             }
         }
 
