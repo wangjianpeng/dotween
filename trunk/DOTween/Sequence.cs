@@ -211,8 +211,11 @@ namespace DG.Tweening
             }
             // Run current cycle
             if (newCompletedSteps == 1 && s.isComplete) return false; // Skip update if complete because multicycle took care of it
-            if (newCompletedSteps > 0 && !s.isComplete) from = useInversePosition ? s.duration : 0;
-            else from = useInversePosition ? s.duration - prevPos : prevPos;
+            if (newCompletedSteps > 0 && !s.isComplete) {
+                from = useInversePosition ? s.duration : 0;
+                // In case of Restart loop rewind all tweens (keep "to > 0" or remove it?)
+                if (s.loopType == LoopType.Restart && to > 0) ApplyInternalCycle(s, s.duration, 0, UpdateMode.Goto, false, false, false);
+            } else from = useInversePosition ? s.duration - prevPos : prevPos;
             return ApplyInternalCycle(s, from, useInversePosition ? s.duration - newPos : newPos, updateMode, useInversePosition, prevPosIsInverse);
         }
 
