@@ -3,27 +3,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class Temp : BrainBase
+public class Temp : MonoBehaviour
 {
-	public Transform target;
-
 	void Start()
 	{
-		target.DOMoveX(5, 1).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear)
-			.OnUpdate(()=> Debug.Log(Time.frameCount + " > " + Time.realtimeSinceStartup + " UPDATE"));
+		SpriteRenderer sprite = this.GetComponent<SpriteRenderer>();
+
+		DOTween.To(
+            () => sprite.color,
+            x => sprite.color = x,
+            new Color(sprite.color.r,
+                sprite.color.g,
+                sprite.color.b,
+                0),
+            0.2f).SetId("instructions").SetLoops(6, LoopType.Yoyo).OnComplete(OnComplete);
 	}
 
-	// void OnGUI()
-	// {
-	// 	if (GUILayout.Button("Pause")) {
-	// 		Debug.Log(Time.frameCount + " > " + Time.realtimeSinceStartup + " PAUSE");
-	// 		DOTween.PauseAll();
-	// 	}
-	// }
-
-	public void TogglePause()
+	void OnComplete()
 	{
-		Debug.Log("<color=#00ff00>" + Time.frameCount + " > " + Time.realtimeSinceStartup + " TOGGLE PAUSE</color>");
-			DOTween.TogglePauseAll();
+		DOTween.Kill("instructions");
+		if(gameObject)
+        Destroy(gameObject);
 	}
 }

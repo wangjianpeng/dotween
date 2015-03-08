@@ -10,21 +10,16 @@ using System;
  
 public class TempTests : BrainBase
 {
-	public Transform[] ts;
+	public LoopType loopType = LoopType.Restart;
+	public Transform target;
 
 	void Start()
 	{
-		ts[0].DOMoveY(2, 1).SetId("a");
-		ts[1].DOMoveY(2, 1).SetId("a");
-		ts[2].DOMoveY(2, 1).SetId("c");
-
-		List<Tween> tweens = DOTween.TweensById("a");
-		foreach (Tween tween in tweens) tween.Complete();
-
-		Debug.Log(">>>>>>");
-
-		ITweenPlugin plug = new Vector3Plugin();
-		Debug.Log(plug);
-		if (plug as ABSTweenPlugin<Vector3, Vector3, VectorOptions> != null) Debug.Log("OK");
+		Sequence s = DOTween.Sequence();
+		s.AppendCallback(()=> Debug.Log(">>>>> Start Callback"))
+			.Append(target.DOMoveX(2, 1))
+			.Append(target.DOMoveY(2, 1))
+			.SetLoops(2, loopType)
+			.OnStepComplete(()=> Debug.Log("Step > " + s.CompletedLoops()));
 	}
 }

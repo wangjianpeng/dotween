@@ -52,7 +52,6 @@ namespace DG.Tweening.Plugins.Core.PathCore
         {
             this.type = type;
             this.subdivisionsXSegment = subdivisionsXSegment;
-            Debug.Log(subdivisionsXSegment);
             if (gizmoColor != null) this.gizmoColor = (Color)gizmoColor;
             AssignWaypoints(waypoints, true);
             AssignDecoder(type);
@@ -63,7 +62,6 @@ namespace DG.Tweening.Plugins.Core.PathCore
         // Needs to be called once waypoints and decoder are assigned, to setup or refresh path data.
         internal void FinalizePath(bool isClosedPath, AxisConstraint lockPositionAxes, Vector3 currTargetVal)
         {
-            Debug.Log("FINALIZE PATH");
             // Rebuild path to lock eventual axes
             if (lockPositionAxes != AxisConstraint.None) {
                 bool lockX = ((lockPositionAxes & AxisConstraint.X) == AxisConstraint.X);
