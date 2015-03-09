@@ -78,9 +78,9 @@ namespace DG.Tweening
         /// <param name="delay">Callback delay</param>
         /// <param name="callback">Callback to fire when the delay has expired</param>
         /// <param name="ignoreTimeScale">If TRUE (default) ignores Unity's timeScale</param>
-        public static void DelayedCall(float delay, TweenCallback callback, bool ignoreTimeScale = true)
+        public static Sequence DelayedCall(float delay, TweenCallback callback, bool ignoreTimeScale = true)
         {
-            DOTween.Sequence().AppendInterval(delay).OnComplete(callback).SetUpdate(UpdateType.Normal, ignoreTimeScale).SetAutoKill(true);
+            return DOTween.Sequence().AppendInterval(delay).OnComplete(callback).SetUpdate(UpdateType.Normal, ignoreTimeScale).SetAutoKill(true);
         }
 
         #endregion
