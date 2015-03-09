@@ -26,11 +26,12 @@ namespace DG.Tweening.Plugins.Core.PathCore
                 p.controlPoints[1] = new ControlPoint(lastP + diffV, Vector3.zero);
             }
             // Store total subdivisions
-            p.subdivisions = (wpsLen + 2) * p.subdivisionsXSegment;
+//            p.subdivisions = (wpsLen + 2) * p.subdivisionsXSegment;
+            p.subdivisions = wpsLen * p.subdivisionsXSegment;
             // Store time to len tables
             SetTimeToLengthTables(p, p.subdivisions);
             // Store waypoints lengths
-            SetWaypointsLengths(p, p.subdivisions);
+            SetWaypointsLengths(p, p.subdivisionsXSegment);
         }
 
         // controlPoints as a separate parameter so we can pass custom ones from SetWaypointsLengths
