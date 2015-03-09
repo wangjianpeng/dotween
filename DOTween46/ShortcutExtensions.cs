@@ -233,6 +233,7 @@ namespace DG.Tweening
         public static Tweener DOText(this Text target, string endValue, float duration, bool scramble = false, string scrambleChars = null)
         {
             return DOTween.To(() => target.text, x => target.text = x, endValue, duration)
+                .SetOptions(scramble, scrambleChars)
                 .SetTarget(target);
         }
 

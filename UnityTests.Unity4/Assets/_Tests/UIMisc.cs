@@ -6,7 +6,7 @@ using DG.Tweening;
 public class UIMisc : BrainBase
 {
 	public Image[] imgs;
-	public Text text;
+	public Text text, textScramble;
 
 	IEnumerator Start()
 	{
@@ -29,6 +29,11 @@ public class UIMisc : BrainBase
 		DOTween.Sequence()
 			.AppendInterval(0.5f)
 			.Append(text.DOText("", 2).From().SetEase(Ease.Linear))
+			.AppendInterval(0.5f)
+			.SetLoops(-1, LoopType.Yoyo);
+		DOTween.Sequence()
+			.AppendInterval(0.5f)
+			.Append(textScramble.DOText("", 2, true).From().SetEase(Ease.Linear))
 			.AppendInterval(0.5f)
 			.SetLoops(-1, LoopType.Yoyo);
 	}
