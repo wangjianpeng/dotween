@@ -144,7 +144,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         {
             int wpsCount = p.wps.Length;
 
-            int gizmosSubdivisions = wpsCount * 5;
+            int gizmosSubdivisions = wpsCount * 10;
             if (p.nonLinearDrawWps == null || p.nonLinearDrawWps.Length != gizmosSubdivisions + 1)
                 p.nonLinearDrawWps = new Vector3[gizmosSubdivisions + 1];
             for (int i = 0; i <= gizmosSubdivisions; ++i) {
