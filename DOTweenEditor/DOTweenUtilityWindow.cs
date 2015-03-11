@@ -12,8 +12,12 @@ namespace DG.DOTweenEditor
 {
     public class UtilityWindowProcessor : AssetPostprocessor
     {
+        static bool _setupDialogRequested; // Used to prevent OnPostProcessAllAssets firing twice (because of a Unity bug/feature)
+
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
+            if (_setupDialogRequested) return;
+
             string[] dotweenEntries = System.Array.FindAll(importedAssets, name => name.Contains("DOTween") && !name.EndsWith(".meta") && !name.EndsWith(".jpg") && !name.EndsWith(".png"));
             bool dotweenImported = dotweenEntries.Length > 0;
             if (dotweenImported) {
@@ -21,13 +25,15 @@ namespace DG.DOTweenEditor
                     && (EditorPrefs.GetString(Application.dataPath + DOTweenUtilityWindow.Id) != Application.dataPath + DOTween.Version
                     || EditorPrefs.GetString(Application.dataPath + DOTweenUtilityWindow.IdPro) != Application.dataPath + EditorUtils.proVersion);
                 if (openSetupDialog) {
+                    _setupDialogRequested = true;
                     EditorPrefs.SetString(Application.dataPath + DOTweenUtilityWindow.Id, Application.dataPath + DOTween.Version);
                     EditorPrefs.SetString(Application.dataPath + DOTweenUtilityWindow.IdPro, Application.dataPath + EditorUtils.proVersion);
                     EditorUtility.DisplayDialog("DOTween", "DOTween needs to be setup.\n\nSelect \"Tools > DOTween Utility Panel\" and press \"Setup DOTween...\" in the panel that opens.", "Ok");
                     // Opening window after a postProcess doesn't work on Unity 3 so check that
                     string[] vs = Application.unityVersion.Split("."[0]);
                     int majorVersion = System.Convert.ToInt32(vs[0]);
-                    if (majorVersion >= 4) DOTweenUtilityWindow.Open();
+                    if (majorVersion >= 4) EditorUtils.DelayedCall(0.5f, DOTweenUtilityWindow.Open);
+                    EditorUtils.DelayedCall(8, ()=> _setupDialogRequested = false);
                 }
             }
         }
