@@ -2,6 +2,7 @@
 // Created: 2014/12/24 13:50
 
 using System;
+using System.Collections;
 using System.Reflection;
 using System.IO;
 using UnityEditor;
@@ -48,6 +49,11 @@ namespace DG.DOTweenEditor.Core
 
         // ===================================================================================
         // PUBLIC METHODS --------------------------------------------------------------------
+
+        public static void DelayedCall(float delay, Action callback)
+        {
+            new DelayedCall(delay, callback);
+        }
 
         /// <summary>
         /// Checks that the given editor texture use the correct import settings,

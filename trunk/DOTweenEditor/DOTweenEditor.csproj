@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DelayedCall.cs" />
     <Compile Include="Core\EditorUtils.cs" />
     <Compile Include="DOTweenInspector.cs" />
     <Compile Include="DOTweenSettingsInspector.cs" />
