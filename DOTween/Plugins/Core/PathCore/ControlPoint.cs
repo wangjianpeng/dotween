@@ -6,15 +6,16 @@
 
 using UnityEngine;
 
+#pragma warning disable 1591
 namespace DG.Tweening.Plugins.Core.PathCore
 {
     /// <summary>
     /// Path control point
     /// </summary>
     [System.Serializable]
-    internal struct ControlPoint
+    public struct ControlPoint
     {
-        internal Vector3 a, b;
+        public Vector3 a, b;
 
         public ControlPoint(Vector3 a, Vector3 b)
         {

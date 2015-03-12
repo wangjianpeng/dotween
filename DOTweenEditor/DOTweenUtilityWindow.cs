@@ -59,8 +59,6 @@ namespace DG.DOTweenEditor
 
         int _selectedTab;
         string[] _tabLabels = new[] { "Setup", "Preferences" };
-        bool _guiStylesSet;
-        GUIStyle _boldLabelStyle, _setupLabelStyle, _redLabelStyle, _btStyle, _btImgStyle, _wrapCenterLabelStyle;
 
         // If force is FALSE opens the window only if DOTween's version has changed
         // (set to FALSE by OnPostprocessAllAssets)
@@ -103,13 +101,13 @@ namespace DG.DOTweenEditor
         void OnGUI()
         {
             Connect();
-            SetGUIStyles();
+            EditorGUIUtils.SetGUIStyles(_footerSize);
 
             if (Application.isPlaying) {
                 GUILayout.Space(40);
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(40);
-                GUILayout.Label("DOTween Utility Panel\nis disabled while in Play Mode", _wrapCenterLabelStyle, GUILayout.ExpandWidth(true));
+                GUILayout.Label("DOTween Utility Panel\nis disabled while in Play Mode", EditorGUIUtils.wrapCenterLabelStyle, GUILayout.ExpandWidth(true));
                 GUILayout.Space(40);
                 GUILayout.EndHorizontal();
             } else {
@@ -135,36 +133,36 @@ namespace DG.DOTweenEditor
             Rect areaRect = new Rect(0, 30, _headerSize.x, _headerSize.y);
             GUI.DrawTexture(areaRect, _headerImg, ScaleMode.StretchToFill, false);
             GUILayout.Space(areaRect.y + _headerSize.y + 2);
-            GUILayout.Label(_innerTitle, DOTween.isDebugBuild ? _redLabelStyle : _boldLabelStyle);
+            GUILayout.Label(_innerTitle, DOTween.isDebugBuild ? EditorGUIUtils.redLabelStyle : EditorGUIUtils.boldLabelStyle);
 
             if (_setupRequired) {
                 GUI.backgroundColor = Color.red;
                 GUILayout.BeginVertical(GUI.skin.box);
-                GUILayout.Label("DOTWEEN SETUP REQUIRED", _setupLabelStyle);
+                GUILayout.Label("DOTWEEN SETUP REQUIRED", EditorGUIUtils.setupLabelStyle);
                 GUILayout.EndVertical();
                 GUI.backgroundColor = Color.white;
             } else GUILayout.Space(8);
-            if (GUILayout.Button("Setup DOTween...", _btStyle)) {
+            if (GUILayout.Button("Setup DOTween...", EditorGUIUtils.btStyle)) {
                 DOTweenSetupMenuItem.Setup();
                 _setupRequired = EditorUtils.DOTweenSetupRequired();
             }
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Documentation", _btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/documentation.php");
-            if (GUILayout.Button("Support", _btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/support.php");
+            if (GUILayout.Button("Documentation", EditorGUIUtils.btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/documentation.php");
+            if (GUILayout.Button("Support", EditorGUIUtils.btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/support.php");
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Changelog", _btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/download.php");
-            if (GUILayout.Button("Check Updates", _btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/download.php?v=" + DOTween.Version);
+            if (GUILayout.Button("Changelog", EditorGUIUtils.btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/download.php");
+            if (GUILayout.Button("Check Updates", EditorGUIUtils.btStyle, GUILayout.Width(_HalfBtSize))) Application.OpenURL("http://dotween.demigiant.com/download.php?v=" + DOTween.Version);
             GUILayout.EndHorizontal();
             GUILayout.Space(14);
-            if (GUILayout.Button(_footerImg, _btImgStyle)) Application.OpenURL("http://www.demigiant.com/");
+            if (GUILayout.Button(_footerImg, EditorGUIUtils.btImgStyle)) Application.OpenURL("http://www.demigiant.com/");
         }
 
         void DrawPreferencesGUI()
         {
             GUILayout.Space(40);
-            if (GUILayout.Button("Reset", _btStyle)) {
+            if (GUILayout.Button("Reset", EditorGUIUtils.btStyle)) {
                 // Reset to original defaults
                 _src.useSafeMode = true;
                 _src.showUnityEditorReport = false;
@@ -220,34 +218,6 @@ namespace DG.DOTweenEditor
                 }
 
                 _src = EditorUtils.ConnectToSourceAsset<DOTweenSettings>(adbSrcFilePath, true);
-            }
-        }
-
-        void SetGUIStyles()
-        {
-            if (!_guiStylesSet) {
-                _boldLabelStyle = new GUIStyle(GUI.skin.label);
-                _boldLabelStyle.fontStyle = FontStyle.Bold;
-                _redLabelStyle = new GUIStyle(GUI.skin.label);
-                _redLabelStyle.normal.textColor = Color.red;
-                _setupLabelStyle = new GUIStyle(_boldLabelStyle);
-                _setupLabelStyle.alignment = TextAnchor.MiddleCenter;
-
-                _wrapCenterLabelStyle = new GUIStyle(GUI.skin.label);
-                _wrapCenterLabelStyle.wordWrap = true;
-                _wrapCenterLabelStyle.alignment = TextAnchor.MiddleCenter;
-
-                _btStyle = new GUIStyle(GUI.skin.button);
-                _btStyle.padding = new RectOffset(0, 0, 10, 10);
-
-                _btImgStyle = new GUIStyle(GUI.skin.button);
-                _btImgStyle.normal.background = null;
-                _btImgStyle.imagePosition = ImagePosition.ImageOnly;
-                _btImgStyle.padding = new RectOffset(0, 0, 0, 0);
-                _btImgStyle.fixedWidth = _footerSize.x;
-                _btImgStyle.fixedHeight = _footerSize.y;
-
-                _guiStylesSet = true;
             }
         }
     }
