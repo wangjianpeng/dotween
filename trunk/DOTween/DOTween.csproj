@@ -124,6 +124,8 @@ set BinDirNoMeta=bin.Global_no_meta\DOTween
 set DestinationDirNoMeta=$(SolutionDir)..\%25BinDirNoMeta%25
 set BinDirUnityTests=UnityTests.Unity4\Assets\Demigiant\DOTween
 set DestinationDirUnityTests=$(SolutionDir)%25BinDirUnityTests%25
+set BinDirUnity5Tests=UnityTests.Unity5\Assets\Demigiant\DOTween
+set DestinationDirUnity5Tests=$(SolutionDir)%25BinDirUnity5Tests%25
 set BinDirCompatibilityTests=UnityCompatibilityTests.Unity35\Assets\Demigiant\DOTween
 set DestinationDirCompatibilityTests=$(SolutionDir)%25BinDirCompatibilityTests%25
 set BinDirSetupTests=UnityDOTweenSetupTests.Unity4\Assets\Demigiant\DOTween
@@ -136,7 +138,7 @@ DEL $(TargetDir)\*.tmp
 
 CD $(TargetDir)
 echo Converting PDB to MDB and deleting PDB...
-"c:\Program Files\_Design\Unity 4\Editor\Data\MonoBleedingEdge\lib\mono\4.0\pdb2mdb.exe" $(TargetFileName)
+"c:\Program Files\_Design\Unity 4.6\Editor\Data\MonoBleedingEdge\lib\mono\4.0\pdb2mdb.exe" $(TargetFileName)
 DEL $(TargetName).pdb
 
 echo Exporting Assembly to %25DestinationDir%25
@@ -148,6 +150,9 @@ echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirNoMeta%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirUnityTests%25
 echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirUnityTests%25 /Y /I /E
+
+echo Exporting Assembly to %25DestinationDirUnity5Tests%25
+echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirUnity5Tests%25 /Y /I /E
 
 echo Exporting Assembly to %25DestinationDirCompatibilityTests%25
 echo f | xcopy "$(SolutionDir)\bin" %25DestinationDirCompatibilityTests%25 /Y /I /E
