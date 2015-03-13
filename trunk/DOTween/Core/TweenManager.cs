@@ -673,6 +673,7 @@ namespace DG.Tweening.Core
             List<Tween> ts = new List<Tween>(len);
             for (int i = 0; i < len; ++i) {
                 Tween t = _activeTweens[i];
+                if (t == null || !t.active) continue;
                 if (t.id == id) ts.Add(t);
             }
             if (ts.Count > 0) return ts;
@@ -687,6 +688,7 @@ namespace DG.Tweening.Core
             List<Tween> ts = new List<Tween>(len);
             for (int i = 0; i < len; ++i) {
                 Tween t = _activeTweens[i];
+                if (t == null || !t.active) continue;
                 if (t.target == target) ts.Add(t);
             }
             if (ts.Count > 0) return ts;
