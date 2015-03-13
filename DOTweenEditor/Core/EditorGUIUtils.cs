@@ -18,10 +18,12 @@ namespace DG.DOTweenEditor.Core
             btImgStyle,
             wrapCenterLabelStyle;
         public static GUIStyle handlelabelStyle,
-                 handleSelectedLabelStyle,
-                 wordWrapLabelStyle,
-                 titleStyle,
-                 logoIconStyle;
+            handleSelectedLabelStyle,
+            wordWrapLabelStyle,
+            titleStyle,
+            logoIconStyle;
+        public static GUIStyle sideBtStyle,
+            sideLogoIconBoldLabelStyle;
 
         // Filtered ease types to show desired eases in Inspector panels
         internal static readonly string[] FilteredEaseTypes = new[] {
@@ -127,6 +129,16 @@ namespace DG.DOTweenEditor.Core
                 logoIconStyle.active.background = logoIconStyle.normal.background = null;
                 logoIconStyle.margin = new RectOffset(0, 0, 4, 4);
                 logoIconStyle.padding = new RectOffset(0, 0, 0, 0);
+
+                //
+
+                sideBtStyle = new GUIStyle(GUI.skin.button);
+                sideBtStyle.margin.top = 1;
+                sideBtStyle.padding = new RectOffset(0, 0, 2, 2);
+
+                sideLogoIconBoldLabelStyle = new GUIStyle(boldLabelStyle);
+                sideLogoIconBoldLabelStyle.alignment = TextAnchor.MiddleLeft;
+                sideLogoIconBoldLabelStyle.padding.top = 6;
             }
         }
     }
