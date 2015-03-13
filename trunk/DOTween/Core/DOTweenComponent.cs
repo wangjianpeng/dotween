@@ -14,6 +14,7 @@ namespace DG.Tweening.Core
     /// Used to separate DOTween class from the MonoBehaviour instance (in order to use static constructors on DOTween).
     /// Contains all instance-based methods
     /// </summary>
+    [AddComponentMenu("")]
     public class DOTweenComponent : MonoBehaviour, IDOTweenInit
     {
         /// <summary>Used internally inside Unity Editor, as a trick to update DOTween's inspector at every frame</summary>
