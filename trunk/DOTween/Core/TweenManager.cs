@@ -643,6 +643,8 @@ namespace DG.Tweening.Core
         {
             if (!hasActiveTweens) return 0;
 
+            if (_requiresActiveReorganization) ReorganizeActiveTweens();
+
             int tot = 0;
             for (int i = 0; i < _maxActiveLookupId + 1; ++i) {
                 Tween t = _activeTweens[i];
@@ -651,9 +653,11 @@ namespace DG.Tweening.Core
             return tot;
         }
 
-        // If playing is FALSE returns active paused tweens
+        // If playing is FALSE returns active paused tweens, otherwise active playing tweens
         internal static List<Tween> GetActiveTweens(bool playing)
         {
+            if (_requiresActiveReorganization) ReorganizeActiveTweens();
+
             if (totActiveTweens <= 0) return null;
             int len = totActiveTweens;
             List<Tween> ts = new List<Tween>(len);
@@ -668,12 +672,13 @@ namespace DG.Tweening.Core
         // Returns all active tweens with the given id
         internal static List<Tween> GetTweensById(object id)
         {
+            if (_requiresActiveReorganization) ReorganizeActiveTweens();
+
             if (totActiveTweens <= 0) return null;
             int len = totActiveTweens;
             List<Tween> ts = new List<Tween>(len);
             for (int i = 0; i < len; ++i) {
                 Tween t = _activeTweens[i];
-                if (t == null || !t.active) continue;
                 if (t.id == id) ts.Add(t);
             }
             if (ts.Count > 0) return ts;
@@ -683,12 +688,13 @@ namespace DG.Tweening.Core
         // Returns all active tweens with the given target
         internal static List<Tween> GetTweensByTarget(object target)
         {
+            if (_requiresActiveReorganization) ReorganizeActiveTweens();
+
             if (totActiveTweens <= 0) return null;
             int len = totActiveTweens;
             List<Tween> ts = new List<Tween>(len);
             for (int i = 0; i < len; ++i) {
                 Tween t = _activeTweens[i];
-                if (t == null || !t.active) continue;
                 if (t.target == target) ts.Add(t);
             }
             if (ts.Count > 0) return ts;
