@@ -22,9 +22,6 @@ namespace DG.DOTweenEditor
         string _title;
         readonly StringBuilder _strBuilder = new StringBuilder();
 
-        bool _guiStylesSet;
-        GUIStyle _boldLabelStyle, _redLabelStyle;
-
         // ===================================================================================
         // MONOBEHAVIOUR METHODS -------------------------------------------------------------
 
@@ -42,7 +39,7 @@ namespace DG.DOTweenEditor
 
         override public void OnInspectorGUI()
         {
-            SetGUIStyles();
+            EditorGUIUtils.SetGUIStyles();
 
             int totActiveTweens = TweenManager.totActiveTweens;
             int totPlayingTweens = TweenManager.TotalPlayingTweens();
@@ -51,7 +48,7 @@ namespace DG.DOTweenEditor
             int totActiveLateTweens = TweenManager.totActiveLateTweens;
 
             GUILayout.Space(4);
-            GUILayout.Label(_title, DOTween.isDebugBuild ? _redLabelStyle : _boldLabelStyle);
+            GUILayout.Label(_title, DOTween.isDebugBuild ? EditorGUIUtils.redLabelStyle : EditorGUIUtils.boldLabelStyle);
 
             GUILayout.Space(6);
             GUILayout.BeginHorizontal();
@@ -87,6 +84,7 @@ namespace DG.DOTweenEditor
             _strBuilder.Append("\nShow Unity Editor Report: ").Append(DOTween.showUnityEditorReport);
             _strBuilder.Append("\nTimeScale (Unity/DOTween): ").Append(Time.timeScale).Append("/").Append(DOTween.timeScale);
             GUILayout.Label(_strBuilder.ToString());
+            GUILayout.Label("NOTE: DOTween's TimeScale is not the same as Unity's Time.timeScale: it is actually multiplied by it except for tweens that are set to update independently", EditorGUIUtils.wordWrapItalicLabelStyle);
 
             GUILayout.Space(8);
             _strBuilder.Remove(0, _strBuilder.Length);
@@ -101,19 +99,6 @@ namespace DG.DOTweenEditor
             GUILayout.Label(_strBuilder.ToString());
 
             GUILayout.Space(10);
-        }
-
-        void SetGUIStyles()
-        {
-            if (!_guiStylesSet) {
-                _boldLabelStyle = new GUIStyle(GUI.skin.label);
-                _boldLabelStyle.fontStyle = FontStyle.Bold;
-
-                _redLabelStyle = new GUIStyle(GUI.skin.label);
-                _redLabelStyle.normal.textColor = Color.red;
-
-                _guiStylesSet = true;
-            }
         }
     }
 }
