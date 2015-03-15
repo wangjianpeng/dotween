@@ -10,20 +10,21 @@ namespace DG.DOTweenEditor.Core
 {
     public static class EditorGUIUtils
     {
-        static bool _stylesSet, additionalStylesSet;
+        static bool _stylesSet, _additionalStylesSet;
         public static GUIStyle boldLabelStyle,
-            setupLabelStyle,
-            redLabelStyle,
-            btStyle,
-            btImgStyle,
-            wrapCenterLabelStyle;
+                               setupLabelStyle,
+                               redLabelStyle,
+                               btStyle,
+                               btImgStyle,
+                               wrapCenterLabelStyle;
         public static GUIStyle handlelabelStyle,
-            handleSelectedLabelStyle,
-            wordWrapLabelStyle,
-            titleStyle,
-            logoIconStyle;
+                               handleSelectedLabelStyle,
+                               wordWrapLabelStyle,
+                               wordWrapItalicLabelStyle,
+                               titleStyle,
+                               logoIconStyle;
         public static GUIStyle sideBtStyle,
-            sideLogoIconBoldLabelStyle;
+                               sideLogoIconBoldLabelStyle;
 
         // Filtered ease types to show desired eases in Inspector panels
         internal static readonly string[] FilteredEaseTypes = new[] {
@@ -77,8 +78,8 @@ namespace DG.DOTweenEditor.Core
 
         public static void SetGUIStyles(Vector2? footerSize = null)
         {
-            if (!additionalStylesSet && footerSize != null) {
-                additionalStylesSet = true;
+            if (!_additionalStylesSet && footerSize != null) {
+                _additionalStylesSet = true;
 
                 Vector2 footerSizeV = (Vector2)footerSize;
                 btImgStyle = new GUIStyle(GUI.skin.button);
@@ -124,6 +125,9 @@ namespace DG.DOTweenEditor.Core
 
                 wordWrapLabelStyle = new GUIStyle(GUI.skin.label);
                 wordWrapLabelStyle.wordWrap = true;
+
+                wordWrapItalicLabelStyle = new GUIStyle(wordWrapLabelStyle);
+                wordWrapItalicLabelStyle.fontStyle = FontStyle.Italic;
 
                 logoIconStyle = new GUIStyle(GUI.skin.box);
                 logoIconStyle.active.background = logoIconStyle.normal.background = null;

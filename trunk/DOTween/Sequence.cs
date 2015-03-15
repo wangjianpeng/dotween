@@ -4,6 +4,7 @@
 // License Copyright (c) Daniele Giardini.
 // This work is subject to the terms at http://dotween.demigiant.com/license.php
 
+using System;
 using System.Collections.Generic;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Easing;
@@ -187,6 +188,10 @@ namespace DG.Tweening
             if (s.isBackwards) prevPosIsInverse = !prevPosIsInverse;
             // Update multiple loop cycles within the same update
             if (newCompletedSteps > 0) {
+                // Store expected completedLoops and position, in order to check them after the update cycles.
+                int expectedCompletedLoops = s.completedLoops + newCompletedSteps;
+                float expectedPosition = s.position;
+                //
                 int cycles = newCompletedSteps;
                 int cyclesDone = 0;
                 from = prevPos;
@@ -208,6 +213,8 @@ namespace DG.Tweening
                     }
                     newCompletedSteps = 0;
                 }
+                // If completedLoops or position were changed by some callback, exit here
+                if (expectedCompletedLoops != s.completedLoops || Math.Abs(expectedPosition - s.position) > Single.Epsilon) return !s.active;
             }
             // Run current cycle
             if (newCompletedSteps == 1 && s.isComplete) return false; // Skip update if complete because multicycle took care of it
@@ -226,7 +233,7 @@ namespace DG.Tweening
         static bool ApplyInternalCycle(Sequence s, float fromPos, float toPos, UpdateMode updateMode, bool useInverse, bool prevPosIsInverse, bool multiCycleStep = false)
         {
             bool isBackwardsUpdate = toPos < fromPos;
-//            Debug.Log((multiCycleStep ? "<color=#FFEC03>Multicycle</color> > " : "Cycle > ") + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos);
+//            Debug.Log(Time.frameCount + " " + s.id + " " + (multiCycleStep ? "<color=#FFEC03>Multicycle</color> > " : "Cycle > ") + s.position + "/" + s.duration + " - s.isBackwards: " + s.isBackwards + ", useInverse/prevInverse: " + useInverse + "/" + prevPosIsInverse + " - " + fromPos + " > " + toPos + " - UpdateMode: " + updateMode + ", isPlaying: " + s.isPlaying);
             if (isBackwardsUpdate) {
                 int len = s._sequencedObjs.Count - 1;
                 for (int i = len; i > -1; --i) {
