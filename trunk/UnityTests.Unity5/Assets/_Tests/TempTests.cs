@@ -10,8 +10,10 @@ using System;
  
 public class TempTests : BrainBase
 {
+	public Transform target;
+
 	void Start()
 	{
-		// Tweener = new Tweener();
+		DOTween.To(()=>new Vector3(0,2,0), x=>target.position = x, new Vector3(2,4,2), 2);
 	}
 }
