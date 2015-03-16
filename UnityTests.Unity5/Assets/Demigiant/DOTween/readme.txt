@@ -15,4 +15,4 @@ DOTween repository (Google Code): https://code.google.com/p/dotween/
 
 // NOTES //////////////////////////////////////////////////////
 
-- DOTween's Utility Panel can be found under "Tools > DOTween Utility Panel" and also contains other useful options, like direct links to the documentation and to check if you have the latest version.
+- DOTween's Utility Panel can be found under "Tools > DOTween Utility Panel" and also contains other useful options, plus a tab to set DOTween's preferences
