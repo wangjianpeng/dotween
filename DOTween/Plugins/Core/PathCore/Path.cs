@@ -23,7 +23,7 @@ namespace DG.Tweening.Plugins.Core.PathCore
         [SerializeField] internal int subdivisionsXSegment; // Subdivisions x each segment
         [SerializeField] internal int subdivisions; // Stored by PathPlugin > total subdivisions for whole path (derived automatically from subdivisionsXSegment)
         [SerializeField] internal Vector3[] wps; // Waypoints (modified by PathPlugin when setting relative end value and change value) - also modified by DOTweenPathInspector
-        [SerializeField] public ControlPoint[] controlPoints; // Control points used by non-linear paths - needs to be public otherwise custom struct serialization won't work
+        [SerializeField] internal ControlPoint[] controlPoints; // Control points used by non-linear paths
         [SerializeField] internal float length; // Unit length of the path
         [SerializeField] internal float[] wpLengths; // Unit length of each waypoint
         [SerializeField] internal bool isFinalized; // TRUE when the path has been finalized (either by starting the tween or if the path was created by the Path Editor)
