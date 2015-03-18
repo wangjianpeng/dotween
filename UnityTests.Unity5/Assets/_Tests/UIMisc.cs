@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class UIMisc : BrainBase
 {
+	public CanvasGroup cGroup;
 	public Image[] imgs;
 	public Text text, textScramble;
 
@@ -36,5 +37,10 @@ public class UIMisc : BrainBase
 			.Append(textScramble.DOText("", 2, true).From().SetEase(Ease.Linear))
 			.AppendInterval(0.5f)
 			.SetLoops(-1, LoopType.Yoyo);
+	}
+
+	void OnGUI()
+	{
+		if (GUILayout.Button("Fade CanvasGroup")) cGroup.DOFade(0, 1);
 	}
 }
